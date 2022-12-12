@@ -156,8 +156,9 @@ class _BlogScreen extends BaseState<BlogScreen> {
                                                     blogList[index].title.toString().trim(),
                                                     overflow: TextOverflow.clip,
                                                     textAlign: TextAlign.start,
-                                                    style: TextStyle(fontWeight: FontWeight.w600,
-                                                        fontSize: 20,
+                                                    style: TextStyle(
+                                                        fontWeight: titleFont,
+                                                        fontSize: 16,
                                                         fontFamily: aileron,
                                                         overflow: TextOverflow.clip,
                                                         foreground: Paint()..shader = linearGradient),

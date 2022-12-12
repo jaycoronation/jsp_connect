@@ -191,14 +191,14 @@ class _AlbumScreen extends BaseState<AlbumScreen> {
                                               width: MediaQuery.of(context).size.width / 2 - 50,
                                               margin: const EdgeInsets.only(left: 14, right: 14, top: 14, bottom: 20),
                                               child: Text(
-                                                toDisplayCase(listGallery[index].title.toString().replaceAll(" ", "\n")),
+                                                toDisplayCase(listGallery[index].title.toString()).replaceAll(" ", "\n"),
                                                 overflow: TextOverflow.clip,
                                                 style: TextStyle(
-                                                  fontFamily: gilroy,
-                                                  fontWeight: FontWeight.w900,
-                                                  fontSize: 16,
-                                                  foreground: Paint()..shader = linearGradient,
-                                                  overflow: TextOverflow.clip,
+                                                    foreground: Paint()..shader = linearGradient,
+                                                    fontWeight: titleFont,
+                                                    fontFamily: gilroy,
+                                                    fontSize: 16,
+                                                    overflow: TextOverflow.clip
                                                 ),
                                                 textAlign: TextAlign.center,
                                               )),

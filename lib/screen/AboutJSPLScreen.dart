@@ -117,7 +117,7 @@ class _AboutJSPLScreen extends BaseState<AboutJSPLScreen> {
                               margin: const EdgeInsets.only(left: 14, right: 14,top: 14,bottom: 18),
                               child:  const Text(
                                 "As the Coronavirus pandemic continues to wage a fierce battle against the human race, imposing tremendous pressure across the world, not just financially but also socially, physically and emotionally.",
-                                style: TextStyle(fontWeight: FontWeight.w900, color: white, fontSize: 20, fontFamily: roboto),
+                                style: TextStyle(fontWeight: FontWeight.w500, color: white, fontSize: 20, fontFamily: roboto),
                               ),
                             ),
                             GestureDetector(
@@ -160,9 +160,9 @@ class _AboutJSPLScreen extends BaseState<AboutJSPLScreen> {
                                                 ),
                                               ],
                                             ),
-                                            const Text('Message From Chairman',style: TextStyle(color: white,fontWeight: FontWeight.w600,fontSize: 16)),
+                                            const Text('Message From Chairman',style: TextStyle(color: white,fontWeight: FontWeight.w500,fontSize: 20,fontFamily: roboto)),
                                             Container(height: 8,),
-                                            Text(readMore,style: const TextStyle(color: white,fontWeight: FontWeight.w400,fontSize: 14)),
+                                            Text(readMore,style: const TextStyle(height: 1.5,color: white,fontWeight: FontWeight.w400,fontSize: 14,fontFamily: roboto)),
                                           ],
                                         ),
                                       ),

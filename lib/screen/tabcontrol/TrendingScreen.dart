@@ -806,7 +806,7 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                                   maxLines: 3,
                                                   style: TextStyle(
                                                       foreground: Paint()..shader = linearGradientSocial,
-                                                      fontWeight: FontWeight.w600,
+                                                      fontWeight: titleFont,
                                                       fontFamily: gilroy,
                                                       fontSize: 16,
                                                       overflow: TextOverflow.clip),
@@ -938,9 +938,14 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                             border: Border.all(width: 0.6, color: white.withOpacity(0.4), style: BorderStyle.solid)),
                         margin: const EdgeInsets.fromLTRB(12, 12, 12, 0),
                         padding: const EdgeInsets.all(8),
-                        child: const Text(
+                        child: Text(
                           "JSP is an industrial powerhouse with a dominant presence in steel, power, mining and infrastructure sectors. Led by Mr Naveen Jindal, the company’s enviable success story has been scripted essentially by its resolve to innovate, set new standards, enhance capabilities, enrich lives and to ensure that it stays true to its cherished value system., ",
-                          style: TextStyle(height: 1.5, color: white, fontWeight: FontWeight.w400, fontSize: 16, fontFamily: roboto),
+                          style: TextStyle(height: 1.5,
+                              foreground: Paint()..shader = linearGradientSocial,
+                              fontWeight: titleFont,
+                              fontFamily: gilroy,
+                              fontSize: 16,
+                              overflow: TextOverflow.clip),
                         ),
                       ),
                       Container(
@@ -1054,7 +1059,7 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                                   listEvents[index].title.toString(),
                                                   style: TextStyle(
                                                       foreground: Paint()..shader = linearGradientSocial,
-                                                      fontWeight: FontWeight.w600,
+                                                      fontWeight: titleFont,
                                                       fontFamily: gilroy,
                                                       fontSize: 16,
                                                       overflow: TextOverflow.clip),
@@ -1251,10 +1256,10 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                               listVideos[index].title.toString(),
                                               overflow: TextOverflow.clip,
                                               maxLines: 2,
-                                              style: const TextStyle(
-                                                  color: white,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontFamily: roboto,
+                                              style: TextStyle(
+                                                  foreground: Paint()..shader = linearGradientSocial,
+                                                  fontWeight: titleFont,
+                                                  fontFamily: gilroy,
                                                   fontSize: 16,
                                                   overflow: TextOverflow.clip),
                                             ))),
@@ -1374,11 +1379,11 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                               Text(listNews[index].title.toString(),
                                                   overflow: TextOverflow.clip,
                                                   style: TextStyle(
-                                                      overflow: TextOverflow.clip,
-                                                      color: white,
-                                                      fontWeight: FontWeight.w400,
+                                                      foreground: Paint()..shader = linearGradientSocial,
+                                                      fontWeight: titleFont,
+                                                      fontFamily: gilroy,
                                                       fontSize: 16,
-                                                      fontFamily: roboto))
+                                                      overflow: TextOverflow.clip))
                                             ],
                                           ),
                                         ),
@@ -1388,7 +1393,7 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                         height: 100,
                                         child: ClipRRect(
                                           borderRadius: BorderRadius.circular(20.0),
-                                          child: Image.network(listNews[index].featuredImage.toString(), width: 100, height: 100, fit: BoxFit.fill),
+                                          child: Image.network(listNews[index].featuredImage.toString(), width: 100, height: 100, fit: BoxFit.cover),
                                         ),
                                       )
                                     ],

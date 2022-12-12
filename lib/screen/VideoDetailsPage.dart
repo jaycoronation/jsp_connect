@@ -215,25 +215,25 @@ class _VideoDetailsPage extends BaseState<VideoDetailsPage> {
                       Container(
                         margin: const EdgeInsets.fromLTRB(12, 6, 12, 6),
                         child: Text(postDetailsData.title.toString(),
-                            style: const TextStyle(color: Colors.white, fontSize: 19, fontWeight: FontWeight.w600, fontFamily: roboto)),
+                            style: const TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w500, fontFamily: roboto)),
                       ),
                       Container(
                         margin: const EdgeInsets.fromLTRB(12, 6, 12, 0),
                         child: Text(
                           postDetailsData.saveTimestamp.toString(),
-                          style: TextStyle(fontFamily: roboto, fontSize: 15, color: white, fontWeight: FontWeight.w600),
+                          style: TextStyle(fontFamily: roboto, fontSize: 12, color: white, fontWeight: FontWeight.w500),
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.fromLTRB(12, 6, 12, 6),
+                        margin: const EdgeInsets.fromLTRB(12, 22, 12, 6),
                         child: HtmlWidget(postDetailsData.description.toString(),
                             textStyle: const TextStyle(height: 1.5, color: white, fontSize: 15, fontWeight: FontWeight.w500, fontFamily: roboto)),
                       ),
                       Container(
-                        margin: const EdgeInsets.fromLTRB(12, 6, 12, 0),
+                        margin: const EdgeInsets.fromLTRB(12, 12, 12, 6),
                         child: const Text(
                           "Related Videos",
-                          style: TextStyle(fontFamily: roboto, fontSize: 17, color: white, fontWeight: FontWeight.w600),
+                          style: TextStyle(fontFamily: roboto, fontSize: 17, color: white, fontWeight: FontWeight.w800),
                         ),
                       ),
                       postDetailsData.reatedPosts!.isNotEmpty

@@ -140,7 +140,7 @@ class _NewsDetailsScreen extends BaseState<NewsDetailsScreen> {
                         ));
                   },
                   child: Container(
-                    margin: EdgeInsets.fromLTRB(16, 8, 16, 8),
+                    margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
                     decoration: BoxDecoration(
                         color: white.withOpacity(0.3),
                         borderRadius: BorderRadius.circular(20),
@@ -159,22 +159,45 @@ class _NewsDetailsScreen extends BaseState<NewsDetailsScreen> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.fromLTRB(16, 8, 16, 8),
-                  child: Text(postDetailsData.title.toString(), style: TextStyle(color: white, fontSize: 20, fontWeight: FontWeight.w600, fontFamily: roboto)),
-                ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(16, 8, 16, 8),
-                  child: Text("On " + postDetailsData.saveTimestamp.toString(), style: TextStyle(color: white, fontSize: 18, fontWeight: FontWeight.w600, fontFamily: roboto)),
-                ),
-                Container(
                   margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+                  child: Text(postDetailsData.title.toString(), style: const TextStyle(color: white, fontSize: 22, fontWeight: FontWeight.w500, fontFamily: roboto)),
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 16),
+                  child: Row(
+                    children: [
+                      Text(
+                        postDetailsData.location.toString(),
+                        style: TextStyle(fontSize: 12, fontFamily: roboto, fontWeight: FontWeight.w400, color: lightGray),
+                      ),
+                      postDetailsData.location.toString().isNotEmpty ? Container(
+                        width: 6,
+                      ) : Container(),
+                      postDetailsData.location.toString().isNotEmpty ? Image.asset(
+                        "assets/images/ic_placeholder.png",
+                        width: 4,
+                        height: 4,
+                        color: lightGray,
+                      ) : Container(),
+                      postDetailsData.location.toString().isNotEmpty ?  Container(
+                        width: 6,
+                      ) : Container(),
+                      Text(
+                        postDetailsData.saveTimestamp.toString(),
+                        style: TextStyle(fontSize: 12, fontFamily: roboto, fontWeight: FontWeight.w400, color: lightGray),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.fromLTRB(16, 22, 16, 8),
                   child: HtmlWidget(postDetailsData.description.toString(),textStyle: const TextStyle(height: 1.5, color: white, fontSize: 16, fontWeight: FontWeight.w500, fontFamily: roboto)),
                 ),
                 Container(
                   margin: const EdgeInsets.fromLTRB(12, 6, 12, 0),
                   child: const Text(
                     "Related News",
-                    style: TextStyle(fontFamily: roboto, fontSize: 17, color: white, fontWeight: FontWeight.w600),
+                    style: TextStyle(fontFamily: roboto, fontSize: 17, color: white, fontWeight: FontWeight.w800),
                   ),
                 ),
                 postDetailsData.reatedPosts!.isNotEmpty
@@ -219,10 +242,10 @@ class _NewsDetailsScreen extends BaseState<NewsDetailsScreen> {
                                               children: [
                                                 Text(postDetailsData.reatedPosts![index].title.toString(),
                                                     overflow: TextOverflow.clip,
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         overflow: TextOverflow.clip,
                                                         color: white,
-                                                        fontWeight: FontWeight.w400,
+                                                        fontWeight: FontWeight.w500,
                                                         fontSize: 16,
                                                         fontFamily: roboto))
                                               ],
@@ -246,7 +269,7 @@ class _NewsDetailsScreen extends BaseState<NewsDetailsScreen> {
                                       children: [
                                         Text(
                                           postDetailsData.reatedPosts![index].location.toString(),
-                                          style: TextStyle(fontSize: 12, fontFamily: roboto, fontWeight: FontWeight.w400, color: lightGray),
+                                          style: const TextStyle(fontSize: 12, fontFamily: roboto, fontWeight: FontWeight.w400, color: lightGray),
                                         ),
                                         Container(
                                           width: 6,
@@ -262,7 +285,7 @@ class _NewsDetailsScreen extends BaseState<NewsDetailsScreen> {
                                         ),
                                         Text(
                                           postDetailsData.reatedPosts![index].saveTimestamp.toString(),
-                                          style: TextStyle(fontSize: 12, fontFamily: roboto, fontWeight: FontWeight.w400, color: lightGray),
+                                          style: const TextStyle(fontSize: 12, fontFamily: roboto, fontWeight: FontWeight.w400, color: lightGray),
                                         ),
                                         const Spacer(),
                                         GestureDetector(
@@ -285,7 +308,7 @@ class _NewsDetailsScreen extends BaseState<NewsDetailsScreen> {
                                         Text(
                                           postDetailsData.reatedPosts![index].sharesCount.toString(),
                                           textAlign: TextAlign.center,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 14, fontWeight: FontWeight.w400, fontFamily: roboto, color: white),
                                         ),
                                         Container(

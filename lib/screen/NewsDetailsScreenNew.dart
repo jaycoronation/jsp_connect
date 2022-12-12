@@ -151,14 +151,14 @@ class _NewsDetailsScreen extends BaseState<NewsDetailsScreenNew> {
                 ),
                 Container(
                   margin: EdgeInsets.fromLTRB(16, 8, 16, 8),
-                  child: Text(post.title.toString(), style: TextStyle(color: white, fontSize: 20, fontWeight: FontWeight.w600, fontFamily: roboto)),
+                  child: Text(post.title.toString(), style: TextStyle(color: white, fontSize: 22, fontWeight: FontWeight.w500, fontFamily: roboto)),
                 ),
                 Container(
                   margin: EdgeInsets.fromLTRB(16, 8, 16, 8),
-                  child: Text("On " + post.saveTimestamp.toString(), style: TextStyle(color: white, fontSize: 18, fontWeight: FontWeight.w600, fontFamily: roboto)),
+                  child: Text(post.saveTimestamp.toString(), style: TextStyle(color: white, fontSize: 12, fontWeight: FontWeight.w500, fontFamily: roboto)),
                 ),
                 Container(
-                  margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+                  margin: const EdgeInsets.fromLTRB(16, 22, 16, 8),
                   child: HtmlWidget(post.description.toString(),textStyle: const TextStyle(height: 1.5, color: white, fontSize: 16, fontWeight: FontWeight.w500, fontFamily: roboto)),
                 ),
               ],

@@ -64,7 +64,7 @@ class _AboutScreen extends BaseState<AboutScreen> {
                      Container(
                          decoration: const BoxDecoration(
                            image: DecorationImage(
-                               image: NetworkImage("https://res.cloudinary.com/dliifke2y/image/upload/v1669291653/Naveen%20Jindal/Naveen_Jindal_11_dw3zi4.jpg"),
+                               image: NetworkImage("https://res.cloudinary.com/dliifke2y/image/upload/v1670859361/Naveen%20Jindal/Copy_of_Awantipora_njqbjd.jpg"),
                                fit: BoxFit.cover
                            )
                          ),
@@ -123,8 +123,8 @@ class _AboutScreen extends BaseState<AboutScreen> {
                                    ],
                                  ),
                                ),
-                               Container(
-                                 height: MediaQuery.of(context).size.height / 2.5,
+                               SizedBox(
+                                 height: MediaQuery.of(context).size.height / 2.1,
                                  width: MediaQuery.of(context).size.width,
                                ),
                                Container(
@@ -175,9 +175,9 @@ class _AboutScreen extends BaseState<AboutScreen> {
                                      ),
                                      Container(
                                        margin: const EdgeInsets.only(left: 14, right: 14,top: 14,bottom: 18),
-                                       child:  Text(
+                                       child:  const Text(
                                          "A man of myriad talents, Naveen stands out for his  senes of commitment, responsibility, dedicatation, honesty, integirty and sheer passion in all his undertaking.",
-                                         style: const TextStyle(fontWeight: FontWeight.w900, color: white, fontSize: 20, fontFamily: roboto),
+                                         style: TextStyle(fontWeight: FontWeight.w500, color: white, fontSize: 20, fontFamily: roboto),
                                        ),
                                      ),
                                      Container(
@@ -206,7 +206,7 @@ class _AboutScreen extends BaseState<AboutScreen> {
                                              return Container(
                                                height: MediaQuery.of(context).size.height * 0.88,
                                                color: lightblack,
-                                               padding: EdgeInsets.all(12),
+                                               padding: const EdgeInsets.all(12),
                                                child: SingleChildScrollView(
                                                  child: Column(
                                                    mainAxisAlignment: MainAxisAlignment.start,
@@ -229,9 +229,9 @@ class _AboutScreen extends BaseState<AboutScreen> {
                                                          ),
                                                        ],
                                                      ),
-                                                     const Text('Biography',style: TextStyle(color: white,fontWeight: FontWeight.w600,fontSize: 16)),
+                                                     const Text('Biography',style: TextStyle(color: white,fontWeight: FontWeight.w600,fontSize: 20,fontFamily: roboto)),
                                                      Container(height: 8,),
-                                                     Text(bio,style: TextStyle(color: white,fontWeight: FontWeight.w400,fontSize: 14)),
+                                                     Text(bio,style: const TextStyle(color: white,fontWeight: FontWeight.w400,fontSize: 16,fontFamily: roboto)),
                                                    ],
                                                  ),
                                                ),
@@ -240,7 +240,7 @@ class _AboutScreen extends BaseState<AboutScreen> {
                                          );
                                        },
                                        child: Container(
-                                         margin: EdgeInsets.only(bottom: 12,left: 12),
+                                         margin: const EdgeInsets.only(bottom: 12,left: 12),
                                          decoration: BoxDecoration(
                                            borderRadius: BorderRadius.circular(18),
                                            color: bgMain.withOpacity(0.8),
@@ -258,7 +258,7 @@ class _AboutScreen extends BaseState<AboutScreen> {
                        ),
                      ),
                      Container(
-                       margin: EdgeInsets.fromLTRB(12, 12, 12, 22),
+                       margin: const EdgeInsets.fromLTRB(12, 0, 12, 22),
                        height: 250,
                        width: MediaQuery.of(context).size.width,
                        child: ListView.builder(

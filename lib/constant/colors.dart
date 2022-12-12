@@ -6,7 +6,10 @@ const String slik = "Gilroy";
 const String aileron = "Gilroy";
 const String gilroy = "Gilroy";
 const String roboto = "Gilroy";
+const String robotoFinal = "Roboto";
 const String nj = "Boelan Sabit Demo";
+
+const titleFont = FontWeight.w500;
 
 var bottomWidgetKey = GlobalKey<State<BottomNavigationBar>>();
 bool isHomeReload = false;

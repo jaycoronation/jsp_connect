@@ -135,11 +135,33 @@ class _BlogDetailsScreen extends BaseState<BlogDetailsScreen> {
                 Container(
                   margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
                   child: Text(post.title.toString(),
-                      style: const TextStyle(color: white, fontSize: 20, fontWeight: FontWeight.w600, fontFamily: roboto)),
+                      style: const TextStyle(color: white, fontSize: 22, fontWeight: titleFont, fontFamily: aileron)),
                 ),
                 Container(
-                  margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                  child: HtmlWidget(post.description.toString(),textStyle: const TextStyle(height: 1.5, color: white, fontSize: 16, fontWeight: FontWeight.w500, fontFamily: roboto)),
+                  margin: EdgeInsets.only(left: 16),
+                  child: Row(
+                    children: [
+                      Text(post.location.toString(), style: TextStyle(fontWeight: FontWeight.w400, fontFamily: aileron, fontSize: 12, color: lightGray)),
+                      post.location.toString().isNotEmpty ? Container(
+                        width: 6,
+                        height: 6,
+                        margin: const EdgeInsets.only(left: 6,right: 6),
+                        decoration: const BoxDecoration(
+                          color: lightGray,
+                          shape: BoxShape.circle,
+                        ),
+                      ) : Container(),
+                      Text(post.saveTimestamp.toString(), style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontFamily: aileron, fontSize: 12,
+                          color: white)),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.fromLTRB(16, 22, 16, 8),
+                  child: HtmlWidget(post.description.toString(),
+                      textStyle: const TextStyle(height: 1.5, color: white, fontSize: 16, fontWeight: FontWeight.w400, fontFamily: robotoFinal)),
                 ),
               ],
             ),

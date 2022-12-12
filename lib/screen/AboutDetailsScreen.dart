@@ -53,7 +53,7 @@ class _AboutDetailsScreen extends BaseState<AboutDetailsScreen> {
                     height: 65,
                     margin: const EdgeInsets.only(left: 5),
                     child: Text(
-                      getSet.title,
+                      "",
                       style: const TextStyle(
                           fontWeight: FontWeight.w600,
                           color: white,
@@ -84,11 +84,11 @@ class _AboutDetailsScreen extends BaseState<AboutDetailsScreen> {
                 ),
                 Container(
                   margin: EdgeInsets.fromLTRB(16, 8, 16, 8),
-                  child: Text(getSet.title, style: TextStyle(color: white,fontSize: 20,fontWeight: FontWeight.w600,fontFamily: roboto)),
+                  child: Text(getSet.title, style: TextStyle(color: white,fontSize: 22,fontWeight: FontWeight.w500,fontFamily: roboto)),
                 ),
                 Container(
                   margin: EdgeInsets.fromLTRB(16, 8, 16, 8),
-                  child: Text(getSet.description, style: TextStyle(height:1.5,color: white,fontSize: 16,fontWeight: FontWeight.w500,fontFamily: roboto)),
+                  child: Text(getSet.description, style: TextStyle(height:1.5,color: white,fontSize: 16,fontWeight: FontWeight.w400,fontFamily: roboto)),
                 ),
               ],
             ),

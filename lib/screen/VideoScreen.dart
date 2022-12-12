@@ -25,6 +25,10 @@ class _VideoScreen extends BaseState<VideoScreen> {
   bool _isLoading = false;
   var listVideo = List<PostsData>.empty(growable: true);
 
+  final Shader linearGradient = const LinearGradient(
+    colors: <Color>[Color(0xffFFFFFF), Color(0xffaaa9a3)],
+  ).createShader(const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));
+
   @override
   void initState() {
     if (isOnline) {
@@ -171,9 +175,9 @@ class _VideoScreen extends BaseState<VideoScreen> {
                                                 margin: const EdgeInsets.only(top: 14, left: 22, right: 10),
                                                 child: Text(listVideo[index].title.toString(),
                                                     overflow: TextOverflow.clip,
-                                                    style: const TextStyle(
-                                                        color: white,
-                                                        fontWeight: FontWeight.w400,
+                                                    style: TextStyle(
+                                                        foreground: Paint()..shader = linearGradient,
+                                                        fontWeight: titleFont,
                                                         fontFamily: gilroy,
                                                         fontSize: 16,
                                                         overflow: TextOverflow.clip))),
@@ -188,12 +192,26 @@ class _VideoScreen extends BaseState<VideoScreen> {
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
-                                                  Container(
-                                                    alignment: Alignment.bottomRight,
+                                                  Padding(
                                                     padding: const EdgeInsets.only(top: 6, bottom: 6, left: 10, right: 10),
-                                                    child: Text(listVideo[index].saveTimestamp.toString(),
-                                                        style: const TextStyle(
-                                                            fontWeight: FontWeight.w500, fontFamily: aileron, fontSize: 12, color: lightGray)),
+                                                    child: Row(
+                                                      children: [
+                                                        Text(listVideo[index].location.toString(), style: const TextStyle(fontWeight: FontWeight.w500, fontFamily: aileron, fontSize: 12, color: lightGray)),
+                                                        listVideo[index].location.toString().isNotEmpty ? Container(
+                                                          width: 6,
+                                                          height: 6,
+                                                          margin: const EdgeInsets.only(left: 6,right: 6),
+                                                          decoration: const BoxDecoration(
+                                                            color: lightGray,
+                                                            shape: BoxShape.circle,
+                                                          ),
+                                                        ) : Container(),
+                                                        Text(listVideo[index].saveTimestamp.toString(), style: const TextStyle(
+                                                            fontWeight: FontWeight.w500,
+                                                            fontFamily: aileron, fontSize: 12,
+                                                            color: lightGray)),
+                                                      ],
+                                                    ),
                                                   ),
                                                   Container(
                                                     alignment: Alignment.bottomRight,
@@ -224,7 +242,7 @@ class _VideoScreen extends BaseState<VideoScreen> {
                                                         Text(
                                                           listVideo[index].sharesCount.toString(),
                                                           textAlign: TextAlign.center,
-                                                          style: TextStyle(
+                                                          style: const TextStyle(
                                                               fontSize: 14, fontWeight: FontWeight.w400, fontFamily: roboto, color: white),
                                                         ),
                                                         /* GestureDetector(
