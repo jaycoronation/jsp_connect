@@ -23,3 +23,4 @@ String aboutApi = "about.json";
 String blogApi = "blog.json";
 String socialApi = "social.json";
 String samparkApi = "sampark.json";
+String leadershipApi = "leadership.json";

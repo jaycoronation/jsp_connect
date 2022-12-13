@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
 import 'package:jspl_connect/screen/AboutJSPLScreen.dart';
+import 'package:jspl_connect/screen/LeadershipScreen.dart';
 import 'package:jspl_connect/screen/SamparkScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../constant/colors.dart';
@@ -129,6 +130,7 @@ class _NavigationDrawerScreen extends BaseState<NavigationDrawerScreen> {
                                   ),
                                 ),
                               ),
+
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: GestureDetector(
@@ -173,6 +175,18 @@ class _NavigationDrawerScreen extends BaseState<NavigationDrawerScreen> {
                                   },
                                   child: const Text(
                                     "Suggestions",
+                                    style: TextStyle(fontFamily: gilroy, fontSize: 18, color: white, fontWeight: FontWeight.w600),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => const LeadershipScreen()));
+                                  },
+                                  child: const Text(
+                                    "Our Leadership",
                                     style: TextStyle(fontFamily: gilroy, fontSize: 18, color: white, fontWeight: FontWeight.w600),
                                   ),
                                 ),
