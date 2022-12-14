@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
 import 'package:jspl_connect/screen/AboutJSPLScreen.dart';
 import 'package:jspl_connect/screen/LeadershipScreen.dart';
-import 'package:jspl_connect/screen/SamparkScreen.dart';
+import 'package:jspl_connect/screen/MagazineListScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../constant/colors.dart';
 import '../utils/base_class.dart';
@@ -159,7 +159,7 @@ class _NavigationDrawerScreen extends BaseState<NavigationDrawerScreen> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: GestureDetector(
                                   onTap: () async {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => const SamparkScreen()));
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => const MagazineListScreen()));
                                   },
                                   child: const Text(
                                     "Magazine",

@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import '../constant/colors.dart';
 import '../utils/base_class.dart';
 import '../widget/loading.dart';
-import 'tabcontrol/DashboardScreen.dart';
 import 'tabcontrol/bottom_navigation_bar_screen.dart';
 
 class CreateNewProfileScreen extends StatefulWidget {

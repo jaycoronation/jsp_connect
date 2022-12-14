@@ -1,7 +1,7 @@
 import 'dart:convert';
 /// success : 1
 /// message : "List loaded successfully"
-/// postsList : [{"id":"3","type":"Videos","posts":[{"id":"28","title":"JSPL in solidarity with nation's fight against Corona","post_type_id":"3","post_category_id":"1","short_description":"The Covid-19 crisis is arguably the biggest challenge being faced by the country and it's people.","description":"The Covid-19 crisis is arguably the biggest challenge being faced by the country and it's people. With all the efforts that the government is making, all of us are making, we are sure we are going to come out stronger out of this. Let's Stand Together to Fight Corona. We shall overcome.... He talks about Syngas and coal gasification technologies, their economic and technical viability. And plans of JSPL to reduce debt in next 3-4 years.","user_id":"5","slug":"","location":"","meta_title":"The Covid-19 crisis is arguably","meta_keywords":"","meta_description":"","schedule_timestamp":"0","time_ago":"2 days ago","save_timestamp":"05 Dec 2022","status":"1","featured_image":"https://jsp.coronation.in/api/assets/upload/feature_image/1670223008-video2_vimage2.jpg","likes_count":0,"shares_count":0,"is_liked":0,"media":[{"post_id":28,"file_name":"1670224323_9763.mp4","file_size":"10304944","file_type":"video/mp4","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670224323_9763.mp4","alt_tag":"videos","sort_order":0,"company_id":6}]},{"id":"27","title":"VR Sharma Exclusive Interview with Metalogic PMS","post_type_id":"3","post_category_id":"1","short_description":"VR Sharma, Managing Director at Jindal Steel & Power Limited, Exclusive Interview with Monica Bachchan, Founder Metalogic PMS","description":"VR Sharma, Managing Director at Jindal Steel & Power Limited, Exclusive Interview with Monica Bachchan, Founder Metalogic PMS. He talks about Syngas and coal gasification technologies, their economic and technical viability. And plans of JSPL to reduce debt in next 3-4 years.","user_id":"5","slug":"","location":"","meta_title":"Jindal Steel & Power Limited","meta_keywords":"","meta_description":"","schedule_timestamp":"0","time_ago":"2 days ago","save_timestamp":"05 Dec 2022","status":"1","featured_image":"https://jsp.coronation.in/api/assets/upload/feature_image/1670222866-Video3_image3.jpg","likes_count":0,"shares_count":0,"is_liked":0,"media":[{"post_id":27,"file_name":"1670225924_6601.mp4","file_size":"26002813","file_type":"video/mp4","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670225924_6601.mp4","alt_tag":"videos","sort_order":0,"company_id":6}]},{"id":"26","title":"VR Sharma On Supreme Court Order Allowing JSPL To Sell Some Of Its Iron Ore In Odisha","post_type_id":"3","post_category_id":"1","short_description":"JSPL's MD VR Sharma speaks about the Supreme Court order allowing the company to sell some of its iron ore in Odisha","description":"JSPL's MD VR Sharma speaks about the Supreme Court order allowing the company to sell some of its iron ore in Odisha","user_id":"5","slug":"slug","location":"","meta_title":"JSPL's MD VR Sharma speaks about the Supreme Court","meta_keywords":"","meta_description":"","schedule_timestamp":"0","time_ago":"2 days ago","save_timestamp":"05 Dec 2022","status":"1","featured_image":"https://jsp.coronation.in/api/assets/upload/feature_image/1670222720-Video1_Image1.jpg","likes_count":0,"shares_count":0,"is_liked":0,"media":[{"post_id":26,"file_name":"1670225374_3288.mp4","file_size":"10125366","file_type":"video/mp4","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670225374_3288.mp4","alt_tag":"videos","sort_order":0,"company_id":6}]}]}]
+/// postsList : [{"id":"5","type":"Images","posts":[{"id":"93","title":"Angul Plant","post_type_id":"5","post_category_id":"","short_description":"","description":"","user_id":"","slug":"","location":"","meta_title":"","meta_keywords":"","meta_description":"","status":"1","schedule_timestamp":"01 Jan 1970","save_timestamp":"01 Jan 1970","featured_image":"https://jsp.coronation.in/api/assets/upload/feature_image/1670612299__SAM9135.jpg","likes_count":0,"shares_count":0,"bookmark_count":0,"is_liked":0,"is_bookmarked":0,"media":[{"post_id":93,"file_name":"1670611152__SAM9254.jpg","file_size":"389755","file_type":"image/jpeg","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670611152__SAM9254.jpg","alt_tag":"","sort_order":0,"company_id":6}]}]}]
 
 DashBoardDataResponse dashBoardDataResponseFromJson(String str) => DashBoardDataResponse.fromJson(json.decode(str));
 String dashBoardDataResponseToJson(DashBoardDataResponse data) => json.encode(data.toJson());
@@ -51,9 +51,9 @@ DashBoardDataResponse copyWith({  num? success,
 
 }
 
-/// id : "3"
-/// type : "Videos"
-/// posts : [{"id":"28","title":"JSPL in solidarity with nation's fight against Corona","post_type_id":"3","post_category_id":"1","short_description":"The Covid-19 crisis is arguably the biggest challenge being faced by the country and it's people.","description":"The Covid-19 crisis is arguably the biggest challenge being faced by the country and it's people. With all the efforts that the government is making, all of us are making, we are sure we are going to come out stronger out of this. Let's Stand Together to Fight Corona. We shall overcome.... He talks about Syngas and coal gasification technologies, their economic and technical viability. And plans of JSPL to reduce debt in next 3-4 years.","user_id":"5","slug":"","location":"","meta_title":"The Covid-19 crisis is arguably","meta_keywords":"","meta_description":"","schedule_timestamp":"0","time_ago":"2 days ago","save_timestamp":"05 Dec 2022","status":"1","featured_image":"https://jsp.coronation.in/api/assets/upload/feature_image/1670223008-video2_vimage2.jpg","likes_count":0,"shares_count":0,"is_liked":0,"media":[{"post_id":28,"file_name":"1670224323_9763.mp4","file_size":"10304944","file_type":"video/mp4","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670224323_9763.mp4","alt_tag":"videos","sort_order":0,"company_id":6}]},{"id":"27","title":"VR Sharma Exclusive Interview with Metalogic PMS","post_type_id":"3","post_category_id":"1","short_description":"VR Sharma, Managing Director at Jindal Steel & Power Limited, Exclusive Interview with Monica Bachchan, Founder Metalogic PMS","description":"VR Sharma, Managing Director at Jindal Steel & Power Limited, Exclusive Interview with Monica Bachchan, Founder Metalogic PMS. He talks about Syngas and coal gasification technologies, their economic and technical viability. And plans of JSPL to reduce debt in next 3-4 years.","user_id":"5","slug":"","location":"","meta_title":"Jindal Steel & Power Limited","meta_keywords":"","meta_description":"","schedule_timestamp":"0","time_ago":"2 days ago","save_timestamp":"05 Dec 2022","status":"1","featured_image":"https://jsp.coronation.in/api/assets/upload/feature_image/1670222866-Video3_image3.jpg","likes_count":0,"shares_count":0,"is_liked":0,"media":[{"post_id":27,"file_name":"1670225924_6601.mp4","file_size":"26002813","file_type":"video/mp4","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670225924_6601.mp4","alt_tag":"videos","sort_order":0,"company_id":6}]},{"id":"26","title":"VR Sharma On Supreme Court Order Allowing JSPL To Sell Some Of Its Iron Ore In Odisha","post_type_id":"3","post_category_id":"1","short_description":"JSPL's MD VR Sharma speaks about the Supreme Court order allowing the company to sell some of its iron ore in Odisha","description":"JSPL's MD VR Sharma speaks about the Supreme Court order allowing the company to sell some of its iron ore in Odisha","user_id":"5","slug":"slug","location":"","meta_title":"JSPL's MD VR Sharma speaks about the Supreme Court","meta_keywords":"","meta_description":"","schedule_timestamp":"0","time_ago":"2 days ago","save_timestamp":"05 Dec 2022","status":"1","featured_image":"https://jsp.coronation.in/api/assets/upload/feature_image/1670222720-Video1_Image1.jpg","likes_count":0,"shares_count":0,"is_liked":0,"media":[{"post_id":26,"file_name":"1670225374_3288.mp4","file_size":"10125366","file_type":"video/mp4","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670225374_3288.mp4","alt_tag":"videos","sort_order":0,"company_id":6}]}]
+/// id : "5"
+/// type : "Images"
+/// posts : [{"id":"93","title":"Angul Plant","post_type_id":"5","post_category_id":"","short_description":"","description":"","user_id":"","slug":"","location":"","meta_title":"","meta_keywords":"","meta_description":"","status":"1","schedule_timestamp":"01 Jan 1970","save_timestamp":"01 Jan 1970","featured_image":"https://jsp.coronation.in/api/assets/upload/feature_image/1670612299__SAM9135.jpg","likes_count":0,"shares_count":0,"bookmark_count":0,"is_liked":0,"is_bookmarked":0,"media":[{"post_id":93,"file_name":"1670611152__SAM9254.jpg","file_size":"389755","file_type":"image/jpeg","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670611152__SAM9254.jpg","alt_tag":"","sort_order":0,"company_id":6}]}]
 
 PostsList postsListFromJson(String str) => PostsList.fromJson(json.decode(str));
 String postsListToJson(PostsList data) => json.encode(data.toJson());
@@ -103,27 +103,28 @@ PostsList copyWith({  String? id,
 
 }
 
-/// id : "28"
-/// title : "JSPL in solidarity with nation's fight against Corona"
-/// post_type_id : "3"
-/// post_category_id : "1"
-/// short_description : "The Covid-19 crisis is arguably the biggest challenge being faced by the country and it's people."
-/// description : "The Covid-19 crisis is arguably the biggest challenge being faced by the country and it's people. With all the efforts that the government is making, all of us are making, we are sure we are going to come out stronger out of this. Let's Stand Together to Fight Corona. We shall overcome.... He talks about Syngas and coal gasification technologies, their economic and technical viability. And plans of JSPL to reduce debt in next 3-4 years."
-/// user_id : "5"
+/// id : "93"
+/// title : "Angul Plant"
+/// post_type_id : "5"
+/// post_category_id : ""
+/// short_description : ""
+/// description : ""
+/// user_id : ""
 /// slug : ""
 /// location : ""
-/// meta_title : "The Covid-19 crisis is arguably"
+/// meta_title : ""
 /// meta_keywords : ""
 /// meta_description : ""
-/// schedule_timestamp : "0"
-/// time_ago : "2 days ago"
-/// save_timestamp : "05 Dec 2022"
 /// status : "1"
-/// featured_image : "https://jsp.coronation.in/api/assets/upload/feature_image/1670223008-video2_vimage2.jpg"
+/// schedule_timestamp : "01 Jan 1970"
+/// save_timestamp : "01 Jan 1970"
+/// featured_image : "https://jsp.coronation.in/api/assets/upload/feature_image/1670612299__SAM9135.jpg"
 /// likes_count : 0
 /// shares_count : 0
+/// bookmark_count : 0
 /// is_liked : 0
-/// media : [{"post_id":28,"file_name":"1670224323_9763.mp4","file_size":"10304944","file_type":"video/mp4","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670224323_9763.mp4","alt_tag":"videos","sort_order":0,"company_id":6}]
+/// is_bookmarked : 0
+/// media : [{"post_id":93,"file_name":"1670611152__SAM9254.jpg","file_size":"389755","file_type":"image/jpeg","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670611152__SAM9254.jpg","alt_tag":"","sort_order":0,"company_id":6}]
 
 Posts postsFromJson(String str) => Posts.fromJson(json.decode(str));
 String postsToJson(Posts data) => json.encode(data.toJson());
@@ -141,14 +142,15 @@ class Posts {
       String? metaTitle, 
       String? metaKeywords, 
       String? metaDescription, 
-      String? scheduleTimestamp, 
-      String? timeAgo, 
-      String? saveTimestamp, 
       String? status, 
+      String? scheduleTimestamp, 
+      String? saveTimestamp, 
       String? featuredImage, 
       num? likesCount, 
       num? sharesCount, 
+      num? bookmarkCount, 
       num? isLiked, 
+      num? isBookmarked, 
       List<Media>? media,}){
     _id = id;
     _title = title;
@@ -162,14 +164,15 @@ class Posts {
     _metaTitle = metaTitle;
     _metaKeywords = metaKeywords;
     _metaDescription = metaDescription;
-    _scheduleTimestamp = scheduleTimestamp;
-    _timeAgo = timeAgo;
-    _saveTimestamp = saveTimestamp;
     _status = status;
+    _scheduleTimestamp = scheduleTimestamp;
+    _saveTimestamp = saveTimestamp;
     _featuredImage = featuredImage;
     _likesCount = likesCount;
     _sharesCount = sharesCount;
+    _bookmarkCount = bookmarkCount;
     _isLiked = isLiked;
+    _isBookmarked = isBookmarked;
     _media = media;
 }
 
@@ -186,14 +189,15 @@ class Posts {
     _metaTitle = json['meta_title'];
     _metaKeywords = json['meta_keywords'];
     _metaDescription = json['meta_description'];
-    _scheduleTimestamp = json['schedule_timestamp'];
-    _timeAgo = json['time_ago'];
-    _saveTimestamp = json['save_timestamp'];
     _status = json['status'];
+    _scheduleTimestamp = json['schedule_timestamp'];
+    _saveTimestamp = json['save_timestamp'];
     _featuredImage = json['featured_image'];
     _likesCount = json['likes_count'];
     _sharesCount = json['shares_count'];
+    _bookmarkCount = json['bookmark_count'];
     _isLiked = json['is_liked'];
+    _isBookmarked = json['is_bookmarked'];
     if (json['media'] != null) {
       _media = [];
       json['media'].forEach((v) {
@@ -213,14 +217,15 @@ class Posts {
   String? _metaTitle;
   String? _metaKeywords;
   String? _metaDescription;
-  String? _scheduleTimestamp;
-  String? _timeAgo;
-  String? _saveTimestamp;
   String? _status;
+  String? _scheduleTimestamp;
+  String? _saveTimestamp;
   String? _featuredImage;
   num? _likesCount;
   num? _sharesCount;
+  num? _bookmarkCount;
   num? _isLiked;
+  num? _isBookmarked;
   List<Media>? _media;
 Posts copyWith({  String? id,
   String? title,
@@ -234,14 +239,15 @@ Posts copyWith({  String? id,
   String? metaTitle,
   String? metaKeywords,
   String? metaDescription,
-  String? scheduleTimestamp,
-  String? timeAgo,
-  String? saveTimestamp,
   String? status,
+  String? scheduleTimestamp,
+  String? saveTimestamp,
   String? featuredImage,
   num? likesCount,
   num? sharesCount,
+  num? bookmarkCount,
   num? isLiked,
+  num? isBookmarked,
   List<Media>? media,
 }) => Posts(  id: id ?? _id,
   title: title ?? _title,
@@ -255,14 +261,15 @@ Posts copyWith({  String? id,
   metaTitle: metaTitle ?? _metaTitle,
   metaKeywords: metaKeywords ?? _metaKeywords,
   metaDescription: metaDescription ?? _metaDescription,
-  scheduleTimestamp: scheduleTimestamp ?? _scheduleTimestamp,
-  timeAgo: timeAgo ?? _timeAgo,
-  saveTimestamp: saveTimestamp ?? _saveTimestamp,
   status: status ?? _status,
+  scheduleTimestamp: scheduleTimestamp ?? _scheduleTimestamp,
+  saveTimestamp: saveTimestamp ?? _saveTimestamp,
   featuredImage: featuredImage ?? _featuredImage,
   likesCount: likesCount ?? _likesCount,
   sharesCount: sharesCount ?? _sharesCount,
+  bookmarkCount: bookmarkCount ?? _bookmarkCount,
   isLiked: isLiked ?? _isLiked,
+  isBookmarked: isBookmarked ?? _isBookmarked,
   media: media ?? _media,
 );
   String? get id => _id;
@@ -277,18 +284,27 @@ Posts copyWith({  String? id,
   String? get metaTitle => _metaTitle;
   String? get metaKeywords => _metaKeywords;
   String? get metaDescription => _metaDescription;
-  String? get scheduleTimestamp => _scheduleTimestamp;
-  String? get timeAgo => _timeAgo;
-  String? get saveTimestamp => _saveTimestamp;
   String? get status => _status;
+  String? get scheduleTimestamp => _scheduleTimestamp;
+  String? get saveTimestamp => _saveTimestamp;
   String? get featuredImage => _featuredImage;
   num? get likesCount => _likesCount;
   num? get sharesCount => _sharesCount;
+  num? get bookmarkCount => _bookmarkCount;
   num? get isLiked => _isLiked;
+  num? get isBookmarked => _isBookmarked;
   List<Media>? get media => _media;
 
   set setIsLikeMain(num value) {
     _isLiked = value;
+  }
+
+  set setSharesCount(num value) {
+    _sharesCount = value;
+  }
+
+  set setIsBookmarked(num value) {
+    _isBookmarked = value;
   }
 
   Map<String, dynamic> toJson() {
@@ -305,14 +321,15 @@ Posts copyWith({  String? id,
     map['meta_title'] = _metaTitle;
     map['meta_keywords'] = _metaKeywords;
     map['meta_description'] = _metaDescription;
-    map['schedule_timestamp'] = _scheduleTimestamp;
-    map['time_ago'] = _timeAgo;
-    map['save_timestamp'] = _saveTimestamp;
     map['status'] = _status;
+    map['schedule_timestamp'] = _scheduleTimestamp;
+    map['save_timestamp'] = _saveTimestamp;
     map['featured_image'] = _featuredImage;
     map['likes_count'] = _likesCount;
     map['shares_count'] = _sharesCount;
+    map['bookmark_count'] = _bookmarkCount;
     map['is_liked'] = _isLiked;
+    map['is_bookmarked'] = _isBookmarked;
     if (_media != null) {
       map['media'] = _media?.map((v) => v.toJson()).toList();
     }
@@ -321,13 +338,13 @@ Posts copyWith({  String? id,
 
 }
 
-/// post_id : 28
-/// file_name : "1670224323_9763.mp4"
-/// file_size : "10304944"
-/// file_type : "video/mp4"
+/// post_id : 93
+/// file_name : "1670611152__SAM9254.jpg"
+/// file_size : "389755"
+/// file_type : "image/jpeg"
 /// path : "assets/upload/posts/2022/12/"
-/// media : "https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670224323_9763.mp4"
-/// alt_tag : "videos"
+/// media : "https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670611152__SAM9254.jpg"
+/// alt_tag : ""
 /// sort_order : 0
 /// company_id : 6
 

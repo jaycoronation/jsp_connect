@@ -2,13 +2,14 @@ import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:jspl_connect/constant/colors.dart';
 import 'package:jspl_connect/model/LeadershipResponseModel.dart';
 import 'package:jspl_connect/screen/LeadershipDetailsScreen.dart';
 import 'package:pretty_http_logger/pretty_http_logger.dart';
-
 import '../constant/api_end_point.dart';
+import '../model/LeadershipListResponse.dart';
 import '../utils/app_utils.dart';
 import '../utils/base_class.dart';
 
@@ -22,11 +23,18 @@ class LeadershipScreen extends StatefulWidget {
 
 class _LeadershipScreen extends BaseState<LeadershipScreen> {
   bool _isLoading = false;
+  var listLeadership = List<PostData>.empty(growable: true);
   List<KeyManagment> listKeyManagement = [];
   List<KeyManagment> listBoardOfDirectors = [];
 
   @override
   void initState() {
+    /* if (isOnline) {
+      getListData(true);
+    } else {
+      noInterNet(context);
+    }*/
+
     if (isOnline) {
       leadershipAPI();
     } else {
@@ -34,6 +42,7 @@ class _LeadershipScreen extends BaseState<LeadershipScreen> {
     }
     super.initState();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -302,5 +311,42 @@ class _LeadershipScreen extends BaseState<LeadershipScreen> {
         _isLoading = false;
       });
     }
+  }
+
+  getListData() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+      HttpLogger(logLevel: LogLevel.BODY),
+    ]);
+
+    final url = Uri.parse(API_URL + leadershipList);
+    Map<String, String> jsonBody = {
+      'from_app': FROM_APP,
+      'user_id': sessionManager.getUserId().toString(),
+    };
+    final response = await http.post(url, body: jsonBody, headers: {"Access-Token": sessionManager.getAccessToken().toString().trim()});
+
+    final statusCode = response.statusCode;
+    final body = response.body;
+    Map<String, dynamic> apiResponse = jsonDecode(body);
+    var dataResponse = LeadershipListResponse.fromJson(apiResponse);
+
+    if (statusCode == 200 && dataResponse.success == 1) {
+      if (dataResponse.postData != null && dataResponse.postData!.isNotEmpty) {
+        if (listLeadership.isNotEmpty) {
+          listLeadership = [];
+        }
+        listLeadership.addAll(dataResponse.postData!);
+      }
+    } else {
+      showSnackBar(dataResponse.message, context);
+    }
+
+    setState(() {
+      _isLoading = false;
+    });
   }
 }

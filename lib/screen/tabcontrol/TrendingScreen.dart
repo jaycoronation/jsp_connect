@@ -10,6 +10,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../constant/api_end_point.dart';
 import '../../constant/colors.dart';
+import '../../model/CommanResponse.dart';
 import '../../model/DashBoardDataResponse.dart';
 import '../../model/SocialResponseModel.dart';
 import '../../utils/app_utils.dart';
@@ -17,7 +18,8 @@ import '../../utils/base_class.dart';
 import '../../widget/loading.dart';
 import '../NavigationDrawerScreen.dart';
 import '../NewsDetailsScreen.dart';
-import '../NewsDetailsScreenNew.dart';
+import '../EventDetailsScreen.dart';
+import '../NotificationListScreen.dart';
 import '../VideoDetailsPage.dart';
 import 'LiveScreen.dart';
 
@@ -259,6 +261,18 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
               } else {
                 isClicked = isClicked + 1;
               }
+            },
+            child: Container(
+              width: 50,
+              height: 50,
+              alignment: Alignment.center,
+              child: Image.asset('assets/images/notification_white.png', height: 22, width: 22, color: Colors.yellow),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => NotificationListScreen()));
             },
             child: Container(
               width: 50,
@@ -709,16 +723,8 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                             RichText(
                               text: const TextSpan(
                                 children: <TextSpan>[
-                                  TextSpan(
-                                    text: 'S',
-                                    style: TextStyle(fontFamily: roboto, fontSize: 20, color: yellow, fontWeight: FontWeight.w900),
-                                  ),
-                                  TextSpan(text: 'ocial', style: TextStyle(fontFamily: roboto, fontSize: 20, color: white, fontWeight: FontWeight.w900)),
-                                  TextSpan(
-                                    text: ' M',
-                                    style: TextStyle(fontFamily: roboto, fontSize: 20, color: yellow, fontWeight: FontWeight.w900),
-                                  ),
-                                  TextSpan(text: 'edia', style: TextStyle(fontFamily: roboto, fontSize: 20, color: white, fontWeight: FontWeight.w900)),
+                                  TextSpan(text: 'Social', style: TextStyle(fontFamily: roboto, fontSize: 20, color: white, fontWeight: FontWeight.w900)),
+                                  TextSpan(text: ' Media', style: TextStyle(fontFamily: roboto, fontSize: 20, color: white, fontWeight: FontWeight.w900)),
                                 ],
                               ),
                             )
@@ -914,16 +920,8 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                             RichText(
                               text: const TextSpan(
                                 children: <TextSpan>[
-                                  TextSpan(
-                                    text: 'W',
-                                    style: TextStyle(fontFamily: roboto, fontSize: 20, color: yellow, fontWeight: FontWeight.w900),
-                                  ),
-                                  TextSpan(text: "hat's", style: TextStyle(fontFamily: roboto, fontSize: 20, color: white, fontWeight: FontWeight.w900)),
-                                  TextSpan(
-                                    text: ' N',
-                                    style: TextStyle(fontFamily: roboto, fontSize: 20, color: yellow, fontWeight: FontWeight.w900),
-                                  ),
-                                  TextSpan(text: 'ew', style: TextStyle(fontFamily: roboto, fontSize: 20, color: white, fontWeight: FontWeight.w900)),
+                                  TextSpan(text: "What's", style: TextStyle(fontFamily: roboto, fontSize: 20, color: white, fontWeight: FontWeight.w900)),
+                                  TextSpan(text: ' New', style: TextStyle(fontFamily: roboto, fontSize: 20, color: white, fontWeight: FontWeight.w900)),
                                 ],
                               ),
                             )
@@ -959,21 +957,13 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                             RichText(
                               text: const TextSpan(
                                 children: <TextSpan>[
-                                  TextSpan(
-                                    text: 'E',
-                                    style: TextStyle(fontFamily: roboto, fontSize: 20, color: yellow, fontWeight: FontWeight.w900),
-                                  ),
-                                  TextSpan(text: 'vents', style: TextStyle(fontFamily: roboto, fontSize: 20, color: white, fontWeight: FontWeight.w900)),
+                                  TextSpan(text: 'Events', style: TextStyle(fontFamily: roboto, fontSize: 20, color: white, fontWeight: FontWeight.w900)),
                                   TextSpan(
                                     text: ' & ',
                                     style: TextStyle(fontFamily: roboto, fontSize: 20, color: white, fontWeight: FontWeight.w900),
                                   ),
                                   TextSpan(
-                                    text: 'E',
-                                    style: TextStyle(fontFamily: roboto, fontSize: 20, color: yellow, fontWeight: FontWeight.w900),
-                                  ),
-                                  TextSpan(
-                                      text: 'ngagements', style: TextStyle(fontFamily: roboto, fontSize: 20, color: white, fontWeight: FontWeight.w900)),
+                                      text: 'Engagements', style: TextStyle(fontFamily: roboto, fontSize: 20, color: white, fontWeight: FontWeight.w900)),
                                 ],
                               ),
                             )
@@ -987,17 +977,8 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                             physics: const ScrollPhysics(),
                             itemBuilder: (context, index) {
                               return GestureDetector(
-                                onTap: () async {
-                                  final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => NewsDetailsScreenNew(listEvents[index])));
-                                  // print("result ===== $result");
-                                  setState(() {
-                                    for (int i = 0; i < listEvents.length; i++) {
-                                      if(listEvents[i].id == result.id)
-                                      {
-                                        listEvents[i].setIsLikeMain = result.isLiked;
-                                      }
-                                    }
-                                  });
+                                onTap: () {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => EventDetailsScreen(listEvents[index].id.toString())));
                                 },
                                 child: Container(
                                   height: 300,
@@ -1103,11 +1084,7 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                             RichText(
                               text: const TextSpan(
                                 children: <TextSpan>[
-                                  TextSpan(
-                                    text: 'V',
-                                    style: TextStyle(fontFamily: roboto, fontSize: 20, color: yellow, fontWeight: FontWeight.w900),
-                                  ),
-                                  TextSpan(text: 'ideos', style: TextStyle(fontFamily: roboto, fontSize: 20, color: white, fontWeight: FontWeight.w900)),
+                                  TextSpan(text: 'Videos', style: TextStyle(fontFamily: roboto, fontSize: 20, color: white, fontWeight: FontWeight.w900)),
                                 ],
                               ),
                             )
@@ -1123,8 +1100,19 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                           physics: const ScrollPhysics(),
                           itemBuilder: (context, index) {
                             return GestureDetector(
-                              onTap: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => VideoDetailsPage(listVideos[index].id.toString())));
+                              onTap: () async {
+                                final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => VideoDetailsPage(listVideos[index].id.toString())));
+                                 print("result ===== $result");
+                                 setState(() {
+                                  var data = result.toString().split("|");
+                                  for (int i = 0; i < listVideos.length; i++) {
+                                    if(listVideos[i].id == data[0])
+                                    {
+                                      listVideos[i].setSharesCount = num.parse(data[1]);
+                                      break;
+                                    }
+                                  }
+                                });
                               },
                               child: Container(
                                 width: MediaQuery.of(context).size.width,
@@ -1187,7 +1175,19 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                                       if(listVideos[index].media![0].media.toString().isNotEmpty)
                                                       {
                                                         Share.share(listVideos[index].media![0].media.toString());
+                                                        _sharePost(listVideos[index].id.toString());
+                                                        setState(() {
+                                                          listVideos[index].setSharesCount = listVideos[index].sharesCount! + 1;
+                                                        });
                                                       }
+                                                      else
+                                                        {
+                                                          showSnackBar("Video link not found.", context);
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                      showSnackBar("Video link not found.", context);
                                                     }
                                                   },
                                                   child: Container(
@@ -1332,11 +1332,7 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                             RichText(
                               text: const TextSpan(
                                 children: <TextSpan>[
-                                  TextSpan(
-                                    text: 'N',
-                                    style: TextStyle(fontFamily: roboto, fontSize: 20, color: yellow, fontWeight: FontWeight.w900),
-                                  ),
-                                  TextSpan(text: 'ews', style: TextStyle(fontFamily: roboto, fontSize: 20, color: white, fontWeight: FontWeight.w900)),
+                                  TextSpan(text: 'News', style: TextStyle(fontFamily: roboto, fontSize: 20, color: white, fontWeight: FontWeight.w900)),
                                 ],
                               ),
                             )
@@ -1352,7 +1348,18 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                         itemBuilder: (context, index) {
                           return GestureDetector(
                             onTap: () async {
-                              await Navigator.push(context, MaterialPageRoute(builder: (context) => NewsDetailsScreen(listNews[index].id.toString())));
+                              final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => NewsDetailsScreen(listNews[index].id.toString())));
+                              print("result ===== $result");
+                              setState(() {
+                                var data = result.toString().split("|");
+                                for (int i = 0; i < listNews.length; i++) {
+                                  if(listNews[i].id == data[0])
+                                  {
+                                    listNews[i].setSharesCount = num.parse(data[1]);
+                                    break;
+                                  }
+                                }
+                              });
                             },
                             child: Container(
                               width: double.infinity,
@@ -1431,7 +1438,19 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                             if(listNews[index].media![0].media.toString().isNotEmpty)
                                             {
                                               Share.share(listNews[index].media![0].media.toString());
+                                              _sharePost(listNews[index].id.toString());
+                                              setState(() {
+                                                listNews[index].setSharesCount = listNews[index].sharesCount! + 1;
+                                              });
                                             }
+                                            else
+                                            {
+                                              showSnackBar("News link not found.", context);
+                                            }
+                                          }
+                                          else
+                                          {
+                                            showSnackBar("News link not found.", context);
                                           }
                                         },
                                         child: Container(
@@ -1558,6 +1577,35 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
     setState(() {
       _isLoading = false;
     });
+  }
+
+  _sharePost(String postId) async {
+    HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+      HttpLogger(logLevel: LogLevel.BODY),
+    ]);
+
+    final url = Uri.parse(API_URL + postMetaSave);
+    Map<String, String> jsonBody = {
+      'from_app': FROM_APP,
+      'post_id' : postId.toString(),
+      'user_id' : sessionManager.getUserId().toString(),
+      'type' : "share",
+      'comments': ""};
+
+    final response = await http.post(
+        url,
+        body: jsonBody,
+        headers: {"Access-Token": sessionManager.getAccessToken().toString().trim()});
+
+    final statusCode = response.statusCode;
+    final body = response.body;
+    Map<String, dynamic> apiResponse = jsonDecode(body);
+    var dataResponse = CommanResponse.fromJson(apiResponse);
+
+    if (statusCode == 200 && dataResponse.status == 1) {
+    } else {
+      showSnackBar(dataResponse.message, context);
+    }
   }
 }
 

@@ -1,31 +1,47 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:jspl_connect/screen/tabcontrol/bottom_navigation_bar_screen.dart';
 import 'package:pretty_http_logger/pretty_http_logger.dart';
+import 'package:share/share.dart';
 import '../constant/api_end_point.dart';
 import '../constant/colors.dart';
+import '../constant/global_context.dart';
 import '../model/CommanResponse.dart';
+import '../model/PostDetailsResponse.dart';
 import '../model/PostListResponse.dart';
 import '../utils/app_utils.dart';
 import '../utils/base_class.dart';
 import '../utils/full_screen_image_new.dart';
+import '../widget/loading.dart';
+import '../widget/no_data.dart';
 
 class MediaCoverageDetailsScreen extends StatefulWidget {
-  final PostsData post;
+  final String postId;
 
-  const MediaCoverageDetailsScreen(this.post, {Key? key}) : super(key: key);
+  const MediaCoverageDetailsScreen(this.postId, {Key? key}) : super(key: key);
 
   @override
   _NewsDetailsScreen createState() => _NewsDetailsScreen();
 }
 
 class _NewsDetailsScreen extends BaseState<MediaCoverageDetailsScreen> {
-  late final PostsData post;
+  late final PostDetails postDetailsData;
   num isLiked = 0;
+  bool _isNoData = false;
+  num isBookMark = 0;
+  num shareCount = 0;
+  late final String postId;
+  bool _isLoading = false;
+
   @override
   void initState() {
-    post = (widget as MediaCoverageDetailsScreen).post;
-    isLiked = post.isLiked!;
+    postId = (widget as MediaCoverageDetailsScreen).postId;
+    if (isOnline) {
+      _getPostDetails();
+    } else {
+      noInterNet(context);
+    }
     super.initState();
   }
 
@@ -48,8 +64,20 @@ class _NewsDetailsScreen extends BaseState<MediaCoverageDetailsScreen> {
                 children: [
                   InkWell(
                       onTap: () {
-                        post.setIsLikeMain = isLiked;
-                        Navigator.pop(context,post);
+                        if (NavigationService.notif_type.isNotEmpty)
+                        {
+                          NavigationService.notif_type = "";
+                          NavigationService.notif_post_id = "";
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (context) => const BottomNavigationBarScreen(0)),
+                                  (Route<dynamic> route) => false);
+                        }
+                        else
+                        {
+                          String data = "$postId|$shareCount";
+                          Navigator.pop(context, data);
+                        }
                       },
                       child: Container(
                         alignment: Alignment.topLeft,
@@ -74,7 +102,7 @@ class _NewsDetailsScreen extends BaseState<MediaCoverageDetailsScreen> {
               ),
             ),
             actions: [
-              GestureDetector(
+            Visibility(visible: !_isNoData,child: GestureDetector(
                 onTap: () {
                   setState(() {
                     if(isLiked == 1)
@@ -95,16 +123,60 @@ class _NewsDetailsScreen extends BaseState<MediaCoverageDetailsScreen> {
                   margin: const EdgeInsets.only(right: 8),
                   child: Image.asset(isLiked == 1 ? "assets/images/like_filled.png" : "assets/images/like.png", height: 22, width: 22,color: isLiked == 1 ? Colors.yellow : white,),
                 ),
-              ),
-              Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.all(6),
-                margin: const EdgeInsets.only(right: 8),
-                child: Image.asset('assets/images/share.png', height: 22, width: 22, color: white),
-              )
+              )),
+          Visibility(visible: !_isNoData,child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    if(isBookMark == 1)
+                    {
+                      isBookMark = 0;
+                    }
+                    else
+                    {
+                      isBookMark = 1;
+                    }
+                  });
+                  _bookmarkPost();
+                },
+                behavior: HitTestBehavior.opaque,
+                child:  Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(6),
+                  margin: const EdgeInsets.only(right: 8),
+                  child: Image.asset(isBookMark == 1 ? "assets/images/saved_fill.png" : "assets/images/saved.png", height: 22, width: 22,color: isBookMark == 1 ? Colors.yellow : white,),
+                ),
+              )),
+          Visibility(visible: !_isNoData,child: GestureDetector(
+                onTap: () {
+                  if(postDetailsData.media!.isNotEmpty)
+                  {
+                    if(postDetailsData.media![0].media.toString().isNotEmpty)
+                    {
+                      Share.share(postDetailsData.media![0].media.toString());
+                      _sharePost();
+                    }
+                    else
+                    {
+                      showSnackBar("Media Coverage link not found.", context);
+                    }
+                  }
+                  else
+                  {
+                    showSnackBar("Media Coverage link not found.", context);
+                  }
+                },
+                behavior: HitTestBehavior.opaque,
+                child: Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(6),
+                  margin: const EdgeInsets.only(right: 8),
+                  child: Image.asset('assets/images/share.png', height: 22, width: 22, color: white),
+                ),
+              )),
             ],
           ),
-          body: SingleChildScrollView(
+          body: _isLoading
+              ? const LoadingWidget() : _isNoData ? const MyNoDataWidget(msg: "No media coverage details found.") : SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,7 +184,7 @@ class _NewsDetailsScreen extends BaseState<MediaCoverageDetailsScreen> {
                 GestureDetector(
                   onTap: () {
                     List<String> listImage = [];
-                    listImage.add(post.featuredImage.toString().trim());
+                    listImage.add(postDetailsData.featuredImage.toString().trim());
                     Navigator.push(
                         context,
                         PageRouteBuilder(
@@ -139,7 +211,7 @@ class _NewsDetailsScreen extends BaseState<MediaCoverageDetailsScreen> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: FadeInImage.assetNetwork(
-                        image: post.featuredImage.toString().trim(),
+                        image: postDetailsData.featuredImage.toString().trim(),
                         fit: BoxFit.cover,
                         width: MediaQuery.of(context).size.width,
                         height: 250,
@@ -150,25 +222,78 @@ class _NewsDetailsScreen extends BaseState<MediaCoverageDetailsScreen> {
                 ),
                 Container(
                   margin: EdgeInsets.fromLTRB(16, 8, 16, 8),
-                  child: Text(post.title.toString(), style: TextStyle(color: white, fontSize: 20, fontWeight: FontWeight.w600, fontFamily: roboto)),
+                  child: Text(postDetailsData.title.toString(), style: TextStyle(color: white, fontSize: 20, fontWeight: FontWeight.w600, fontFamily: roboto)),
                 ),
                 Container(
                   margin: EdgeInsets.fromLTRB(16, 8, 16, 8),
-                  child: Text("On " + post.saveTimestamp.toString(), style: TextStyle(color: white, fontSize: 18, fontWeight: FontWeight.w600, fontFamily: roboto)),
+                  child: Text("On " + postDetailsData.saveTimestamp.toString(), style: TextStyle(color: white, fontSize: 18, fontWeight: FontWeight.w600, fontFamily: roboto)),
                 ),
                 Container(
                   margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                  child: HtmlWidget(post.description.toString(),textStyle: const TextStyle(height: 1.5, color: white, fontSize: 16, fontWeight: FontWeight.w500, fontFamily: roboto)),
+                  child: HtmlWidget(postDetailsData.description.toString(),textStyle: const TextStyle(height: 1.5, color: white, fontSize: 16, fontWeight: FontWeight.w500, fontFamily: roboto)),
                 ),
               ],
             ),
           ),
         ),
         onWillPop: () {
-          post.setIsLikeMain = isLiked;
-          Navigator.pop(context,post);
+          if (NavigationService.notif_type.isNotEmpty)
+          {
+            NavigationService.notif_type = "";
+            NavigationService.notif_post_id = "";
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                    builder: (context) => const BottomNavigationBarScreen(0)),
+                    (Route<dynamic> route) => false);
+          }
+          else
+          {
+            String data = "$postId|$shareCount";
+            Navigator.pop(context, data);
+          }
           return Future.value(true);
         });
+  }
+
+  _getPostDetails() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+      HttpLogger(logLevel: LogLevel.BODY),
+    ]);
+
+    final url = Uri.parse(API_URL + postDetails);
+    Map<String, String> jsonBody = {
+      'from_app': FROM_APP,
+      'post_id': postId.toString(),
+      'user_id': sessionManager.getUserId().toString(),
+      'type_id': "8"
+    };
+    final response = await http.post(url, body: jsonBody, headers: {"Access-Token": sessionManager.getAccessToken().toString().trim()});
+
+    final statusCode = response.statusCode;
+    final body = response.body;
+    Map<String, dynamic> apiResponse = jsonDecode(body);
+    var dataResponse = PostDetailsResponse.fromJson(apiResponse);
+
+    if (statusCode == 200 && dataResponse.success == 1) {
+      if (dataResponse.postDetails != null) {
+        postDetailsData = dataResponse.postDetails!;
+        isLiked = postDetailsData.isLiked!;
+        isBookMark = postDetailsData.isBookmarked!;
+        shareCount = postDetailsData.sharesCount!;
+      }
+    } else {
+      setState(() {
+        _isNoData = true;
+      });
+      showSnackBar(dataResponse.message, context);
+    }
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   _likePost() async {
@@ -179,7 +304,7 @@ class _NewsDetailsScreen extends BaseState<MediaCoverageDetailsScreen> {
     final url = Uri.parse(API_URL + postMetaSave);
     Map<String, String> jsonBody = {
       'from_app': FROM_APP,
-      'post_id' : post.id.toString(),
+      'post_id' : postId.toString(),
       'user_id' : sessionManager.getUserId().toString(),
       'type' : "like",
       'comments': ""};
@@ -206,6 +331,74 @@ class _NewsDetailsScreen extends BaseState<MediaCoverageDetailsScreen> {
           isLiked = 1;
         }
       });
+      showSnackBar(dataResponse.message, context);
+    }
+  }
+
+  _bookmarkPost() async {
+    HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+      HttpLogger(logLevel: LogLevel.BODY),
+    ]);
+
+    final url = Uri.parse(API_URL + postMetaSave);
+    Map<String, String> jsonBody = {
+      'from_app': FROM_APP,
+      'post_id' : postId.toString(),
+      'user_id' : sessionManager.getUserId().toString(),
+      'type' : "bookmark",
+      'comments': ""};
+    final response = await http.post(
+        url,
+        body: jsonBody,
+        headers: {"Access-Token": sessionManager.getAccessToken().toString().trim()});
+
+    final statusCode = response.statusCode;
+    final body = response.body;
+    Map<String, dynamic> apiResponse = jsonDecode(body);
+    var dataResponse = CommanResponse.fromJson(apiResponse);
+
+    if (statusCode == 200 && dataResponse.status == 1) {
+
+    } else {
+      setState(() {
+        if(isBookMark == 1)
+        {
+          isBookMark = 0;
+        }
+        else
+        {
+          isBookMark = 1;
+        }
+      });
+      showSnackBar(dataResponse.message, context);
+    }
+  }
+
+  _sharePost() async {
+    HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+      HttpLogger(logLevel: LogLevel.BODY),
+    ]);
+
+    final url = Uri.parse(API_URL + postMetaSave);
+    Map<String, String> jsonBody = {
+      'from_app': FROM_APP,
+      'post_id' : postId.toString(),
+      'user_id' : sessionManager.getUserId().toString(),
+      'type' : "share",
+      'comments': ""};
+
+    final response = await http.post(
+        url,
+        body: jsonBody,
+        headers: {"Access-Token": sessionManager.getAccessToken().toString().trim()});
+
+    final statusCode = response.statusCode;
+    final body = response.body;
+    Map<String, dynamic> apiResponse = jsonDecode(body);
+    var dataResponse = CommanResponse.fromJson(apiResponse);
+
+    if (statusCode == 200 && dataResponse.status == 1) {
+    } else {
       showSnackBar(dataResponse.message, context);
     }
   }

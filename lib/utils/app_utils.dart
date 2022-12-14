@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:share/share.dart';
 
@@ -164,7 +165,9 @@ Future<void> shareFileWithText(String text,String filePath) async {
   }
 }
 
-
+Future<void> setOrientation(List<DeviceOrientation> orientations) async {
+  SystemChrome.setPreferredOrientations(orientations);
+}
 
 /*share text content to social apps*/
 /*Future<void> shareTextContent(String title,String text,String link,String chooserTitle) async {

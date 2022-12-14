@@ -56,15 +56,6 @@ class _GalleryScreen extends BaseState<GalleryScreen> {
               post.title.toString().trim(),
               style: const TextStyle(fontWeight: FontWeight.w600, color: white, fontSize: 16),
             ),
-            actions: [
-              Container(
-                width: 32,
-                height: 32,
-                margin: const EdgeInsets.only(right: 8),
-                padding: const EdgeInsets.all(6),
-                child: Image.asset("assets/images/share.png", color: white),
-              )
-            ],
           ),
           body: _isLoading ? const LoadingWidget() : gallery(),
         ),

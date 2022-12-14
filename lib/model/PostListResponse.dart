@@ -1,7 +1,7 @@
 import 'dart:convert';
 /// success : 1
 /// message : "List loaded successfully"
-/// posts : [{"id":"37","title":"Plant Photos","post_type_id":"5","post_category_id":"1","short_description":"Plant Photos","description":"Plant Photos","user_id":"5","slug":"","location":"","meta_title":"","meta_keywords":"","meta_description":"","schedule_timestamp":"0","time_ago":"2 days ago","save_timestamp":"05 Dec 2022","status":"1","featured_image":"https://jsp.coronation.in/api/assets/upload/feature_image/1670241016-pp1.jpg","likes_count":0,"shares_count":0,"is_liked":0,"media":[{"post_id":37,"file_name":"1670240990_1707.jpg","file_size":"346724","file_type":"image/jpeg","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670240990_1707.jpg","alt_tag":"internal photos","sort_order":0,"company_id":6},{"post_id":37,"file_name":"1670240990_17071.jpg","file_size":"76382","file_type":"image/jpeg","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670240990_17071.jpg","alt_tag":"internal photos","sort_order":0,"company_id":6},{"post_id":37,"file_name":"1670240990_17072.jpg","file_size":"300297","file_type":"image/jpeg","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670240990_17072.jpg","alt_tag":"internal photos","sort_order":0,"company_id":6},{"post_id":37,"file_name":"1670240990_17073.jpg","file_size":"307040","file_type":"image/jpeg","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670240990_17073.jpg","alt_tag":"internal photos","sort_order":0,"company_id":6},{"post_id":37,"file_name":"1670240990_17074.jpg","file_size":"617490","file_type":"image/jpeg","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670240990_17074.jpg","alt_tag":"internal photos","sort_order":0,"company_id":6}]},{"id":"36","title":"Internal Photos","post_type_id":"5","post_category_id":"1","short_description":"Internal Photos","description":"Internal Photos","user_id":"5","slug":"","location":"","meta_title":"","meta_keywords":"","meta_description":"","schedule_timestamp":"0","time_ago":"2 days ago","save_timestamp":"05 Dec 2022","status":"1","featured_image":"https://jsp.coronation.in/api/assets/upload/feature_image/1670240789-ip1.jpg","likes_count":0,"shares_count":0,"is_liked":0,"media":[{"post_id":36,"file_name":"1670240815_8373.jpg","file_size":"278445","file_type":"image/jpeg","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670240815_8373.jpg","alt_tag":"internal photos","sort_order":0,"company_id":6},{"post_id":36,"file_name":"1670240815_83731.jpg","file_size":"211434","file_type":"image/jpeg","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670240815_83731.jpg","alt_tag":"internal photos","sort_order":0,"company_id":6},{"post_id":36,"file_name":"1670240815_83732.jpg","file_size":"231444","file_type":"image/jpeg","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670240815_83732.jpg","alt_tag":"internal photos","sort_order":0,"company_id":6},{"post_id":36,"file_name":"1670240815_83733.jpg","file_size":"296350","file_type":"image/jpeg","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670240815_83733.jpg","alt_tag":"internal photos","sort_order":0,"company_id":6},{"post_id":36,"file_name":"1670240815_83734.jpg","file_size":"121454","file_type":"image/jpeg","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670240815_83734.jpg","alt_tag":"internal photos","sort_order":0,"company_id":6}]},{"id":"35","title":"Awards Recognition","post_type_id":"5","post_category_id":"1","short_description":"Awards Recognition","description":"Awards Recognition","user_id":"5","slug":"","location":"","meta_title":"","meta_keywords":"","meta_description":"","schedule_timestamp":"0","time_ago":"2 days ago","save_timestamp":"05 Dec 2022","status":"1","featured_image":"https://jsp.coronation.in/api/assets/upload/feature_image/1670238690-awards_recognition.jpg","likes_count":0,"shares_count":0,"is_liked":0,"media":[{"post_id":35,"file_name":"1670237357_5179.jpg","file_size":"276232","file_type":"image/jpeg","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670237357_5179.jpg","alt_tag":"awards recognition","sort_order":0,"company_id":6},{"post_id":35,"file_name":"1670237357_51791.jpg","file_size":"77089","file_type":"image/jpeg","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670237357_51791.jpg","alt_tag":"awards recognition","sort_order":0,"company_id":6},{"post_id":35,"file_name":"1670237357_51792.jpg","file_size":"299335","file_type":"image/jpeg","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670237357_51792.jpg","alt_tag":"awards recognition","sort_order":0,"company_id":6},{"post_id":35,"file_name":"1670237357_51793.jpg","file_size":"228803","file_type":"image/jpeg","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670237357_51793.jpg","alt_tag":"awards recognition","sort_order":0,"company_id":6},{"post_id":35,"file_name":"1670237357_51794.jpg","file_size":"76401","file_type":"image/jpeg","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670237357_51794.jpg","alt_tag":"awards recognition","sort_order":0,"company_id":6}]}]
+/// posts : [{"id":"78","title":"Champions At Work- Jagat Kalyan Kumar","post_type_id":"3","post_category_id":"","short_description":"","description":"<html>\n<head>\n\t<title></title>\n</head>\n<body>\n<p>Meet Jagat Kalyan Kumar, Quality Assurance Manager at our Machinery Division in Raipur, Chhattisgarh. Passionate about technology and heavy machinery, Jagat is one of the many young engineers working tirelessly to build the nation of our dreams. He is one of our <a dir=\"auto\" href=\"https://www.youtube.com/hashtag/championsatwork\" spellcheck=\"false\">#ChampionsAtWork</a></p>\n</body>\n</html>\n","user_id":"","slug":"","location":"","meta_title":"","meta_keywords":"","meta_description":"","status":"1","schedule_timestamp":"01 Jan 1970","save_timestamp":"01 Jan 1970","featured_image":"https://jsp.coronation.in/api/assets/upload/feature_image/1670603761_Screenshot_2022-12-09_at_9.55.07_PM.png","likes_count":1,"shares_count":0,"bookmark_count":0,"is_liked":0,"is_bookmarked":0,"media":[{"post_id":78,"file_name":"1670603263_Champions_At_Work-_Jagat_Kalyan_Kumar.mp4","file_size":"20762424","file_type":"video/mp4","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670603263_Champions_At_Work-_Jagat_Kalyan_Kumar.mp4","alt_tag":"","sort_order":0,"company_id":6}]}]
 
 PostListResponse postListResponseFromJson(String str) => PostListResponse.fromJson(json.decode(str));
 String postListResponseToJson(PostListResponse data) => json.encode(data.toJson());
@@ -51,27 +51,28 @@ PostListResponse copyWith({  num? success,
 
 }
 
-/// id : "37"
-/// title : "Plant Photos"
-/// post_type_id : "5"
-/// post_category_id : "1"
-/// short_description : "Plant Photos"
-/// description : "Plant Photos"
-/// user_id : "5"
+/// id : "78"
+/// title : "Champions At Work- Jagat Kalyan Kumar"
+/// post_type_id : "3"
+/// post_category_id : ""
+/// short_description : ""
+/// description : "<html>\n<head>\n\t<title></title>\n</head>\n<body>\n<p>Meet Jagat Kalyan Kumar, Quality Assurance Manager at our Machinery Division in Raipur, Chhattisgarh. Passionate about technology and heavy machinery, Jagat is one of the many young engineers working tirelessly to build the nation of our dreams. He is one of our <a dir=\"auto\" href=\"https://www.youtube.com/hashtag/championsatwork\" spellcheck=\"false\">#ChampionsAtWork</a></p>\n</body>\n</html>\n"
+/// user_id : ""
 /// slug : ""
 /// location : ""
 /// meta_title : ""
 /// meta_keywords : ""
 /// meta_description : ""
-/// schedule_timestamp : "0"
-/// time_ago : "2 days ago"
-/// save_timestamp : "05 Dec 2022"
 /// status : "1"
-/// featured_image : "https://jsp.coronation.in/api/assets/upload/feature_image/1670241016-pp1.jpg"
-/// likes_count : 0
+/// schedule_timestamp : "01 Jan 1970"
+/// save_timestamp : "01 Jan 1970"
+/// featured_image : "https://jsp.coronation.in/api/assets/upload/feature_image/1670603761_Screenshot_2022-12-09_at_9.55.07_PM.png"
+/// likes_count : 1
 /// shares_count : 0
+/// bookmark_count : 0
 /// is_liked : 0
-/// media : [{"post_id":37,"file_name":"1670240990_1707.jpg","file_size":"346724","file_type":"image/jpeg","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670240990_1707.jpg","alt_tag":"internal photos","sort_order":0,"company_id":6},{"post_id":37,"file_name":"1670240990_17071.jpg","file_size":"76382","file_type":"image/jpeg","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670240990_17071.jpg","alt_tag":"internal photos","sort_order":0,"company_id":6},{"post_id":37,"file_name":"1670240990_17072.jpg","file_size":"300297","file_type":"image/jpeg","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670240990_17072.jpg","alt_tag":"internal photos","sort_order":0,"company_id":6},{"post_id":37,"file_name":"1670240990_17073.jpg","file_size":"307040","file_type":"image/jpeg","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670240990_17073.jpg","alt_tag":"internal photos","sort_order":0,"company_id":6},{"post_id":37,"file_name":"1670240990_17074.jpg","file_size":"617490","file_type":"image/jpeg","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670240990_17074.jpg","alt_tag":"internal photos","sort_order":0,"company_id":6}]
+/// is_bookmarked : 0
+/// media : [{"post_id":78,"file_name":"1670603263_Champions_At_Work-_Jagat_Kalyan_Kumar.mp4","file_size":"20762424","file_type":"video/mp4","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670603263_Champions_At_Work-_Jagat_Kalyan_Kumar.mp4","alt_tag":"","sort_order":0,"company_id":6}]
 
 PostsData postsFromJson(String str) => PostsData.fromJson(json.decode(str));
 String postsToJson(PostsData data) => json.encode(data.toJson());
@@ -89,14 +90,15 @@ class PostsData {
       String? metaTitle, 
       String? metaKeywords, 
       String? metaDescription, 
-      String? scheduleTimestamp, 
-      String? timeAgo, 
-      String? saveTimestamp, 
       String? status, 
+      String? scheduleTimestamp, 
+      String? saveTimestamp, 
       String? featuredImage, 
       num? likesCount, 
       num? sharesCount, 
+      num? bookmarkCount, 
       num? isLiked, 
+      num? isBookmarked, 
       List<Media>? media,}){
     _id = id;
     _title = title;
@@ -110,14 +112,15 @@ class PostsData {
     _metaTitle = metaTitle;
     _metaKeywords = metaKeywords;
     _metaDescription = metaDescription;
-    _scheduleTimestamp = scheduleTimestamp;
-    _timeAgo = timeAgo;
-    _saveTimestamp = saveTimestamp;
     _status = status;
+    _scheduleTimestamp = scheduleTimestamp;
+    _saveTimestamp = saveTimestamp;
     _featuredImage = featuredImage;
     _likesCount = likesCount;
     _sharesCount = sharesCount;
+    _bookmarkCount = bookmarkCount;
     _isLiked = isLiked;
+    _isBookmarked = isBookmarked;
     _media = media;
 }
 
@@ -134,14 +137,15 @@ class PostsData {
     _metaTitle = json['meta_title'];
     _metaKeywords = json['meta_keywords'];
     _metaDescription = json['meta_description'];
-    _scheduleTimestamp = json['schedule_timestamp'];
-    _timeAgo = json['time_ago'];
-    _saveTimestamp = json['save_timestamp'];
     _status = json['status'];
+    _scheduleTimestamp = json['schedule_timestamp'];
+    _saveTimestamp = json['save_timestamp'];
     _featuredImage = json['featured_image'];
     _likesCount = json['likes_count'];
     _sharesCount = json['shares_count'];
+    _bookmarkCount = json['bookmark_count'];
     _isLiked = json['is_liked'];
+    _isBookmarked = json['is_bookmarked'];
     if (json['media'] != null) {
       _media = [];
       json['media'].forEach((v) {
@@ -161,14 +165,15 @@ class PostsData {
   String? _metaTitle;
   String? _metaKeywords;
   String? _metaDescription;
-  String? _scheduleTimestamp;
-  String? _timeAgo;
-  String? _saveTimestamp;
   String? _status;
+  String? _scheduleTimestamp;
+  String? _saveTimestamp;
   String? _featuredImage;
   num? _likesCount;
   num? _sharesCount;
+  num? _bookmarkCount;
   num? _isLiked;
+  num? _isBookmarked;
   List<Media>? _media;
 PostsData copyWith({  String? id,
   String? title,
@@ -182,14 +187,15 @@ PostsData copyWith({  String? id,
   String? metaTitle,
   String? metaKeywords,
   String? metaDescription,
-  String? scheduleTimestamp,
-  String? timeAgo,
-  String? saveTimestamp,
   String? status,
+  String? scheduleTimestamp,
+  String? saveTimestamp,
   String? featuredImage,
   num? likesCount,
   num? sharesCount,
+  num? bookmarkCount,
   num? isLiked,
+  num? isBookmarked,
   List<Media>? media,
 }) => PostsData(  id: id ?? _id,
   title: title ?? _title,
@@ -203,14 +209,15 @@ PostsData copyWith({  String? id,
   metaTitle: metaTitle ?? _metaTitle,
   metaKeywords: metaKeywords ?? _metaKeywords,
   metaDescription: metaDescription ?? _metaDescription,
-  scheduleTimestamp: scheduleTimestamp ?? _scheduleTimestamp,
-  timeAgo: timeAgo ?? _timeAgo,
-  saveTimestamp: saveTimestamp ?? _saveTimestamp,
   status: status ?? _status,
+  scheduleTimestamp: scheduleTimestamp ?? _scheduleTimestamp,
+  saveTimestamp: saveTimestamp ?? _saveTimestamp,
   featuredImage: featuredImage ?? _featuredImage,
   likesCount: likesCount ?? _likesCount,
   sharesCount: sharesCount ?? _sharesCount,
+  bookmarkCount: bookmarkCount ?? _bookmarkCount,
   isLiked: isLiked ?? _isLiked,
+  isBookmarked: isBookmarked ?? _isBookmarked,
   media: media ?? _media,
 );
   String? get id => _id;
@@ -225,19 +232,28 @@ PostsData copyWith({  String? id,
   String? get metaTitle => _metaTitle;
   String? get metaKeywords => _metaKeywords;
   String? get metaDescription => _metaDescription;
-  String? get scheduleTimestamp => _scheduleTimestamp;
-  String? get timeAgo => _timeAgo;
-  String? get saveTimestamp => _saveTimestamp;
   String? get status => _status;
+  String? get scheduleTimestamp => _scheduleTimestamp;
+  String? get saveTimestamp => _saveTimestamp;
   String? get featuredImage => _featuredImage;
   num? get likesCount => _likesCount;
   num? get sharesCount => _sharesCount;
+  num? get bookmarkCount => _bookmarkCount;
   num? get isLiked => _isLiked;
+  num? get isBookmarked => _isBookmarked;
   List<Media>? get media => _media;
 
   set setIsLikeMain(num value) {
     _isLiked = value;
   }
+  set setIsBookmarked(num value) {
+    _isBookmarked = value;
+  }
+
+  set setSharesCount(num value) {
+    _sharesCount = value;
+  }
+
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -253,14 +269,15 @@ PostsData copyWith({  String? id,
     map['meta_title'] = _metaTitle;
     map['meta_keywords'] = _metaKeywords;
     map['meta_description'] = _metaDescription;
-    map['schedule_timestamp'] = _scheduleTimestamp;
-    map['time_ago'] = _timeAgo;
-    map['save_timestamp'] = _saveTimestamp;
     map['status'] = _status;
+    map['schedule_timestamp'] = _scheduleTimestamp;
+    map['save_timestamp'] = _saveTimestamp;
     map['featured_image'] = _featuredImage;
     map['likes_count'] = _likesCount;
     map['shares_count'] = _sharesCount;
+    map['bookmark_count'] = _bookmarkCount;
     map['is_liked'] = _isLiked;
+    map['is_bookmarked'] = _isBookmarked;
     if (_media != null) {
       map['media'] = _media?.map((v) => v.toJson()).toList();
     }
@@ -269,13 +286,13 @@ PostsData copyWith({  String? id,
 
 }
 
-/// post_id : 37
-/// file_name : "1670240990_1707.jpg"
-/// file_size : "346724"
-/// file_type : "image/jpeg"
+/// post_id : 78
+/// file_name : "1670603263_Champions_At_Work-_Jagat_Kalyan_Kumar.mp4"
+/// file_size : "20762424"
+/// file_type : "video/mp4"
 /// path : "assets/upload/posts/2022/12/"
-/// media : "https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670240990_1707.jpg"
-/// alt_tag : "internal photos"
+/// media : "https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670603263_Champions_At_Work-_Jagat_Kalyan_Kumar.mp4"
+/// alt_tag : ""
 /// sort_order : 0
 /// company_id : 6
 

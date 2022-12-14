@@ -1,6 +1,6 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:jspl_connect/screen/tabcontrol/bottom_navigation_bar_screen.dart';
 import 'package:pretty_http_logger/pretty_http_logger.dart';
@@ -9,6 +9,7 @@ import '../constant/api_end_point.dart';
 import '../constant/colors.dart';
 import '../constant/global_context.dart';
 import '../model/CommanResponse.dart';
+import '../model/DashBoardDataResponse.dart';
 import '../model/PostDetailsResponse.dart';
 import '../utils/app_utils.dart';
 import '../utils/base_class.dart';
@@ -16,27 +17,27 @@ import '../utils/full_screen_image_new.dart';
 import '../widget/loading.dart';
 import '../widget/no_data.dart';
 
-class NewsDetailsScreen extends StatefulWidget {
+class EventDetailsScreen extends StatefulWidget {
   final String postId;
 
-  const NewsDetailsScreen(this.postId, {Key? key}) : super(key: key);
+  const EventDetailsScreen(this.postId, {Key? key}) : super(key: key);
 
   @override
   _NewsDetailsScreen createState() => _NewsDetailsScreen();
 }
 
-class _NewsDetailsScreen extends BaseState<NewsDetailsScreen> {
+class _NewsDetailsScreen extends BaseState<EventDetailsScreen> {
   late final PostDetails postDetailsData;
   num isLiked = 0;
   num isBookMark = 0;
   num shareCount = 0;
-  bool _isNoData = false;
   late final String postId;
   bool _isLoading = false;
+  bool _isNoData = false;
 
   @override
   void initState() {
-    postId = (widget as NewsDetailsScreen).postId;
+    postId = (widget as EventDetailsScreen).postId;
     if (isOnline) {
       _getPostDetails();
     } else {
@@ -75,8 +76,7 @@ class _NewsDetailsScreen extends BaseState<NewsDetailsScreen> {
                         }
                         else
                         {
-                          String data = "$postId|$shareCount";
-                          Navigator.pop(context, data);
+                          Navigator.pop(context);
                         }
                       },
                       child: Container(
@@ -104,7 +104,7 @@ class _NewsDetailsScreen extends BaseState<NewsDetailsScreen> {
             actions: [
             Visibility(
             visible: !_isNoData,
-            child:GestureDetector(
+            child: GestureDetector(
                 onTap: () {
                   setState(() {
                     if(isLiked == 1)
@@ -163,13 +163,14 @@ class _NewsDetailsScreen extends BaseState<NewsDetailsScreen> {
                     }
                     else
                     {
-                      showSnackBar("News link not found.", context);
+                      showSnackBar("Event link not found.", context);
                     }
                   }
                   else
                   {
-                    showSnackBar("News link not found.", context);
+                    showSnackBar("Event link not found.", context);
                   }
+
                 },
                 behavior: HitTestBehavior.opaque,
                 child: Container(
@@ -181,8 +182,11 @@ class _NewsDetailsScreen extends BaseState<NewsDetailsScreen> {
               )),
             ],
           ),
-          body:  _isLoading
-              ? const LoadingWidget() : _isNoData ? const MyNoDataWidget(msg: "No news details found.")  : SingleChildScrollView(
+          body:_isLoading
+              ? const LoadingWidget()
+              : _isNoData
+              ? const MyNoDataWidget(msg: "No event details found.")
+              :  SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -208,7 +212,7 @@ class _NewsDetailsScreen extends BaseState<NewsDetailsScreen> {
                         ));
                   },
                   child: Container(
-                    margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+                    margin: EdgeInsets.fromLTRB(16, 8, 16, 8),
                     decoration: BoxDecoration(
                         color: white.withOpacity(0.3),
                         borderRadius: BorderRadius.circular(20),
@@ -227,185 +231,17 @@ class _NewsDetailsScreen extends BaseState<NewsDetailsScreen> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                  child: Text(postDetailsData.title.toString(), style: const TextStyle(color: white, fontSize: 22, fontWeight: FontWeight.w500, fontFamily: roboto)),
+                  margin: EdgeInsets.fromLTRB(16, 8, 16, 8),
+                  child: Text(postDetailsData.title.toString(), style: TextStyle(color: white, fontSize: 22, fontWeight: FontWeight.w500, fontFamily: roboto)),
                 ),
                 Container(
-                  margin: EdgeInsets.only(left: 16),
-                  child: Row(
-                    children: [
-                      Text(
-                        postDetailsData.location.toString(),
-                        style: TextStyle(fontSize: 12, fontFamily: roboto, fontWeight: FontWeight.w400, color: lightGray),
-                      ),
-                      postDetailsData.location.toString().isNotEmpty ? Container(
-                        width: 6,
-                      ) : Container(),
-                      postDetailsData.location.toString().isNotEmpty ? Image.asset(
-                        "assets/images/ic_placeholder.png",
-                        width: 4,
-                        height: 4,
-                        color: lightGray,
-                      ) : Container(),
-                      postDetailsData.location.toString().isNotEmpty ?  Container(
-                        width: 6,
-                      ) : Container(),
-                      Text(
-                        postDetailsData.saveTimestamp.toString(),
-                        style: TextStyle(fontSize: 12, fontFamily: roboto, fontWeight: FontWeight.w400, color: lightGray),
-                      ),
-                    ],
-                  ),
+                  margin: EdgeInsets.fromLTRB(16, 8, 16, 8),
+                  child: Text(postDetailsData.saveTimestamp.toString(), style: TextStyle(color: white, fontSize: 12, fontWeight: FontWeight.w500, fontFamily: roboto)),
                 ),
                 Container(
                   margin: const EdgeInsets.fromLTRB(16, 22, 16, 8),
                   child: HtmlWidget(postDetailsData.description.toString(),textStyle: const TextStyle(height: 1.5, color: white, fontSize: 16, fontWeight: FontWeight.w500, fontFamily: roboto)),
                 ),
-                Container(
-                  margin: const EdgeInsets.fromLTRB(12, 6, 12, 0),
-                  child: const Text(
-                    "Related News",
-                    style: TextStyle(fontFamily: roboto, fontSize: 17, color: white, fontWeight: FontWeight.w800),
-                  ),
-                ),
-                postDetailsData.reatedPosts!.isNotEmpty
-                    ? AnimationLimiter(
-                  child: ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: postDetailsData.reatedPosts!.length,
-                    itemBuilder: (context, index) {
-                      return AnimationConfiguration.staggeredList(
-                        position: index,
-                        duration: const Duration(milliseconds: 375),
-                        child: SlideAnimation(
-                          verticalOffset: 50.0,
-                          child: FadeInAnimation(
-                            child: GestureDetector(
-                              onTap: () async {
-                                await Navigator.push(context, MaterialPageRoute(builder: (context) => NewsDetailsScreen(postDetailsData.reatedPosts![index].id.toString())));
-                              },
-                              child: Container(
-                                width: double.infinity,
-                                padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
-                                margin: const EdgeInsets.only(left: 12, right: 12, top: 12),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    border: Border.all(width: 0.6, color: white.withOpacity(0.4), style: BorderStyle.solid)),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      height: 8,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                          child: Container(
-                                            margin: const EdgeInsets.only(right: 12),
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Text(postDetailsData.reatedPosts![index].title.toString(),
-                                                    overflow: TextOverflow.clip,
-                                                    style: const TextStyle(
-                                                        overflow: TextOverflow.clip,
-                                                        color: white,
-                                                        fontWeight: FontWeight.w500,
-                                                        fontSize: 16,
-                                                        fontFamily: roboto))
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 100,
-                                          height: 100,
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(20.0),
-                                            child: Image.network(postDetailsData.reatedPosts![index].featuredImage.toString(), width: 100, height: 100, fit: BoxFit.fill),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                    Container(
-                                      height: 18,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          postDetailsData.reatedPosts![index].location.toString(),
-                                          style: const TextStyle(fontSize: 12, fontFamily: roboto, fontWeight: FontWeight.w400, color: lightGray),
-                                        ),
-                                        Container(
-                                          width: 6,
-                                        ),
-                                        Image.asset(
-                                          "assets/images/ic_placeholder.png",
-                                          width: 4,
-                                          height: 4,
-                                          color: lightGray,
-                                        ),
-                                        Container(
-                                          width: 6,
-                                        ),
-                                        Text(
-                                          postDetailsData.reatedPosts![index].saveTimestamp.toString(),
-                                          style: const TextStyle(fontSize: 12, fontFamily: roboto, fontWeight: FontWeight.w400, color: lightGray),
-                                        ),
-                                        const Spacer(),
-                                        GestureDetector(
-                                          onTap: () async {
-                                            if(postDetailsData.reatedPosts![index].media!.isNotEmpty)
-                                            {
-                                              if(postDetailsData.reatedPosts![index].media![0].media.toString().isNotEmpty)
-                                              {
-                                                Share.share(postDetailsData.reatedPosts![index].media![0].media.toString());
-                                              }
-                                            }
-                                          },
-                                          child: Container(
-                                            width: 42,
-                                            height: 42,
-                                            alignment: Alignment.center,
-                                            child: Image.asset('assets/images/share.png', height: 22, width: 22, color: white),
-                                          ),
-                                        ),
-                                        Text(
-                                          postDetailsData.reatedPosts![index].sharesCount.toString(),
-                                          textAlign: TextAlign.center,
-                                          style: const TextStyle(
-                                              fontSize: 14, fontWeight: FontWeight.w400, fontFamily: roboto, color: white),
-                                        ),
-                                        Container(
-                                          width: 8,
-                                        )
-                                        /* Container(
-                                    width: 12,
-                                  ),
-                                  Image.asset(
-                                    "assets/images/ic_arrow_right_new.png",
-                                    width: 22,
-                                    height: 22,
-                                  )*/
-                                      ],
-                                    ),
-                                    Container(
-                                      height: 8,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                )
-                    : Container(),
               ],
             ),
           ),
@@ -422,8 +258,7 @@ class _NewsDetailsScreen extends BaseState<NewsDetailsScreen> {
           }
           else
           {
-            String data = "$postId|$shareCount";
-            Navigator.pop(context, data);
+            Navigator.pop(context);
           }
           return Future.value(true);
         });
@@ -443,7 +278,7 @@ class _NewsDetailsScreen extends BaseState<NewsDetailsScreen> {
       'from_app': FROM_APP,
       'post_id': postId.toString(),
       'user_id': sessionManager.getUserId().toString(),
-      'type_id': "4"
+      'type_id': "2"
     };
     final response = await http.post(url, body: jsonBody, headers: {"Access-Token": sessionManager.getAccessToken().toString().trim()});
 
@@ -579,6 +414,6 @@ class _NewsDetailsScreen extends BaseState<NewsDetailsScreen> {
 
   @override
   void castStatefulWidget() {
-    widget is NewsDetailsScreen;
+    widget is EventDetailsScreen;
   }
 }

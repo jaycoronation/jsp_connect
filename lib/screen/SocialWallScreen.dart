@@ -1,11 +1,9 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:pretty_http_logger/pretty_http_logger.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../constant/api_end_point.dart';
 import '../constant/colors.dart';
 import '../model/SocialResponseModel.dart';

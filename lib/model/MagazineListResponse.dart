@@ -295,6 +295,10 @@ Posts copyWith({  String? id,
   num? get isLiked => _isLiked;
   List<Media>? get media => _media;
 
+  set setSharesCount(num value) {
+    _sharesCount = value;
+  }
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = _id;

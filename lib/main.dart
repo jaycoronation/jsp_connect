@@ -6,33 +6,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jspl_connect/constant/colors.dart';
 import 'package:jspl_connect/push_notification/PushNotificationService.dart';
+import 'package:jspl_connect/screen/BlogDetailsScreen.dart';
+import 'package:jspl_connect/screen/EventDetailsScreen.dart';
 import 'package:jspl_connect/screen/LoginScreen.dart';
+import 'package:jspl_connect/screen/MagazineListScreen.dart';
+import 'package:jspl_connect/screen/MediaCoverageDetailsScreen.dart';
+import 'package:jspl_connect/screen/NewsDetailsScreen.dart';
+import 'package:jspl_connect/screen/VideoDetailsPage.dart';
 import 'package:jspl_connect/screen/tabcontrol/bottom_navigation_bar_screen.dart';
 import 'package:jspl_connect/utils/app_utils.dart';
 import 'package:jspl_connect/utils/session_manager_methods.dart';
 import 'constant/global_context.dart';
 import 'utils/session_manager.dart';
 
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
-  print("Handling a background message: ${message.data.toString()}");
-}
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
   await SessionManagerMethods.init();
   await PushNotificationService().setupInteractedMessage();
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  runApp(const MyApp());
   RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
   if (initialMessage != null) {
     print("@@@@@@@@ Main Dart @@@@@@@@ ${initialMessage.data}");
     NavigationService.notif_type = initialMessage.data['content_id'];
+    NavigationService.notif_post_id = initialMessage.data['post_id'];
   }
-  FirebaseMessaging.instance.requestPermission();
-  runApp(const MyApp());
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -74,22 +72,57 @@ class _MyHomePageState extends State<MyHomePage> {
       SessionManager sessionManager = SessionManager();
       isLoggedIn = sessionManager.checkIsLoggedIn() ?? false;
 
-      if(isLoggedIn)
+        if(isLoggedIn)
         {
-          if(NavigationService.notif_type == "3")
+          print("<><> NOTIF TYPE :" + NavigationService.notif_type + " <><>");
+          if(NavigationService.notif_post_id != null)
+          {
+            if(NavigationService.notif_post_id.toString().isNotEmpty)
             {
-              Timer(
-                  const Duration(seconds: 3),
-                      () => Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-                  const BottomNavigationBarScreen(2)), (Route<dynamic> route) => false));
+              if(NavigationService.notif_type == "2")
+              {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => EventDetailsScreen(NavigationService.notif_post_id.toString())));
+              }
+              else if(NavigationService.notif_type == "3")
+              {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => VideoDetailsPage(NavigationService.notif_post_id.toString())));
+              }
+              else if(NavigationService.notif_type == "4")
+              {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => NewsDetailsScreen(NavigationService.notif_post_id.toString())));
+              }
+              else if(NavigationService.notif_type == "5")
+              {
+                // for image
+              }
+              else if(NavigationService.notif_type == "6")
+              {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => BlogDetailsScreen(NavigationService.notif_post_id.toString())));
+              }
+              else if(NavigationService.notif_type == "7")
+              {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const MagazineListScreen()));
+              }
+              else if(NavigationService.notif_type == "8")
+              {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => MediaCoverageDetailsScreen(NavigationService.notif_post_id.toString())));
+              }
             }
-          else
+            else
             {
               Timer(
                   const Duration(seconds: 3),
                       () => Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
                   const BottomNavigationBarScreen(0)), (Route<dynamic> route) => false));
             }
+          }
+          else
+          {
+            Timer(
+                const Duration(seconds: 3),
+                    () => Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                const BottomNavigationBarScreen(0)), (Route<dynamic> route) => false));
+          }
         }
       else
         {
@@ -113,16 +146,9 @@ class _MyHomePageState extends State<MyHomePage> {
       statusBarBrightness: Brightness.light,
     ));
     return Container(
-      color:  white,
-      child: Center(
-        child: Column(
-         crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Image.asset("assets/images/ic_jspl_logo.png",width: 150,height: 150,)
-          ],
-        ),
-      ),
+      color: white,
+      height: MediaQuery.of(context).size.height,
+      child: Image.asset('assets/images/jspl.jpg',fit: BoxFit.cover),
     );
   }
 }

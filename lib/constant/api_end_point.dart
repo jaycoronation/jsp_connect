@@ -11,6 +11,9 @@ String postDetails = "post_details";
 String postMetaSave = "post_meta_save";
 String suggestion_save = "suggestion_save";
 String magazineList = "magazine_list";
+String leadershipList = "leadershipList";
+String notification_list = "notification_list";
+
 
 String dashboardApi = "dashbord.json";
 String videoApi = "video.json";

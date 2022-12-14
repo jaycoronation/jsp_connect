@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-
-
 import '../constant/colors.dart';
 import '../utils/app_utils.dart';
 import '../utils/base_class.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
   final String videoUrl;
-  const VideoPlayerScreen(this.videoUrl, {Key? key}) : super(key: key);
+  final String title;
+
+  const VideoPlayerScreen(this.videoUrl, this.title, {Key? key}) : super(key: key);
 
   @override
   _VideoPlayerScreenState createState() => _VideoPlayerScreenState();
 }
 
 class _VideoPlayerScreenState extends BaseState<VideoPlayerScreen> {
-
   late YoutubePlayerController _controller;
-
   late PlayerState _playerState;
   late YoutubeMetaData _videoMetaData;
   bool _isPlayerReady = false;
@@ -26,8 +24,9 @@ class _VideoPlayerScreenState extends BaseState<VideoPlayerScreen> {
   @override
   void initState() {
     super.initState();
+    print('<><> URL ' + (widget as VideoPlayerScreen).videoUrl);
     var videoId = YoutubePlayer.convertUrlToId((widget as VideoPlayerScreen).videoUrl);
-    print('this is $videoId');
+    print('<><> URL ID  $videoId');
     _controller = YoutubePlayerController(
       initialVideoId: videoId.toString(),
       flags: const YoutubePlayerFlags(
@@ -43,6 +42,7 @@ class _VideoPlayerScreenState extends BaseState<VideoPlayerScreen> {
     _videoMetaData = const YoutubeMetaData();
     _playerState = PlayerState.unknown;
   }
+
   void listener() {
     if (_isPlayerReady && mounted && !_controller.value.isFullScreen) {
       setState(() {
@@ -55,67 +55,56 @@ class _VideoPlayerScreenState extends BaseState<VideoPlayerScreen> {
   @override
   void deactivate() {
     _controller.pause();
+    _controller.dispose();
     super.deactivate();
   }
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-    ]);
     return WillPopScope(
-        child: Scaffold(
-          backgroundColor: white,
-          body: SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            child: YoutubePlayer(
-              controller: _controller,
-              showVideoProgressIndicator: true,
-              progressIndicatorColor: Colors.red,
-              topActions: <Widget>[
-                const SizedBox(width: 8.0),
-                Expanded(
-                  child: Text(
-                    _controller.metadata.title,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 18.0,
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                  ),
-                ),
-                IconButton(
-                  icon: const Icon(
-                    Icons.settings,
-                    color: Colors.white,
-                    size: 25.0,
-                  ),
-                  onPressed: () {
+        child: YoutubePlayerBuilder(
+          onExitFullScreen: () {
+            // The player forces portraitUp after exiting fullscreen. This overrides the behaviour.
+            SystemChrome.setPreferredOrientations(DeviceOrientation.values);
+          },
+          player: YoutubePlayer(
+            controller: _controller,
+            showVideoProgressIndicator: true,
+            progressIndicatorColor: Colors.blueAccent,
+            onReady: () {
+              _isPlayerReady = true;
+            },
+            onEnded: (data) {
+              showSnackBar("Video Finish", context);
+              Navigator.pop(context);
+            },
+          ),
+          builder: (context, player) => Scaffold(
+            appBar: AppBar(
+              leading: InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
                   },
-                ),
-              ],
-              onReady: () {
-                _isPlayerReady = true;
-              },
-              onEnded: (data) {
-                showSnackBar("Video Finish", context);
-                Navigator.pop(context);
-              },
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 18.0, top: 18, bottom: 18, right: 18),
+                    child: Image.asset('assets/images/ic_back_button.png', height: 16, width: 16, color: white),
+                  )),
+              title: Text(
+                (widget as VideoPlayerScreen).title,
+                style: TextStyle(fontWeight: FontWeight.w600, color: white, fontSize: 18),
+              ),
+            ),
+            body: Container(
+              color: black,
+              alignment: Alignment.center,
+              child: player,
             ),
           ),
         ),
-        onWillPop: (){
-          SystemChrome.setPreferredOrientations([
-            DeviceOrientation.portraitUp,
-            DeviceOrientation.portraitDown,
-          ]);
+        onWillPop: () {
           Navigator.pop(context);
           return Future.value(true);
-        }
-    );
+        });
   }
 
   @override
