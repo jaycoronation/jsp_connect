@@ -176,65 +176,68 @@ class _NewsDetailsScreen extends BaseState<MediaCoverageDetailsScreen> {
             ],
           ),
           body: _isLoading
-              ? const LoadingWidget() : _isNoData ? const MyNoDataWidget(msg: "No media coverage details found.") : SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    List<String> listImage = [];
-                    listImage.add(postDetailsData.featuredImage.toString().trim());
-                    Navigator.push(
-                        context,
-                        PageRouteBuilder(
-                          pageBuilder: (context, animation, secondaryAnimation) => FullScreenImageNew("", listImage, 0),
-                          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                            const begin = Offset(0.0, 1.0);
-                            const end = Offset.zero;
-                            const curve = Curves.ease;
-                            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-                            return SlideTransition(
-                              position: animation.drive(tween),
-                              child: child,
-                            );
-                          },
-                        ));
-                  },
-                  child: Container(
-                    margin: EdgeInsets.fromLTRB(16, 8, 16, 8),
-                    decoration: BoxDecoration(
-                        color: white.withOpacity(0.3),
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(width: 0.4, color: white.withOpacity(0.3), style: BorderStyle.solid)
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: FadeInImage.assetNetwork(
-                        image: postDetailsData.featuredImage.toString().trim(),
-                        fit: BoxFit.cover,
-                        width: MediaQuery.of(context).size.width,
-                        height: 250,
-                        placeholder: 'assets/images/bg_gray.jpeg',
+              ? const LoadingWidget()
+              : _isNoData
+              ? const MyNoDataWidget(msg: "No media coverage details found.")
+              : SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        List<String> listImage = [];
+                        listImage.add(postDetailsData.featuredImage.toString().trim());
+                        Navigator.push(
+                            context,
+                            PageRouteBuilder(
+                              pageBuilder: (context, animation, secondaryAnimation) => FullScreenImageNew("", listImage, 0),
+                              transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                const begin = Offset(0.0, 1.0);
+                                const end = Offset.zero;
+                                const curve = Curves.ease;
+                                var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                                return SlideTransition(
+                                  position: animation.drive(tween),
+                                  child: child,
+                                );
+                              },
+                            ));
+                      },
+                      child: Container(
+                        margin: EdgeInsets.fromLTRB(16, 8, 16, 8),
+                        decoration: BoxDecoration(
+                            color: white.withOpacity(0.3),
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(width: 0.4, color: white.withOpacity(0.3), style: BorderStyle.solid)
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: FadeInImage.assetNetwork(
+                            image: postDetailsData.featuredImage.toString().trim(),
+                            fit: BoxFit.cover,
+                            width: MediaQuery.of(context).size.width,
+                            height: 250,
+                            placeholder: 'assets/images/bg_gray.jpeg',
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(16, 8, 16, 8),
+                      child: Text(postDetailsData.title.toString(), style: TextStyle(color: white, fontSize: 22, fontWeight: FontWeight.w500, fontFamily: roboto)),
+                    ),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(16, 8, 16, 8),
+                      child: Text("On " + postDetailsData.saveTimestamp.toString(), style: TextStyle(color: white, fontSize: 16, fontWeight: FontWeight.w400, fontFamily: roboto)),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+                      child: HtmlWidget(postDetailsData.description.toString(),textStyle: const TextStyle(height: 1.5, color: white, fontSize: 16, fontWeight: FontWeight.w400, fontFamily: roboto)),
+                    ),
+                  ],
                 ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(16, 8, 16, 8),
-                  child: Text(postDetailsData.title.toString(), style: TextStyle(color: white, fontSize: 20, fontWeight: FontWeight.w600, fontFamily: roboto)),
-                ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(16, 8, 16, 8),
-                  child: Text("On " + postDetailsData.saveTimestamp.toString(), style: TextStyle(color: white, fontSize: 18, fontWeight: FontWeight.w600, fontFamily: roboto)),
-                ),
-                Container(
-                  margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                  child: HtmlWidget(postDetailsData.description.toString(),textStyle: const TextStyle(height: 1.5, color: white, fontSize: 16, fontWeight: FontWeight.w500, fontFamily: roboto)),
-                ),
-              ],
-            ),
-          ),
+              ),
         ),
         onWillPop: () {
           if (NavigationService.notif_type.isNotEmpty)

@@ -12,6 +12,7 @@ import '../constant/api_end_point.dart';
 import '../model/LeadershipListResponse.dart';
 import '../utils/app_utils.dart';
 import '../utils/base_class.dart';
+import '../widget/loading.dart';
 
 class LeadershipScreen extends StatefulWidget {
 
@@ -82,195 +83,168 @@ class _LeadershipScreen extends BaseState<LeadershipScreen> {
               ],
             ),
           ),
-          body: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(top: 12,bottom: 12),
-                    child: RichText(
-                      text: const TextSpan(
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: 'K',
-                            style: TextStyle(fontFamily: roboto, fontSize: 20, color: yellow, fontWeight: FontWeight.w900),
-                          ),
-                          TextSpan(text: 'ey', style: TextStyle(fontFamily: roboto, fontSize: 20, color: white, fontWeight: FontWeight.w900)),
-                          TextSpan(
-                            text: ' M',
-                            style: TextStyle(fontFamily: roboto, fontSize: 20, color: yellow, fontWeight: FontWeight.w900),
-                          ),
-                          TextSpan(text: 'anagment', style: TextStyle(fontFamily: roboto, fontSize: 20, color: white, fontWeight: FontWeight.w900)),
-                        ],
+          body: _isLoading
+              ? const LoadingWidget()
+              : SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(top: 12,bottom: 12),
+                        child: const Text(
+                          'Key Management',
+                          style: TextStyle(fontFamily: roboto, fontSize: 20, color: white, fontWeight: FontWeight.w900),
+                        ),
                       ),
-                    ),
-                  ),
-                  Container(
-                    height: 200,
-                    child: AnimationLimiter(
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          physics: const BouncingScrollPhysics(),
-                          primary: false,
-                          shrinkWrap: true,
-                          itemCount: listKeyManagement.length,
-                          itemBuilder: (context, index) {
-                            return AnimationConfiguration.staggeredList(
-                              position: index,
-                              duration: const Duration(milliseconds: 375),
-                              child: SlideAnimation(
-                                verticalOffset: 50.0,
-                                child: FadeInAnimation(
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => LeadershipDetailsScreen(listKeyManagement[index])));
-                                    },
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          margin:const EdgeInsets.only(left: 4,right: 4),
-                                          decoration:  BoxDecoration(
-                                              color: Colors.transparent,
-                                              borderRadius: BorderRadius.circular(4)
-                                          ),
-                                          height: 150,
-                                          width: 150,
-                                          child: ClipRRect(
-                                            borderRadius:  BorderRadius.circular(4),
-                                            child: SizedBox.fromSize(
-                                                size: const Size.fromRadius(48), // Image radius
-                                                child:
-                                                CachedNetworkImage(
-                                                  imageUrl: listKeyManagement[index].img.toString(),
-                                                  fit: BoxFit.cover,
-                                                  width: 150,
-                                                  height: 120,
-                                                  errorWidget: (context, url, error) => Image.asset('assets/images/bg_gray.jpeg', width: MediaQuery.of(context).size.width,
-                                                    height: 100,fit: BoxFit.cover,),
-                                                  placeholder: (context, url) => Image.asset('assets/images/bg_gray.jpeg', width: MediaQuery.of(context).size.width,
-                                                    height: 100,),
-                                                )
+                      SizedBox(
+                        height: 200,
+                        child: AnimationLimiter(
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              physics: const BouncingScrollPhysics(),
+                              primary: false,
+                              shrinkWrap: true,
+                              itemCount: listKeyManagement.length,
+                              itemBuilder: (context, index) {
+                                return AnimationConfiguration.staggeredList(
+                                  position: index,
+                                  duration: const Duration(milliseconds: 375),
+                                  child: SlideAnimation(
+                                    verticalOffset: 50.0,
+                                    child: FadeInAnimation(
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => LeadershipDetailsScreen(listKeyManagement[index])));
+                                        },
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              margin:const EdgeInsets.only(left: 4,right: 4),
+                                              decoration:  BoxDecoration(
+                                                  color: Colors.transparent,
+                                                  borderRadius: BorderRadius.circular(4)
+                                              ),
+                                              height: 150,
+                                              width: 130,
+                                              child: ClipRRect(
+                                                borderRadius:  BorderRadius.circular(4),
+                                                child: SizedBox.fromSize(
+                                                    size: const Size.fromRadius(48), // Image radius
+                                                    child:
+                                                    CachedNetworkImage(
+                                                      imageUrl: listKeyManagement[index].img.toString(),
+                                                      fit: BoxFit.cover,
+                                                      width: 130,
+                                                      height: 120,
+                                                      errorWidget: (context, url, error) => Image.asset('assets/images/bg_gray.jpeg', width: MediaQuery.of(context).size.width, height: 100,fit: BoxFit.cover,),
+                                                      placeholder: (context, url) => Image.asset('assets/images/bg_gray.jpeg', width: MediaQuery.of(context).size.width, height: 100,),
+                                                    )
+                                                ),
+                                              ),
                                             ),
-                                          ),
+                                            Container(
+                                              width: 130,
+                                              margin: const EdgeInsets.only(left: 12,right: 12,top: 12),
+                                              child: Column(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(listKeyManagement[index].name.toString(),style: const TextStyle(fontFamily: roboto,fontSize: 16, color: white,fontWeight: FontWeight.w500,overflow: TextOverflow.ellipsis),overflow: TextOverflow.ellipsis),
+                                                  Text(listKeyManagement[index].desgnation.toString(),style: const TextStyle(fontFamily: roboto,fontSize: 12, color: white,fontWeight: FontWeight.w400,overflow: TextOverflow.ellipsis),overflow: TextOverflow.ellipsis),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                        Container(
-                                          width: 150,
-                                          margin: const EdgeInsets.only(left: 12,right: 12,top: 12),
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text(listKeyManagement[index].name.toString(),style: TextStyle(fontFamily: roboto,fontSize: 16, color: white,fontWeight: FontWeight.w500,overflow: TextOverflow.ellipsis),overflow: TextOverflow.ellipsis),
-                                              Text(listKeyManagement[index].desgnation.toString(),style: TextStyle(fontFamily: roboto,fontSize: 12, color: white,fontWeight: FontWeight.w400,overflow: TextOverflow.ellipsis),overflow: TextOverflow.ellipsis),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
-                            );
-                          },
-                        )
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 12,bottom: 12),
-                    child: RichText(
-                      text: const TextSpan(
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: 'B',
-                            style: TextStyle(fontFamily: roboto, fontSize: 20, color: yellow, fontWeight: FontWeight.w900),
-                          ),
-                          TextSpan(text: 'oard Of ', style: TextStyle(fontFamily: roboto, fontSize: 20, color: white, fontWeight: FontWeight.w900)),
-                          TextSpan(
-                            text: 'D',
-                            style: TextStyle(fontFamily: roboto, fontSize: 20, color: yellow, fontWeight: FontWeight.w900),
-                          ),
-                          TextSpan(text: 'irectors', style: TextStyle(fontFamily: roboto, fontSize: 20, color: white, fontWeight: FontWeight.w900)),
-                        ],
+                                );
+                              },
+                            )
+                        ),
                       ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 200,
-                    child: AnimationLimiter(
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          physics: const BouncingScrollPhysics(),
-                          primary: false,
-                          shrinkWrap: true,
-                          itemCount: listBoardOfDirectors.length,
-                          itemBuilder: (context, index) {
-                            return AnimationConfiguration.staggeredList(
-                              position: index,
-                              duration: const Duration(milliseconds: 375),
-                              child: SlideAnimation(
-                                verticalOffset: 50.0,
-                                child: FadeInAnimation(
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => LeadershipDetailsScreen(listBoardOfDirectors[index])));
-                                    },
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          margin:const EdgeInsets.only(left: 4,right: 4),
-                                          decoration:  BoxDecoration(
-                                              color: Colors.transparent,
-                                              borderRadius: BorderRadius.circular(4)
-                                          ),
-                                          height: 150,
-                                          width: 150,
-                                          child: ClipRRect(
-                                            borderRadius:  BorderRadius.circular(4),
-                                            child: SizedBox.fromSize(
-                                                size: const Size.fromRadius(48), // Image radius
-                                                child:
-                                                CachedNetworkImage(
-                                                  imageUrl: listBoardOfDirectors[index].img.toString(),
-                                                  fit: BoxFit.cover,
-                                                  width: 150,
-                                                  height: 120,
-                                                  errorWidget: (context, url, error) => Image.asset('assets/images/bg_gray.jpeg', width: MediaQuery.of(context).size.width,
-                                                    height: 100,fit: BoxFit.cover,),
-                                                  placeholder: (context, url) => Image.asset('assets/images/bg_gray.jpeg', width: MediaQuery.of(context).size.width,
-                                                    height: 100,),
-                                                )
+                      Container(
+                        margin: const EdgeInsets.only(top: 12,bottom: 12),
+                        child: const Text(
+                          'Board Of Directors',
+                          style: TextStyle(fontFamily: roboto, fontSize: 20, color: white, fontWeight: FontWeight.w900),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 200,
+                        child: AnimationLimiter(
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              physics: const BouncingScrollPhysics(),
+                              primary: false,
+                              shrinkWrap: true,
+                              itemCount: listBoardOfDirectors.length,
+                              itemBuilder: (context, index) {
+                                return AnimationConfiguration.staggeredList(
+                                  position: index,
+                                  duration: const Duration(milliseconds: 375),
+                                  child: SlideAnimation(
+                                    verticalOffset: 50.0,
+                                    child: FadeInAnimation(
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => LeadershipDetailsScreen(listBoardOfDirectors[index])));
+                                        },
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              margin:const EdgeInsets.only(left: 4,right: 4),
+                                              decoration: BoxDecoration(
+                                                  color: Colors.transparent,
+                                                  borderRadius: BorderRadius.circular(4)
+                                              ),
+                                              height: 150,
+                                              width: 130,
+                                              child: ClipRRect(
+                                                borderRadius:  BorderRadius.circular(4),
+                                                child: SizedBox.fromSize(
+                                                    size: const Size.fromRadius(48), // Image radius
+                                                    child: CachedNetworkImage(
+                                                      imageUrl: listBoardOfDirectors[index].img.toString(),
+                                                      fit: BoxFit.cover,
+                                                      width: 130,
+                                                      height: 120,
+                                                      errorWidget: (context, url, error) => Image.asset('assets/images/bg_gray.jpeg', width: MediaQuery.of(context).size.width, height: 100,fit: BoxFit.cover,),
+                                                      placeholder: (context, url) => Image.asset('assets/images/bg_gray.jpeg', width: MediaQuery.of(context).size.width, height: 100,),
+                                                    )
+                                                ),
+                                              ),
                                             ),
-                                          ),
+                                            Container(
+                                              width: 130,
+                                              margin: const EdgeInsets.only(left: 12,right: 12,top: 12),
+                                              child: Column(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(listBoardOfDirectors[index].name.toString(),style: const TextStyle(fontFamily: roboto,fontSize: 16, color: white,fontWeight: FontWeight.w500,overflow: TextOverflow.ellipsis),overflow: TextOverflow.ellipsis),
+                                                  Text(listBoardOfDirectors[index].desgnation.toString(),style: const TextStyle(fontFamily: roboto,fontSize: 12, color: white,fontWeight: FontWeight.w400,overflow: TextOverflow.ellipsis),overflow: TextOverflow.ellipsis),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                        Container(
-                                          width: 150,
-                                          margin: const EdgeInsets.only(left: 12,right: 12,top: 12),
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text(listBoardOfDirectors[index].name.toString(),style: TextStyle(fontFamily: roboto,fontSize: 16, color: white,fontWeight: FontWeight.w500,overflow: TextOverflow.ellipsis),overflow: TextOverflow.ellipsis),
-                                              Text(listBoardOfDirectors[index].desgnation.toString(),style: TextStyle(fontFamily: roboto,fontSize: 12, color: white,fontWeight: FontWeight.w400,overflow: TextOverflow.ellipsis),overflow: TextOverflow.ellipsis),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
-                            );
-                          },
-                        )
-                    ),
+                                );
+                              },
+                            )
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
-          ),
         ),
         onWillPop: (){
           Navigator.pop(context);

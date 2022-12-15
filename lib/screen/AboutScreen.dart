@@ -286,13 +286,16 @@ class _AboutScreen extends BaseState<AboutScreen> {
                                      ),
                                    ),
                                    Container(
+                                     alignment: Alignment.center,
                                      margin: const EdgeInsets.only(top: 12),
                                      decoration: BoxDecoration(
                                        borderRadius: BorderRadius.circular(18),
                                        color: white,
                                      ),
                                      padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
-                                     child: Text(listNew[index].title,style: const TextStyle(color: black,fontWeight: FontWeight.w600,fontSize: 14,fontFamily: roboto)),
+                                     child: Text(listNew[index].title,
+                                         textAlign: TextAlign.center,
+                                         style: const TextStyle(color: black,fontWeight: FontWeight.w600,fontSize: 14,fontFamily: roboto)),
                                    )
                                  ],
                                ),

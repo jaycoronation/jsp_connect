@@ -33,6 +33,7 @@ class TrendingScreen extends StatefulWidget {
 class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProviderStateMixin {
   final controller = PageController(viewportFraction: 1, keepPage: true);
   final controllerSocial = PageController(viewportFraction: 1, keepPage: true);
+  final controllerEvents = PageController(viewportFraction: 1, keepPage: true);
   int isClicked = 1;
   bool _isLoading = false;
   bool isNotification = false;
@@ -973,6 +974,7 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                       SizedBox(
                           height: 300,
                           child: PageView.builder(
+                            controller: controllerEvents,
                             itemCount: listEvents.length,
                             physics: const ScrollPhysics(),
                             itemBuilder: (context, index) {
@@ -1073,6 +1075,29 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                               );
                             },
                           )),
+                      Wrap(
+                        children: [
+                          Container(
+                            width: 240,
+                            alignment: Alignment.center,
+                            margin: const EdgeInsets.only(bottom: 10, left: 14, right: 14, top: 12),
+                            decoration: const BoxDecoration(color: text_dark),
+                            child: SmoothPageIndicator(
+                              controller: controllerEvents,
+                              count: 3,
+                              effect: const SlideEffect(
+                                  spacing: 2.0,
+                                  radius: 0.0,
+                                  dotWidth: 80.0,
+                                  dotHeight: 2.5,
+                                  paintStyle: PaintingStyle.stroke,
+                                  strokeWidth: 0,
+                                  dotColor: Colors.transparent,
+                                  activeDotColor: yellow),
+                            ),
+                          ),
+                        ],
+                      ),
                       Container(
                         margin: const EdgeInsets.only(left: 12, right: 12, top: 22),
                         child: Row(
