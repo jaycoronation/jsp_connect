@@ -99,7 +99,7 @@ class _AlbumScreen extends BaseState<AlbumScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              InkWell(
+             /* InkWell(
                   onTap: () {
                     final BottomNavigationBar bar = bottomWidgetKey.currentWidget as BottomNavigationBar;
                     bar.onTap!(0);
@@ -108,14 +108,14 @@ class _AlbumScreen extends BaseState<AlbumScreen> {
                     alignment: Alignment.topLeft,
                     padding: const EdgeInsets.all(6),
                     child: Image.asset('assets/images/ic_back_button.png', height: 22, width: 22, color: white),
-                  )),
+                  )),*/
               Container(
                 alignment: Alignment.centerLeft,
                 height: 65,
                 margin: const EdgeInsets.only(left: 5),
                 child: const Text(
                   "Photo Gallery",
-                  style: TextStyle(fontWeight: FontWeight.w600, color: white, fontSize: 16),
+                  style:TextStyle(fontWeight: FontWeight.w600, color: white, fontFamily: roboto),
                 ),
               ),
               const Spacer(),

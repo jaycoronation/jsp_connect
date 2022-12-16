@@ -9,6 +9,7 @@ import 'package:pretty_http_logger/pretty_http_logger.dart';
 import '../../constant/api_end_point.dart';
 import '../../constant/colors.dart';
 import '../../utils/app_utils.dart';
+import '../../widget/FadeIndexedStack.dart';
 import '../AlbumScreen.dart';
 import '../BlogScreen.dart';
 import '../VideoScreen.dart';
@@ -163,11 +164,12 @@ class _BottomNavigationBarScreenState extends BaseState<BottomNavigationBarScree
       },
       child: Scaffold(
         resizeToAvoidBottomInset: true,
-        backgroundColor: white,
+        backgroundColor: black,
         extendBody: true,
-        body:IndexedStack(
-          index: _currentIndex,
-          children: _pages,
+        body: FadeIndexedStack(
+          _currentIndex,_pages ,const Duration(
+          milliseconds: 400,
+        )
         ),
         bottomNavigationBar: Container(
             decoration: const BoxDecoration(

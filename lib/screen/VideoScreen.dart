@@ -87,7 +87,7 @@ class _VideoScreen extends BaseState<VideoScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              InkWell(
+               /*InkWell(
                   onTap: () {
                     final BottomNavigationBar bar = bottomWidgetKey.currentWidget as BottomNavigationBar;
                     bar.onTap!(0);
@@ -101,14 +101,14 @@ class _VideoScreen extends BaseState<VideoScreen> {
                       width: 22,
                       color: white,
                     ),
-                  )),
-              Container(
+                  )),*/
+                Container(
                 alignment: Alignment.centerLeft,
                 height: 65,
                 margin: const EdgeInsets.only(left: 5),
                 child: const Text(
                   "Videos",
-                  style: TextStyle(fontWeight: FontWeight.w600, color: white, fontSize: 16),
+                  style:TextStyle(fontWeight: FontWeight.w600, color: white, fontFamily: roboto),
                 ),
               ),
               const Spacer(),

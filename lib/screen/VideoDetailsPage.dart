@@ -382,7 +382,7 @@ class _VideoDetailsPage extends BaseState<VideoDetailsPage> {
                                                           crossAxisAlignment: CrossAxisAlignment.start,
                                                           mainAxisAlignment: MainAxisAlignment.start,
                                                           children: [
-                                                            Container(
+                                                           /* Container(
                                                               margin: const EdgeInsets.only(top: 10, left: 22),
                                                               decoration: BoxDecoration(
                                                                 color: bgOverlay,
@@ -396,7 +396,7 @@ class _VideoDetailsPage extends BaseState<VideoDetailsPage> {
                                                                       fontFamily: gilroy, fontWeight: FontWeight.w400, fontSize: 12, color: white),
                                                                 ),
                                                               ),
-                                                            ),
+                                                            ),*/
                                                             Container(
                                                                 alignment: Alignment.bottomLeft,
                                                                 margin: const EdgeInsets.only(top: 14, left: 22, right: 10),
