@@ -1,7 +1,7 @@
 import 'dart:convert';
 /// success : 1
 /// message : "List loaded successfully"
-/// postsList : [{"id":"5","type":"Images","posts":[{"id":"93","title":"Angul Plant","post_type_id":"5","post_category_id":"","short_description":"","description":"","user_id":"","slug":"","location":"","meta_title":"","meta_keywords":"","meta_description":"","status":"1","schedule_timestamp":"01 Jan 1970","save_timestamp":"01 Jan 1970","featured_image":"https://jsp.coronation.in/api/assets/upload/feature_image/1670612299__SAM9135.jpg","likes_count":0,"shares_count":0,"bookmark_count":0,"is_liked":0,"is_bookmarked":0,"media":[{"post_id":93,"file_name":"1670611152__SAM9254.jpg","file_size":"389755","file_type":"image/jpeg","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670611152__SAM9254.jpg","alt_tag":"","sort_order":0,"company_id":6}]}]}]
+/// postsList : [{"id":"3","type":"Videos","posts":[{"id":"78","title":"Champions At Work- Jagat Kalyan Kumar","post_type_id":"3","post_category_id":"","short_description":"","description":"<html>\n<head>\n\t<title></title>\n</head>\n<body>\n<p>Meet Jagat Kalyan Kumar, Quality Assurance Manager at our Machinery Division in Raipur, Chhattisgarh. Passionate about technology and heavy machinery, Jagat is one of the many young engineers working tirelessly to build the nation of our dreams. He is one of our <a dir=\"auto\" href=\"https://www.youtube.com/hashtag/championsatwork\" spellcheck=\"false\">#ChampionsAtWork</a></p>\n</body>\n</html>\n","user_id":"","slug":"","location":"","meta_title":"","meta_keywords":"","meta_description":"","status":"1","social_media_type":"","social_media_link":"","schedule_timestamp":"09 Dec 2022","save_timestamp":"09 Dec 2022","featured_image":"https://jsp.coronation.in/api/assets/upload/feature_image/1670603761_Screenshot_2022-12-09_at_9.55.07_PM.png","likes_count":0,"shares_count":12,"bookmark_count":0,"is_liked":0,"is_bookmarked":0,"media":[{"post_id":78,"file_name":"1670603263_Champions_At_Work-_Jagat_Kalyan_Kumar.mp4","file_size":"20762424","file_type":"video/mp4","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670603263_Champions_At_Work-_Jagat_Kalyan_Kumar.mp4","alt_tag":"","sort_order":0,"company_id":6}]}]}]
 
 DashBoardDataResponse dashBoardDataResponseFromJson(String str) => DashBoardDataResponse.fromJson(json.decode(str));
 String dashBoardDataResponseToJson(DashBoardDataResponse data) => json.encode(data.toJson());
@@ -51,9 +51,9 @@ DashBoardDataResponse copyWith({  num? success,
 
 }
 
-/// id : "5"
-/// type : "Images"
-/// posts : [{"id":"93","title":"Angul Plant","post_type_id":"5","post_category_id":"","short_description":"","description":"","user_id":"","slug":"","location":"","meta_title":"","meta_keywords":"","meta_description":"","status":"1","schedule_timestamp":"01 Jan 1970","save_timestamp":"01 Jan 1970","featured_image":"https://jsp.coronation.in/api/assets/upload/feature_image/1670612299__SAM9135.jpg","likes_count":0,"shares_count":0,"bookmark_count":0,"is_liked":0,"is_bookmarked":0,"media":[{"post_id":93,"file_name":"1670611152__SAM9254.jpg","file_size":"389755","file_type":"image/jpeg","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670611152__SAM9254.jpg","alt_tag":"","sort_order":0,"company_id":6}]}]
+/// id : "3"
+/// type : "Videos"
+/// posts : [{"id":"78","title":"Champions At Work- Jagat Kalyan Kumar","post_type_id":"3","post_category_id":"","short_description":"","description":"<html>\n<head>\n\t<title></title>\n</head>\n<body>\n<p>Meet Jagat Kalyan Kumar, Quality Assurance Manager at our Machinery Division in Raipur, Chhattisgarh. Passionate about technology and heavy machinery, Jagat is one of the many young engineers working tirelessly to build the nation of our dreams. He is one of our <a dir=\"auto\" href=\"https://www.youtube.com/hashtag/championsatwork\" spellcheck=\"false\">#ChampionsAtWork</a></p>\n</body>\n</html>\n","user_id":"","slug":"","location":"","meta_title":"","meta_keywords":"","meta_description":"","status":"1","social_media_type":"","social_media_link":"","schedule_timestamp":"09 Dec 2022","save_timestamp":"09 Dec 2022","featured_image":"https://jsp.coronation.in/api/assets/upload/feature_image/1670603761_Screenshot_2022-12-09_at_9.55.07_PM.png","likes_count":0,"shares_count":12,"bookmark_count":0,"is_liked":0,"is_bookmarked":0,"media":[{"post_id":78,"file_name":"1670603263_Champions_At_Work-_Jagat_Kalyan_Kumar.mp4","file_size":"20762424","file_type":"video/mp4","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670603263_Champions_At_Work-_Jagat_Kalyan_Kumar.mp4","alt_tag":"","sort_order":0,"company_id":6}]}]
 
 PostsList postsListFromJson(String str) => PostsList.fromJson(json.decode(str));
 String postsListToJson(PostsList data) => json.encode(data.toJson());
@@ -103,12 +103,12 @@ PostsList copyWith({  String? id,
 
 }
 
-/// id : "93"
-/// title : "Angul Plant"
-/// post_type_id : "5"
+/// id : "78"
+/// title : "Champions At Work- Jagat Kalyan Kumar"
+/// post_type_id : "3"
 /// post_category_id : ""
 /// short_description : ""
-/// description : ""
+/// description : "<html>\n<head>\n\t<title></title>\n</head>\n<body>\n<p>Meet Jagat Kalyan Kumar, Quality Assurance Manager at our Machinery Division in Raipur, Chhattisgarh. Passionate about technology and heavy machinery, Jagat is one of the many young engineers working tirelessly to build the nation of our dreams. He is one of our <a dir=\"auto\" href=\"https://www.youtube.com/hashtag/championsatwork\" spellcheck=\"false\">#ChampionsAtWork</a></p>\n</body>\n</html>\n"
 /// user_id : ""
 /// slug : ""
 /// location : ""
@@ -116,15 +116,17 @@ PostsList copyWith({  String? id,
 /// meta_keywords : ""
 /// meta_description : ""
 /// status : "1"
-/// schedule_timestamp : "01 Jan 1970"
-/// save_timestamp : "01 Jan 1970"
-/// featured_image : "https://jsp.coronation.in/api/assets/upload/feature_image/1670612299__SAM9135.jpg"
+/// social_media_type : ""
+/// social_media_link : ""
+/// schedule_timestamp : "09 Dec 2022"
+/// save_timestamp : "09 Dec 2022"
+/// featured_image : "https://jsp.coronation.in/api/assets/upload/feature_image/1670603761_Screenshot_2022-12-09_at_9.55.07_PM.png"
 /// likes_count : 0
-/// shares_count : 0
+/// shares_count : 12
 /// bookmark_count : 0
 /// is_liked : 0
 /// is_bookmarked : 0
-/// media : [{"post_id":93,"file_name":"1670611152__SAM9254.jpg","file_size":"389755","file_type":"image/jpeg","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670611152__SAM9254.jpg","alt_tag":"","sort_order":0,"company_id":6}]
+/// media : [{"post_id":78,"file_name":"1670603263_Champions_At_Work-_Jagat_Kalyan_Kumar.mp4","file_size":"20762424","file_type":"video/mp4","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670603263_Champions_At_Work-_Jagat_Kalyan_Kumar.mp4","alt_tag":"","sort_order":0,"company_id":6}]
 
 Posts postsFromJson(String str) => Posts.fromJson(json.decode(str));
 String postsToJson(Posts data) => json.encode(data.toJson());
@@ -143,6 +145,8 @@ class Posts {
       String? metaKeywords, 
       String? metaDescription, 
       String? status, 
+      String? socialMediaType, 
+      String? socialMediaLink, 
       String? scheduleTimestamp, 
       String? saveTimestamp, 
       String? featuredImage, 
@@ -165,6 +169,8 @@ class Posts {
     _metaKeywords = metaKeywords;
     _metaDescription = metaDescription;
     _status = status;
+    _socialMediaType = socialMediaType;
+    _socialMediaLink = socialMediaLink;
     _scheduleTimestamp = scheduleTimestamp;
     _saveTimestamp = saveTimestamp;
     _featuredImage = featuredImage;
@@ -190,6 +196,8 @@ class Posts {
     _metaKeywords = json['meta_keywords'];
     _metaDescription = json['meta_description'];
     _status = json['status'];
+    _socialMediaType = json['social_media_type'];
+    _socialMediaLink = json['social_media_link'];
     _scheduleTimestamp = json['schedule_timestamp'];
     _saveTimestamp = json['save_timestamp'];
     _featuredImage = json['featured_image'];
@@ -218,6 +226,8 @@ class Posts {
   String? _metaKeywords;
   String? _metaDescription;
   String? _status;
+  String? _socialMediaType;
+  String? _socialMediaLink;
   String? _scheduleTimestamp;
   String? _saveTimestamp;
   String? _featuredImage;
@@ -240,6 +250,8 @@ Posts copyWith({  String? id,
   String? metaKeywords,
   String? metaDescription,
   String? status,
+  String? socialMediaType,
+  String? socialMediaLink,
   String? scheduleTimestamp,
   String? saveTimestamp,
   String? featuredImage,
@@ -262,6 +274,8 @@ Posts copyWith({  String? id,
   metaKeywords: metaKeywords ?? _metaKeywords,
   metaDescription: metaDescription ?? _metaDescription,
   status: status ?? _status,
+  socialMediaType: socialMediaType ?? _socialMediaType,
+  socialMediaLink: socialMediaLink ?? _socialMediaLink,
   scheduleTimestamp: scheduleTimestamp ?? _scheduleTimestamp,
   saveTimestamp: saveTimestamp ?? _saveTimestamp,
   featuredImage: featuredImage ?? _featuredImage,
@@ -285,6 +299,8 @@ Posts copyWith({  String? id,
   String? get metaKeywords => _metaKeywords;
   String? get metaDescription => _metaDescription;
   String? get status => _status;
+  String? get socialMediaType => _socialMediaType;
+  String? get socialMediaLink => _socialMediaLink;
   String? get scheduleTimestamp => _scheduleTimestamp;
   String? get saveTimestamp => _saveTimestamp;
   String? get featuredImage => _featuredImage;
@@ -322,6 +338,8 @@ Posts copyWith({  String? id,
     map['meta_keywords'] = _metaKeywords;
     map['meta_description'] = _metaDescription;
     map['status'] = _status;
+    map['social_media_type'] = _socialMediaType;
+    map['social_media_link'] = _socialMediaLink;
     map['schedule_timestamp'] = _scheduleTimestamp;
     map['save_timestamp'] = _saveTimestamp;
     map['featured_image'] = _featuredImage;
@@ -338,12 +356,12 @@ Posts copyWith({  String? id,
 
 }
 
-/// post_id : 93
-/// file_name : "1670611152__SAM9254.jpg"
-/// file_size : "389755"
-/// file_type : "image/jpeg"
+/// post_id : 78
+/// file_name : "1670603263_Champions_At_Work-_Jagat_Kalyan_Kumar.mp4"
+/// file_size : "20762424"
+/// file_type : "video/mp4"
 /// path : "assets/upload/posts/2022/12/"
-/// media : "https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670611152__SAM9254.jpg"
+/// media : "https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670603263_Champions_At_Work-_Jagat_Kalyan_Kumar.mp4"
 /// alt_tag : ""
 /// sort_order : 0
 /// company_id : 6

@@ -12,7 +12,6 @@ import '../../constant/api_end_point.dart';
 import '../../constant/colors.dart';
 import '../../model/CommanResponse.dart';
 import '../../model/DashBoardDataResponse.dart';
-import '../../model/SocialResponseModel.dart';
 import '../../utils/app_utils.dart';
 import '../../utils/base_class.dart';
 import '../../widget/loading.dart';
@@ -42,7 +41,7 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
   bool isAnniversary = false;
   bool isAnimationVisible = false;
   late AnimationController _animationController;
-  List<SocialMedia> listSocial = [];
+  List<Posts> listSocial = List<Posts>.empty(growable: true);
   List<Posts> listVideos = List<Posts>.empty(growable: true);
   List<Posts> listEvents = List<Posts>.empty(growable: true);
   List<Posts> listNews = List<Posts>.empty(growable: true);
@@ -60,7 +59,6 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
     });
 
     if (isOnline) {
-      socialAPI();
       getDashboradData();
     } else {
       noInterNet(context);
@@ -78,75 +76,6 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
     }
     return Future.value(true);
   }
-
-  socialAPI() async {
-    setState(() {
-      _isLoading = true;
-    });
-    HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
-      HttpLogger(logLevel: LogLevel.BODY),
-    ]);
-
-    final url = Uri.parse(MAIN_URL + socialApi);
-
-    final response = await http.get(url);
-    final statusCode = response.statusCode;
-    final body = response.body;
-    Map<String, dynamic> user = jsonDecode(body);
-    var dataResponse = SocialResponseModel.fromJson(user);
-
-    if (statusCode == 200) {
-      listSocial = dataResponse.socialMedia?.reversed.toList() ?? [];
-
-      setState(() {
-        _isLoading = false;
-      });
-    } else {
-      setState(() {
-        _isLoading = false;
-      });
-    }
-  }
-
-  Future<bool> sendFcmMessage(String title, String message) async {
-    try {
-      var url = 'https://fcm.googleapis.com/fcm/send';
-      var header = {
-        "Content-Type": "application/json",
-        "Authorization":
-            "key=AAAA75A5-5g:APA91bFuRXEkPQfiUs7eXb752-z_HSl5GEyPwt7-E0TRl4vm91g7Nzuyt7wViAJ2E7ol9OkdGwvyi3y99NcKXb2B0P1vrxYT6QBSERPFowi78mybkYi3geS3_D8nj_-OzNiScqGY4t-m",
-      };
-      var request = {
-        "notification": {
-          "title": title,
-          "body": message,
-          "sound": "default",
-          "color": "#990000",
-          "android": {
-            "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/aa/Naveen_Jindal_at_the_India_Economic_Summit_2010_cropped.jpg",
-          }
-        },
-        "priority": "high",
-        "to": sessionManager.getDeviceToken(),
-      };
-
-      var client = Client();
-      var response = await client.post(Uri.parse(url), headers: header, body: json.encode(request));
-      print(response.body);
-      return true;
-    } catch (e, s) {
-      print(e);
-      return false;
-    }
-  }
-
-  final Shader linearGradient = const LinearGradient(
-    colors: <Color>[Color(0xffFFFFFF), Color(0xffaaa9a3)],
-  ).createShader(const Rect.fromLTWH(0.0, 0.0, 800.0, 80.0));
-
-  final Shader linearGradientSocial = const LinearGradient(
-    colors: <Color>[Color(0xffFFFFFF), Color(0xff9b9b98)],
-  ).createShader(const Rect.fromLTWH(0.0, 0.0, 800.0, 80.0));
 
   @override
   Widget build(BuildContext context) {
@@ -715,24 +644,18 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                           ),
                         ),
                       ),
-                      Container(
+                      Visibility(visible : listSocial.isNotEmpty,child:Container(
+                        alignment: Alignment.centerLeft,
                         margin: const EdgeInsets.only(left: 12, right: 12, top: 12),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            RichText(
-                              text: const TextSpan(
-                                children: <TextSpan>[
-                                  TextSpan(text: 'Social', style: TextStyle(fontFamily: roboto, fontSize: 20, color: white, fontWeight: FontWeight.w900)),
-                                  TextSpan(text: ' Media', style: TextStyle(fontFamily: roboto, fontSize: 20, color: white, fontWeight: FontWeight.w900)),
-                                ],
-                              ),
-                            )
-                          ],
+                        child: RichText(
+                          text: const TextSpan(
+                            children: <TextSpan>[
+                              TextSpan(text: 'Social Media', style: TextStyle(fontFamily: roboto, fontSize: 20, color: white, fontWeight: FontWeight.w900)),
+                            ],
+                          ),
                         ),
-                      ),
-                      SizedBox(
+                      )),
+                      Visibility(visible : listSocial.isNotEmpty,child:SizedBox(
                           height: 300,
                           child: PageView.builder(
                             controller: controllerSocial,
@@ -741,9 +664,9 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                             itemBuilder: (context, index) {
                               return GestureDetector(
                                 onTap: () async {
-                                  if (listSocial[index].url!.isNotEmpty) {
-                                    if (await canLaunchUrl(Uri.parse(listSocial[index].url!.toString()))) {
-                                      launchUrl(Uri.parse(listSocial[index].url!.toString()), mode: LaunchMode.externalNonBrowserApplication);
+                                  if (listSocial[index].socialMediaLink!.isNotEmpty) {
+                                    if (await canLaunchUrl(Uri.parse(listSocial[index].socialMediaLink!.toString()))) {
+                                      launchUrl(Uri.parse(listSocial[index].socialMediaLink!.toString()), mode: LaunchMode.externalNonBrowserApplication);
                                     }
                                   }
                                 },
@@ -765,7 +688,7 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                         child: ClipRRect(
                                           borderRadius: BorderRadius.circular(20), // Image border
                                           child: Image.network(
-                                            listSocial[index].image.toString(),
+                                            listSocial[index].featuredImage.toString(),
                                             fit: BoxFit.cover,
                                             height: 350,
                                             width: MediaQuery.of(context).size.width,
@@ -776,9 +699,9 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                           margin: const EdgeInsets.only(right: 14, top: 14),
                                           alignment: Alignment.topRight,
                                           child: Image.asset(
-                                            listSocial[index].social.toString() == "facebook"
+                                            listSocial[index].socialMediaType.toString() == "Facebook"
                                                 ? "assets/images/facebook.png"
-                                                : listSocial[index].social.toString() == "twitter"
+                                                : listSocial[index].socialMediaType.toString() == "Twitter"
                                                     ? "assets/images/ic_twitter.png"
                                                     : "assets/images/ic_insta.png",
                                             height: 24,
@@ -809,7 +732,7 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                                 margin: const EdgeInsets.only(bottom: 0, left: 14, right: 14),
                                                 alignment: Alignment.centerLeft,
                                                 child: Text(
-                                                  listSocial[index].description.toString(),
+                                                  listSocial[index].shortDescription.toString(),
                                                   maxLines: 3,
                                                   style: TextStyle(
                                                       foreground: Paint()..shader = linearGradientSocial,
@@ -829,7 +752,7 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                                   Container(
                                                     alignment: Alignment.centerLeft,
                                                     padding: const EdgeInsets.only(top: 8, bottom: 8,  right: 10),
-                                                    child: Text(listSocial[index].date.toString(),
+                                                    child: Text(listSocial[index].saveTimestamp.toString(),
                                                         style: const TextStyle(
                                                             fontWeight: FontWeight.w400, fontFamily: aileron, fontSize: 14, color: lightGray)),
                                                   ),
@@ -837,9 +760,14 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                                     children: [
                                                       GestureDetector(
                                                         onTap: () {
-                                                          if(listSocial[index].url.toString().isNotEmpty)
-                                                          {
-                                                            Share.share(listSocial[index].url.toString());
+                                                          if (listSocial[index].socialMediaLink!.isNotEmpty) {
+                                                            Share.share(listSocial[index].socialMediaLink.toString());
+                                                            _sharePost(listSocial[index].id.toString());
+                                                            setState(() {
+                                                              listSocial[index].setSharesCount = listSocial[index].sharesCount! + 1;
+                                                            });
+                                                          } else {
+                                                            showSnackBar("Social link not found.", context);
                                                           }
                                                         },
                                                         behavior: HitTestBehavior.opaque,
@@ -850,31 +778,12 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                                           width: 22,
                                                         ),
                                                       ),
-                                                      const Text(
-                                                        "  14  ",
+                                                      const Gap(6),
+                                                      Text(
+                                                        listSocial[index].sharesCount.toString(),
                                                         textAlign: TextAlign.center,
                                                         style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, fontFamily: roboto, color: white),
-                                                      ),
-                                                   /*   Container(width: 8),
-                                                      GestureDetector(
-                                                        behavior: HitTestBehavior.opaque,
-                                                        onTap: () {
-                                                          setState(() {
-                                                            listSocial[index].isLiked = !listSocial[index].isLiked;
-                                                          });
-                                                        },
-                                                        child: Image.asset(
-                                                          listSocial[index].isLiked ? "assets/images/like_filled.png" : "assets/images/like.png",
-                                                          height: 24,
-                                                          color: listSocial[index].isLiked ? Colors.red : darkGray,
-                                                          width: 24,
-                                                        ),
-                                                      ),
-                                                      const Text(
-                                                        "  14  ",
-                                                        textAlign: TextAlign.center,
-                                                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, fontFamily: roboto, color: white),
-                                                      ),*/
+                                                      )
                                                     ],
                                                   ),
                                                 ],
@@ -888,8 +797,8 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                 ),
                               );
                             },
-                          )),
-                      Wrap(
+                          ))),
+                      Visibility(visible : listSocial.length > 1,child: Wrap(
                         children: [
                           Container(
                             width: 220,
@@ -902,7 +811,7 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                               effect: const SlideEffect(
                                   spacing: 2.0,
                                   radius: 0.0,
-                                  dotWidth: 22.0,
+                                  dotWidth: 50.0,
                                   dotHeight: 2.5,
                                   paintStyle: PaintingStyle.stroke,
                                   strokeWidth: 0,
@@ -911,8 +820,8 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                             ),
                           ),
                         ],
-                      ),
-                      Container(
+                      )),
+                       Container(
                         margin: const EdgeInsets.only(left: 12, right: 12, top: 12),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -929,7 +838,7 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                           ],
                         ),
                       ),
-                      Container(
+                       Container(
                         height: 270,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
@@ -947,7 +856,7 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                               overflow: TextOverflow.clip),
                         ),
                       ),
-                      Container(
+                       Visibility(visible : listEvents.isNotEmpty,child:Container(
                         margin: const EdgeInsets.only(left: 12, right: 12, top: 22),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -970,8 +879,8 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                             )
                           ],
                         ),
-                      ),
-                      SizedBox(
+                      )),
+                       Visibility(visible : listEvents.isNotEmpty,child:SizedBox(
                           height: 300,
                           child: PageView.builder(
                             controller: controllerEvents,
@@ -1074,8 +983,8 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                 ),
                               );
                             },
-                          )),
-                      Wrap(
+                          ))),
+                       Visibility(visible : listEvents.length > 1,child:Wrap(
                         children: [
                           Container(
                             width: 240,
@@ -1084,11 +993,11 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                             decoration: const BoxDecoration(color: text_dark),
                             child: SmoothPageIndicator(
                               controller: controllerEvents,
-                              count: 3,
+                              count: listEvents.length,
                               effect: const SlideEffect(
                                   spacing: 2.0,
                                   radius: 0.0,
-                                  dotWidth: 80.0,
+                                  dotWidth: 50.0,
                                   dotHeight: 2.5,
                                   paintStyle: PaintingStyle.stroke,
                                   strokeWidth: 0,
@@ -1097,8 +1006,8 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                             ),
                           ),
                         ],
-                      ),
-                      Container(
+                      )),
+                       Visibility(visible : listVideos.isNotEmpty,child:Container(
                         margin: const EdgeInsets.only(left: 12, right: 12, top: 22),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1115,8 +1024,8 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                             )
                           ],
                         ),
-                      ),
-                      Container(
+                      )),
+                       Visibility(visible : listVideos.isNotEmpty,child:Container(
                         margin: const EdgeInsets.only(top: 22),
                         height: 300,
                         child: PageView.builder(
@@ -1324,8 +1233,8 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                             );
                           },
                         ),
-                      ),
-                      Wrap(
+                      )),
+                       Visibility(visible : listVideos.length > 1,child:Wrap(
                         children: [
                           Container(
                             width: 240,
@@ -1334,11 +1243,11 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                             decoration: const BoxDecoration(color: text_dark),
                             child: SmoothPageIndicator(
                               controller: controller,
-                              count: 3,
+                              count: listVideos.length,
                               effect: const SlideEffect(
                                   spacing: 2.0,
                                   radius: 0.0,
-                                  dotWidth: 80.0,
+                                  dotWidth: 50.0,
                                   dotHeight: 2.5,
                                   paintStyle: PaintingStyle.stroke,
                                   strokeWidth: 0,
@@ -1347,8 +1256,8 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                             ),
                           ),
                         ],
-                      ),
-                      Container(
+                      )),
+                       Visibility(visible : listNews.isNotEmpty,child:Container(
                         margin: const EdgeInsets.only(left: 12, right: 12, top: 22),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1363,8 +1272,8 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                             )
                           ],
                         ),
-                      ),
-                      ListView.builder(
+                      )),
+                       Visibility(visible : listNews.isNotEmpty,child:ListView.builder(
                         scrollDirection: Axis.vertical,
                         physics: const NeverScrollableScrollPhysics(),
                         primary: false,
@@ -1512,8 +1421,8 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                             ),
                           );
                         },
-                      ),
-                      Gap(20)
+                      )),
+                       Gap(20)
                     ],
                   ),
                   Visibility(
@@ -1567,12 +1476,22 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
     Map<String, dynamic> apiResponse = jsonDecode(body);
     var dataResponse = DashBoardDataResponse.fromJson(apiResponse);
     if (statusCode == 200 && dataResponse.success == 1) {
+      listSocial = List<Posts>.empty(growable: true);
       listVideos = List<Posts>.empty(growable: true);
       listEvents = List<Posts>.empty(growable: true);
       listNews = List<Posts>.empty(growable: true);
       if (dataResponse.postsList != null && dataResponse.postsList!.isNotEmpty) {
-        for (int i = 0; i < dataResponse.postsList!.length; i++) {
-          if (dataResponse.postsList![i].id == "2") // "Events & Enagagements"
+        for (int i = 0; i < dataResponse.postsList!.length; i++)
+        {
+          if (dataResponse.postsList![i].id == "1") // "Social Media"
+              {
+            if (dataResponse.postsList![i].posts != null) {
+              if (dataResponse.postsList![i].posts!.isNotEmpty) {
+                listSocial.addAll(dataResponse.postsList![i].posts!);
+              }
+            }
+          }
+          else if (dataResponse.postsList![i].id == "2") // "Events & Enagagements"
           {
             if (dataResponse.postsList![i].posts != null) {
               if (dataResponse.postsList![i].posts!.isNotEmpty) {
@@ -1632,6 +1551,46 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
       showSnackBar(dataResponse.message, context);
     }
   }
+
+  Future<bool> sendFcmMessage(String title, String message) async {
+    try {
+      var url = 'https://fcm.googleapis.com/fcm/send';
+      var header = {
+        "Content-Type": "application/json",
+        "Authorization":
+        "key=AAAA75A5-5g:APA91bFuRXEkPQfiUs7eXb752-z_HSl5GEyPwt7-E0TRl4vm91g7Nzuyt7wViAJ2E7ol9OkdGwvyi3y99NcKXb2B0P1vrxYT6QBSERPFowi78mybkYi3geS3_D8nj_-OzNiScqGY4t-m",
+      };
+      var request = {
+        "notification": {
+          "title": title,
+          "body": message,
+          "sound": "default",
+          "color": "#990000",
+          "android": {
+            "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/aa/Naveen_Jindal_at_the_India_Economic_Summit_2010_cropped.jpg",
+          }
+        },
+        "priority": "high",
+        "to": sessionManager.getDeviceToken(),
+      };
+
+      var client = Client();
+      var response = await client.post(Uri.parse(url), headers: header, body: json.encode(request));
+      print(response.body);
+      return true;
+    } catch (e, s) {
+      print(e);
+      return false;
+    }
+  }
+
+  final Shader linearGradient = const LinearGradient(
+    colors: <Color>[Color(0xffFFFFFF), Color(0xffaaa9a3)],
+  ).createShader(const Rect.fromLTWH(0.0, 0.0, 800.0, 80.0));
+
+  final Shader linearGradientSocial = const LinearGradient(
+    colors: <Color>[Color(0xffFFFFFF), Color(0xff9b9b98)],
+  ).createShader(const Rect.fromLTWH(0.0, 0.0, 800.0, 80.0));
 }
 
 @immutable

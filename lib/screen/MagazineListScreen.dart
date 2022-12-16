@@ -15,6 +15,7 @@ import '../constant/global_context.dart';
 import '../model/CommanResponse.dart';
 import '../utils/app_utils.dart';
 import '../utils/base_class.dart';
+import '../widget/no_data.dart';
 
 class MagazineListScreen extends StatefulWidget {
   const MagazineListScreen({Key? key}) : super(key: key);
@@ -131,8 +132,8 @@ class _MagazineListScreen extends BaseState<MagazineListScreen> {
               ),
             ),
           ),
-          body: _isLoading
-              ? const LoadingWidget()
+          body:_isLoading
+              ? const LoadingWidget() : listMagazine.isEmpty ? const MyNoDataWidget(msg: 'No magazine data found!')
               : Column(
             children: [
               Expanded(child: SingleChildScrollView(
@@ -404,8 +405,13 @@ class _MagazineListScreen extends BaseState<MagazineListScreen> {
     if (statusCode == 200 && dataResponse.success == 1) {
       if (dataResponse.postData != null && dataResponse.postData!.isNotEmpty) {
         List<PostData>? _tempList = [];
-        _tempList = dataResponse.postData;
-        listMagazine.addAll(_tempList!);
+        for (int i = 0; i < dataResponse.postData!.length; i++) {
+          if (dataResponse.postData![i].posts != null && dataResponse.postData![i].posts!.isNotEmpty) {
+            _tempList.add(dataResponse.postData![i]);
+          }
+        }
+
+        listMagazine.addAll(_tempList);
 
         if (_tempList.isNotEmpty) {
           _pageIndex += 1;

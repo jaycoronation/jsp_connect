@@ -15,15 +15,15 @@ String leadershipList = "leadershipList";
 String notification_list = "notification_list";
 
 
-String dashboardApi = "dashbord.json";
-String videoApi = "video.json";
-String newsApi = "news.json";
+//String dashboardApi = "dashbord.json";
+//String videoApi = "video.json";
+//String newsApi = "news.json";
 String liveApi = "live.json";
-String albumApi = "album.json";
-String galleryApi = "gallery.json";
+//String albumApi = "album.json";
+//String galleryApi = "gallery.json";
 String speechApi = "speech.json";
 String aboutApi = "about.json";
-String blogApi = "blog.json";
-String socialApi = "social.json";
-String samparkApi = "sampark.json";
-String leadershipApi = "leadership.json";
+//String blogApi = "blog.json";
+//String socialApi = "social.json";
+//String samparkApi = "sampark.json";
+//String leadershipApi = "leadership.json";

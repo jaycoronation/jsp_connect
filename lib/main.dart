@@ -7,10 +7,12 @@ import 'package:jspl_connect/constant/colors.dart';
 import 'package:jspl_connect/push_notification/PushNotificationService.dart';
 import 'package:jspl_connect/screen/BlogDetailsScreen.dart';
 import 'package:jspl_connect/screen/EventDetailsScreen.dart';
+import 'package:jspl_connect/screen/LeadershipDetailsScreen.dart';
 import 'package:jspl_connect/screen/LoginScreen.dart';
 import 'package:jspl_connect/screen/MagazineListScreen.dart';
 import 'package:jspl_connect/screen/MediaCoverageDetailsScreen.dart';
 import 'package:jspl_connect/screen/NewsDetailsScreen.dart';
+import 'package:jspl_connect/screen/SocialWallScreen.dart';
 import 'package:jspl_connect/screen/VideoDetailsPage.dart';
 import 'package:jspl_connect/screen/tabcontrol/bottom_navigation_bar_screen.dart';
 import 'package:jspl_connect/utils/app_utils.dart';
@@ -78,7 +80,11 @@ class _MyHomePageState extends State<MyHomePage> {
           {
             if(NavigationService.notif_post_id.toString().isNotEmpty)
             {
-              if(NavigationService.notif_type == "2")
+              if(NavigationService.notif_type == "1")
+              {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => SocialWallScreen()));
+              }
+              else if(NavigationService.notif_type == "2")
               {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => EventDetailsScreen(NavigationService.notif_post_id.toString())));
               }
@@ -89,10 +95,17 @@ class _MyHomePageState extends State<MyHomePage> {
               else if(NavigationService.notif_type == "4")
               {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => NewsDetailsScreen(NavigationService.notif_post_id.toString())));
+                NavigationService.notif_type = "";
+                NavigationService.notif_post_id = "";
               }
               else if(NavigationService.notif_type == "5")
               {
-                // for image
+                Timer(
+                    const Duration(seconds: 3),
+                        () => Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                    const BottomNavigationBarScreen(1)), (Route<dynamic> route) => false));
+                NavigationService.notif_type = "";
+                NavigationService.notif_post_id = "";
               }
               else if(NavigationService.notif_type == "6")
               {
@@ -105,6 +118,10 @@ class _MyHomePageState extends State<MyHomePage> {
               else if(NavigationService.notif_type == "8")
               {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => MediaCoverageDetailsScreen(NavigationService.notif_post_id.toString())));
+              }
+              else if(NavigationService.notif_type == "10")
+              {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => LeadershipDetailsScreen(NavigationService.notif_post_id.toString())));
               }
             }
             else

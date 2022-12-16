@@ -1,7 +1,7 @@
 import 'dart:convert';
 /// success : 1
 /// message : "List loaded successfully"
-/// posts : [{"id":"78","title":"Champions At Work- Jagat Kalyan Kumar","post_type_id":"3","post_category_id":"","short_description":"","description":"<html>\n<head>\n\t<title></title>\n</head>\n<body>\n<p>Meet Jagat Kalyan Kumar, Quality Assurance Manager at our Machinery Division in Raipur, Chhattisgarh. Passionate about technology and heavy machinery, Jagat is one of the many young engineers working tirelessly to build the nation of our dreams. He is one of our <a dir=\"auto\" href=\"https://www.youtube.com/hashtag/championsatwork\" spellcheck=\"false\">#ChampionsAtWork</a></p>\n</body>\n</html>\n","user_id":"","slug":"","location":"","meta_title":"","meta_keywords":"","meta_description":"","status":"1","schedule_timestamp":"01 Jan 1970","save_timestamp":"01 Jan 1970","featured_image":"https://jsp.coronation.in/api/assets/upload/feature_image/1670603761_Screenshot_2022-12-09_at_9.55.07_PM.png","likes_count":1,"shares_count":0,"bookmark_count":0,"is_liked":0,"is_bookmarked":0,"media":[{"post_id":78,"file_name":"1670603263_Champions_At_Work-_Jagat_Kalyan_Kumar.mp4","file_size":"20762424","file_type":"video/mp4","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670603263_Champions_At_Work-_Jagat_Kalyan_Kumar.mp4","alt_tag":"","sort_order":0,"company_id":6}]}]
+/// posts : [{"id":"78","title":"Champions At Work- Jagat Kalyan Kumar","post_type_id":"3","post_category_id":"","short_description":"","description":"<html>\n<head>\n\t<title></title>\n</head>\n<body>\n<p>Meet Jagat Kalyan Kumar, Quality Assurance Manager at our Machinery Division in Raipur, Chhattisgarh. Passionate about technology and heavy machinery, Jagat is one of the many young engineers working tirelessly to build the nation of our dreams. He is one of our <a dir=\"auto\" href=\"https://www.youtube.com/hashtag/championsatwork\" spellcheck=\"false\">#ChampionsAtWork</a></p>\n</body>\n</html>\n","user_id":"","slug":"","location":"","meta_title":"","meta_keywords":"","meta_description":"","status":"1","social_media_type":"","social_media_link":"","schedule_timestamp":"09 Dec 2022","save_timestamp":"09 Dec 2022","featured_image":"https://jsp.coronation.in/api/assets/upload/feature_image/1670603761_Screenshot_2022-12-09_at_9.55.07_PM.png","likes_count":0,"shares_count":12,"bookmark_count":0,"is_liked":0,"is_bookmarked":0,"media":[{"post_id":78,"file_name":"1670603263_Champions_At_Work-_Jagat_Kalyan_Kumar.mp4","file_size":"20762424","file_type":"video/mp4","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670603263_Champions_At_Work-_Jagat_Kalyan_Kumar.mp4","alt_tag":"","sort_order":0,"company_id":6}]}]
 
 PostListResponse postListResponseFromJson(String str) => PostListResponse.fromJson(json.decode(str));
 String postListResponseToJson(PostListResponse data) => json.encode(data.toJson());
@@ -64,11 +64,13 @@ PostListResponse copyWith({  num? success,
 /// meta_keywords : ""
 /// meta_description : ""
 /// status : "1"
-/// schedule_timestamp : "01 Jan 1970"
-/// save_timestamp : "01 Jan 1970"
+/// social_media_type : ""
+/// social_media_link : ""
+/// schedule_timestamp : "09 Dec 2022"
+/// save_timestamp : "09 Dec 2022"
 /// featured_image : "https://jsp.coronation.in/api/assets/upload/feature_image/1670603761_Screenshot_2022-12-09_at_9.55.07_PM.png"
-/// likes_count : 1
-/// shares_count : 0
+/// likes_count : 0
+/// shares_count : 12
 /// bookmark_count : 0
 /// is_liked : 0
 /// is_bookmarked : 0
@@ -91,6 +93,8 @@ class PostsData {
       String? metaKeywords, 
       String? metaDescription, 
       String? status, 
+      String? socialMediaType, 
+      String? socialMediaLink, 
       String? scheduleTimestamp, 
       String? saveTimestamp, 
       String? featuredImage, 
@@ -113,6 +117,8 @@ class PostsData {
     _metaKeywords = metaKeywords;
     _metaDescription = metaDescription;
     _status = status;
+    _socialMediaType = socialMediaType;
+    _socialMediaLink = socialMediaLink;
     _scheduleTimestamp = scheduleTimestamp;
     _saveTimestamp = saveTimestamp;
     _featuredImage = featuredImage;
@@ -138,6 +144,8 @@ class PostsData {
     _metaKeywords = json['meta_keywords'];
     _metaDescription = json['meta_description'];
     _status = json['status'];
+    _socialMediaType = json['social_media_type'];
+    _socialMediaLink = json['social_media_link'];
     _scheduleTimestamp = json['schedule_timestamp'];
     _saveTimestamp = json['save_timestamp'];
     _featuredImage = json['featured_image'];
@@ -166,6 +174,8 @@ class PostsData {
   String? _metaKeywords;
   String? _metaDescription;
   String? _status;
+  String? _socialMediaType;
+  String? _socialMediaLink;
   String? _scheduleTimestamp;
   String? _saveTimestamp;
   String? _featuredImage;
@@ -188,6 +198,8 @@ PostsData copyWith({  String? id,
   String? metaKeywords,
   String? metaDescription,
   String? status,
+  String? socialMediaType,
+  String? socialMediaLink,
   String? scheduleTimestamp,
   String? saveTimestamp,
   String? featuredImage,
@@ -210,6 +222,8 @@ PostsData copyWith({  String? id,
   metaKeywords: metaKeywords ?? _metaKeywords,
   metaDescription: metaDescription ?? _metaDescription,
   status: status ?? _status,
+  socialMediaType: socialMediaType ?? _socialMediaType,
+  socialMediaLink: socialMediaLink ?? _socialMediaLink,
   scheduleTimestamp: scheduleTimestamp ?? _scheduleTimestamp,
   saveTimestamp: saveTimestamp ?? _saveTimestamp,
   featuredImage: featuredImage ?? _featuredImage,
@@ -233,6 +247,8 @@ PostsData copyWith({  String? id,
   String? get metaKeywords => _metaKeywords;
   String? get metaDescription => _metaDescription;
   String? get status => _status;
+  String? get socialMediaType => _socialMediaType;
+  String? get socialMediaLink => _socialMediaLink;
   String? get scheduleTimestamp => _scheduleTimestamp;
   String? get saveTimestamp => _saveTimestamp;
   String? get featuredImage => _featuredImage;
@@ -246,14 +262,14 @@ PostsData copyWith({  String? id,
   set setIsLikeMain(num value) {
     _isLiked = value;
   }
-  set setIsBookmarked(num value) {
-    _isBookmarked = value;
-  }
 
   set setSharesCount(num value) {
     _sharesCount = value;
   }
 
+  set setIsBookmarked(num value) {
+    _isBookmarked = value;
+  }
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -270,6 +286,8 @@ PostsData copyWith({  String? id,
     map['meta_keywords'] = _metaKeywords;
     map['meta_description'] = _metaDescription;
     map['status'] = _status;
+    map['social_media_type'] = _socialMediaType;
+    map['social_media_link'] = _socialMediaLink;
     map['schedule_timestamp'] = _scheduleTimestamp;
     map['save_timestamp'] = _saveTimestamp;
     map['featured_image'] = _featuredImage;

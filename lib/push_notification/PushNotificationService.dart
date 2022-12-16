@@ -5,9 +5,11 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import '../constant/global_context.dart';
 import '../screen/BlogDetailsScreen.dart';
 import '../screen/EventDetailsScreen.dart';
+import '../screen/LeadershipDetailsScreen.dart';
 import '../screen/MagazineListScreen.dart';
 import '../screen/MediaCoverageDetailsScreen.dart';
 import '../screen/NewsDetailsScreen.dart';
+import '../screen/SocialWallScreen.dart';
 import '../screen/VideoDetailsPage.dart';
 import '../screen/tabcontrol/bottom_navigation_bar_screen.dart';
 import '../utils/app_utils.dart';
@@ -93,7 +95,14 @@ class PushNotificationService {
       {
         if(postId.toString().isNotEmpty)
         {
-          if(contentId == "2")
+          if(contentId == "1")
+          {
+            NavigationService.navigatorKey.currentState!.push(
+              MaterialPageRoute(
+                  builder: (context) =>  SocialWallScreen()),
+            );
+          }
+          else if(contentId == "2")
           {
             NavigationService.navigatorKey.currentState!.push(
               MaterialPageRoute(
@@ -117,6 +126,13 @@ class PushNotificationService {
           else if(contentId == "5")
           {
             // for image
+            NavigationService.navigatorKey.currentState!.push(
+              MaterialPageRoute(
+                  builder: (context) =>  BottomNavigationBarScreen(1)),
+            );
+
+            NavigationService.notif_type = "";
+            NavigationService.notif_post_id = "";
           }
           else if(contentId == "6")
           {
@@ -137,6 +153,13 @@ class PushNotificationService {
             NavigationService.navigatorKey.currentState!.push(
               MaterialPageRoute(
                   builder: (context) =>  MediaCoverageDetailsScreen(postId.toString())),
+            );
+          }
+          else if(contentId == "10")
+          {
+            NavigationService.navigatorKey.currentState!.push(
+              MaterialPageRoute(
+                  builder: (context) =>  LeadershipDetailsScreen(postId.toString())),
             );
           }
           else
@@ -187,10 +210,10 @@ class PushNotificationService {
           // This function handles the click in the notification when the app is in foreground
           // Get.toNamed(NOTIFICATIOINS_ROUTE);
           print('onMessage Data Payload On TAP :' + message.toString() + "  <><>");
-        /*  NavigationService.navigatorKey.currentState!.push(
+          NavigationService.navigatorKey.currentState!.push(
             MaterialPageRoute(
                 builder: (context) =>  BottomNavigationBarScreen(0)),
-          );*/
+          );
         });
     // onMessage is called when the app is in foreground and a notification is received
     FirebaseMessaging.onMessage.listen((RemoteMessage? message) {

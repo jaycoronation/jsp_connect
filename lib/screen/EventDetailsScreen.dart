@@ -23,10 +23,10 @@ class EventDetailsScreen extends StatefulWidget {
   const EventDetailsScreen(this.postId, {Key? key}) : super(key: key);
 
   @override
-  _NewsDetailsScreen createState() => _NewsDetailsScreen();
+  _EventDetailsScreen createState() => _EventDetailsScreen();
 }
 
-class _NewsDetailsScreen extends BaseState<EventDetailsScreen> {
+class _EventDetailsScreen extends BaseState<EventDetailsScreen> {
   late final PostDetails postDetailsData;
   num isLiked = 0;
   num isBookMark = 0;
