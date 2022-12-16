@@ -81,7 +81,7 @@ class _MediaCoverageScreen extends BaseState<MediaCoverageScreen> {
           appBar: AppBar(
             toolbarHeight: 55,
             automaticallyImplyLeading: false,
-            backgroundColor: black,
+            backgroundColor: white,
             elevation: 0,
             centerTitle: false,
             title: Padding(
@@ -101,7 +101,7 @@ class _MediaCoverageScreen extends BaseState<MediaCoverageScreen> {
                         alignment: Alignment.topLeft,
                         padding: const EdgeInsets.all(12),
                         child: Image.asset('assets/images/ic_back_button.png',
-                          height: 32, width: 32,color: white),
+                          height: 32, width: 32,color: black),
                       )),
                   Container(
                     alignment: Alignment.centerLeft,
@@ -111,7 +111,7 @@ class _MediaCoverageScreen extends BaseState<MediaCoverageScreen> {
                       "Media Coverage",
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
-                          color: white,
+                          color: black,
                           fontSize: 18),
                     ),
                   ),
@@ -120,7 +120,7 @@ class _MediaCoverageScreen extends BaseState<MediaCoverageScreen> {
               ),
             ),
           ),
-          backgroundColor: black,
+          backgroundColor: white,
           resizeToAvoidBottomInset: true,
           body: _isLoading
               ? const LoadingWidget() : listMedia.isEmpty ? MyNoDataWidget(msg: 'No media coverage data found!')

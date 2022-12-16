@@ -92,7 +92,7 @@ class _AlbumScreen extends BaseState<AlbumScreen> {
         appBar: AppBar(
           toolbarHeight: 55,
           automaticallyImplyLeading: false,
-          backgroundColor: black,
+          backgroundColor: white,
           elevation: 0,
           centerTitle: false,
           title: Row(
@@ -115,14 +115,14 @@ class _AlbumScreen extends BaseState<AlbumScreen> {
                 margin: const EdgeInsets.only(left: 5),
                 child: const Text(
                   "Photo Gallery",
-                  style:TextStyle(fontWeight: FontWeight.w600, color: white, fontFamily: roboto),
+                  style:TextStyle(fontWeight: FontWeight.w600, color: black, fontFamily: roboto),
                 ),
               ),
               const Spacer(),
             ],
           ),
         ),
-        backgroundColor: black,
+        backgroundColor: white,
         resizeToAvoidBottomInset: true,
         body: _isLoading
             ? const LoadingWidget()

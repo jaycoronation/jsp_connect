@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pretty_http_logger/pretty_http_logger.dart';
 
 import '../constant/api_end_point.dart';
@@ -51,11 +52,12 @@ class _AboutScreen extends BaseState<AboutScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return WillPopScope(
         child: Scaffold(
           backgroundColor: black,
           resizeToAvoidBottomInset: false,
-          appBar: AppBar(toolbarHeight: 0, elevation: 0),
+          appBar: AppBar(toolbarHeight: 0, elevation: 0,systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: white,statusBarIconBrightness: Brightness.dark,statusBarBrightness: Brightness.dark),),
           body: _isLoading
               ? const LoadingWidget()
                : SingleChildScrollView(
@@ -85,10 +87,6 @@ class _AboutScreen extends BaseState<AboutScreen> {
                                      0.0,
                                      1.0
                                    ]
-                               ),
-                               borderRadius: const BorderRadius.only(
-                                   topRight: Radius.circular(20),
-                                   topLeft: Radius.circular(20)
                                ),
                              ),
                            ),

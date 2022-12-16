@@ -78,7 +78,7 @@ class _VideoScreen extends BaseState<VideoScreen> {
       appBar: AppBar(
         toolbarHeight: 55,
         automaticallyImplyLeading: false,
-        backgroundColor: black,
+        backgroundColor: white,
         elevation: 0,
         centerTitle: false,
         title: Padding(
@@ -108,7 +108,7 @@ class _VideoScreen extends BaseState<VideoScreen> {
                 margin: const EdgeInsets.only(left: 5),
                 child: const Text(
                   "Videos",
-                  style:TextStyle(fontWeight: FontWeight.w600, color: white, fontFamily: roboto),
+                  style:TextStyle(fontWeight: FontWeight.w600, color: black, fontFamily: roboto),
                 ),
               ),
               const Spacer(),
@@ -116,7 +116,7 @@ class _VideoScreen extends BaseState<VideoScreen> {
           ),
         ),
       ),
-      backgroundColor: black,
+      backgroundColor: white,
       resizeToAvoidBottomInset: true,
       body: _isLoading
           ? const LoadingWidget()

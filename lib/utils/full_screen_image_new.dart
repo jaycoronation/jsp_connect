@@ -31,9 +31,9 @@ class FullScreenImageNew extends StatelessWidget {
     ));*/
 
     return Scaffold(
-        backgroundColor: black,
+        backgroundColor: white,
         body: Container(
-          color: black,
+          color: white,
           child: Stack(
             children: [
              /* PageView.builder(
@@ -66,7 +66,7 @@ class FullScreenImageNew extends StatelessWidget {
                 },
                 scrollPhysics: const BouncingScrollPhysics(),
                 backgroundDecoration: const BoxDecoration(
-                  color: black,
+                  color: white,
                 ),
               ),
               Container(
@@ -77,7 +77,7 @@ class FullScreenImageNew extends StatelessWidget {
                     Navigator.pop(context);
                   },
                   icon: const Icon(Icons.close_rounded),
-                  color: white,
+                  color: black,
                   iconSize: 32,
                 ),
               ),
@@ -94,8 +94,8 @@ class FullScreenImageNew extends StatelessWidget {
                     File(path).writeAsBytes(bytes);
                     shareFileWithText("",path);
                   },
-                  icon: Image.asset('assets/images/share.png', height: 24, width: 24, color: white),
-                  color: white,
+                  icon: Image.asset('assets/images/share.png', height: 24, width: 24, color: black),
+                  color: black,
                   iconSize: 32,
                 ),
               ),
@@ -109,7 +109,7 @@ class FullScreenImageNew extends StatelessWidget {
                       effect: const ExpandingDotsEffect(
                         dotHeight: 6,
                         dotWidth: 6,
-                        activeDotColor: white,
+                        activeDotColor: black,
                         dotColor: Colors.grey,
                         // strokeWidth: 5,
                       ),

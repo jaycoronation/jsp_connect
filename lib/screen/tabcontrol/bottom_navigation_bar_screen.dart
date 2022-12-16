@@ -164,54 +164,57 @@ class _BottomNavigationBarScreenState extends BaseState<BottomNavigationBarScree
       },
       child: Scaffold(
         resizeToAvoidBottomInset: true,
-        backgroundColor: black,
+        backgroundColor: white,
         extendBody: true,
         body: FadeIndexedStack(
           _currentIndex,_pages ,const Duration(
           milliseconds: 400,
         )
         ),
-        bottomNavigationBar: Container(
-            decoration: const BoxDecoration(
-              color: lightblack,
-              borderRadius: BorderRadius.only(topRight: Radius.circular(30),topLeft: Radius.circular(30),),
-            ),
-            child: ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(30.0),
-                topRight: Radius.circular(30.0),
+        bottomNavigationBar: Material(
+          elevation: 6,
+          child: Container(
+              decoration: const BoxDecoration(
+                color: white,
+                borderRadius: BorderRadius.only(topRight: Radius.circular(30),topLeft: Radius.circular(30),),
               ),
-              child: BottomNavigationBar(
-                key: bottomWidgetKey,
-                items: const <BottomNavigationBarItem>[
-                  BottomNavigationBarItem(
-                    icon: ImageIcon(AssetImage("assets/images/trending.png")),
-                    label: 'Trending',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: ImageIcon(AssetImage("assets/images/news.png")),
-                    label: 'Gallery',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: ImageIcon(AssetImage("assets/images/media.png")),
-                    label: 'Video',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: ImageIcon(AssetImage("assets/images/podcast.png")),
-                    label: 'Blog',
-                  ),
-                ],
-                selectedLabelStyle: const TextStyle(color: white,fontSize: 12,fontFamily: roboto,fontWeight: FontWeight.w400),
-                unselectedLabelStyle: const TextStyle(color: white,fontSize: 12,fontFamily: roboto,fontWeight: FontWeight.w400),
-                backgroundColor: darkblack,
-                type: BottomNavigationBarType.fixed,
-                selectedItemColor: orangeNew,
-                unselectedItemColor: white,
-                currentIndex: _currentIndex,
-                onTap: _onItemTapped,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(30.0),
+                  topRight: Radius.circular(30.0),
+                ),
+                child: BottomNavigationBar(
+                  key: bottomWidgetKey,
+                  items: const <BottomNavigationBarItem>[
+                    BottomNavigationBarItem(
+                      icon: ImageIcon(AssetImage("assets/images/trending.png")),
+                      label: 'Trending',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: ImageIcon(AssetImage("assets/images/news.png")),
+                      label: 'Gallery',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: ImageIcon(AssetImage("assets/images/media.png")),
+                      label: 'Video',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: ImageIcon(AssetImage("assets/images/podcast.png")),
+                      label: 'Blog',
+                    ),
+                  ],
+                  selectedLabelStyle: const TextStyle(color: black,fontSize: 12,fontFamily: roboto,fontWeight: FontWeight.w400),
+                  unselectedLabelStyle: const TextStyle(color: black,fontSize: 12,fontFamily: roboto,fontWeight: FontWeight.w400),
+                  backgroundColor: white,
+                  type: BottomNavigationBarType.fixed,
+                  selectedItemColor: orangeNew,
+                  unselectedItemColor: black,
+                  currentIndex: _currentIndex,
+                  onTap: _onItemTapped,
+                ),
               ),
             ),
-          ),
+        ),
       ),
     );
   }

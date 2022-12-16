@@ -76,7 +76,7 @@ SocialMedia copyWith({  String? description,
   date: date ?? _date,
   url: url ?? _url,
   image: image ?? _image,
-  isLiked: isLiked ?? _isLiked,
+  isLiked: isLiked,
 );
   String? get description => _description;
   String? get social => _social;

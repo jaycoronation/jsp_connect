@@ -5,6 +5,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:jspl_connect/screen/tabcontrol/bottom_navigation_bar_screen.dart';
 import 'package:jspl_connect/widget/no_data.dart';
+import 'package:like_button/like_button.dart';
 import 'package:pretty_http_logger/pretty_http_logger.dart';
 import 'package:share/share.dart';
 
@@ -53,11 +54,11 @@ class _BlogDetailsScreen extends BaseState<BlogDetailsScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
         child: Scaffold(
-          backgroundColor: black,
+          backgroundColor: white,
           appBar: AppBar(
             toolbarHeight: 55,
             automaticallyImplyLeading: false,
-            backgroundColor: black,
+            backgroundColor: white,
             elevation: 0,
             centerTitle: false,
             titleSpacing: 0,
@@ -81,88 +82,123 @@ class _BlogDetailsScreen extends BaseState<BlogDetailsScreen> {
                 child: Container(
                   alignment: Alignment.center,
                   padding: const EdgeInsets.all(6),
-                  child: Image.asset('assets/images/ic_back_button.png', height: 22, width: 22, color: white),
+                  child: Image.asset('assets/images/ic_back_button.png', height: 22, width: 22, color: black),
                 )),
             title: Container(
               alignment: Alignment.centerLeft,
               child: const Text(
                 "",
-                style: TextStyle(fontWeight: FontWeight.w600, color: white, fontSize: 18),
+                style: TextStyle(fontWeight: FontWeight.w600, color: black, fontSize: 18),
               ),
             ),
             actions: [
-              Visibility(visible: !_isNoData,child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    if(isLiked == 1)
-                    {
-                      isLiked = 0;
-                    }
-                    else
-                    {
-                      isLiked = 1;
-                    }
-                  });
-                  _likePost();
-                },
-                behavior: HitTestBehavior.opaque,
-                child:  Container(
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.all(6),
-                  margin: const EdgeInsets.only(right: 8),
-                  child: Image.asset(isLiked == 1 ? "assets/images/like_filled.png" : "assets/images/like.png", height: 22, width: 22,color: isLiked == 1 ? Colors.yellow : white,),
+
+              Visibility(
+                visible: !_isNoData,
+                child: LikeButton(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  size: 22,
+                  isLiked: isLiked == 1,
+                  circleColor: const CircleColor(
+                      start: yellow, end: yellowNew),
+                  bubblesColor: const BubblesColor(
+                    dotPrimaryColor: yellow,
+                    dotSecondaryColor: yellowNew,
+                  ),
+                  likeBuilder: (bool isLiked) {
+                    return Image.asset(
+                        isLiked
+                        ? "assets/images/like_filled.png"
+                        : "assets/images/like.png",
+                      color: isLiked ? yellow : black,
+                    );
+                  },
+                  onTap: (isLike) async {
+                    setState(() {
+                      if(isLiked == 1)
+                      {
+                        isLiked = 0;
+                      }
+                      else
+                      {
+                        isLiked = 1;
+                      }
+                    });
+                    _likePost();
+                    return true;
+                  },
                 ),
-              )),
-              Visibility(visible:  !_isNoData,child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    if(isBookMark == 1)
-                    {
-                      isBookMark = 0;
-                    }
-                    else
-                    {
-                      isBookMark = 1;
-                    }
-                  });
-                  _bookmarkPost();
-                },
-                behavior: HitTestBehavior.opaque,
-                child:  Container(
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.all(6),
-                  margin: const EdgeInsets.only(right: 8),
-                  child: Image.asset(isBookMark == 1 ? "assets/images/saved_fill.png" : "assets/images/saved.png", height: 22, width: 22,color: isBookMark == 1 ? Colors.yellow : white,),
-                ),
-              )),
-              Visibility(visible:  !_isNoData,child: GestureDetector(
-                onTap: () {
-                  if(postDetailsData.media!.isNotEmpty)
-                  {
-                    if(postDetailsData.media![0].media.toString().isNotEmpty)
-                    {
-                      Share.share(postDetailsData.media![0].media.toString());
-                      shareCount = shareCount + 1;
-                      _sharePost(postId);
-                    }
-                    else
-                    {
-                      showSnackBar("Blog link not found.", context);
-                    }
-                  }
-                  else
-                  {
-                    showSnackBar("Blog link not found.", context);
-                  }
-                },
-                behavior: HitTestBehavior.opaque,
-                child: Container(
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.all(6),
-                  margin: const EdgeInsets.only(right: 8),
-                  child: Image.asset('assets/images/share.png', height: 22, width: 22, color: white),
-                ),
-              )),
+              ),
+              Container(width: 8,),
+              Visibility(
+                  visible: !_isNoData,
+                  child: LikeButton(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    size: 22,
+                    isLiked: isBookMark == 1,
+                    circleColor: const CircleColor(
+                        start: yellow, end: yellowNew),
+                    bubblesColor: const BubblesColor(
+                      dotPrimaryColor: yellow,
+                      dotSecondaryColor: yellowNew,
+                    ),
+                    likeBuilder: (bool isLiked) {
+                      return Image.asset(
+                        isLiked
+                            ? "assets/images/saved_fill.png"
+                            : "assets/images/saved.png",
+                        color: isLiked ? yellow : black,
+                      );
+                    },
+                    onTap: (isLike) async {
+                      setState(() {
+                        if(isBookMark == 1)
+                        {
+                          isBookMark = 0;
+                        }
+                        else
+                        {
+                          isBookMark = 1;
+                        }
+                      });
+                      _likePost();
+                      return true;
+                    },
+                  )
+              ),
+              Container(width: 8,),
+              Visibility(
+                  visible:  !_isNoData,
+                  child: GestureDetector(
+                    onTap: () {
+                      if(postDetailsData.media!.isNotEmpty)
+                      {
+                        if(postDetailsData.media![0].media.toString().isNotEmpty)
+                        {
+                          Share.share(postDetailsData.media![0].media.toString());
+                          shareCount = shareCount + 1;
+                          _sharePost(postId);
+                        }
+                        else
+                        {
+                          showSnackBar("Blog link not found.", context);
+                        }
+                      }
+                      else
+                      {
+                        showSnackBar("Blog link not found.", context);
+                      }
+                    },
+                    behavior: HitTestBehavior.opaque,
+                    child: Container(
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.all(6),
+                      margin: const EdgeInsets.only(right: 8),
+                      child: Image.asset('assets/images/share.png', height: 22, width: 22, color: black),
+                    ),
+                  )),
             ],
           ),
           body: _isLoading
@@ -209,205 +245,206 @@ class _BlogDetailsScreen extends BaseState<BlogDetailsScreen> {
                 Container(
                   margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
                   child: Text(postDetailsData.title.toString(),
-                      style: const TextStyle(color: white, fontSize: 22, fontWeight: titleFont, fontFamily: aileron)),
+                      style: const TextStyle(color: black, fontSize: 22, fontWeight: titleFont, fontFamily: aileron)),
                 ),
                 Container(
-                  margin: EdgeInsets.only(left: 16),
+                  margin: const EdgeInsets.only(left: 16),
                   child: Row(
                     children: [
-                      Text(postDetailsData.location.toString(), style: TextStyle(fontWeight: FontWeight.w400, fontFamily: aileron, fontSize: 12, color: lightGray)),
+                      Text(postDetailsData.location.toString(), style: const TextStyle(fontWeight: FontWeight.w400, fontFamily: aileron, fontSize: 12, color: black)),
                       postDetailsData.location.toString().isNotEmpty ? Container(
                         width: 6,
                         height: 6,
                         margin: const EdgeInsets.only(left: 6,right: 6),
                         decoration: const BoxDecoration(
-                          color: lightGray,
+                          color: black,
                           shape: BoxShape.circle,
                         ),
                       ) : Container(),
-                      Text(postDetailsData.saveTimestamp.toString(), style: TextStyle(
+                      Text(postDetailsData.saveTimestamp.toString(), style: const TextStyle(
                           fontWeight: FontWeight.w400,
                           fontFamily: aileron, fontSize: 12,
-                          color: white)),
+                          color: black)),
                     ],
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.fromLTRB(16, 22, 16, 8),
                   child: HtmlWidget(postDetailsData.description.toString(),
-                      textStyle: const TextStyle(height: 1.5, color: white, fontSize: 16, fontWeight: FontWeight.w400, fontFamily: robotoFinal)),
+                      textStyle: const TextStyle(height: 1.5, color: black, fontSize: 16, fontWeight: FontWeight.w400, fontFamily: robotoFinal)),
                 ),
                 Container(
                   margin: const EdgeInsets.fromLTRB(12, 6, 12, 0),
                   child: const Text(
                     "Related Blogs",
-                    style: TextStyle(fontFamily: roboto, fontSize: 17, color: white, fontWeight: FontWeight.w800),
+                    style: TextStyle(fontFamily: roboto, fontSize: 17, color: black, fontWeight: FontWeight.w800),
                   ),
                 ),
                 postDetailsData.reatedPosts!.isNotEmpty
                     ? AnimationLimiter(
-                  child: ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: postDetailsData.reatedPosts!.length,
-                    itemBuilder: (context, index) {
-                      return AnimationConfiguration.staggeredList(
-                        position: index,
-                        duration: const Duration(milliseconds: 375),
-                        child: SlideAnimation(
-                          verticalOffset: 50.0,
-                          child: FadeInAnimation(
-                            child: GestureDetector(
-                              onTap: () async {
-                                final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => BlogDetailsScreen(postDetailsData.reatedPosts![index].id.toString())));
-                                print("result ===== $result");
-                                setState(() {
-                                  var data = result.toString().split("|");
-                                  for (int i = 0; i < postDetailsData.reatedPosts!.length; i++) {
-                                    if(postDetailsData.reatedPosts![i].id == data[0])
-                                    {
-                                      postDetailsData.reatedPosts![i].setSharesCount = num.parse(data[1]);
-                                      break;
-                                    }
-                                  }
-                                });
-                              },
-                              child: Container(
-                                  margin: const EdgeInsets.only(left: 14, right: 14, top: 14),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      border: Border.all(width: 0.6, color: white.withOpacity(0.4), style: BorderStyle.solid)
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                      child: ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: postDetailsData.reatedPosts!.length,
+                        itemBuilder: (context, index) {
+                          return AnimationConfiguration.staggeredList(
+                            position: index,
+                            duration: const Duration(milliseconds: 375),
+                            child: SlideAnimation(
+                              verticalOffset: 50.0,
+                              child: FadeInAnimation(
+                                child: GestureDetector(
+                                  onTap: () async {
+                                    final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => BlogDetailsScreen(postDetailsData.reatedPosts![index].id.toString())));
+                                    print("result ===== $result");
+                                    setState(() {
+                                      var data = result.toString().split("|");
+                                      for (int i = 0; i < postDetailsData.reatedPosts!.length; i++) {
+                                        if(postDetailsData.reatedPosts![i].id == data[0])
+                                        {
+                                          postDetailsData.reatedPosts![i].setSharesCount = num.parse(data[1]);
+                                          break;
+                                        }
+                                      }
+                                    });
+                                  },
+                                  child: Container(
+                                      margin: const EdgeInsets.only(left: 14, right: 14, top: 14),
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(20),
+                                          border: Border.all(width: 0.6, color: black.withOpacity(0.4), style: BorderStyle.solid)
+                                      ),
+                                      child: Column(
                                         children: [
-                                          Expanded(
-                                            child: Column(
-                                              children: [
-                                                Container(
-                                                    alignment: Alignment.centerLeft,
-                                                    margin: EdgeInsets.only(left: 14, right: 22, top:postDetailsData.reatedPosts![index].saveTimestamp.toString().isNotEmpty ? 10 : 22),
-                                                    child: Text(
-                                                      postDetailsData.reatedPosts![index].title.toString().trim(),
-                                                      overflow: TextOverflow.clip,
-                                                      textAlign: TextAlign.start,
-                                                      style: TextStyle(
-                                                          fontWeight: titleFont,
-                                                          fontSize: 16,
-                                                          fontFamily: aileron,
-                                                          overflow: TextOverflow.clip,
-                                                          color: white),
-                                                    )),
-                                              ],
-                                            ),
-                                          ),
-                                          Stack(
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              Container(
-                                                margin: const EdgeInsets.only( right: 10,top: 12),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.transparent,
-                                                  borderRadius: BorderRadius.circular(30),
+                                              Expanded(
+                                                child: Column(
+                                                  children: [
+                                                    Container(
+                                                        alignment: Alignment.centerLeft,
+                                                        margin: EdgeInsets.only(left: 14, right: 22, top:postDetailsData.reatedPosts![index].saveTimestamp.toString().isNotEmpty ? 10 : 22),
+                                                        child: Text(
+                                                          postDetailsData.reatedPosts![index].title.toString().trim(),
+                                                          overflow: TextOverflow.clip,
+                                                          textAlign: TextAlign.start,
+                                                          style: const TextStyle(
+                                                              fontWeight: titleFont,
+                                                              fontSize: 16,
+                                                              fontFamily: aileron,
+                                                              overflow: TextOverflow.clip,
+                                                              color: black),
+                                                        )),
+                                                  ],
                                                 ),
-                                                height: 80,
-                                                width: 80,
-                                                child: ClipRRect(
-                                                  borderRadius: BorderRadius.circular(20), // Image border
-                                                  child: SizedBox.fromSize(
-                                                    size: const Size.fromRadius(48), // Image radius
-                                                    child: Image.network(
-                                                      postDetailsData.reatedPosts![index].featuredImage.toString(),
-                                                      fit: BoxFit.cover,
-                                                      width: MediaQuery.of(context).size.width,
-                                                      alignment: Alignment.topRight,
+                                              ),
+                                              Stack(
+                                                children: [
+                                                  Container(
+                                                    margin: const EdgeInsets.only( right: 10,top: 12),
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.transparent,
+                                                      borderRadius: BorderRadius.circular(30),
+                                                    ),
+                                                    height: 80,
+                                                    width: 80,
+                                                    child: ClipRRect(
+                                                      borderRadius: BorderRadius.circular(20), // Image border
+                                                      child: SizedBox.fromSize(
+                                                        size: const Size.fromRadius(48), // Image radius
+                                                        child: Image.network(
+                                                          postDetailsData.reatedPosts![index].featuredImage.toString(),
+                                                          fit: BoxFit.cover,
+                                                          width: MediaQuery.of(context).size.width,
+                                                          alignment: Alignment.topRight,
+                                                        ),
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
+                                                ],
                                               ),
                                             ],
                                           ),
-                                        ],
-                                      ),
-                                      Container(
-                                        margin: const EdgeInsets.fromLTRB(18, 38, 18, 12),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: [
-                                            Row(
+                                          Container(
+                                            margin: const EdgeInsets.fromLTRB(18, 38, 18, 12),
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.center,
                                               children: [
-                                                Text(postDetailsData.reatedPosts![index].location.toString(), style: TextStyle(fontWeight: FontWeight.w400, fontFamily: aileron, fontSize: 12, color: lightGray)),
-                                                postDetailsData.reatedPosts![index].location.toString().isNotEmpty ? Container(
-                                                  width: 6,
-                                                  height: 6,
-                                                  margin: const EdgeInsets.only(left: 6,right: 6),
-                                                  decoration: const BoxDecoration(
-                                                    color: lightGray,
-                                                    shape: BoxShape.circle,
+                                                Row(
+                                                  children: [
+                                                    Text(postDetailsData.reatedPosts![index].location.toString(), style: const TextStyle(fontWeight: FontWeight.w400, fontFamily: aileron, fontSize: 12, color: black)),
+                                                    postDetailsData.reatedPosts![index].location.toString().isNotEmpty ? Container(
+                                                      width: 6,
+                                                      height: 6,
+                                                      margin: const EdgeInsets.only(left: 6,right: 6),
+                                                      decoration: const BoxDecoration(
+                                                        color: black,
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                    ) : Container(),
+                                                    Text(postDetailsData.reatedPosts![index].saveTimestamp.toString(), style: const TextStyle(
+                                                        fontWeight: FontWeight.w400,
+                                                        fontFamily: aileron, fontSize: 12,
+                                                        color: black)),
+                                                  ],
+                                                ),
+                                                const Spacer(),
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    if(postDetailsData.reatedPosts![index].media!.isNotEmpty)
+                                                    {
+                                                      if(postDetailsData.reatedPosts![index].media![0].media.toString().isNotEmpty)
+                                                      {
+                                                        Share.share(postDetailsData.reatedPosts![index].media![0].media.toString());
+                                                        _sharePost(postDetailsData.reatedPosts![index].id.toString());
+                                                        setState(() {
+                                                          postDetailsData.reatedPosts![index].setSharesCount = postDetailsData.reatedPosts![index].sharesCount! + 1;
+                                                        });
+                                                      }
+                                                      else
+                                                      {
+                                                        showSnackBar("Blog link not found.", context);
+                                                      }
+                                                    }
+                                                    else
+                                                    {
+                                                      showSnackBar("Blog link not found.", context);
+                                                    }
+                                                  },
+                                                  behavior: HitTestBehavior.opaque,
+                                                  child:  Container(
+                                                    width: 32,
+                                                    height: 32,
+                                                    padding: const EdgeInsets.all(6),
+                                                    child: Image.asset("assets/images/share.png", height: 22,
+                                                        width: 22,color: black),
                                                   ),
-                                                ) : Container(),
-                                                Text(postDetailsData.reatedPosts![index].saveTimestamp.toString(), style: TextStyle(
-                                                    fontWeight: FontWeight.w400,
-                                                    fontFamily: aileron, fontSize: 12,
-                                                    color: white)),
+                                                ),
+                                                Text(
+                                                  postDetailsData.reatedPosts![index].sharesCount.toString(),
+                                                  textAlign: TextAlign.center,
+                                                  style: const TextStyle(
+                                                      fontSize: 14, fontWeight: FontWeight.w400, fontFamily: roboto, color: black),
+                                                ),
                                               ],
                                             ),
-                                            const Spacer(),
-                                            GestureDetector(
-                                              onTap: () {
-                                                if(postDetailsData.reatedPosts![index].media!.isNotEmpty)
-                                                {
-                                                  if(postDetailsData.reatedPosts![index].media![0].media.toString().isNotEmpty)
-                                                  {
-                                                    Share.share(postDetailsData.reatedPosts![index].media![0].media.toString());
-                                                    _sharePost(postDetailsData.reatedPosts![index].id.toString());
-                                                    setState(() {
-                                                      postDetailsData.reatedPosts![index].setSharesCount = postDetailsData.reatedPosts![index].sharesCount! + 1;
-                                                    });
-                                                  }
-                                                  else
-                                                  {
-                                                    showSnackBar("Blog link not found.", context);
-                                                  }
-                                                }
-                                                else
-                                                {
-                                                  showSnackBar("Blog link not found.", context);
-                                                }
-                                              },
-                                              behavior: HitTestBehavior.opaque,
-                                              child:  Container(
-                                                width: 32,
-                                                height: 32,
-                                                padding: const EdgeInsets.all(6),
-                                                child: Image.asset("assets/images/share.png", height: 22,
-                                                    width: 22,color: white),
-                                              ),
-                                            ),
-                                            Text(
-                                              postDetailsData.reatedPosts![index].sharesCount.toString(),
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                  fontSize: 14, fontWeight: FontWeight.w400, fontFamily: roboto, color: white),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  )
+                                          ),
+                                        ],
+                                      )
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                )
+                          );
+                        },
+                      ),
+                    )
                     : Container(),
+                Container(height: 22,)
               ],
             ),
           ),

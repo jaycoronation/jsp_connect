@@ -74,7 +74,7 @@ class ContentPlaceholder extends StatelessWidget {
           Container(
             width: 50.0,
             height: 50.0,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               shape: BoxShape.circle,
               color: Colors.white,
             ),

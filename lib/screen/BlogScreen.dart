@@ -100,7 +100,7 @@ class _BlogScreen extends BaseState<BlogScreen> {
         appBar: AppBar(
           toolbarHeight: 55,
           automaticallyImplyLeading: false,
-          backgroundColor: black,
+          backgroundColor: white,
           elevation: 0,
           centerTitle: false,
           title: Padding(
@@ -126,7 +126,7 @@ class _BlogScreen extends BaseState<BlogScreen> {
                   margin: const EdgeInsets.only(left: 5),
                   child: const Text(
                     "Blog",
-                    style: TextStyle(fontWeight: FontWeight.w600, color: white, fontFamily: roboto),
+                    style: TextStyle(fontWeight: FontWeight.w600, color: black, fontFamily: roboto),
                   ),
                 ),
                 const Spacer(),
@@ -134,7 +134,7 @@ class _BlogScreen extends BaseState<BlogScreen> {
             ),
           ),
         ),
-        backgroundColor: black,
+        backgroundColor: white,
         resizeToAvoidBottomInset: true,
         body: _isLoading
             ? const LoadingWidget()
@@ -172,7 +172,7 @@ class _BlogScreen extends BaseState<BlogScreen> {
                                           margin: const EdgeInsets.only(left: 14, right: 14, top: 14),
                                           decoration: BoxDecoration(
                                               borderRadius: BorderRadius.circular(20),
-                                              border: Border.all(width: 0.6, color: white.withOpacity(0.4), style: BorderStyle.solid)),
+                                              border: Border.all(width: 0.6, color: black.withOpacity(0.4), style: BorderStyle.solid)),
                                           child: Column(
                                             children: [
                                               Row(
@@ -197,7 +197,7 @@ class _BlogScreen extends BaseState<BlogScreen> {
                                                                   fontSize: 16,
                                                                   fontFamily: aileron,
                                                                   overflow: TextOverflow.clip,
-                                                                  foreground: Paint()..shader = linearGradient),
+                                                                  foreground: Paint()..shader = linearGradientForDate),
                                                             )),
                                                       ],
                                                     ),
@@ -239,14 +239,14 @@ class _BlogScreen extends BaseState<BlogScreen> {
                                                       children: [
                                                         Text(blogList[index].location.toString(),
                                                             style: TextStyle(
-                                                                fontWeight: FontWeight.w400, fontFamily: aileron, fontSize: 12, color: lightGray)),
+                                                                fontWeight: FontWeight.w400, fontFamily: aileron, fontSize: 12, color: black)),
                                                         blogList[index].location.toString().isNotEmpty
                                                             ? Container(
                                                                 width: 6,
                                                                 height: 6,
                                                                 margin: const EdgeInsets.only(left: 6, right: 6),
                                                                 decoration: const BoxDecoration(
-                                                                  color: lightGray,
+                                                                  color: black,
                                                                   shape: BoxShape.circle,
                                                                 ),
                                                               )

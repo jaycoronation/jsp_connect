@@ -74,7 +74,7 @@ Videos copyWith({  String? image,
   date: date ?? _date,
   title: title ?? _title,
   data: data ?? _data,
-  isLike: isLike ?? _isLike,
+  isLike: isLike,
 );
   String? get image => _image;
   String? get videoUrl => _videoUrl;

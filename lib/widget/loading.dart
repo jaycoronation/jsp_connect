@@ -10,15 +10,15 @@ class LoadingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: black,
+      color: white,
       child: Center(
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Shimmer.fromColors(
-                    baseColor: Colors.grey.shade900,
-                    highlightColor: Colors.grey.shade800,
+                    baseColor: Colors.grey.shade300,
+                    highlightColor: Colors.grey.shade500,
                     enabled: true,
                     child: SingleChildScrollView(
                       physics: const NeverScrollableScrollPhysics(),

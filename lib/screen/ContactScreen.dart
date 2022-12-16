@@ -14,7 +14,7 @@ class ContactScreen extends StatefulWidget {
 class _ContactScreen extends BaseState<ContactScreen> {
 
   final Shader linearGradient = const LinearGradient(
-    colors: <Color>[Color(0xffFFFFFF), Color(0xffaaa9a3)],
+    colors: <Color>[Color(0xff000000), Color(0xffaaa9a3)],
   ).createShader(const Rect.fromLTWH(0.0, 0.0, 800.0, 80.0));
 
 
@@ -22,11 +22,11 @@ class _ContactScreen extends BaseState<ContactScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
         child: Scaffold(
-          backgroundColor: black,
+          backgroundColor: white,
           appBar: AppBar(
             toolbarHeight: 55,
             automaticallyImplyLeading: false,
-            backgroundColor: black,
+            backgroundColor: white,
             elevation: 0,
             centerTitle: false,
             title: Padding(
@@ -43,7 +43,7 @@ class _ContactScreen extends BaseState<ContactScreen> {
                         alignment: Alignment.topLeft,
                         padding: const EdgeInsets.all(6),
                         child: Image.asset('assets/images/ic_back_button.png',
-                          height: 22, width: 22,color: white),
+                          height: 22, width: 22,color: black),
                       )),
                   Container(
                     alignment: Alignment.centerLeft,
@@ -53,7 +53,7 @@ class _ContactScreen extends BaseState<ContactScreen> {
                       "Contact Us",
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
-                          color: white,
+                          color: black,
                           fontSize: 16),
                     ),
                   ),

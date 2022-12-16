@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:jspl_connect/screen/tabcontrol/bottom_navigation_bar_screen.dart';
+import 'package:like_button/like_button.dart';
 import 'package:pretty_http_logger/pretty_http_logger.dart';
 import 'package:share/share.dart';
 import '../constant/api_end_point.dart';
@@ -50,11 +51,11 @@ class _EventDetailsScreen extends BaseState<EventDetailsScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
         child: Scaffold(
-          backgroundColor: black,
+          backgroundColor: white,
           appBar: AppBar(
             toolbarHeight: 55,
             automaticallyImplyLeading: false,
-            backgroundColor: black,
+            backgroundColor: white,
             elevation: 0,
             centerTitle: false,
             title: Padding(
@@ -86,6 +87,7 @@ class _EventDetailsScreen extends BaseState<EventDetailsScreen> {
                           'assets/images/ic_back_button.png',
                           height: 22,
                           width: 22,
+                          color: black,
                         ),
                       )),
                   Container(
@@ -94,7 +96,7 @@ class _EventDetailsScreen extends BaseState<EventDetailsScreen> {
                     margin: const EdgeInsets.only(left: 5),
                     child: const Text(
                       "",
-                      style: TextStyle(fontWeight: FontWeight.w600, color: white, fontSize: 16),
+                      style: TextStyle(fontWeight: FontWeight.w600, color: black, fontSize: 16),
                     ),
                   ),
                   const Spacer(),
@@ -102,84 +104,112 @@ class _EventDetailsScreen extends BaseState<EventDetailsScreen> {
               ),
             ),
             actions: [
+              Visibility(
+                visible: !_isNoData,
+                child: LikeButton(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  size: 22,
+                  isLiked: isLiked == 1,
+                  circleColor: const CircleColor(
+                      start: yellow, end: yellowNew),
+                  bubblesColor: const BubblesColor(
+                    dotPrimaryColor: yellow,
+                    dotSecondaryColor: yellowNew,
+                  ),
+                  likeBuilder: (bool isLiked) {
+                    return Image.asset(
+                      isLiked
+                          ? "assets/images/like_filled.png"
+                          : "assets/images/like.png",
+                      color: isLiked ? yellow : black,
+                    );
+                  },
+                  onTap: (isLike) async {
+                    setState(() {
+                      if(isLiked == 1)
+                      {
+                        isLiked = 0;
+                      }
+                      else
+                      {
+                        isLiked = 1;
+                      }
+                    });
+                    _likePost();
+                    return true;
+                  },
+                ),
+              ),
+              Container(width: 8,),
+              Visibility(
+                  visible: !_isNoData,
+                  child: LikeButton(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    size: 22,
+                    isLiked: isBookMark == 1,
+                    circleColor: const CircleColor(
+                        start: yellow, end: yellowNew),
+                    bubblesColor: const BubblesColor(
+                      dotPrimaryColor: yellow,
+                      dotSecondaryColor: yellowNew,
+                    ),
+                    likeBuilder: (bool isLiked) {
+                      return Image.asset(
+                        isLiked
+                            ? "assets/images/saved_fill.png"
+                            : "assets/images/saved.png",
+                        color: isLiked ? yellow : black,
+                      );
+                    },
+                    onTap: (isLike) async {
+                      setState(() {
+                        if(isBookMark == 1)
+                        {
+                          isBookMark = 0;
+                        }
+                        else
+                        {
+                          isBookMark = 1;
+                        }
+                      });
+                      _likePost();
+                      return true;
+                    },
+                  )
+              ),
+              Container(width: 8,),
             Visibility(
-            visible: !_isNoData,
-            child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    if(isLiked == 1)
+              visible: !_isNoData,
+              child:GestureDetector(
+                  onTap: () {
+                    if(postDetailsData.media!.isNotEmpty)
                     {
-                      isLiked = 0;
-                    }
-                    else
-                    {
-                      isLiked = 1;
-                    }
-                  });
-                  _likePost();
-                },
-                behavior: HitTestBehavior.opaque,
-                child:  Container(
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.all(6),
-                  margin: const EdgeInsets.only(right: 8),
-                  child: Image.asset(isLiked == 1 ? "assets/images/like_filled.png" : "assets/images/like.png", height: 22, width: 22,color: isLiked == 1 ? Colors.yellow : white,),
-                ),
-              )),
-          Visibility(
-            visible: !_isNoData,
-            child:GestureDetector(
-                onTap: () {
-                  setState(() {
-                    if(isBookMark == 1)
-                    {
-                      isBookMark = 0;
-                    }
-                    else
-                    {
-                      isBookMark = 1;
-                    }
-                  });
-                  _bookmarkPost();
-                },
-                behavior: HitTestBehavior.opaque,
-                child:  Container(
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.all(6),
-                  margin: const EdgeInsets.only(right: 8),
-                  child: Image.asset(isBookMark == 1 ? "assets/images/saved_fill.png" : "assets/images/saved.png", height: 22, width: 22,color: isBookMark == 1 ? Colors.yellow : white,),
-                ),
-              )),
-          Visibility(
-            visible: !_isNoData,
-            child:GestureDetector(
-                onTap: () {
-                  if(postDetailsData.media!.isNotEmpty)
-                  {
-                    if(postDetailsData.media![0].media.toString().isNotEmpty)
-                    {
-                      Share.share(postDetailsData.media![0].media.toString());
-                      _sharePost();
+                      if(postDetailsData.media![0].media.toString().isNotEmpty)
+                      {
+                        Share.share(postDetailsData.media![0].media.toString());
+                        _sharePost();
+                      }
+                      else
+                      {
+                        showSnackBar("Event link not found.", context);
+                      }
                     }
                     else
                     {
                       showSnackBar("Event link not found.", context);
                     }
-                  }
-                  else
-                  {
-                    showSnackBar("Event link not found.", context);
-                  }
 
-                },
-                behavior: HitTestBehavior.opaque,
-                child: Container(
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.all(6),
-                  margin: const EdgeInsets.only(right: 8),
-                  child: Image.asset('assets/images/share.png', height: 22, width: 22, color: white),
-                ),
-              )),
+                  },
+                  behavior: HitTestBehavior.opaque,
+                  child: Container(
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.all(6),
+                    margin: const EdgeInsets.only(right: 8),
+                    child: Image.asset('assets/images/share.png', height: 22, width: 22, color: black),
+                  ),
+                )),
             ],
           ),
           body:_isLoading
@@ -214,9 +244,9 @@ class _EventDetailsScreen extends BaseState<EventDetailsScreen> {
                   child: Container(
                     margin: EdgeInsets.fromLTRB(16, 8, 16, 8),
                     decoration: BoxDecoration(
-                        color: white.withOpacity(0.3),
+                        color: black.withOpacity(0.3),
                         borderRadius: BorderRadius.circular(20),
-                        border: Border.all(width: 0.4, color: white.withOpacity(0.3), style: BorderStyle.solid)
+                        border: Border.all(width: 0.4, color: black.withOpacity(0.3), style: BorderStyle.solid)
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
@@ -232,15 +262,15 @@ class _EventDetailsScreen extends BaseState<EventDetailsScreen> {
                 ),
                 Container(
                   margin: EdgeInsets.fromLTRB(16, 8, 16, 8),
-                  child: Text(postDetailsData.title.toString(), style: TextStyle(color: white, fontSize: 22, fontWeight: FontWeight.w500, fontFamily: roboto)),
+                  child: Text(postDetailsData.title.toString(), style: TextStyle(color: black, fontSize: 22, fontWeight: FontWeight.w500, fontFamily: roboto)),
                 ),
                 Container(
                   margin: EdgeInsets.fromLTRB(16, 8, 16, 8),
-                  child: Text(postDetailsData.saveTimestamp.toString(), style: TextStyle(color: white, fontSize: 12, fontWeight: FontWeight.w500, fontFamily: roboto)),
+                  child: Text(postDetailsData.saveTimestamp.toString(), style: TextStyle(color: black, fontSize: 12, fontWeight: FontWeight.w500, fontFamily: roboto)),
                 ),
                 Container(
                   margin: const EdgeInsets.fromLTRB(16, 22, 16, 8),
-                  child: HtmlWidget(postDetailsData.description.toString(),textStyle: const TextStyle(height: 1.5, color: white, fontSize: 16, fontWeight: FontWeight.w500, fontFamily: roboto)),
+                  child: HtmlWidget(postDetailsData.description.toString(),textStyle: const TextStyle(height: 1.5, color: black, fontSize: 16, fontWeight: FontWeight.w500, fontFamily: roboto)),
                 ),
               ],
             ),

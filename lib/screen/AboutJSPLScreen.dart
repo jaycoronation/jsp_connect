@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../constant/colors.dart';
 import '../utils/base_class.dart';
@@ -21,7 +22,7 @@ class _AboutJSPLScreen extends BaseState<AboutJSPLScreen> {
     return WillPopScope(
         child: Scaffold(
           backgroundColor: black,
-          appBar: AppBar(toolbarHeight: 0, elevation: 0),
+          appBar: AppBar(toolbarHeight: 0, elevation: 0,systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: white,statusBarIconBrightness: Brightness.dark,statusBarBrightness: Brightness.dark),),
           body: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,

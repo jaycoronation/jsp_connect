@@ -6,6 +6,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:jspl_connect/screen/tabcontrol/bottom_navigation_bar_screen.dart';
 import 'package:jspl_connect/screen/video_player_screen.dart';
+import 'package:like_button/like_button.dart';
 import 'package:pretty_http_logger/pretty_http_logger.dart';
 import 'package:share/share.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -98,11 +99,11 @@ class _VideoDetailsPage extends BaseState<VideoDetailsPage> {
   Widget build(BuildContext context) {
     return WillPopScope(
         child: Scaffold(
-          backgroundColor: black,
+          backgroundColor: white,
           appBar: AppBar(
             toolbarHeight: 55,
             automaticallyImplyLeading: false,
-            backgroundColor: black,
+            backgroundColor: white,
             elevation: 0,
             centerTitle: false,
             titleSpacing: 0,
@@ -120,65 +121,89 @@ class _VideoDetailsPage extends BaseState<VideoDetailsPage> {
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(18.0),
-                  child: Image.asset('assets/images/ic_back_button.png', height: 16, width: 16, color: white),
+                  child: Image.asset('assets/images/ic_back_button.png', height: 16, width: 16, color: black),
                 )),
             title: const Text(
               "",
-              style: TextStyle(fontWeight: FontWeight.w600, color: white, fontSize: 18),
+              style: TextStyle(fontWeight: FontWeight.w600, color: black, fontSize: 18),
             ),
             actions: [
               Visibility(
-                  visible: !_isNoData,
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        if (isLiked == 1) {
-                          isLiked = 0;
-                        } else {
-                          isLiked = 1;
-                        }
-                      });
-                      _likePost();
-                    },
-                    behavior: HitTestBehavior.opaque,
-                    child: Container(
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.all(6),
-                      margin: const EdgeInsets.only(right: 8),
-                      child: Image.asset(
-                        isLiked == 1 ? "assets/images/like_filled.png" : "assets/images/like.png",
-                        height: 22,
-                        width: 22,
-                        color: isLiked == 1 ? Colors.yellow : white,
-                      ),
-                    ),
-                  )),
+                visible: !_isNoData,
+                child: LikeButton(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  size: 22,
+                  isLiked: isLiked == 1,
+                  circleColor: const CircleColor(
+                      start: yellow, end: yellowNew),
+                  bubblesColor: const BubblesColor(
+                    dotPrimaryColor: yellow,
+                    dotSecondaryColor: yellowNew,
+                  ),
+                  likeBuilder: (bool isLiked) {
+                    return Image.asset(
+                      isLiked
+                          ? "assets/images/like_filled.png"
+                          : "assets/images/like.png",
+                      color: isLiked ? yellow : black,
+                    );
+                  },
+                  onTap: (isLike) async {
+                    setState(() {
+                      if(isLiked == 1)
+                      {
+                        isLiked = 0;
+                      }
+                      else
+                      {
+                        isLiked = 1;
+                      }
+                    });
+                    _likePost();
+                    return true;
+                  },
+                ),
+              ),
+              Container(width: 8,),
               Visibility(
                   visible: !_isNoData,
-                  child: GestureDetector(
-                    onTap: () {
+                  child:  LikeButton(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    size: 22,
+                    isLiked: isBookMark == 1,
+                    circleColor: const CircleColor(
+                        start: yellow, end: yellowNew),
+                    bubblesColor: const BubblesColor(
+                      dotPrimaryColor: yellow,
+                      dotSecondaryColor: yellowNew,
+                    ),
+                    likeBuilder: (bool isLiked) {
+                      return Image.asset(
+                        isLiked
+                            ? "assets/images/saved_fill.png"
+                            : "assets/images/saved.png",
+                        color: isLiked ? yellow : black,
+                      );
+                    },
+                    onTap: (isLike) async {
                       setState(() {
-                        if (isBookMark == 1) {
+                        if(isBookMark == 1)
+                        {
                           isBookMark = 0;
-                        } else {
+                        }
+                        else
+                        {
                           isBookMark = 1;
                         }
                       });
-                      _bookmarkPost();
+                      _likePost();
+                      return true;
                     },
-                    behavior: HitTestBehavior.opaque,
-                    child: Container(
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.all(6),
-                      margin: const EdgeInsets.only(right: 8),
-                      child: Image.asset(
-                        isBookMark == 1 ? "assets/images/saved_fill.png" : "assets/images/saved.png",
-                        height: 22,
-                        width: 22,
-                        color: isBookMark == 1 ? Colors.yellow : white,
-                      ),
-                    ),
-                  )),
+                  )
+              ),
+              Container(width: 8,),
               Visibility(
                   visible: !_isNoData,
                   child: GestureDetector(
@@ -200,7 +225,7 @@ class _VideoDetailsPage extends BaseState<VideoDetailsPage> {
                       alignment: Alignment.center,
                       padding: const EdgeInsets.all(6),
                       margin: const EdgeInsets.only(right: 8),
-                      child: Image.asset('assets/images/share.png', height: 22, width: 22, color: white),
+                      child: Image.asset('assets/images/share.png', height: 22, width: 22, color: black),
                     ),
                   )),
             ],
@@ -250,9 +275,9 @@ class _VideoDetailsPage extends BaseState<VideoDetailsPage> {
                             child: Container(
                               margin: const EdgeInsets.fromLTRB(12, 8, 12, 8),
                               decoration: BoxDecoration(
-                                  color: white.withOpacity(0.4),
+                                  color: black.withOpacity(0.4),
                                   borderRadius: BorderRadius.circular(20),
-                                  border: Border.all(width: 0.5, color: white.withOpacity(0.3), style: BorderStyle.solid)),
+                                  border: Border.all(width: 0.5, color: black.withOpacity(0.3), style: BorderStyle.solid)),
                               child: Stack(
                                 children: [
                                   ClipRRect(
@@ -280,25 +305,25 @@ class _VideoDetailsPage extends BaseState<VideoDetailsPage> {
                           Container(
                             margin: const EdgeInsets.fromLTRB(12, 6, 12, 6),
                             child: Text(postDetailsData.title.toString(),
-                                style: const TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w500, fontFamily: roboto)),
+                                style: const TextStyle(color: Colors.black, fontSize: 22, fontWeight: FontWeight.w500, fontFamily: roboto)),
                           ),
                           Container(
                             margin: const EdgeInsets.fromLTRB(12, 6, 12, 0),
                             child: Text(
                               postDetailsData.saveTimestamp.toString(),
-                              style: TextStyle(fontFamily: roboto, fontSize: 12, color: white, fontWeight: FontWeight.w500),
+                              style: TextStyle(fontFamily: roboto, fontSize: 12, color: black, fontWeight: FontWeight.w500),
                             ),
                           ),
                           Container(
                             margin: const EdgeInsets.fromLTRB(12, 22, 12, 6),
                             child: HtmlWidget(postDetailsData.description.toString(),
-                                textStyle: const TextStyle(height: 1.5, color: white, fontSize: 15, fontWeight: FontWeight.w500, fontFamily: roboto)),
+                                textStyle: const TextStyle(height: 1.5, color: black, fontSize: 15, fontWeight: FontWeight.w500, fontFamily: roboto)),
                           ),
                           Container(
                             margin: const EdgeInsets.fromLTRB(12, 12, 12, 6),
                             child: const Text(
                               "Related Videos",
-                              style: TextStyle(fontFamily: roboto, fontSize: 17, color: white, fontWeight: FontWeight.w800),
+                              style: TextStyle(fontFamily: roboto, fontSize: 17, color: black, fontWeight: FontWeight.w800),
                             ),
                           ),
                           postDetailsData.reatedPosts!.isNotEmpty
@@ -328,7 +353,7 @@ class _VideoDetailsPage extends BaseState<VideoDetailsPage> {
                                                   margin: const EdgeInsets.only(left: 14, right: 14, top: 14),
                                                   decoration: BoxDecoration(
                                                       borderRadius: BorderRadius.circular(20),
-                                                      border: Border.all(width: 0.6, color: white.withOpacity(0.4), style: BorderStyle.solid)),
+                                                      border: Border.all(width: 0.6, color: black.withOpacity(0.4), style: BorderStyle.solid)),
                                                   child: Stack(
                                                     children: [
                                                       Container(
@@ -470,7 +495,7 @@ class _VideoDetailsPage extends BaseState<VideoDetailsPage> {
                                                                         Text(
                                                                           postDetailsData.reatedPosts![index].sharesCount.toString(),
                                                                           textAlign: TextAlign.center,
-                                                                          style: TextStyle(
+                                                                          style: const TextStyle(
                                                                               fontSize: 14,
                                                                               fontWeight: FontWeight.w400,
                                                                               fontFamily: roboto,

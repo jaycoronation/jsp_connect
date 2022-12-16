@@ -31,11 +31,11 @@ class _GalleryScreen extends BaseState<GalleryScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
         child: Scaffold(
-          backgroundColor: black,
+          backgroundColor: white,
           appBar: AppBar(
             toolbarHeight: 55,
             automaticallyImplyLeading: false,
-            backgroundColor: black,
+            backgroundColor: white,
             elevation: 0,
             centerTitle: false,
             titleSpacing: 0,
@@ -50,11 +50,12 @@ class _GalleryScreen extends BaseState<GalleryScreen> {
                     'assets/images/ic_back_button.png',
                     height: 22,
                     width: 22,
+                    color: black,
                   ),
                 )),
             title: Text(
               post.title.toString().trim(),
-              style: const TextStyle(fontWeight: FontWeight.w600, color: white, fontSize: 16),
+              style: const TextStyle(fontWeight: FontWeight.w600, color: black, fontSize: 16),
             ),
           ),
           body: _isLoading ? const LoadingWidget() : gallery(),
@@ -142,7 +143,7 @@ class _GalleryScreen extends BaseState<GalleryScreen> {
                         margin: const EdgeInsets.only(left: 4, right: 4),
                         height: 300,
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: Colors.black,
                           gradient: LinearGradient(begin: FractionalOffset.topCenter, end: FractionalOffset.bottomCenter, colors: [
                             black.withOpacity(0.1),
                             black.withOpacity(1),

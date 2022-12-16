@@ -80,11 +80,11 @@ class _MagazineListScreen extends BaseState<MagazineListScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
         child: Scaffold(
-          backgroundColor: black,
+          backgroundColor: white,
           appBar: AppBar(
             toolbarHeight: 55,
             automaticallyImplyLeading: false,
-            backgroundColor: black,
+            backgroundColor: white,
             elevation: 0,
             centerTitle: false,
             title: Padding(
@@ -113,7 +113,7 @@ class _MagazineListScreen extends BaseState<MagazineListScreen> {
                         alignment: Alignment.topLeft,
                         padding: const EdgeInsets.all(6),
                         child: Image.asset('assets/images/ic_back_button.png',
-                          height: 22, width: 22,color: white),
+                          height: 22, width: 22,color: black),
                       )),
                   Container(
                     alignment: Alignment.centerLeft,
@@ -123,7 +123,7 @@ class _MagazineListScreen extends BaseState<MagazineListScreen> {
                       "Magazine",
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
-                          color: white,
+                          color: black,
                           fontSize: 18),
                     ),
                   ),
@@ -169,7 +169,7 @@ class _MagazineListScreen extends BaseState<MagazineListScreen> {
                                             RichText(
                                               text: TextSpan(
                                                 children: <TextSpan>[
-                                                  TextSpan(text: listMagazine[index].name.toString(),style: TextStyle(fontFamily: roboto,fontSize: 20, color: white,fontWeight: FontWeight.w900)),
+                                                  TextSpan(text: listMagazine[index].name.toString(),style: TextStyle(fontFamily: roboto,fontSize: 20, color: black,fontWeight: FontWeight.w900)),
                                                 ],
                                               ),
                                             )
@@ -257,14 +257,14 @@ class _MagazineListScreen extends BaseState<MagazineListScreen> {
                                                                 width: 32,
                                                                 height: 32,
                                                                 padding: EdgeInsets.all(4),
-                                                                child: Image.asset("assets/images/share.png",width: 22,height: 22,color: white,),
+                                                                child: Image.asset("assets/images/share.png",width: 22,height: 22,color: black,),
                                                               ),
                                                             ),
                                                             Text(
                                                               listMagazine[index].posts![indexNew].sharesCount.toString(),
                                                               textAlign: TextAlign.center,
                                                               style: const TextStyle(
-                                                                  fontSize: 14, fontWeight: FontWeight.w400, fontFamily: roboto, color: white),
+                                                                  fontSize: 14, fontWeight: FontWeight.w400, fontFamily: roboto, color: black),
                                                             )
                                                           ],
                                                         ),
@@ -304,11 +304,11 @@ class _MagazineListScreen extends BaseState<MagazineListScreen> {
                                 )),
                             child: const Padding(
                               padding: EdgeInsets.all(6.0),
-                              child: CircularProgressIndicator(color: white,strokeWidth: 2),
+                              child: CircularProgressIndicator(color: black,strokeWidth: 2),
                             )
                         )),
                     const Text(' Loading more...',
-                        style: TextStyle(color: white, fontWeight: FontWeight.w400, fontSize: 16)
+                        style: TextStyle(color: black, fontWeight: FontWeight.w400, fontSize: 16)
                     )
                   ],
                 ),
