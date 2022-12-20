@@ -90,21 +90,6 @@ class _VideoScreen extends BaseState<VideoScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-               /*InkWell(
-                  onTap: () {
-                    final BottomNavigationBar bar = bottomWidgetKey.currentWidget as BottomNavigationBar;
-                    bar.onTap!(0);
-                  },
-                  child: Container(
-                    alignment: Alignment.topLeft,
-                    padding: const EdgeInsets.all(6),
-                    child: Image.asset(
-                      'assets/images/ic_back_button.png',
-                      height: 22,
-                      width: 22,
-                      color: white,
-                    ),
-                  )),*/
                 Container(
                   alignment: Alignment.centerLeft,
                   height: 65,

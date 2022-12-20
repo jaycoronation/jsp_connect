@@ -142,7 +142,7 @@ class _NavigationDrawerScreen extends BaseState<NavigationDrawerScreen> {
                                   Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutScreen()));
                                 },
                                 child: const Text(
-                                  "About Naveen Jindal",
+                                  "Shri Naveen Jindal",
                                   style: TextStyle(fontFamily: gilroy, fontSize: 22, color: blackConst, fontWeight: FontWeight.w600),
                                 ),
                               ),

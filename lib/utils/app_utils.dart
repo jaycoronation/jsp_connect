@@ -169,6 +169,14 @@ Future<void> setOrientation(List<DeviceOrientation> orientations) async {
   SystemChrome.setPreferredOrientations(orientations);
 }
 
+checkValidString (String? value) {
+  if (value == null || value == "null" || value == "<null>")
+  {
+    value = "";
+  }
+  return value.trim();
+}
+
 /*share text content to social apps*/
 /*Future<void> shareTextContent(String title,String text,String link,String chooserTitle) async {
   try {

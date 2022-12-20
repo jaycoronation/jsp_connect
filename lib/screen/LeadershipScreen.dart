@@ -180,7 +180,7 @@ class _LeadershipScreen extends BaseState<LeadershipScreen> {
                                                       blackConst.withOpacity(0.4),
                                                       blackConst.withOpacity(1),
                                                     ], stops: const [
-                                                      0.0,
+                                                      0.9,
                                                       1.0
                                                     ]),
                                                     borderRadius: BorderRadius.circular(20)),
@@ -191,18 +191,33 @@ class _LeadershipScreen extends BaseState<LeadershipScreen> {
                                                   color: Colors.transparent,
                                                   width: MediaQuery.of(context).size.width,
                                                   alignment: Alignment.bottomCenter,
-                                                  child: Text(
-                                                    /*  toDisplayCase(listLeadership[index].posts![indexNew].title.toString())
-                                                                        .replaceAll(" ", "\n"),*/
-                                                    toDisplayCase(listLeadership[pos].posts![indexNew].title.toString()),
-                                                    overflow: TextOverflow.clip,
-                                                    style: const TextStyle(
-                                                        fontWeight: FontWeight.w600,
-                                                        fontFamily: gilroy,
-                                                        color: whiteConst,
-                                                        fontSize: 18,
-                                                        overflow: TextOverflow.clip),
-                                                    textAlign: TextAlign.center,
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                    mainAxisAlignment: MainAxisAlignment.end,
+                                                    children: [
+                                                      Text(
+                                                        toDisplayCase(listLeadership[pos].posts![indexNew].title.toString()),
+                                                        overflow: TextOverflow.clip,
+                                                        style: const TextStyle(
+                                                            fontWeight: FontWeight.w600,
+                                                            fontFamily: gilroy,
+                                                            color: whiteConst,
+                                                            fontSize: 18,
+                                                            overflow: TextOverflow.clip),
+                                                        textAlign: TextAlign.center,
+                                                      ),
+                                                      checkValidString(listLeadership[pos].posts![indexNew].designation).toString().isNotEmpty ? Text(
+                                                        checkValidString(listLeadership[pos].posts![indexNew].designation),
+                                                        overflow: TextOverflow.clip,
+                                                        style: const TextStyle(
+                                                            fontWeight: FontWeight.w600,
+                                                            fontFamily: gilroy,
+                                                            color: whiteConst,
+                                                            fontSize: 18,
+                                                            overflow: TextOverflow.clip),
+                                                        textAlign: TextAlign.center,
+                                                      ) : Container()
+                                                    ],
                                                   ))
                                             ]),
                                           )

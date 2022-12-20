@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jspl_connect/model/AboutJSPResponseModel.dart';
+import 'package:like_button/like_button.dart';
 import 'package:pretty_http_logger/pretty_http_logger.dart';
 
 import '../constant/api_end_point.dart';
@@ -31,9 +32,14 @@ class _AboutScreen extends BaseState<AboutScreen> {
 
   @override
   void initState(){
-    if (isOnline)
+      if (isOnline)
       {
         _aboutApi();
+
+      }
+      else
+      {
+
       }
 
     String sportsMan = "At the age of 6, Naveen Jindal began his riding lessons when his father gave him a horse as a birthday present. He emerged as a prolific rider and focused his attention on polo. The Jindal Steel & Power polo team became a reality and an integral part of the Indian polo circuit. Being an accomplished player and an irrepressible polo enthusiast, he became the driving force behind the multiple successes of the Jindal team.\n\nHis passion for the sport is evident through his sprawling 30-acre farm, where 40 select ponies and horses are trained under professional eye and kept in peak-condition. And his love for the sport is ever increasing, the challenges motivating him to greater heights. He is the moving spirit behind popularising polo as a sport in the country.\n\nAt the age of 15, Naveen developed another passion, which he not only mastered but has been acknowledged for in numerous occasions. It is shooting as a sport. His first rifle was gifted by his father and soon Naveen became extremely focused in improving his overall performance in skeet shooting. He is a National Record Holder in Skeet Shooting. This sport, which entails quick reflexes and decision making, soon became second nature to him.\n\nUnder careful guidance and training from his coaches, he became a name to be reckoned with in the national and international events in skeet shooting. He also initiated and successfully got the import policy changed for the duty-free import of arms and ammunition for shooting as a sport. Earlier only the top 10 shooters were allowed to import arms and ammunition which, through his untiring efforts was changed to the top 25 shooters. He has received intensive training under the guidance of the world-famous Juan Ghia Yarur of Peru.\n\nNaveen is also the President of Chhattisgarh Pradesh Rifle Association and under his guidance shooting ranges have been constructed at Raigarh to further popularise the sport. Coaching camps at Raigarh are under way for school children and for other members of the shooting club. He has plans to carry basic training needs to everyone interested in the sport including members of police and armed forces personnel.";
@@ -57,23 +63,36 @@ class _AboutScreen extends BaseState<AboutScreen> {
 
     return WillPopScope(
         child: Scaffold(
-          backgroundColor: blackConst,
+          backgroundColor: white,
           resizeToAvoidBottomInset: false,
-          appBar: AppBar(toolbarHeight: 0, elevation: 0,systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: white,statusBarIconBrightness: Brightness.dark,statusBarBrightness: Brightness.dark),),
+          extendBodyBehindAppBar: true,
+          appBar: AppBar(
+            toolbarHeight: 0,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            systemOverlayStyle: const SystemUiOverlayStyle(
+              // Status bar color
+              statusBarColor: Colors.transparent,
+              // Status bar brightness (optional)
+              statusBarIconBrightness: Brightness.light,
+              // For Android (dark icons)
+              statusBarBrightness: Brightness.light, // For iOS (dark icons)
+            ),
+          ),
           body: _isLoading
               ? const LoadingWidget()
                : SingleChildScrollView(
                  child: Column(
                    children: [
                      Container(
-                         decoration: BoxDecoration(
-                           image: DecorationImage(
-                               image: NetworkImage(bioImage),
-                               fit: BoxFit.cover
-                           )
-                         ),
                        child: Stack(
                          children: [
+                           FadeInImage.assetNetwork(
+                             image: bioImage.toString(),
+                             fit: BoxFit.cover,
+                             height: MediaQuery.of(context).size.height,
+                             width: MediaQuery.of(context).size.width, placeholder: 'assets/images/bg_gray.jpeg',
+                           ),
                            Container(
                              height: MediaQuery.of(context).size.height,
                              decoration: BoxDecoration(
@@ -82,11 +101,11 @@ class _AboutScreen extends BaseState<AboutScreen> {
                                    begin: FractionalOffset.topCenter,
                                    end: FractionalOffset.bottomCenter,
                                    colors: [
-                                     blackConst.withOpacity(0.1),
+                                     blackConst.withOpacity(0.2),
                                      blackConst.withOpacity(1),
                                    ],
                                    stops: const [
-                                     0.0,
+                                     0.7,
                                      1.0
                                    ]
                                ),
@@ -95,9 +114,9 @@ class _AboutScreen extends BaseState<AboutScreen> {
                            Column(
                              children: [
                                Container(
-                                 margin: const EdgeInsets.only(left: 14, right: 14, top: 10),
+                                 margin: const EdgeInsets.only(left: 14, right: 14, top: 45),
                                  child: Row(
-                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                   crossAxisAlignment: CrossAxisAlignment.center,
                                    mainAxisAlignment: MainAxisAlignment.start,
                                    children: [
                                      GestureDetector(
@@ -114,7 +133,7 @@ class _AboutScreen extends BaseState<AboutScreen> {
                                        margin: const EdgeInsets.only(left: 12),
                                        alignment: Alignment.center,
                                        child: Text(
-                                         "About Naveen Jindal",
+                                         "Shri Naveen Jindal",
                                          textAlign: TextAlign.start,
                                          style: TextStyle(fontSize: 18, color: white, fontWeight: FontWeight.w600, fontFamily: gilroy),
                                        ),
@@ -148,20 +167,31 @@ class _AboutScreen extends BaseState<AboutScreen> {
                                              style: TextStyle(fontFamily: gilroy, fontSize: 16, color: black, fontWeight: FontWeight.w600),
                                            ),
                                            const Spacer(),
-                                           GestureDetector(
-                                             onTap: (){
+                                           LikeButton(
+                                             mainAxisAlignment: MainAxisAlignment.center,
+                                             crossAxisAlignment: CrossAxisAlignment.center,
+                                             size: 22,
+                                             isLiked: isLiked,
+                                             circleColor: const CircleColor(
+                                                 start: orange, end: orangeNew),
+                                             bubblesColor: const BubblesColor(
+                                               dotPrimaryColor: orange,
+                                               dotSecondaryColor: orangeNew,
+                                             ),
+                                             likeBuilder: (bool isLiked) {
+                                               return Image.asset(
+                                                 isLiked
+                                                     ? "assets/images/like_filled.png"
+                                                     : "assets/images/like.png",
+                                                 color: isLiked ? yellow : black,
+                                               );
+                                             },
+                                             onTap: (isLike) async {
                                                setState(() {
                                                  isLiked = !isLiked;
                                                });
+                                               return true;
                                              },
-                                             child: Image.asset(
-                                               isLiked
-                                                   ? "assets/images/like_filled.png"
-                                                   : "assets/images/like.png",
-                                               height: 22,
-                                               width: 22,
-                                               color: isLiked ? Colors.yellow : darkGray,
-                                             ),
                                            ),
                                            Container(width: 12,),
                                            Image.asset(
@@ -170,7 +200,6 @@ class _AboutScreen extends BaseState<AboutScreen> {
                                              width: 22,
                                              color: darkGray,
                                            ),
-
                                          ],
                                        ),
                                      ),
@@ -206,7 +235,7 @@ class _AboutScreen extends BaseState<AboutScreen> {
                                            builder: (BuildContext context) {
                                              return Container(
                                                height: MediaQuery.of(context).size.height * 0.88,
-                                               color: lightblack,
+                                               color: grayNew,
                                                padding: const EdgeInsets.all(12),
                                                child: SingleChildScrollView(
                                                  child: Column(
@@ -230,9 +259,9 @@ class _AboutScreen extends BaseState<AboutScreen> {
                                                          ),
                                                        ],
                                                      ),
-                                                     const Text('Biography',style: TextStyle(color: whiteConst,fontWeight: FontWeight.w600,fontSize: 20,fontFamily: roboto)),
+                                                     Text('Biography',style: TextStyle(color: black,fontWeight: FontWeight.w600,fontSize: 20,fontFamily: roboto)),
                                                      Container(height: 8,),
-                                                     Text(bio,style: const TextStyle(color: whiteConst,fontWeight: FontWeight.w400,fontSize: 18,fontFamily: roboto)),
+                                                     Text(bio,style: TextStyle(color: black,fontWeight: FontWeight.w400,fontSize: 18,fontFamily: roboto)),
                                                    ],
                                                  ),
                                                ),
@@ -335,14 +364,9 @@ class _AboutScreen extends BaseState<AboutScreen> {
       if (dataResponse.about!.isNotEmpty) {
         listAbout = dataResponse.about!;
       }
-      setState(() {
-        _isLoading = false;
-      });
-    } else {
-      setState(() {
-        _isLoading = false;
-      });
     }
+
+    aboutJSPAPI();
   }
 
   aboutJSPAPI() async {

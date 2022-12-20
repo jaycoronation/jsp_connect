@@ -128,7 +128,7 @@ class VideoBlock extends StatelessWidget {
                               overflow: TextOverflow.ellipsis),
                         )),
                     SizedBox(
-                      width: MediaQuery.of(context).size.width - 50,
+                      width: MediaQuery.of(context).size.width - 40,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,

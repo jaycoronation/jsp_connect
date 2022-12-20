@@ -25,6 +25,7 @@ class _VideoWidgetState extends State<VideoPlayerPage>
   @override
   void initState() {
     super.initState();
+
     if(widget.url.startsWith("https"))
     {
       videoPlayerController = VideoPlayerController.network(widget.url);

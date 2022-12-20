@@ -19,6 +19,7 @@ import '../widget/no_data.dart';
 import 'MediaCoverageDetailsScreen.dart';
 import 'NewsDetailsScreen.dart';
 import 'EventDetailsScreen.dart';
+import 'SocialWallScreen.dart';
 import 'VideoDetailsPage.dart';
 
 class NotificationListScreen extends StatefulWidget {
@@ -32,7 +33,7 @@ class _NotificationListScreen extends BaseState<NotificationListScreen> {
   bool _isLoading = false;
   bool _isLoadingMore = false;
   int _pageIndex = 1;
-  final int _pageResult = 30;
+  final int _pageResult = 50;
   bool _isLastPage = false;
   bool isScrollingDown = false;
   late ScrollController _scrollViewController;
@@ -185,7 +186,8 @@ class _NotificationListScreen extends BaseState<NotificationListScreen> {
                                               child: Column(
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(notificationList[index].message.toString(), style: TextStyle(fontWeight: FontWeight.w600, fontFamily: aileron, fontSize: 16, color: black)),
+                                                  Text(notificationList[index].title.toString(), style: TextStyle(fontWeight: FontWeight.w600, fontFamily: aileron, fontSize: 16, color: black)),
+                                                  Text(notificationList[index].contentType.toString(), style: TextStyle(fontWeight: FontWeight.w600, fontFamily: aileron, fontSize: 16, color: black)),
                                                   Gap(4),
                                                   Text(notificationList[index].saveTimestamp.toString(), style: TextStyle(
                                                       fontWeight: FontWeight.w400,
@@ -246,11 +248,18 @@ class _NotificationListScreen extends BaseState<NotificationListScreen> {
        {
            if(notificationList.postId.toString().isNotEmpty)
            {
-
-             if (contentId != "5")
-               {
-                 Navigator.push(context, MaterialPageRoute(builder: (context) => CommonDetailsScreen(notificationList.postId.toString(),contentId)));
-               }
+             if(contentId == "1")
+             {
+               Navigator.push(context, MaterialPageRoute(builder: (context) => const SocialWallScreen()));
+             }
+             else if(contentId == "2" || contentId == "3" ||contentId == "4" || contentId == "6" || contentId == "8" || contentId == "10" )
+             {
+               Navigator.push(context, MaterialPageRoute(builder: (context) => CommonDetailsScreen(notificationList.postId.toString(),contentId)));
+             }
+             else if(contentId == "7")
+             {
+               Navigator.push(context, MaterialPageRoute(builder: (context) => const MagazineListScreen()));
+             }
 
              /*if(contentId == "2")
              {
@@ -342,6 +351,12 @@ class _NotificationListScreen extends BaseState<NotificationListScreen> {
           }
         }
 
+        setState(() {
+          _isLoading = false;
+          _isLoadingMore = false;
+        });
+      }
+      else {
         setState(() {
           _isLoading = false;
           _isLoadingMore = false;

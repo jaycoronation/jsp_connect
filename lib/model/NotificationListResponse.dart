@@ -1,8 +1,8 @@
 import 'dart:convert';
 /// success : 1
 /// message : "Notification List"
-/// totalCount : 61
-/// notificationList : [{"id":103,"message":"New post added for the Videos","to_user_id":9,"save_timestamp":"09 Dec 2022","post_id":76,"content_id":3,"content_type":"Videos"},{"id":109,"message":"New post added for the Videos","to_user_id":9,"save_timestamp":"09 Dec 2022","post_id":77,"content_id":3,"content_type":"Videos"},{"id":115,"message":"New post added for the Videos","to_user_id":9,"save_timestamp":"09 Dec 2022","post_id":78,"content_id":3,"content_type":"Videos"}]
+/// totalCount : 873
+/// notificationList : [{"id":1056,"title":"National flag above political affiliations'","message":"New post added for the Videos","to_user_id":10,"save_timestamp":"1 hour ago","post_id":137,"content_id":3,"content_type":"Videos"},{"id":1055,"title":"National flag above political affiliations'","message":"New post added for the Videos","to_user_id":10,"save_timestamp":"1 hour ago","post_id":137,"content_id":3,"content_type":"Videos"}]
 
 NotificationListResponse notificationListResponseFromJson(String str) => NotificationListResponse.fromJson(json.decode(str));
 String notificationListResponseToJson(NotificationListResponse data) => json.encode(data.toJson());
@@ -60,11 +60,12 @@ NotificationListResponse copyWith({  num? success,
 
 }
 
-/// id : 103
+/// id : 1056
+/// title : "National flag above political affiliations'"
 /// message : "New post added for the Videos"
-/// to_user_id : 9
-/// save_timestamp : "09 Dec 2022"
-/// post_id : 76
+/// to_user_id : 10
+/// save_timestamp : "1 hour ago"
+/// post_id : 137
 /// content_id : 3
 /// content_type : "Videos"
 
@@ -73,6 +74,7 @@ String notificationListToJson(NotificationList data) => json.encode(data.toJson(
 class NotificationList {
   NotificationList({
       num? id, 
+      String? title, 
       String? message, 
       num? toUserId, 
       String? saveTimestamp, 
@@ -80,6 +82,7 @@ class NotificationList {
       num? contentId, 
       String? contentType,}){
     _id = id;
+    _title = title;
     _message = message;
     _toUserId = toUserId;
     _saveTimestamp = saveTimestamp;
@@ -90,6 +93,7 @@ class NotificationList {
 
   NotificationList.fromJson(dynamic json) {
     _id = json['id'];
+    _title = json['title'];
     _message = json['message'];
     _toUserId = json['to_user_id'];
     _saveTimestamp = json['save_timestamp'];
@@ -98,6 +102,7 @@ class NotificationList {
     _contentType = json['content_type'];
   }
   num? _id;
+  String? _title;
   String? _message;
   num? _toUserId;
   String? _saveTimestamp;
@@ -105,6 +110,7 @@ class NotificationList {
   num? _contentId;
   String? _contentType;
 NotificationList copyWith({  num? id,
+  String? title,
   String? message,
   num? toUserId,
   String? saveTimestamp,
@@ -112,6 +118,7 @@ NotificationList copyWith({  num? id,
   num? contentId,
   String? contentType,
 }) => NotificationList(  id: id ?? _id,
+  title: title ?? _title,
   message: message ?? _message,
   toUserId: toUserId ?? _toUserId,
   saveTimestamp: saveTimestamp ?? _saveTimestamp,
@@ -120,6 +127,7 @@ NotificationList copyWith({  num? id,
   contentType: contentType ?? _contentType,
 );
   num? get id => _id;
+  String? get title => _title;
   String? get message => _message;
   num? get toUserId => _toUserId;
   String? get saveTimestamp => _saveTimestamp;
@@ -130,6 +138,7 @@ NotificationList copyWith({  num? id,
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = _id;
+    map['title'] = _title;
     map['message'] = _message;
     map['to_user_id'] = _toUserId;
     map['save_timestamp'] = _saveTimestamp;

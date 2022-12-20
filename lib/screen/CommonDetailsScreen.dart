@@ -107,7 +107,7 @@ class _CommonDetailsScreen extends BaseState<CommonDetailsScreen> {
             leading: InkWell(
                 onTap: () {
                   if (NavigationService.notif_post_id.isNotEmpty) {
-                    typeId = "";
+                    NavigationService.notif_type = "";
                     NavigationService.notif_post_id = "";
                     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const BottomNavigationBarScreen(0)), (Route<dynamic> route) => false);
                   } else {
@@ -164,18 +164,18 @@ class _CommonDetailsScreen extends BaseState<CommonDetailsScreen> {
                         return true;
                       },
                     ),
-                    Container(width: 8),
+                   /* Container(width: 8),
                     Text(
-                      _isLoading ? "" :
+                      _isLoading ? "0" :
                       postDetailsData.likesCount.toString(),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontSize: 14, fontWeight: FontWeight.w400, fontFamily: roboto, color: black),
-                    ),
+                    ),*/
                   ],
                 ),
               ),
-              Container(width: 10,),
+              Container(width: 12,),
               Visibility(
                   visible: !_isNoData,
                   child:  Row(
@@ -216,17 +216,17 @@ class _CommonDetailsScreen extends BaseState<CommonDetailsScreen> {
                           return true;
                         },
                       ),
-                      Container(width: 8),
+                     /* Container(width: 8),
                       Text(
-                        _isLoading ? "" : postDetailsData.bookmarkCount.toString(),
+                        _isLoading ? "0" : postDetailsData.bookmarkCount.toString(),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 14, fontWeight: FontWeight.w400, fontFamily: roboto, color: black),
-                      ),
+                      ),*/
                     ],
                   )
               ),
-              Container(width: 6,),
+              Container(width: 10,),
               Visibility(
                   visible: !_isNoData,
                   child: Row(
@@ -249,18 +249,17 @@ class _CommonDetailsScreen extends BaseState<CommonDetailsScreen> {
                         child: Container(
                           alignment: Alignment.center,
                           padding: const EdgeInsets.all(6),
-                          margin: const EdgeInsets.only(right: 8),
+                          margin: const EdgeInsets.only(right: 12),
                           child: Image.asset('assets/images/share.png', height: 22, width: 22, color: black),
                         ),
                       ),
-                      Text(
-                        _isLoading ? "" : postDetailsData.sharesCount.toString(),
+                    /*  Text(
+                        _isLoading ? "0" : postDetailsData.sharesCount.toString(),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 14, fontWeight: FontWeight.w400, fontFamily: roboto, color: black),
                       ),
-                      Container(width: 8),
-
+                      Container(width: 8),*/
                     ],
                   )),
             ],
@@ -275,7 +274,7 @@ class _CommonDetailsScreen extends BaseState<CommonDetailsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+                      margin: const EdgeInsets.fromLTRB(16, 10, 16, 0),
                       child: Text(postDetailsData.title.toString(), style:  TextStyle(color: black, fontSize: 22, fontWeight: FontWeight.w500, fontFamily: roboto)),
                     ),
                     Row(
@@ -287,7 +286,7 @@ class _CommonDetailsScreen extends BaseState<CommonDetailsScreen> {
                             color: grayNew,
                           ),
                           padding: const EdgeInsets.fromLTRB(8, 5, 8, 5),
-                          margin: const EdgeInsets.only(left: 16),
+                          margin: const EdgeInsets.only(left: 16,right: 16,top: 10),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
@@ -370,7 +369,7 @@ class _CommonDetailsScreen extends BaseState<CommonDetailsScreen> {
                           }
                       },
                       child: Container(
-                        margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+                        margin: const EdgeInsets.fromLTRB(16, 10, 16, 0),
                         decoration: BoxDecoration(
                             color: black.withOpacity(0.3),
                             borderRadius: BorderRadius.circular(20),
@@ -408,23 +407,23 @@ class _CommonDetailsScreen extends BaseState<CommonDetailsScreen> {
                         borderRadius: BorderRadius.circular(18),
                         color: grayNew
                       ),
-                      margin: const EdgeInsets.fromLTRB(16, 22, 16, 8),
+                      margin: const EdgeInsets.fromLTRB(16, 10, 16, 0),
                       padding: const EdgeInsets.all(8),
                       child: HtmlWidget(postDetailsData.description.toString(),textStyle: TextStyle(height: 1.5, color: black, fontSize: 16, fontWeight: FontWeight.w500, fontFamily: roboto),),
                     ),
                     Visibility(
-                      visible: postDetailsData.reatedPosts!.isNotEmpty,
+                      visible: isShowRelatedPost(),
                       child: Container(
-                        margin: const EdgeInsets.fromLTRB(15, 6, 12, 6),
+                        margin: const EdgeInsets.fromLTRB(16, 10, 16, 0),
                         child: Text(
                           relatedTitle,
                           style:  TextStyle(fontFamily: roboto, fontSize: 17, color: black, fontWeight: FontWeight.w800),
                         ),
                       ),
                     ),
-                    postDetailsData.reatedPosts!.isNotEmpty
+                    Visibility(visible : isShowRelatedPost() ,child: postDetailsData.reatedPosts!.isNotEmpty
                         ? relatedPostBlock()
-                        : Container(),
+                        : Container()),
                     Container(height: 16,)
                   ],
             ),
@@ -432,7 +431,7 @@ class _CommonDetailsScreen extends BaseState<CommonDetailsScreen> {
         ),
         onWillPop: () {
           if (NavigationService.notif_type.isNotEmpty) {
-            typeId = "";
+            NavigationService.notif_type = "";
             NavigationService.notif_post_id = "";
             Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const BottomNavigationBarScreen(0)), (Route<dynamic> route) => false);
           } else {
@@ -444,611 +443,456 @@ class _CommonDetailsScreen extends BaseState<CommonDetailsScreen> {
     );
   }
 
-  AnimationLimiter relatedPostBlock() {
-    if (typeId == "2")
+  Container relatedPostBlock() {
+      if (typeId == "2")
       {
-        return AnimationLimiter(
-          child: ListView.builder(
-            scrollDirection: Axis.vertical,
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: postDetailsData.reatedPosts!.length,
-            itemBuilder: (context, index) {
-              return AnimationConfiguration.staggeredList(
-                position: index,
-                duration: const Duration(milliseconds: 375),
-                child: SlideAnimation(
-                  verticalOffset: 50.0,
-                  child: FadeInAnimation(
-                    child: GestureDetector(
-                      onTap: () async {
-                        final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => CommonDetailsScreen(postDetailsData.reatedPosts![index].id.toString(),"2")));
-                        print(result);
-                      },
-                      child: Container(
-                        height: 400,
-                        margin: const EdgeInsets.only(left: 14, right: 14, top: 14),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(width: 0.6, color: black.withOpacity(0.4), style: BorderStyle.solid)),
-                        child: Stack(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              height: 450,
-                              alignment: Alignment.center,
-                              width: MediaQuery.of(context).size.width,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20), // Image border
-                                child: Image.network(
-                                  postDetailsData.reatedPosts![index].featuredImage.toString(),
-                                  fit: BoxFit.cover,
-                                  height: 450,
-                                  width: MediaQuery.of(context).size.width,
+        return Container(
+          child: AnimationLimiter(
+            child: ListView.builder(
+              scrollDirection: Axis.vertical,
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: postDetailsData.reatedPosts!.length,
+              itemBuilder: (context, index) {
+                return AnimationConfiguration.staggeredList(
+                  position: index,
+                  duration: const Duration(milliseconds: 375),
+                  child: SlideAnimation(
+                    verticalOffset: 50.0,
+                    child: FadeInAnimation(
+                      child: GestureDetector(
+                        onTap: () async {
+                          final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => CommonDetailsScreen(postDetailsData.reatedPosts![index].id.toString(),postDetailsData.reatedPosts![index].postTypeId.toString())));
+                          print(result);
+                        },
+                        child: Container(
+                          height: 400,
+                          margin: const EdgeInsets.only(left: 16, right: 16, top: 10),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(width: 0.6, color: black.withOpacity(0.4), style: BorderStyle.solid)),
+                          child: Stack(
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                height: 450,
+                                alignment: Alignment.center,
+                                width: MediaQuery.of(context).size.width,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20), // Image border
+                                  child: Image.network(
+                                    postDetailsData.reatedPosts![index].featuredImage.toString(),
+                                    fit: BoxFit.cover,
+                                    height: 450,
+                                    width: MediaQuery.of(context).size.width,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Container(
-                              height: 400,
-                              decoration: BoxDecoration(
-                                  color: Colors.black,
-                                  borderRadius: BorderRadius.circular(20),
-                                  gradient: LinearGradient(
-                                      begin: FractionalOffset.topCenter,
-                                      end: FractionalOffset.bottomCenter,
-                                      colors: [
-                                        blackConst.withOpacity(0.2),
-                                        blackConst,
-                                      ],
-                                      stops: const [
-                                        0.7,
-                                        1.0
-                                      ]
-                                  )
-                              ),
-                            ),
-                            Positioned(
-                                top: 12,
-                                left: 12,
-                                child: Container(
-                                    decoration: BoxDecoration(color: whiteConst.withOpacity(0.4), borderRadius: BorderRadius.circular(22)),
-                                    padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
-                                    child: Text(
-                                      postDetailsData.reatedPosts![index].location.toString(),
-                                      style:  const TextStyle(color: blackConst, fontSize: 14, fontWeight: FontWeight.w400),
+                              Container(
+                                height: 400,
+                                decoration: BoxDecoration(
+                                    color: Colors.black,
+                                    borderRadius: BorderRadius.circular(20),
+                                    gradient: LinearGradient(
+                                        begin: FractionalOffset.topCenter,
+                                        end: FractionalOffset.bottomCenter,
+                                        colors: [
+                                          blackConst.withOpacity(0.2),
+                                          blackConst,
+                                        ],
+                                        stops: const [
+                                          0.7,
+                                          1.0
+                                        ]
                                     )
-                                )
-                            ),
-                            Positioned(
-                              bottom: 12,
-                              child: Column(
-                                children: [
-                                  Container(
-                                      width: MediaQuery.of(context).size.width - 50,
-                                      margin: const EdgeInsets.only(bottom: 0, left: 14, right: 14),
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        postDetailsData.reatedPosts![index].title.toString(),
-                                        style: TextStyle(
-                                            foreground: Paint()..shader = linearGradientSocial,
-                                            fontWeight: titleFont,
-                                            fontFamily: gilroy,
-                                            fontSize: 16,
-                                            overflow: TextOverflow.clip),
-                                        overflow: TextOverflow.clip,
-                                      )),
-                                  Row(
-                                    children: [
-                                      Container(
-                                          width: MediaQuery.of(context).size.width - 50,
-                                          margin: const EdgeInsets.only(top: 12,bottom: 12, left: 14, right: 14),
-                                          alignment: Alignment.centerLeft,
-                                          child: Text(
-                                            postDetailsData.reatedPosts![index].saveTimestamp.toString(),
-                                            style:  const TextStyle(
-                                                color: lightGray,
-                                                fontWeight: FontWeight.w400,
-                                                fontFamily: gilroy,
-                                                fontSize: 14,
-                                                overflow: TextOverflow.clip),
-                                            overflow: TextOverflow.clip,
-                                          )),
-                                    ],
-                                  )
-                                ],
+                                ),
                               ),
-                            )
-                          ],
+                              Positioned(
+                                  top: 12,
+                                  left: 12,
+                                  child: Container(
+                                      decoration: BoxDecoration(color: whiteConst.withOpacity(0.4), borderRadius: BorderRadius.circular(22)),
+                                      padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
+                                      child: Text(
+                                        postDetailsData.reatedPosts![index].location.toString(),
+                                        style:  const TextStyle(color: blackConst, fontSize: 14, fontWeight: FontWeight.w400),
+                                      )
+                                  )
+                              ),
+                              Positioned(
+                                bottom: 12,
+                                child: Column(
+                                  children: [
+                                    Container(
+                                        width: MediaQuery.of(context).size.width - 50,
+                                        margin: const EdgeInsets.only(bottom: 0, left: 14, right: 14),
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          postDetailsData.reatedPosts![index].title.toString(),
+                                          style: TextStyle(
+                                              foreground: Paint()..shader = linearGradientSocial,
+                                              fontWeight: titleFont,
+                                              fontFamily: gilroy,
+                                              fontSize: 16,
+                                              overflow: TextOverflow.clip),
+                                          overflow: TextOverflow.clip,
+                                        )),
+                                    Row(
+                                      children: [
+                                        Container(
+                                            width: MediaQuery.of(context).size.width - 50,
+                                            margin: const EdgeInsets.only(top: 12,bottom: 12, left: 14, right: 14),
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              postDetailsData.reatedPosts![index].saveTimestamp.toString(),
+                                              style:  const TextStyle(
+                                                  color: lightGray,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontFamily: gilroy,
+                                                  fontSize: 14,
+                                                  overflow: TextOverflow.clip),
+                                              overflow: TextOverflow.clip,
+                                            )),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         );
       }
-    else if (typeId == "3")
+      else if (typeId == "3")
       {
-        return AnimationLimiter(
-          child: ListView.builder(
-            scrollDirection: Axis.vertical,
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: postDetailsData.reatedPosts!.length,
-            itemBuilder: (context, index) {
-              return AnimationConfiguration.staggeredList(
-                position: index,
-                duration: const Duration(milliseconds: 375),
-                child: SlideAnimation(
-                  verticalOffset: 50.0,
-                  child: FadeInAnimation(
-                    child:  GestureDetector(
-                      onTap: () async {
-                        final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => CommonDetailsScreen(postDetailsData.reatedPosts![index].id.toString(),"3")));
-                        print("result ===== $result");
-                        setState(() {
-                        var data = result.toString().split("|");
-                        for (int i = 0; i < postDetailsData.reatedPosts!.length; i++) {
-                          if(postDetailsData.reatedPosts![i].id == data[0])
-                          {
-                            postDetailsData.reatedPosts![i].setSharesCount = num.parse(data[1]);
-                            break;
+        return Container(
+          child: AnimationLimiter(
+            child: ListView.builder(
+              scrollDirection: Axis.vertical,
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: postDetailsData.reatedPosts!.length,
+              itemBuilder: (context, index) {
+                return AnimationConfiguration.staggeredList(
+                  position: index,
+                  duration: const Duration(milliseconds: 375),
+                  child: SlideAnimation(
+                    verticalOffset: 50.0,
+                    child: FadeInAnimation(
+                      child:  GestureDetector(
+                        onTap: () async {
+                          final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => CommonDetailsScreen(postDetailsData.reatedPosts![index].id.toString(),postDetailsData.reatedPosts![index].postTypeId.toString())));
+                          print("result ===== $result");
+                          setState(() {
+                          var data = result.toString().split("|");
+                          for (int i = 0; i < postDetailsData.reatedPosts!.length; i++) {
+                            if(postDetailsData.reatedPosts![i].id == data[0])
+                            {
+                              postDetailsData.reatedPosts![i].setSharesCount = num.parse(data[1]);
+                              break;
+                            }
                           }
-                        }
-                      });
-                      },
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 450,
-                        margin: const EdgeInsets.only(left: 12, right: 12,bottom: 12),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(width: 0.6, color: black.withOpacity(0.4), style: BorderStyle.solid)
-                        ),
-                        child: Stack(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(20.0),
-                              child: Image.network(postDetailsData.reatedPosts![index].featuredImage.toString(),
-                                  width: MediaQuery.of(context).size.width, height: 450, fit: BoxFit.cover),
-                            ),
-                            Container(
-                              height: 450,
-                              decoration: BoxDecoration(
-                                  color: Colors.black,
-                                  gradient: LinearGradient(
-                                      begin: FractionalOffset.topCenter,
-                                      end: FractionalOffset.bottomCenter,
-                                      colors: [
-                                        blackConst.withOpacity(0.2),
-                                        blackConst.withOpacity(1),
-                                      ],
-                                      stops: const [
-                                        0.8,
-                                        1.0
-                                      ]
-                                  ),
-                                  borderRadius: BorderRadius.circular(20)
+                        });
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 450,
+                          margin: const EdgeInsets.only(left: 16, right: 16, top: 10),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(width: 0.6, color: black.withOpacity(0.4), style: BorderStyle.solid)
+                          ),
+                          child: Stack(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(20.0),
+                                child: Image.network(postDetailsData.reatedPosts![index].featuredImage.toString(),
+                                    width: MediaQuery.of(context).size.width, height: 450, fit: BoxFit.cover),
                               ),
-                            ),
-                            Positioned.fill(
-                              child: Container(
-                                width: 46,
-                                height: 46,
-                                alignment: Alignment.center,
-                                child: Image.asset(
-                                  'assets/images/play.png',
-                                  height: 46,
-                                  width: 46,
+                              Container(
+                                height: 450,
+                                decoration: BoxDecoration(
+                                    color: Colors.black,
+                                    gradient: LinearGradient(
+                                        begin: FractionalOffset.topCenter,
+                                        end: FractionalOffset.bottomCenter,
+                                        colors: [
+                                          blackConst.withOpacity(0.2),
+                                          blackConst.withOpacity(1),
+                                        ],
+                                        stops: const [
+                                          0.8,
+                                          1.0
+                                        ]
+                                    ),
+                                    borderRadius: BorderRadius.circular(20)
                                 ),
                               ),
-                            ),
-                            /*Positioned(
-                                        top: 16,
-                                        left: 16,
-                                        child: Container(
-                                          padding: const EdgeInsets.fromLTRB(14, 8, 14, 8),
-                                          decoration: BoxDecoration(
+                              Positioned.fill(
+                                child: Container(
+                                  width: 46,
+                                  height: 46,
+                                  alignment: Alignment.center,
+                                  child: Image.asset(
+                                    'assets/images/play.png',
+                                    height: 46,
+                                    width: 46,
+                                  ),
+                                ),
+                              ),
+                              /*Positioned(
+                                          top: 16,
+                                          left: 16,
+                                          child: Container(
+                                            padding: const EdgeInsets.fromLTRB(14, 8, 14, 8),
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(22),
+                                              color: whiteConst.withOpacity(0.9)
+                                            ),
+                                            alignment: Alignment.center,
+                                            child: const Text("8:10 mins",style: TextStyle(color: blackConst,fontSize: 12,fontWeight: FontWeight.w500,fontFamily: roboto)),
+                                          )
+                                      ),*/
+                              Positioned(
+                                  bottom: 22,
+                                  left: 16,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        padding: const EdgeInsets.fromLTRB(14, 8, 14, 8),
+                                        decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(22),
-                                            color: whiteConst.withOpacity(0.9)
-                                          ),
-                                          alignment: Alignment.center,
-                                          child: const Text("8:10 mins",style: TextStyle(color: blackConst,fontSize: 12,fontWeight: FontWeight.w500,fontFamily: roboto)),
-                                        )
-                                    ),*/
-                            Positioned(
-                                bottom: 22,
-                                left: 16,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.fromLTRB(14, 8, 14, 8),
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(22),
-                                          color: white.withOpacity(0.2)
+                                            color: white.withOpacity(0.2)
+                                        ),
+                                        alignment: Alignment.center,
+                                        child: Text(postDetailsData.reatedPosts![index].location.toString(),style:  const TextStyle(color: blackConst,fontSize: 12,fontWeight: FontWeight.w500,fontFamily: roboto)),
                                       ),
-                                      alignment: Alignment.center,
-                                      child: Text(postDetailsData.reatedPosts![index].location.toString(),style:  const TextStyle(color: blackConst,fontSize: 12,fontWeight: FontWeight.w500,fontFamily: roboto)),
-                                    ),
-                                    Container(
+                                      Container(
+                                          width: MediaQuery.of(context).size.width - 50,
+                                          margin: const EdgeInsets.only(top: 12, right: 18,bottom: 22),
+                                          child: Text(
+                                            postDetailsData.reatedPosts![index].title.toString(),
+                                            overflow: TextOverflow.clip,
+                                            maxLines: 2,
+                                            style:  const TextStyle(
+                                                color: whiteConst,
+                                                fontWeight: titleFont,
+                                                fontFamily: gilroy,
+                                                fontSize: 18,
+                                                overflow: TextOverflow.clip),
+                                          )),
+                                      SizedBox(
                                         width: MediaQuery.of(context).size.width - 50,
-                                        margin: const EdgeInsets.only(top: 12, right: 18,bottom: 22),
-                                        child: Text(
-                                          postDetailsData.reatedPosts![index].title.toString(),
-                                          overflow: TextOverflow.clip,
-                                          maxLines: 2,
-                                          style:  const TextStyle(
-                                              color: whiteConst,
-                                              fontWeight: titleFont,
-                                              fontFamily: gilroy,
-                                              fontSize: 18,
-                                              overflow: TextOverflow.clip),
-                                        )),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width - 50,
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            postDetailsData.reatedPosts![index].saveTimestamp.toString(),
-                                            style:  const TextStyle(fontSize: 14, fontFamily: roboto, fontWeight: FontWeight.w400, color: text_light),
-                                          ),
-                                          Row(
-                                            children: [
-                                              GestureDetector(
-                                                onTap: (){
-                                                  if(postDetailsData.reatedPosts![index].media!.isNotEmpty)
-                                                  {
-                                                    if(postDetailsData.reatedPosts![index].media![0].media.toString().isNotEmpty)
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              postDetailsData.reatedPosts![index].saveTimestamp.toString(),
+                                              style:  const TextStyle(fontSize: 14, fontFamily: roboto, fontWeight: FontWeight.w400, color: text_light),
+                                            ),
+                                            Row(
+                                              children: [
+                                                GestureDetector(
+                                                  onTap: (){
+                                                    if(postDetailsData.reatedPosts![index].media!.isNotEmpty)
                                                     {
-                                                      Share.share(postDetailsData.reatedPosts![index].media![0].media.toString());
-                                                      _sharePost(postDetailsData.reatedPosts![index].id.toString());
-                                                      setState(() {
-                                                        postDetailsData.reatedPosts![index].setSharesCount = postDetailsData.reatedPosts![index].sharesCount! + 1;
-                                                      });
+                                                      if(postDetailsData.reatedPosts![index].media![0].media.toString().isNotEmpty)
+                                                      {
+                                                        Share.share(postDetailsData.reatedPosts![index].media![0].media.toString());
+                                                        _sharePost(postDetailsData.reatedPosts![index].id.toString());
+                                                        setState(() {
+                                                          postDetailsData.reatedPosts![index].setSharesCount = postDetailsData.reatedPosts![index].sharesCount! + 1;
+                                                        });
+                                                      }
+                                                      else
+                                                      {
+                                                        showSnackBar("Video link not found.", context);
+                                                      }
                                                     }
                                                     else
                                                     {
                                                       showSnackBar("Video link not found.", context);
                                                     }
-                                                  }
-                                                  else
-                                                  {
-                                                    showSnackBar("Video link not found.", context);
-                                                  }
-                                                },
-                                                child: Container(
-                                                  width: 42,
-                                                  height: 42,
-                                                  alignment: Alignment.center,
-                                                  child: Image.asset('assets/images/share.png', height: 22, width: 22, color: lightGray),
+                                                  },
+                                                  child: Container(
+                                                    width: 42,
+                                                    height: 42,
+                                                    alignment: Alignment.center,
+                                                    child: Image.asset('assets/images/share.png', height: 22, width: 22, color: lightGray),
+                                                  ),
                                                 ),
-                                              ),
-                                              Text(
-                                                postDetailsData.reatedPosts![index].sharesCount.toString(),
-                                                textAlign: TextAlign.center,
-                                                style:  const TextStyle(
-                                                    fontSize: 14, fontWeight: FontWeight.w400, fontFamily: roboto, color: whiteConst),
-                                              ),
-
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                )
-                            ),
-                          ],
+                                                Text(
+                                                  postDetailsData.reatedPosts![index].sharesCount.toString(),
+                                                  textAlign: TextAlign.center,
+                                                  style:  const TextStyle(
+                                                      fontSize: 14, fontWeight: FontWeight.w400, fontFamily: roboto, color: whiteConst),
+                                                ),
+                                                Container(width: 16,),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  )
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         );
       }
-    else if (typeId == "4")
+      else if (typeId == "4")
       {
-        return AnimationLimiter(
-          child: ListView.builder(
-            scrollDirection: Axis.vertical,
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: postDetailsData.reatedPosts!.length,
-            itemBuilder: (context, index) {
-              return AnimationConfiguration.staggeredList(
-                position: index,
-                duration: const Duration(milliseconds: 375),
-                child: SlideAnimation(
-                  verticalOffset: 50.0,
-                  child: FadeInAnimation(
-                    child: GestureDetector(
-                      onTap: () async {
-                        final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => CommonDetailsScreen(postDetailsData.reatedPosts![index].id.toString(),"4")));
-                        print("result ===== $result");
-                        setState(() {
-                          var data = result.toString().split("|");
-                          for (int i = 0; i < postDetailsData.reatedPosts!.length; i++) {
-                            if(postDetailsData.reatedPosts![i].id == data[0])
-                            {
-                              postDetailsData.reatedPosts![i].setSharesCount = num.parse(data[1]);
-                              break;
+        return Container(
+          child: AnimationLimiter(
+            child: ListView.builder(
+              scrollDirection: Axis.vertical,
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: postDetailsData.reatedPosts!.length,
+              itemBuilder: (context, index) {
+                return AnimationConfiguration.staggeredList(
+                  position: index,
+                  duration: const Duration(milliseconds: 375),
+                  child: SlideAnimation(
+                    verticalOffset: 50.0,
+                    child: FadeInAnimation(
+                      child: GestureDetector(
+                        onTap: () async {
+                          final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => CommonDetailsScreen(postDetailsData.reatedPosts![index].id.toString(),postDetailsData.reatedPosts![index].postTypeId.toString())));
+                          print("result ===== $result");
+                          setState(() {
+                            var data = result.toString().split("|");
+                            for (int i = 0; i < postDetailsData.reatedPosts!.length; i++) {
+                              if(postDetailsData.reatedPosts![i].id == data[0])
+                              {
+                                postDetailsData.reatedPosts![i].setSharesCount = num.parse(data[1]);
+                                break;
+                              }
                             }
-                          }
-                        });
-                      },
-                      child: Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.fromLTRB(10, 8, 8, 8),
-                        margin: const EdgeInsets.only(left: 12, right: 12, top: 12),
-                        decoration: BoxDecoration(
-                          color: newsBlock,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    margin: const EdgeInsets.only(right: 12),
-                                    child: Text(postDetailsData.reatedPosts![index].title.toString(),
-                                        overflow: TextOverflow.clip,
-                                        style: TextStyle(
-                                            color: black,
-                                            fontWeight: FontWeight.w500,
-                                            fontFamily: gilroy,
-                                            fontSize: 18,
-                                            overflow: TextOverflow.clip)),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 100,
-                                  height: 100,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                    child: Image.network(postDetailsData.reatedPosts![index].featuredImage.toString(), width: 100, height: 100, fit: BoxFit.cover),
-                                  ),
-                                )
-                              ],
-                            ),
-                            Container(
-                              height: 18,
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  postDetailsData.reatedPosts![index].location.toString(),
-                                  style: TextStyle(fontSize: 13, fontFamily: roboto, fontWeight: FontWeight.w400, color: newsText),
-                                ),
-                                postDetailsData.reatedPosts![index].location.toString().isNotEmpty ? Container(
-                                  width: 6,
-                                ) : Container(),
-                                postDetailsData.reatedPosts![index].location.toString().isNotEmpty ? Image.asset(
-                                  "assets/images/ic_placeholder.png",
-                                  width: 4,
-                                  height: 4,
-                                  color: newsText,
-                                ) : Container(),
-                                postDetailsData.reatedPosts![index].location.toString().isNotEmpty ?  Container(
-                                  width: 6,
-                                ) : Container(),
-                                Text(
-                                  postDetailsData.reatedPosts![index].saveTimestamp.toString(),
-                                  style: TextStyle(fontSize: 13, fontFamily: roboto, fontWeight: FontWeight.w400, color: newsText),
-                                ),
-                                const Spacer(),
-                                GestureDetector(
-                                  onTap: () async {
-                                    if(postDetailsData.reatedPosts![index].media!.isNotEmpty)
-                                    {
-                                      if(postDetailsData.reatedPosts![index].media![0].media.toString().isNotEmpty)
-                                      {
-                                        Share.share(postDetailsData.reatedPosts![index].media![0].media.toString());
-                                        _sharePost(postDetailsData.reatedPosts![index].id.toString());
-                                        setState(() {
-                                          postDetailsData.reatedPosts![index].setSharesCount = postDetailsData.reatedPosts![index].sharesCount! + 1;
-                                        });
-                                      }
-                                      else
-                                      {
-                                        showSnackBar("News link not found.", context);
-                                      }
-                                    }
-                                    else
-                                    {
-                                      showSnackBar("News link not found.", context);
-                                    }
-                                  },
-                                  child: Container(
-                                    width: 42,
-                                    height: 42,
-                                    alignment: Alignment.center,
-                                    child: Image.asset('assets/images/share.png', height: 22, width: 22, color: newsText),
-                                  ),
-                                ),
-                                Text(
-                                  postDetailsData.reatedPosts![index].sharesCount.toString(),
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: 13, fontWeight: FontWeight.w400, fontFamily: roboto, color: newsText),
-                                ),
-                                Container(
-                                  width: 8,
-                                )
-                                /* Container(
-                                        width: 12,
-                                      ),
-                                      Image.asset(
-                                        "assets/images/ic_arrow_right_new.png",
-                                        width: 22,
-                                        height: 22,
-                                      )*/
-                              ],
-                            ),
-                            Container(
-                              height: 8,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
-        );
-      }
-    else if (typeId == "6")
-      {
-        return AnimationLimiter(
-          child: ListView.builder(
-            scrollDirection: Axis.vertical,
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: postDetailsData.reatedPosts!.length,
-            itemBuilder: (context, index) {
-              return AnimationConfiguration.staggeredList(
-                position: index,
-                duration: const Duration(milliseconds: 375),
-                child: SlideAnimation(
-                  verticalOffset: 50.0,
-                  child: FadeInAnimation(
-                    child: GestureDetector(
-                      onTap: () async {
-                        final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => CommonDetailsScreen(postDetailsData.reatedPosts![index].id.toString(),"4")));
-                        print("result ===== $result");
-                        setState(() {
-                          var data = result.toString().split("|");
-                          for (int i = 0; i < postDetailsData.reatedPosts!.length; i++) {
-                            if(postDetailsData.reatedPosts![i].id == data[0])
-                            {
-                              postDetailsData.reatedPosts![i].setSharesCount = num.parse(data[1]);
-                              break;
-                            }
-                          }
-                        });
-                      },
-                      child: Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.fromLTRB(10, 8, 8, 8),
-                        margin: const EdgeInsets.only(left: 12, right: 12, top: 12),
-                        decoration: BoxDecoration(
-                          color: newsBlock,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    margin: const EdgeInsets.only(right: 12),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(postDetailsData.reatedPosts![index].title.toString(),
-                                            overflow: TextOverflow.clip,
-                                            style: TextStyle(
-                                                color: black,
-                                                fontWeight: FontWeight.w500,
-                                                fontFamily: gilroy,
-                                                fontSize: 18,
-                                                overflow: TextOverflow.clip))
-                                      ],
+                          });
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.fromLTRB(10, 8, 8, 8),
+                          margin: const EdgeInsets.only(left: 16, right: 16, top: 10),
+                          decoration: BoxDecoration(
+                            color: newsBlock,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      margin: const EdgeInsets.only(right: 12),
+                                      child: Text(postDetailsData.reatedPosts![index].title.toString(),
+                                          overflow: TextOverflow.clip,
+                                          style: TextStyle(
+                                              color: black,
+                                              fontWeight: FontWeight.w500,
+                                              fontFamily: gilroy,
+                                              fontSize: 18,
+                                              overflow: TextOverflow.clip)),
                                     ),
                                   ),
-                                ),
-                                SizedBox(
-                                  width: 100,
-                                  height: 100,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                    child: Image.network(postDetailsData.reatedPosts![index].featuredImage.toString(), width: 100, height: 100, fit: BoxFit.cover),
+                                  SizedBox(
+                                    width: 100,
+                                    height: 100,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                      child: Image.network(postDetailsData.reatedPosts![index].featuredImage.toString(), width: 100, height: 100, fit: BoxFit.cover),
+                                    ),
+                                  )
+                                ],
+                              ),
+                              Container(
+                                height: 18,
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    postDetailsData.reatedPosts![index].location.toString(),
+                                    style: TextStyle(fontSize: 13, fontFamily: roboto, fontWeight: FontWeight.w400, color: newsText),
                                   ),
-                                )
-                              ],
-                            ),
-                            Container(
-                              height: 18,
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  postDetailsData.reatedPosts![index].location.toString(),
-                                  style: TextStyle(fontSize: 13, fontFamily: roboto, fontWeight: FontWeight.w400, color: newsText),
-                                ),
-                                postDetailsData.reatedPosts![index].location.toString().isNotEmpty ? Container(
-                                  width: 6,
-                                ) : Container(),
-                                postDetailsData.reatedPosts![index].location.toString().isNotEmpty ? Image.asset(
-                                  "assets/images/ic_placeholder.png",
-                                  width: 4,
-                                  height: 4,
-                                  color: newsText,
-                                ) : Container(),
-                                postDetailsData.reatedPosts![index].location.toString().isNotEmpty ?  Container(
-                                  width: 6,
-                                ) : Container(),
-                                Text(
-                                  postDetailsData.reatedPosts![index].saveTimestamp.toString(),
-                                  style: TextStyle(fontSize: 13, fontFamily: roboto, fontWeight: FontWeight.w400, color: newsText),
-                                ),
-                                const Spacer(),
-                                GestureDetector(
-                                  onTap: () async {
-                                    if(postDetailsData.reatedPosts![index].media!.isNotEmpty)
-                                    {
-                                      if(postDetailsData.reatedPosts![index].media![0].media.toString().isNotEmpty)
+                                  postDetailsData.reatedPosts![index].location.toString().isNotEmpty ? Container(
+                                    width: 6,
+                                  ) : Container(),
+                                  postDetailsData.reatedPosts![index].location.toString().isNotEmpty ? Image.asset(
+                                    "assets/images/ic_placeholder.png",
+                                    width: 4,
+                                    height: 4,
+                                    color: newsText,
+                                  ) : Container(),
+                                  postDetailsData.reatedPosts![index].location.toString().isNotEmpty ?  Container(
+                                    width: 6,
+                                  ) : Container(),
+                                  Text(
+                                    postDetailsData.reatedPosts![index].saveTimestamp.toString(),
+                                    style: TextStyle(fontSize: 13, fontFamily: roboto, fontWeight: FontWeight.w400, color: newsText),
+                                  ),
+                                  const Spacer(),
+                                  GestureDetector(
+                                    onTap: () async {
+                                      if(postDetailsData.reatedPosts![index].media!.isNotEmpty)
                                       {
-                                        Share.share(postDetailsData.reatedPosts![index].media![0].media.toString());
-                                        _sharePost(postDetailsData.reatedPosts![index].id.toString());
-                                        setState(() {
-                                          postDetailsData.reatedPosts![index].setSharesCount = postDetailsData.reatedPosts![index].sharesCount! + 1;
-                                        });
+                                        if(postDetailsData.reatedPosts![index].media![0].media.toString().isNotEmpty)
+                                        {
+                                          Share.share(postDetailsData.reatedPosts![index].media![0].media.toString());
+                                          _sharePost(postDetailsData.reatedPosts![index].id.toString());
+                                          setState(() {
+                                            postDetailsData.reatedPosts![index].setSharesCount = postDetailsData.reatedPosts![index].sharesCount! + 1;
+                                          });
+                                        }
+                                        else
+                                        {
+                                          showSnackBar("News link not found.", context);
+                                        }
                                       }
                                       else
                                       {
                                         showSnackBar("News link not found.", context);
                                       }
-                                    }
-                                    else
-                                    {
-                                      showSnackBar("News link not found.", context);
-                                    }
-                                  },
-                                  child: Container(
-                                    width: 42,
-                                    height: 42,
-                                    alignment: Alignment.center,
-                                    child: Image.asset('assets/images/share.png', height: 22, width: 22, color: newsText),
+                                    },
+                                    child: Container(
+                                      width: 42,
+                                      height: 42,
+                                      alignment: Alignment.center,
+                                      child: Image.asset('assets/images/share.png', height: 22, width: 22, color: newsText),
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  postDetailsData.reatedPosts![index].sharesCount.toString(),
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: 13, fontWeight: FontWeight.w400, fontFamily: roboto, color: newsText),
-                                ),
-                                Container(
-                                  width: 8,
-                                )
-                                /* Container(
+                                  Text(
+                                    postDetailsData.reatedPosts![index].sharesCount.toString(),
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontSize: 13, fontWeight: FontWeight.w400, fontFamily: roboto, color: newsText),
+                                  ),
+                                  Container(
+                                    width: 8,
+                                  )
+                                  /* Container(
                                           width: 12,
                                         ),
                                         Image.asset(
@@ -1056,23 +900,190 @@ class _CommonDetailsScreen extends BaseState<CommonDetailsScreen> {
                                           width: 22,
                                           height: 22,
                                         )*/
-                              ],
-                            ),
-                            Container(
-                              height: 8,
-                            ),
-                          ],
+                                ],
+                              ),
+                              Container(
+                                height: 8,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         );
       }
-    else 
+      else if (typeId == "6")
+      {
+        return Container(
+          child: AnimationLimiter(
+            child: ListView.builder(
+              scrollDirection: Axis.vertical,
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: postDetailsData.reatedPosts!.length,
+              itemBuilder: (context, index) {
+                return AnimationConfiguration.staggeredList(
+                  position: index,
+                  duration: const Duration(milliseconds: 375),
+                  child: SlideAnimation(
+                    verticalOffset: 50.0,
+                    child: FadeInAnimation(
+                      child: GestureDetector(
+                        onTap: () async {
+                          final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => CommonDetailsScreen(postDetailsData.reatedPosts![index].id.toString(),postDetailsData.reatedPosts![index].postTypeId.toString())));
+                          print("result ===== $result");
+                          setState(() {
+                            var data = result.toString().split("|");
+                            for (int i = 0; i < postDetailsData.reatedPosts!.length; i++) {
+                              if(postDetailsData.reatedPosts![i].id == data[0])
+                              {
+                                postDetailsData.reatedPosts![i].setSharesCount = num.parse(data[1]);
+                                break;
+                              }
+                            }
+                          });
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.fromLTRB(10, 8, 8, 8),
+                          margin: const EdgeInsets.only(left: 16, right: 16, top: 10),
+                          decoration: BoxDecoration(
+                            color: newsBlock,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      margin: const EdgeInsets.only(right: 12),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(postDetailsData.reatedPosts![index].title.toString(),
+                                              overflow: TextOverflow.clip,
+                                              style: TextStyle(
+                                                  color: black,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontFamily: gilroy,
+                                                  fontSize: 18,
+                                                  overflow: TextOverflow.clip))
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 100,
+                                    height: 100,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                      child: Image.network(postDetailsData.reatedPosts![index].featuredImage.toString(), width: 100, height: 100, fit: BoxFit.cover),
+                                    ),
+                                  )
+                                ],
+                              ),
+                              Container(
+                                height: 18,
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    postDetailsData.reatedPosts![index].location.toString(),
+                                    style: TextStyle(fontSize: 13, fontFamily: roboto, fontWeight: FontWeight.w400, color: newsText),
+                                  ),
+                                  postDetailsData.reatedPosts![index].location.toString().isNotEmpty ? Container(
+                                    width: 6,
+                                  ) : Container(),
+                                  postDetailsData.reatedPosts![index].location.toString().isNotEmpty ? Image.asset(
+                                    "assets/images/ic_placeholder.png",
+                                    width: 4,
+                                    height: 4,
+                                    color: newsText,
+                                  ) : Container(),
+                                  postDetailsData.reatedPosts![index].location.toString().isNotEmpty ?  Container(
+                                    width: 6,
+                                  ) : Container(),
+                                  Text(
+                                    postDetailsData.reatedPosts![index].saveTimestamp.toString(),
+                                    style: TextStyle(fontSize: 13, fontFamily: roboto, fontWeight: FontWeight.w400, color: newsText),
+                                  ),
+                                  const Spacer(),
+                                  GestureDetector(
+                                    onTap: () async {
+                                      if(postDetailsData.reatedPosts![index].media!.isNotEmpty)
+                                      {
+                                        if(postDetailsData.reatedPosts![index].media![0].media.toString().isNotEmpty)
+                                        {
+                                          Share.share(postDetailsData.reatedPosts![index].media![0].media.toString());
+                                          _sharePost(postDetailsData.reatedPosts![index].id.toString());
+                                          setState(() {
+                                            postDetailsData.reatedPosts![index].setSharesCount = postDetailsData.reatedPosts![index].sharesCount! + 1;
+                                          });
+                                        }
+                                        else
+                                        {
+                                          showSnackBar("News link not found.", context);
+                                        }
+                                      }
+                                      else
+                                      {
+                                        showSnackBar("News link not found.", context);
+                                      }
+                                    },
+                                    child: Container(
+                                      width: 42,
+                                      height: 42,
+                                      alignment: Alignment.center,
+                                      child: Image.asset('assets/images/share.png', height: 22, width: 22, color: newsText),
+                                    ),
+                                  ),
+                                  Text(
+                                    postDetailsData.reatedPosts![index].sharesCount.toString(),
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontSize: 13, fontWeight: FontWeight.w400, fontFamily: roboto, color: newsText),
+                                  ),
+                                  Container(
+                                    width: 8,
+                                  )
+                                  /* Container(
+                                            width: 12,
+                                          ),
+                                          Image.asset(
+                                            "assets/images/ic_arrow_right_new.png",
+                                            width: 22,
+                                            height: 22,
+                                          )*/
+                                ],
+                              ),
+                              Container(
+                                height: 8,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        );
+      }
+      else
+        {
+          return Container();
+        }
+     /* else
       {
         return AnimationLimiter(
           child: ListView.builder(
@@ -1089,10 +1100,10 @@ class _CommonDetailsScreen extends BaseState<CommonDetailsScreen> {
                   child: FadeInAnimation(
                     child: GestureDetector(
                       onTap: () async {
-                        final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => CommonDetailsScreen(postDetailsData.reatedPosts![index].id.toString(),"8")));
+                        final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => CommonDetailsScreen(postDetailsData.reatedPosts![index].id.toString(),postDetailsData.reatedPosts![index].postTypeId.toString())));
                         print(result);
-                        /*final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => MediaCoverageDetailsScreen(postDetailsData.reatedPosts![index].id.toString())));
-                                            print("result ===== $result");*/
+                        *//*final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => MediaCoverageDetailsScreen(postDetailsData.reatedPosts![index].id.toString())));
+                                            print("result ===== $result");*//*
                         setState(() {
                           var data = result.toString().split("|");
                           for (int i = 0; i < postDetailsData.reatedPosts!.length; i++) {
@@ -1217,7 +1228,7 @@ class _CommonDetailsScreen extends BaseState<CommonDetailsScreen> {
             },
           ),
         );
-      }
+      }*/
   }
 
   _getPostDetails() async {
@@ -1373,4 +1384,14 @@ class _CommonDetailsScreen extends BaseState<CommonDetailsScreen> {
     widget is CommonDetailsScreen;
   }
 
+  isShowRelatedPost() {
+    if (typeId == "2" || typeId == "3" || typeId == "4" || typeId == "6")
+    {
+      return true;
+    }
+    else
+      {
+        return false;
+      }
+  }
 }

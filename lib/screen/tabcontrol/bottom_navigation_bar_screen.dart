@@ -19,8 +19,10 @@ import 'TrendingScreen.dart';
 class BottomNavigationBarScreen extends StatefulWidget {
   final int passIndex;
   const BottomNavigationBarScreen(this.passIndex, {Key? key}) : super(key: key);
+
   @override
   _BottomNavigationBarScreenState createState() => _BottomNavigationBarScreenState();
+
 }
 
 class _BottomNavigationBarScreenState extends BaseState<BottomNavigationBarScreen> {
@@ -34,12 +36,13 @@ class _BottomNavigationBarScreenState extends BaseState<BottomNavigationBarScree
   late int currentPage;
   late TabController tabController;
 
+  final GlobalKey<_BottomNavigationBarScreenState> myWidgetState = GlobalKey<_BottomNavigationBarScreenState>();
 
   @override
   void initState() {
     super.initState();
     getDeviceToken();
-    _page1 = const TrendingScreen();
+    _page1 = TrendingScreen(key : myWidgetState);
     _page2 = const AlbumScreen();
     _page3 = const VideoScreen();
     _page4 = const BlogScreen();
@@ -74,7 +77,7 @@ class _BottomNavigationBarScreenState extends BaseState<BottomNavigationBarScree
     if(value == 0 && isHomeReload) {
       setState(() {
         _pages.removeAt(0);
-        _pages.insert(0, TrendingScreen(key: UniqueKey()));
+        _pages.insert(0, TrendingScreen(key: myWidgetState));
       });
 
     }else if(value == 1 && isGalleryReload) {

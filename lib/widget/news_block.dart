@@ -24,36 +24,18 @@ class NewsBlock extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        if (isFromNews)
-          {
-            final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => CommonDetailsScreen(listNews[index].id.toString(),"4")));
-            print("result ===== $result");
-            setState(() {
-              var data = result.toString().split("|");
-              for (int i = 0; i < listNews.length; i++) {
-                if(listNews[i].id == data[0])
-                {
-                  listNews[i].setSharesCount = num.parse(data[1]);
-                  break;
-                }
-              }
-            });
+        final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => CommonDetailsScreen(listNews[index].id.toString(),listNews[index].postTypeId.toString())));
+        print("result ===== $result");
+        setState(() {
+          var data = result.toString().split("|");
+          for (int i = 0; i < listNews.length; i++) {
+            if(listNews[i].id == data[0])
+            {
+              listNews[i].setSharesCount = num.parse(data[1]);
+              break;
+            }
           }
-        else
-          {
-            final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => CommonDetailsScreen(listNews[index].id.toString(),"6")));
-            print("result ===== $result");
-            setState(() {
-              var data = result.toString().split("|");
-              for (int i = 0; i < listNews.length; i++) {
-                if(listNews[i].id == data[0])
-                {
-                  listNews[i].setSharesCount = num.parse(data[1]);
-                  break;
-                }
-              }
-            });
-          }
+        });
 
       },
       child: Container(

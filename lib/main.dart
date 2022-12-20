@@ -6,16 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jspl_connect/constant/colors.dart';
 import 'package:jspl_connect/push_notification/PushNotificationService.dart';
-import 'package:jspl_connect/screen/BlogDetailsScreen.dart';
 import 'package:jspl_connect/screen/CommonDetailsScreen.dart';
-import 'package:jspl_connect/screen/EventDetailsScreen.dart';
-import 'package:jspl_connect/screen/LeadershipDetailsScreen.dart';
 import 'package:jspl_connect/screen/LoginScreen.dart';
 import 'package:jspl_connect/screen/MagazineListScreen.dart';
-import 'package:jspl_connect/screen/MediaCoverageDetailsScreen.dart';
-import 'package:jspl_connect/screen/NewsDetailsScreen.dart';
 import 'package:jspl_connect/screen/SocialWallScreen.dart';
-import 'package:jspl_connect/screen/VideoDetailsPage.dart';
 import 'package:jspl_connect/screen/tabcontrol/bottom_navigation_bar_screen.dart';
 import 'package:jspl_connect/utils/app_utils.dart';
 import 'package:jspl_connect/utils/session_manager_methods.dart';
@@ -25,11 +19,17 @@ import 'constant/global_context.dart';
 import 'model/DashBoardDataResponse.dart';
 import 'utils/session_manager.dart';
 
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // you need to initialize firebase first
+  print("Handling a background message: ${message.data.toString()}");
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SessionManagerMethods.init();
   await PushNotificationService().setupInteractedMessage();
   runApp(const MyApp());
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
   if (initialMessage != null) {
     print("@@@@@@@@ Main Dart @@@@@@@@ ${initialMessage.data}");
@@ -80,21 +80,27 @@ class _MyHomePageState extends State<MyHomePage> {
       WidgetsFlutterBinding.ensureInitialized();
       SessionManager sessionManager = SessionManager();
       isLoggedIn = sessionManager.checkIsLoggedIn() ?? false;
+      print("<><> NOTIF TYPE :" + NavigationService.notif_type + " <><>");
+      print("<><> NOTIF TYPE POST :" + NavigationService.notif_post_id + " <><>");
 
         if(isLoggedIn)
         {
-          print("<><> NOTIF TYPE :" + NavigationService.notif_type + " <><>");
           if(NavigationService.notif_post_id != null)
           {
             if(NavigationService.notif_post_id.toString().isNotEmpty)
             {
               if(NavigationService.notif_type == "1")
               {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => SocialWallScreen()));
+                Timer(
+                    const Duration(seconds: 3),
+                        () => Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                    const SocialWallScreen()), (Route<dynamic> route) => false));
               }
               else if(NavigationService.notif_type == "2" || NavigationService.notif_type == "3" ||NavigationService.notif_type == "4" || NavigationService.notif_type == "6" || NavigationService.notif_type == "8" || NavigationService.notif_type == "10" )
               {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => CommonDetailsScreen(NavigationService.notif_post_id.toString(),(NavigationService.notif_type.toString()))));
+                Timer(
+                    const Duration(seconds: 3),
+                        () => Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => CommonDetailsScreen(NavigationService.notif_post_id.toString(),NavigationService.notif_type.toString())), (Route<dynamic> route) => false));
               }
               else if(NavigationService.notif_type == "5")
               {
@@ -102,15 +108,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     const Duration(seconds: 3),
                         () => Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
                     const BottomNavigationBarScreen(1)), (Route<dynamic> route) => false));
-                NavigationService.notif_type = "";
-                NavigationService.notif_post_id = "";
               }
               else if(NavigationService.notif_type == "7")
               {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const MagazineListScreen()));
+                Timer(
+                    const Duration(seconds: 3),
+                        () => Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                    const MagazineListScreen()), (Route<dynamic> route) => false));
               }
-
-
             }
             else
             {
