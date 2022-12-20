@@ -1,7 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:jspl_connect/widget/loading.dart';
+import 'package:pretty_http_logger/pretty_http_logger.dart';
 
+import '../constant/api_end_point.dart';
 import '../constant/colors.dart';
+import '../model/AboutJSPResponseModel.dart';
 import '../utils/base_class.dart';
 
 class AboutJSPLScreen extends StatefulWidget {
@@ -12,8 +18,9 @@ class AboutJSPLScreen extends StatefulWidget {
 }
 
 class _AboutJSPLScreen extends BaseState<AboutJSPLScreen> {
-
   bool isLiked = false;
+  bool _isLoading = false;
+  String njImage = "";
 
   String readMore = "As the Coronavirus pandemic continues to wage a fierce battle against the human race, imposing tremendous pressure across the world, not just financially but also socially, physically and emotionally. I appreciate the meaningful role you are playing despite the uncertainties and hardships that we all are facing. Shallu and I would like to extend our heartfelt gratitude for your enduring dedication and support for each other and the organization.\n\nIn this unfavourable environment, the businesses, in particular, are confronted with questions on their ability to steer through this black swan event and challenges of business continuity. We at JSP have over the past few weeks stepped up our business continuity preparedness to equip our organization with operational resilience. It has been heartening to know how our teams are working in these complex times managing both, their personal priorities and the work responsibilities.\n\nAs we deal with the looming uncertainty and adjust to the new normal, there are no known rules or ready reckoners available to refer. We know that many of us are going to feel anxious and concerned about our own health and the health of our families and friends. In such times we must leverage on our key strength, that has since long helped us sail through tough times - Collaboration. This epidemic has propelled us to broaden the meaning of collaboration at workplace from partnership between employees to a partnership between the employees’ families - organization and to embrace technology to transcend the boundaries of workplace.\n\nThe severity of the present circumstances has driven us to renounce the traditional mind-set that equates office to a fixed building and adopt a progressive belief that treats office as mobile, placing it where one wants it to be. Working remotely or working from home presents us with an opportunity to explore a new style of working, which I believe is the future of work.\n\nI am deeply concerned about the health and safety of those who are working in our plants in roles that currently cannot be performed from home and would like to assure that all the necessary measures have been undertaken to ensure your safety at all times. I am particularly inspired by the agility with which you all have taken ownership of new priorities that have emerged due to the unprecedented nature of the challenge. However, I would also like to stress that each one of you must ensure that you take good care of yourselves and consider your own wellbeing and that of your families, friends and the community that you live in, as your top priority.\n\nJSP is committed to supporting the Government of India in all of its endeavours to contain the outbreak. I urge you to please stay focused, safe and abide by the National, State and Local government guidelines. This is an evolving situation and JSPLs Crisis Management Group is working relentlessly to keep itself abreast of the developments to ensure your safety and that of your family.\n\nThe upcoming times may be challenging, but together we can face it with resilience and commitment. I would like to thank you once again for all your hard work, support, and diligence. I wish you good health and happiness.\n\nWarmly, Naveen Jindal";
 
@@ -23,7 +30,9 @@ class _AboutJSPLScreen extends BaseState<AboutJSPLScreen> {
         child: Scaffold(
           backgroundColor: black,
           appBar: AppBar(toolbarHeight: 0, elevation: 0,systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: white,statusBarIconBrightness: Brightness.dark,statusBarBrightness: Brightness.dark),),
-          body: SingleChildScrollView(
+          body: _isLoading
+              ? const LoadingWidget()
+              : SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,8 +40,8 @@ class _AboutJSPLScreen extends BaseState<AboutJSPLScreen> {
                 Container(
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
-                  decoration: const BoxDecoration(
-                      image: DecorationImage(image: AssetImage("assets/images/ic_about_jspl_1.jpg"),fit: BoxFit.cover)
+                  decoration: BoxDecoration(
+                      image: DecorationImage(image: NetworkImage(njImage),fit: BoxFit.cover)
                   ),
                   child: Column(
                     children: [
@@ -67,7 +76,7 @@ class _AboutJSPLScreen extends BaseState<AboutJSPLScreen> {
                         height: MediaQuery.of(context).size.height / 2.5,
                         width: MediaQuery.of(context).size.width,
                       ),*/
-                      Spacer(),
+                      const Spacer(),
                       Container(
                         margin: const EdgeInsets.only(right: 22,left: 22,bottom: 50),
                         decoration: BoxDecoration(
@@ -196,6 +205,35 @@ class _AboutJSPLScreen extends BaseState<AboutJSPLScreen> {
           return Future.value(true);
         }
     );
+  }
+
+  aboutJSPAPI() async {
+    setState(() {
+      _isLoading = true;
+    });
+    HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+      HttpLogger(logLevel: LogLevel.BODY),
+    ]);
+
+    final url = Uri.parse(MAIN_URL + aboutJSPApi);
+
+    final response = await http.get(url);
+    final statusCode = response.statusCode;
+    final body = response.body;
+    Map<String, dynamic> user = jsonDecode(body);
+    var dataResponse = AboutJspResponseModel.fromJson(user);
+
+    if (statusCode == 200) {
+      readMore = dataResponse.nj.toString();
+      njImage = dataResponse.njImage.toString();
+      setState(() {
+        _isLoading = false;
+      });
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   @override

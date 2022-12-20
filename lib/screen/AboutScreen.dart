@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:jspl_connect/model/AboutJSPResponseModel.dart';
 import 'package:pretty_http_logger/pretty_http_logger.dart';
 
 import '../constant/api_end_point.dart';
@@ -26,6 +27,7 @@ class _AboutScreen extends BaseState<AboutScreen> {
   List<AboutNJModel> listNew = [];
 
   String bio = "A crusader for the Indian national flag, an advocate of women and child rights, a philanthropist, a parliamentarian, a politician, a successful industrialist, and a sportsman par excellence…that’s Naveen Jindal for you\n\nA man of myriad talents, Naveen stands out for his sense of commitment, responsibility, dedication, honesty, integrity and sheer passion in all his undertakings\n\nBorn in Hisar, Haryana, on 9 March 1970, Naveen is the youngest child of the industrialist-philanthropist-politician Om Prakash Jindal and his wife Savitri. He studied at the Delhi Public School (Mathura Road), New Delhi, before graduating in Commerce from Hans Raj College, Delhi University, in 1990. He subsequently completed an MBA degree from the University of Texas at Dallas, in 1992. His penchant for leadership became evident during his student days. He was the President of the Student Government and recipient of the ‘Student Leader of the Year Award’ at the university\n\nOn his return to India, Naveen began managing his father’s political affairs. In 2004 he stood for elections from Kurukshetra on a Congress party ticket and won, beating his nearest rival Abhay Singh Chautala by 1.6 lakh votes. He repeated the feat in 2009\n\nWhile Naveen is a two-time Member of Parliament from the Kurukshetra Lok Sabha constituency in Haryana, he is also the Chairman and Managing Director of Jindal Steel and Power Limited, which is a part of the 15 billion USD diversified O.P. Jindal Group. Naveen’s hard work and business acumen demands applause, for he has transformed the once moderately performing enterprise to the organisation that today operates as the world’s largest coal-based sponge iron manufacturing plant in Raigarh, Chhattisgarh, in addition to plants in Jharkhand and Odisha\n\nHe is also the Chairman of Jindal Power Limited, a subsidiary of JSP, which runs the 1,000 MW O.P. Jindal Thermal Power Plant in Raigarh, Chhattisgarh – India’s first such 1,000 MW plant in the private sector. Going beyond his own constituency, Naveen has championed the causes of education, healthcare and the upliftment of weaker sections across Haryana, and in the vicinity of his factories in other parts of India. He has set up hospitals and schools, adopted villages and is an active campaigner for women’s empowerment, health and education. In 2011 Naveen added another feather in his cap by establishing the ‘Citizens’ Alliance for Reproductive Health and Rights’, an organisation that brings together politicians, media persons and NGOs in a bid to spread awareness about family planning, maternal and child mortality, and related issues. Naveen is a true social entrepreneur. He is a people person. He can effortlessly relate to thousands of other people, and is driven to help those who are in need. His numerous social initiatives have led to an overall improvement in the quality of life in all regions where he has business interests, and beyond\n\nFor those who may not know, Naveen is the man who is single-handedly responsible for making the Tiranga more accessible to the average citizen. His unrelenting legal and political campaign led to a revision of the Flag Code of India which now grants every private citizen the right to fly the Indian National Flag publicly with dignity and honour on all days of the year. The Flag Foundation of India that he founded along with his wife is an effort to foster respect for the Tiranga and the values it embodies among Indian youth.";
+  String bioImage = "";
 
   @override
   void initState(){
@@ -64,9 +66,9 @@ class _AboutScreen extends BaseState<AboutScreen> {
                  child: Column(
                    children: [
                      Container(
-                         decoration: const BoxDecoration(
+                         decoration: BoxDecoration(
                            image: DecorationImage(
-                               image: NetworkImage("https://res.cloudinary.com/dliifke2y/image/upload/v1670859361/Naveen%20Jindal/Copy_of_Awantipora_njqbjd.jpg"),
+                               image: NetworkImage(bioImage),
                                fit: BoxFit.cover
                            )
                          ),
@@ -333,6 +335,35 @@ class _AboutScreen extends BaseState<AboutScreen> {
       if (dataResponse.about!.isNotEmpty) {
         listAbout = dataResponse.about!;
       }
+      setState(() {
+        _isLoading = false;
+      });
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  aboutJSPAPI() async {
+    setState(() {
+      _isLoading = true;
+    });
+    HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+      HttpLogger(logLevel: LogLevel.BODY),
+    ]);
+
+    final url = Uri.parse(MAIN_URL + aboutJSPApi);
+
+    final response = await http.get(url);
+    final statusCode = response.statusCode;
+    final body = response.body;
+    Map<String, dynamic> user = jsonDecode(body);
+    var dataResponse = AboutJspResponseModel.fromJson(user);
+
+    if (statusCode == 200) {
+      bio = dataResponse.bio.toString();
+      bioImage = dataResponse.bioImage.toString();
       setState(() {
         _isLoading = false;
       });

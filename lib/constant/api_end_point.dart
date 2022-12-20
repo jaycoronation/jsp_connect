@@ -23,6 +23,7 @@ String liveApi = "live.json";
 //String galleryApi = "gallery.json";
 String speechApi = "speech.json";
 String aboutApi = "about.json";
+String aboutJSPApi = "about_jspl.json";
 //String blogApi = "blog.json";
 //String socialApi = "social.json";
 //String samparkApi = "sampark.json";
