@@ -95,7 +95,7 @@ class _VideoPlayerScreenState extends BaseState<VideoPlayerScreen> {
               ),
             ),
             body: Container(
-              color: black,
+              color: blackConst,
               alignment: Alignment.center,
               child: player,
             ),

@@ -60,288 +60,275 @@ class _AboutScreen extends BaseState<AboutScreen> {
 
   @override
   Widget build(BuildContext context) {
-
+    precacheImage(AssetImage("assets/images/ic_about_jspl_1-min_lsvqzo.jpeg"), context);
     return WillPopScope(
-        child: Scaffold(
-          backgroundColor: white,
-          resizeToAvoidBottomInset: false,
-          extendBodyBehindAppBar: true,
-          appBar: AppBar(
-            toolbarHeight: 0,
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            systemOverlayStyle: const SystemUiOverlayStyle(
-              // Status bar color
-              statusBarColor: Colors.transparent,
-              // Status bar brightness (optional)
-              statusBarIconBrightness: Brightness.light,
-              // For Android (dark icons)
-              statusBarBrightness: Brightness.light, // For iOS (dark icons)
+          child: Scaffold(
+            backgroundColor: blackConst,
+            resizeToAvoidBottomInset: false,
+            extendBodyBehindAppBar: true,
+            appBar: AppBar(
+              toolbarHeight: 60,
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              leading: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    margin: const EdgeInsets.only(right: 8),
+                    child: Image.asset('assets/images/ic_back_button.png', height: 22, width: 22,color: white),
+                  )),
+              title: Text(
+                "Shri Naveen Jindal",
+                textAlign: TextAlign.start,
+                style: TextStyle(fontSize: 18, color: white, fontWeight: FontWeight.w600, fontFamily: gilroy),
+              ),
+              titleSpacing: 0,
+              systemOverlayStyle: const SystemUiOverlayStyle(
+                // Status bar color
+                statusBarColor: Colors.transparent,
+                // Status bar brightness (optional)
+                statusBarIconBrightness: Brightness.light,
+                // For Android (dark icons)
+                statusBarBrightness: Brightness.light, // For iOS (dark icons)
+              ),
             ),
-          ),
-          body: _isLoading
-              ? const LoadingWidget()
-               : SingleChildScrollView(
-                 child: Column(
-                   children: [
-                     Container(
-                       child: Stack(
+            body: _isLoading
+                ? const LoadingWidget()
+                 : SingleChildScrollView(
+                   child: Stack(
+                     children: [
+                       Image.asset("assets/images/ic_about_jspl_1-min_lsvqzo.jpeg",
+                         fit: BoxFit.cover,
+                         height: MediaQuery.of(context).size.height,
+                         width: MediaQuery.of(context).size.width,
+                       ),
+                      /* FadeInImage.assetNetwork(
+                         image: bioImage.toString(),
+                         fit: BoxFit.cover,
+                         height: MediaQuery.of(context).size.height,
+                         width: MediaQuery.of(context).size.width, placeholder: 'assets/images/bg_gray.jpeg',
+                       ),*/
+                       Container(
+                         height: MediaQuery.of(context).size.height,
+                         decoration: BoxDecoration(
+                           color: Colors.white,
+                           gradient: LinearGradient(
+                               begin: FractionalOffset.topCenter,
+                               end: FractionalOffset.bottomCenter,
+                               colors: [
+                                 blackConst.withOpacity(0.2),
+                                 blackConst.withOpacity(1),
+                               ],
+                               stops: const [
+                                 0.7,
+                                 1.0
+                               ]
+                           ),
+                         ),
+                       ),
+                       Column(
                          children: [
-                           FadeInImage.assetNetwork(
-                             image: bioImage.toString(),
-                             fit: BoxFit.cover,
-                             height: MediaQuery.of(context).size.height,
-                             width: MediaQuery.of(context).size.width, placeholder: 'assets/images/bg_gray.jpeg',
+                           SizedBox(
+                             height: MediaQuery.of(context).size.height / 2.1,
+                             width: MediaQuery.of(context).size.width,
                            ),
                            Container(
-                             height: MediaQuery.of(context).size.height,
+                             margin: const EdgeInsets.only(right: 22,left: 22),
                              decoration: BoxDecoration(
-                               color: Colors.white,
-                               gradient: LinearGradient(
-                                   begin: FractionalOffset.topCenter,
-                                   end: FractionalOffset.bottomCenter,
-                                   colors: [
-                                     blackConst.withOpacity(0.2),
-                                     blackConst.withOpacity(1),
-                                   ],
-                                   stops: const [
-                                     0.7,
-                                     1.0
-                                   ]
-                               ),
+                               color: grayNew,
+                               borderRadius: BorderRadius.circular(30),
                              ),
-                           ),
-                           Column(
-                             children: [
-                               Container(
-                                 margin: const EdgeInsets.only(left: 14, right: 14, top: 45),
-                                 child: Row(
-                                   crossAxisAlignment: CrossAxisAlignment.center,
-                                   mainAxisAlignment: MainAxisAlignment.start,
-                                   children: [
-                                     GestureDetector(
-                                       behavior: HitTestBehavior.opaque,
-                                         onTap: () {
-                                           Navigator.pop(context);
-                                         },
-                                         child: Container(
-                                           alignment: Alignment.center,
-                                           margin: const EdgeInsets.only(right: 8),
-                                           child: Image.asset('assets/images/ic_back_button.png', height: 22, width: 22,color: white),
-                                         )),
-                                     Container(
-                                       margin: const EdgeInsets.only(left: 12),
-                                       alignment: Alignment.center,
-                                       child: Text(
-                                         "Shri Naveen Jindal",
-                                         textAlign: TextAlign.start,
-                                         style: TextStyle(fontSize: 18, color: white, fontWeight: FontWeight.w600, fontFamily: gilroy),
+                             child: Column(
+                               mainAxisAlignment: MainAxisAlignment.start,
+                               crossAxisAlignment: CrossAxisAlignment.start,
+                               children: [
+                                 Padding(
+                                   padding: const EdgeInsets.all(20),
+                                   child: Row(
+                                     mainAxisAlignment: MainAxisAlignment.start,
+                                     crossAxisAlignment: CrossAxisAlignment.center,
+                                     children: [
+                                        Text(
+                                        "Biography",
+                                         style: TextStyle(fontFamily: gilroy, fontSize: 16, color: black, fontWeight: FontWeight.w600),
                                        ),
-                                     ),
-                                     const Spacer(),
-                                   ],
-                                 ),
-                               ),
-                               SizedBox(
-                                 height: MediaQuery.of(context).size.height / 2.1,
-                                 width: MediaQuery.of(context).size.width,
-                               ),
-                               Container(
-                                 margin: const EdgeInsets.only(right: 22,left: 22),
-                                 decoration: BoxDecoration(
-                                   color: grayNew,
-                                   borderRadius: BorderRadius.circular(30),
-                                 ),
-                                 child: Column(
-                                   mainAxisAlignment: MainAxisAlignment.start,
-                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                   children: [
-                                     Padding(
-                                       padding: const EdgeInsets.all(20),
-                                       child: Row(
-                                         mainAxisAlignment: MainAxisAlignment.start,
+                                       const Spacer(),
+                                       LikeButton(
+                                         mainAxisAlignment: MainAxisAlignment.center,
                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                         children: [
-                                            Text(
-                                            "Biography",
-                                             style: TextStyle(fontFamily: gilroy, fontSize: 16, color: black, fontWeight: FontWeight.w600),
-                                           ),
-                                           const Spacer(),
-                                           LikeButton(
-                                             mainAxisAlignment: MainAxisAlignment.center,
-                                             crossAxisAlignment: CrossAxisAlignment.center,
-                                             size: 22,
-                                             isLiked: isLiked,
-                                             circleColor: const CircleColor(
-                                                 start: orange, end: orangeNew),
-                                             bubblesColor: const BubblesColor(
-                                               dotPrimaryColor: orange,
-                                               dotSecondaryColor: orangeNew,
-                                             ),
-                                             likeBuilder: (bool isLiked) {
-                                               return Image.asset(
-                                                 isLiked
-                                                     ? "assets/images/like_filled.png"
-                                                     : "assets/images/like.png",
-                                                 color: isLiked ? orangeNew : black,
-                                               );
-                                             },
-                                             onTap: (isLike) async {
-                                               setState(() {
-                                                 isLiked = !isLiked;
-                                               });
-                                               return true;
-                                             },
-                                           ),
-                                           Container(width: 12,),
-                                           Image.asset(
-                                             "assets/images/share.png",
-                                             height: 22,
-                                             width: 22,
-                                             color: darkGray,
-                                           ),
-                                         ],
+                                         size: 22,
+                                         isLiked: isLiked,
+                                         circleColor: const CircleColor(
+                                             start: orange, end: orangeNew),
+                                         bubblesColor: const BubblesColor(
+                                           dotPrimaryColor: orange,
+                                           dotSecondaryColor: orangeNew,
+                                         ),
+                                         likeBuilder: (bool isLiked) {
+                                           return Image.asset(
+                                             isLiked
+                                                 ? "assets/images/like_filled.png"
+                                                 : "assets/images/like.png",
+                                             color: isLiked ? orangeNew : black,
+                                           );
+                                         },
+                                         onTap: (isLike) async {
+                                           setState(() {
+                                             isLiked = !isLiked;
+                                           });
+                                           return true;
+                                         },
                                        ),
-                                     ),
-                                     Container(
-                                       margin: const EdgeInsets.only(left: 14, right: 14,top: 14,bottom: 18),
-                                       child: Text(
-                                         "A man of myriad talents, Naveen stands out for his  senes of commitment, responsibility, dedicatation, honesty, integirty and sheer passion in all his undertaking.",
-                                         style: TextStyle(fontWeight: FontWeight.w500, color: black, fontSize: 20, fontFamily: roboto),
+                                       Container(width: 12,),
+                                       Image.asset(
+                                         "assets/images/share.png",
+                                         height: 22,
+                                         width: 22,
+                                         color: darkGray,
                                        ),
-                                     ),
-                                     Container(
-                                       margin: const EdgeInsets.only(left: 14, right: 14,top: 14,bottom: 18),
-                                       child: Text(
-                                         listAbout[0].aboutData![0].topTxt.toString(),
-                                         maxLines: 2,
-                                         overflow: TextOverflow.ellipsis,
-                                         style: TextStyle(overflow: TextOverflow.ellipsis,fontWeight: FontWeight.w400, color: black, fontSize: 14, fontFamily: roboto),
+                                     ],
+                                   ),
+                                 ),
+                                 Container(
+                                   margin: const EdgeInsets.only(left: 14, right: 14,top: 14,bottom: 18),
+                                   child: Text(
+                                     "A man of myriad talents, Naveen stands out for his  senes of commitment, responsibility, dedicatation, honesty, integirty and sheer passion in all his undertaking.",
+                                     style: TextStyle(fontWeight: FontWeight.w500, color: black, fontSize: 20, fontFamily: roboto),
+                                   ),
+                                 ),
+                                 Container(
+                                   margin: const EdgeInsets.only(left: 14, right: 14,top: 14,bottom: 18),
+                                   child: Text(
+                                     listAbout[0].aboutData![0].topTxt.toString(),
+                                     maxLines: 2,
+                                     overflow: TextOverflow.ellipsis,
+                                     style: TextStyle(overflow: TextOverflow.ellipsis,fontWeight: FontWeight.w400, color: black, fontSize: 14, fontFamily: roboto),
+                                   ),
+                                 ),
+                                 GestureDetector(
+                                   onTap: (){
+                                     showModalBottomSheet<void>(
+                                       context: context,
+                                       isScrollControlled: true,
+                                       shape: const RoundedRectangleBorder(
+                                           borderRadius: BorderRadius.only(
+                                               topLeft: Radius.circular(20),
+                                               topRight: Radius.circular(20)
+                                           )
                                        ),
-                                     ),
-                                     GestureDetector(
-                                       onTap: (){
-                                         showModalBottomSheet<void>(
-                                           context: context,
-                                           isScrollControlled: true,
-                                           shape: const RoundedRectangleBorder(
-                                               borderRadius: BorderRadius.only(
-                                                   topLeft: Radius.circular(20),
-                                                   topRight: Radius.circular(20)
-                                               )
-                                           ),
-                                           elevation: 5,
-                                           isDismissible: true,
-                                           builder: (BuildContext context) {
-                                             return Container(
-                                               height: MediaQuery.of(context).size.height * 0.88,
-                                               color: grayNew,
-                                               padding: const EdgeInsets.all(12),
-                                               child: SingleChildScrollView(
-                                                 child: Column(
-                                                   mainAxisAlignment: MainAxisAlignment.start,
-                                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                                   children: <Widget>[
-                                                     Row(
-                                                       mainAxisAlignment: MainAxisAlignment.center,
-                                                       crossAxisAlignment: CrossAxisAlignment.center,
-                                                       children: const [
-                                                         Padding(
-                                                           padding: EdgeInsets.only(bottom:12 ,top: 12),
-                                                           child: SizedBox(
-                                                             width: 50,
-                                                             child: Divider(
-                                                               color: Colors.grey,
-                                                               height: 1.5,
-                                                               thickness: 1.5,
-                                                             ),
-                                                           ),
+                                       elevation: 5,
+                                       isDismissible: true,
+                                       builder: (BuildContext context) {
+                                         return Container(
+                                           height: MediaQuery.of(context).size.height * 0.88,
+                                           color: grayNew,
+                                           padding: const EdgeInsets.all(12),
+                                           child: SingleChildScrollView(
+                                             child: Column(
+                                               mainAxisAlignment: MainAxisAlignment.start,
+                                               crossAxisAlignment: CrossAxisAlignment.start,
+                                               children: <Widget>[
+                                                 Row(
+                                                   mainAxisAlignment: MainAxisAlignment.center,
+                                                   crossAxisAlignment: CrossAxisAlignment.center,
+                                                   children: const [
+                                                     Padding(
+                                                       padding: EdgeInsets.only(bottom:12 ,top: 12),
+                                                       child: SizedBox(
+                                                         width: 50,
+                                                         child: Divider(
+                                                           color: Colors.grey,
+                                                           height: 1.5,
+                                                           thickness: 1.5,
                                                          ),
-                                                       ],
+                                                       ),
                                                      ),
-                                                     Text('Biography',style: TextStyle(color: black,fontWeight: FontWeight.w600,fontSize: 20,fontFamily: roboto)),
-                                                     Container(height: 8,),
-                                                     Text(bio,style: TextStyle(color: black,fontWeight: FontWeight.w400,fontSize: 18,fontFamily: roboto)),
                                                    ],
                                                  ),
-                                               ),
-                                             );
-                                           },
+                                                 Text('Biography',style: TextStyle(color: black,fontWeight: FontWeight.w600,fontSize: 20,fontFamily: roboto)),
+                                                 Container(height: 8,),
+                                                 Text(bio,style: TextStyle(color: black,fontWeight: FontWeight.w400,fontSize: 18,fontFamily: roboto)),
+                                               ],
+                                             ),
+                                           ),
                                          );
                                        },
-                                       child: Container(
-                                         margin: const EdgeInsets.only(bottom: 12,left: 12),
-                                         decoration: BoxDecoration(
-                                           borderRadius: BorderRadius.circular(18),
-                                           color: bgMain.withOpacity(0.8),
+                                     );
+                                   },
+                                   child: Container(
+                                     margin: const EdgeInsets.only(bottom: 12,left: 12),
+                                     decoration: BoxDecoration(
+                                       borderRadius: BorderRadius.circular(18),
+                                       color: bgMain.withOpacity(0.8),
+                                     ),
+                                     padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
+                                     child:  Text("Read More",style: TextStyle(color: whiteConst,fontWeight: FontWeight.w400,fontSize: 14,fontFamily: roboto)),
+                                   ),
+                                 )
+                               ],
+                             ),
+                           ),
+                           Container(
+                             margin: const EdgeInsets.fromLTRB(12, 22, 12, 22),
+                             height: 250,
+                             width: MediaQuery.of(context).size.width,
+                             child: ListView.builder(
+                               scrollDirection: Axis.horizontal,
+                               physics: const BouncingScrollPhysics(),
+                               primary: false,
+                               shrinkWrap: true,
+                               itemCount: listNew.length,
+                               itemBuilder: (BuildContext context, int index) {
+                                 return GestureDetector(
+                                   onTap: (){
+                                     Navigator.push(context, MaterialPageRoute(builder: (context) => AboutDetailsScreen(listNew[index])));
+                                   },
+                                   child: Container(
+                                     width: 100,
+                                     height: 220,
+                                     margin: const EdgeInsets.only(left: 12),
+                                     child: Column(
+                                       children: [
+                                         SizedBox(
+                                           height: 160,
+                                           child: ClipRRect(
+                                             borderRadius: const BorderRadius.all(Radius.circular(44)),
+                                             child: Image.network(listNew[index].image,fit: BoxFit.cover),
+                                           ),
                                          ),
-                                         padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
-                                         child:  Text("Read More",style: TextStyle(color: whiteConst,fontWeight: FontWeight.w400,fontSize: 14,fontFamily: roboto)),
-                                       ),
-                                     )
-                                   ],
-                                 ),
-                               )
-                             ],
+                                         Container(
+                                           alignment: Alignment.center,
+                                           margin: const EdgeInsets.only(top: 12),
+                                           decoration: BoxDecoration(
+                                             borderRadius: BorderRadius.circular(18),
+                                             color: grayNew,
+                                           ),
+                                           padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
+                                           child: Text(listNew[index].title,
+                                               textAlign: TextAlign.center,
+                                               style: TextStyle(color: black,fontWeight: FontWeight.w600,fontSize: 14,fontFamily: roboto)),
+                                         )
+                                       ],
+                                     ),
+                                   ),
+                                 );
+                               },
+                             ),
                            ),
                          ],
                        ),
-                     ),
-                     Container(
-                       margin: const EdgeInsets.fromLTRB(12, 0, 12, 22),
-                       height: 250,
-                       width: MediaQuery.of(context).size.width,
-                       child: ListView.builder(
-                         scrollDirection: Axis.horizontal,
-                         physics: const BouncingScrollPhysics(),
-                         primary: false,
-                         shrinkWrap: true,
-                         itemCount: listNew.length,
-                          itemBuilder: (BuildContext context, int index) {
-                           return GestureDetector(
-                             onTap: (){
-                               Navigator.push(context, MaterialPageRoute(builder: (context) => AboutDetailsScreen(listNew[index])));
-                             },
-                             child: Container(
-                               width: 100,
-                               height: 220,
-                               margin: const EdgeInsets.only(left: 12),
-                               child: Column(
-                                 children: [
-                                   SizedBox(
-                                     height: 160,
-                                     child: ClipRRect(
-                                       borderRadius: const BorderRadius.all(Radius.circular(44)),
-                                       child: Image.network(listNew[index].image,fit: BoxFit.cover),
-                                     ),
-                                   ),
-                                   Container(
-                                     alignment: Alignment.center,
-                                     margin: const EdgeInsets.only(top: 12),
-                                     decoration: BoxDecoration(
-                                       borderRadius: BorderRadius.circular(18),
-                                       color: grayNew,
-                                     ),
-                                     padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
-                                     child: Text(listNew[index].title,
-                                         textAlign: TextAlign.center,
-                                         style: TextStyle(color: black,fontWeight: FontWeight.w600,fontSize: 14,fontFamily: roboto)),
-                                   )
-                                 ],
-                               ),
-                             ),
-                           );
-                          },
-                       ),
-                     ),
-                   ],
+                     ],
+                   ),
                  ),
-               ),
-        ),
-        onWillPop: () {
-          Navigator.pop(context);
-          return Future.value(true);
-        });
+          ),
+          onWillPop: () {
+            Navigator.pop(context);
+            return Future.value(true);
+          }
+        );
   }
 
   _aboutApi() async {
@@ -388,6 +375,7 @@ class _AboutScreen extends BaseState<AboutScreen> {
     if (statusCode == 200) {
       bio = dataResponse.bio.toString();
       bioImage = dataResponse.bioImage.toString();
+      precacheImage(NetworkImage(bioImage.toString()), context);
       setState(() {
         _isLoading = false;
       });

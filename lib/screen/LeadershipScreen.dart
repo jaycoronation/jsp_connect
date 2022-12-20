@@ -123,112 +123,118 @@ class _LeadershipScreen extends BaseState<LeadershipScreen> {
                                   ),
                                 ))),
                       ),
-                      Expanded(child: listLeadership[pos].posts!.isNotEmpty ? Padding(padding: EdgeInsets.all(12),child: AnimationLimiter(
-                          child: ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            physics: const AlwaysScrollableScrollPhysics(),
-                            primary: false,
-                            shrinkWrap: true,
-                            itemCount: listLeadership[pos].posts!.length,
-                            itemBuilder: (context, indexNew) {
-                              return AnimationConfiguration.staggeredList(
-                                position: pos,
-                                duration: const Duration(milliseconds: 375),
-                                child: SlideAnimation(
-                                  verticalOffset: 50.0,
-                                  child: FadeInAnimation(
-                                    child: GestureDetector(
-                                      onTap: () async {
-                                           final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => CommonDetailsScreen(listLeadership[pos].posts![indexNew].id.toString(),"10")));
-                                           print(result);
-                                      },
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            margin: const EdgeInsets.only(top: 12),
-                                            decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(20),
-                                                border: Border.all(width: 0.6, color: white.withOpacity(0.4), style: BorderStyle.solid)),
-                                            child: Stack(children: [
-                                              ClipRRect(
-                                                borderRadius: BorderRadius.circular(20), // Image border
-                                                child: CachedNetworkImage(
-                                                  imageUrl: listLeadership[pos].posts![indexNew].featuredImagePath.toString(),
-                                                  fit: BoxFit.cover,
-                                                  width: MediaQuery.of(context).size.width,
-                                                  height: 350,
-                                                  errorWidget: (context, url, error) => Image.asset(
-                                                    'assets/images/bg_gray.jpeg',
-                                                    width: MediaQuery.of(context).size.width,
-                                                    height: 350,
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                  placeholder: (context, url) => Image.asset(
-                                                    'assets/images/bg_gray.jpeg',
-                                                    width: MediaQuery.of(context).size.width,
-                                                    height: 350,
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                ),
-                                              ),
-                                              Container(
-                                                height: 350,
-                                                decoration: BoxDecoration(
-                                                    color: Colors.black,
-                                                    gradient:
-                                                    LinearGradient(begin: FractionalOffset.topCenter, end: FractionalOffset.bottomCenter, colors: [
-                                                      blackConst.withOpacity(0.4),
-                                                      blackConst.withOpacity(1),
-                                                    ], stops: const [
-                                                      0.9,
-                                                      1.0
-                                                    ]),
-                                                    borderRadius: BorderRadius.circular(20)),
-                                              ),
-                                              Container(
-                                                  padding: const EdgeInsets.only(left: 10, right: 10, bottom: 22),
-                                                  height: 350,
-                                                  color: Colors.transparent,
-                                                  width: MediaQuery.of(context).size.width,
-                                                  alignment: Alignment.bottomCenter,
-                                                  child: Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                                    mainAxisAlignment: MainAxisAlignment.end,
-                                                    children: [
-                                                      Text(
-                                                        toDisplayCase(listLeadership[pos].posts![indexNew].title.toString()),
-                                                        overflow: TextOverflow.clip,
-                                                        style: const TextStyle(
-                                                            fontWeight: FontWeight.w600,
-                                                            fontFamily: gilroy,
-                                                            color: whiteConst,
-                                                            fontSize: 18,
-                                                            overflow: TextOverflow.clip),
-                                                        textAlign: TextAlign.center,
+                      Expanded(
+                          child: listLeadership[pos].posts!.isNotEmpty
+                              ? Padding(padding: EdgeInsets.all(12),
+                                child: AnimationLimiter(
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.vertical,
+                                    physics: const AlwaysScrollableScrollPhysics(),
+                                    primary: false,
+                                    shrinkWrap: true,
+                                    itemCount: listLeadership[pos].posts!.length,
+                                    itemBuilder: (context, indexNew) {
+                                      return AnimationConfiguration.staggeredList(
+                                        position: pos,
+                                        duration: const Duration(milliseconds: 375),
+                                        child: SlideAnimation(
+                                          verticalOffset: 50.0,
+                                          child: FadeInAnimation(
+                                            child: GestureDetector(
+                                              onTap: () async {
+                                                   final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => CommonDetailsScreen(listLeadership[pos].posts![indexNew].id.toString(),"10")));
+                                                   print(result);
+                                              },
+                                              child: Column(
+                                                children: [
+                                                  Container(
+                                                    margin: const EdgeInsets.only(top: 12),
+                                                    decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(20),
+                                                        border: Border.all(width: 0.6, color: white.withOpacity(0.4), style: BorderStyle.solid)),
+                                                    child: Stack(children: [
+                                                      ClipRRect(
+                                                        borderRadius: BorderRadius.circular(20), // Image border
+                                                        child: CachedNetworkImage(
+                                                          imageUrl: listLeadership[pos].posts![indexNew].featuredImagePath.toString(),
+                                                          fit: BoxFit.cover,
+                                                          width: MediaQuery.of(context).size.width,
+                                                          height: 350,
+                                                          errorWidget: (context, url, error) => Image.asset(
+                                                            'assets/images/bg_gray.jpeg',
+                                                            width: MediaQuery.of(context).size.width,
+                                                            height: 350,
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                          placeholder: (context, url) => Image.asset(
+                                                            'assets/images/bg_gray.jpeg',
+                                                            width: MediaQuery.of(context).size.width,
+                                                            height: 350,
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
                                                       ),
-                                                      checkValidString(listLeadership[pos].posts![indexNew].designation).toString().isNotEmpty ? Text(
-                                                        checkValidString(listLeadership[pos].posts![indexNew].designation),
-                                                        overflow: TextOverflow.clip,
-                                                        style: const TextStyle(
-                                                            fontWeight: FontWeight.w600,
-                                                            fontFamily: gilroy,
-                                                            color: whiteConst,
-                                                            fontSize: 18,
-                                                            overflow: TextOverflow.clip),
-                                                        textAlign: TextAlign.center,
-                                                      ) : Container()
-                                                    ],
-                                                  ))
-                                            ]),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          ))) : MyNoDataWidget(msg: "No " + listLeadership[pos].name.toString().toLowerCase() + " data found!")),
+                                                      Container(
+                                                        height: 350,
+                                                        decoration: BoxDecoration(
+                                                            color: Colors.black,
+                                                            gradient:
+                                                            LinearGradient(begin: FractionalOffset.topCenter, end: FractionalOffset.bottomCenter, colors: [
+                                                              blackConst.withOpacity(0.2),
+                                                              blackConst.withOpacity(1),
+                                                            ], stops: const [
+                                                              0.7,
+                                                              1.0
+                                                            ]),
+                                                            borderRadius: BorderRadius.circular(20)),
+                                                      ),
+                                                      Container(
+                                                          padding: const EdgeInsets.only(left: 10, right: 10, bottom: 22),
+                                                          height: 350,
+                                                          color: Colors.transparent,
+                                                          width: MediaQuery.of(context).size.width,
+                                                          alignment: Alignment.bottomCenter,
+                                                          child: Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                                            mainAxisAlignment: MainAxisAlignment.end,
+                                                            children: [
+                                                              Text(
+                                                                toDisplayCase(listLeadership[pos].posts![indexNew].title.toString()),
+                                                                overflow: TextOverflow.clip,
+                                                                style: const TextStyle(
+                                                                    fontWeight: FontWeight.w600,
+                                                                    fontFamily: gilroy,
+                                                                    color: whiteConst,
+                                                                    fontSize: 18,
+                                                                    overflow: TextOverflow.clip),
+                                                                textAlign: TextAlign.center,
+                                                              ),
+                                                              checkValidString(listLeadership[pos].posts![indexNew].designation).toString().isNotEmpty
+                                                                  ? Text(
+                                                                checkValidString(listLeadership[pos].posts![indexNew].designation),
+                                                                overflow: TextOverflow.clip,
+                                                                style: const TextStyle(
+                                                                    fontWeight: FontWeight.w600,
+                                                                    fontFamily: gilroy,
+                                                                    color: whiteConst,
+                                                                    fontSize: 18,
+                                                                    overflow: TextOverflow.clip),
+                                                                textAlign: TextAlign.center,
+                                                              )
+                                                                  : Container()
+                                                            ],
+                                                          ))
+                                                    ]),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  )))
+                              : MyNoDataWidget(msg: "No " + listLeadership[pos].name.toString().toLowerCase() + " data found!")),
                     ],
                   ),
                 ),

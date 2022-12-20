@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:jspl_connect/widget/news_block.dart';
 import 'package:jspl_connect/widget/no_data.dart';
 import 'package:pretty_http_logger/pretty_http_logger.dart';
 import 'package:share/share.dart';
@@ -127,190 +128,67 @@ class _MediaCoverageScreen extends BaseState<MediaCoverageScreen> {
           body: _isLoading
               ? const LoadingWidget() : listMedia.isEmpty ? MyNoDataWidget(msg: 'No media coverage data found!')
               : Column(
-            children: [
-              Expanded(child: SingleChildScrollView(
-                controller: _scrollViewController,
-                child: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+                    Expanded(child: SingleChildScrollView(
+                      controller: _scrollViewController,
                       child: Column(
                         children: [
-                          AnimationLimiter(
-                            child: ListView.builder(
-                                scrollDirection: Axis.vertical,
-                                physics: const NeverScrollableScrollPhysics(),
-                                primary: false,
-                                shrinkWrap: true,
-                                itemCount: listMedia.length,
-                                itemBuilder: (ctx, index) => AnimationConfiguration.staggeredList(
-                                  position: index,
-                                  duration: const Duration(milliseconds: 375),
-                                  child:  SlideAnimation(
-                                    verticalOffset: 50.0,
-                                    child: FadeInAnimation(
-                                        child: GestureDetector(
-                                          onTap: () async {
-                                            final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => CommonDetailsScreen(listMedia[index].id.toString(),"8")));
-                                            print(result);
-                                            /*final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => MediaCoverageDetailsScreen(listMedia[index].id.toString())));
-                                            print("result ===== $result");*/
-                                            setState(() {
-                                              var data = result.toString().split("|");
-                                              for (int i = 0; i < listMedia.length; i++) {
-                                                if(listMedia[i].id == data[0])
-                                                {
-                                                  listMedia[i].setSharesCount = num.parse(data[1]);
-                                                  break;
-                                                }
-                                              }
-                                            });
-                                          },
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              color: grayNew,
-                                              borderRadius: BorderRadius.circular(30),
-                                            ),
-                                            margin: const EdgeInsets.only(top: 12),
-                                            padding: const EdgeInsets.only(left: 15.0,right: 15,top: 12,bottom: 12),
-                                            child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Row(
-                                                  mainAxisAlignment: MainAxisAlignment.end,
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Expanded(
-                                                      child: Column(
-                                                        mainAxisAlignment: MainAxisAlignment.start,
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                        children: [
-                                                          Text(listMedia[index].location.toString(),
-                                                              overflow: TextOverflow.clip,
-                                                              textAlign: TextAlign.start,
-                                                              style: TextStyle(fontWeight: FontWeight.w400, fontFamily: roboto, fontSize: 12, color: black,overflow: TextOverflow.clip)),
-                                                          Container(
-                                                            margin: const EdgeInsets.only(top: 8),
-                                                            child: Text(listMedia[index].title.toString(),
-                                                                overflow: TextOverflow.clip,
-                                                                textAlign: TextAlign.start,
-                                                                style: TextStyle(fontWeight: FontWeight.w600, fontFamily: roboto, fontSize: 16, color: black,overflow: TextOverflow.clip)),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Container(width: 8),
-                                                    Stack(
-                                                      children: [
-                                                        ClipRRect(
-                                                            borderRadius: BorderRadius.circular(12),
-                                                            child: Image.network(
-                                                              listMedia[index].featuredImage.toString(),
-                                                              height: 80,
-                                                              width: 80,
-                                                              fit: BoxFit.cover,
-                                                            )
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                                Container(height: 12,),
-                                                Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Container(
-                                                      padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
-                                                      child: Text(listMedia[index].saveTimestamp.toString(),
-                                                          overflow: TextOverflow.clip,
-                                                          textAlign: TextAlign.start,
-                                                          style: TextStyle(fontWeight: FontWeight.w500, fontFamily: roboto, fontSize: 12, color: black,overflow: TextOverflow.clip)),
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        GestureDetector(
-                                                          onTap: (){
-                                                            if(listMedia[index].media!.isNotEmpty)
-                                                            {
-                                                              if(listMedia[index].media![0].media.toString().isNotEmpty)
-                                                              {
-                                                                Share.share(listMedia[index].media![0].media.toString());
-                                                                _sharePost(listMedia[index].id.toString());
-                                                                setState(() {
-                                                                  listMedia[index].setSharesCount = listMedia[index].sharesCount! + 1;
-                                                                });
-                                                              }
-                                                              else
-                                                              {
-                                                                showSnackBar("Media Coverage link not found.", context);
-                                                              }
-                                                            }
-                                                            else
-                                                            {
-                                                              showSnackBar("Media Coverage link not found.", context);
-                                                            }
-                                                          },
-                                                          child: Container(
-                                                            width: 32,
-                                                            height: 32,
-                                                            padding: EdgeInsets.all(6),
-                                                            child: Image.asset("assets/images/share.png",color: black),
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          listMedia[index].sharesCount.toString(),
-                                                          textAlign: TextAlign.center,
-                                                          style: TextStyle(
-                                                              fontSize: 14, fontWeight: FontWeight.w400, fontFamily: roboto, color: black),
-                                                        )
-                                                      ],
-                                                    )
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+                            child: Column(
+                              children: [
+                                AnimationLimiter(
+                                  child: ListView.builder(
+                                      scrollDirection: Axis.vertical,
+                                      physics: const NeverScrollableScrollPhysics(),
+                                      primary: false,
+                                      shrinkWrap: true,
+                                      itemCount: listMedia.length,
+                                      itemBuilder: (ctx, index) => AnimationConfiguration.staggeredList(
+                                        position: index,
+                                        duration: const Duration(milliseconds: 375),
+                                        child:  SlideAnimation(
+                                          verticalOffset: 50.0,
+                                          child: FadeInAnimation(
+                                              child: NewsBlock(listNews: listMedia, index: index, isFromNews: false, setState: setState)
                                           ),
-                                        )
-                                    ),
+                                        ),
+                                      )
                                   ),
-                                )
+                                ),
+                              ],
                             ),
-                          ),
+                          )
                         ],
                       ),
-                    )
+                    )),
+                    Visibility(visible : _isLoadingMore,child: Container(
+                      padding: const EdgeInsets.only(top: 10,bottom: 10),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(width: 30, height: 30,
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                        color: const Color(0xff444444),
+                                        width: 1,
+                                      )),
+                                  child:  Padding(
+                                    padding: EdgeInsets.all(6.0),
+                                    child: CircularProgressIndicator(color: white,strokeWidth: 2),
+                                  )
+                              )),
+                           Text(' Loading more...',
+                              style: TextStyle(color: white, fontWeight: FontWeight.w400, fontSize: 16)
+                          )
+                        ],
+                      ),
+                    ))
                   ],
                 ),
-              )),
-              Visibility(visible : _isLoadingMore,child: Container(
-                padding: const EdgeInsets.only(top: 10,bottom: 10),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(width: 30, height: 30,
-                        child: Container(
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: const Color(0xff444444),
-                                  width: 1,
-                                )),
-                            child:  Padding(
-                              padding: EdgeInsets.all(6.0),
-                              child: CircularProgressIndicator(color: white,strokeWidth: 2),
-                            )
-                        )),
-                     Text(' Loading more...',
-                        style: TextStyle(color: white, fontWeight: FontWeight.w400, fontSize: 16)
-                    )
-                  ],
-                ),
-              ))
-            ],
-          ),
         ),
         onWillPop: () {
           Navigator.pop(context);

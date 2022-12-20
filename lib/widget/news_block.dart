@@ -41,7 +41,7 @@ class NewsBlock extends StatelessWidget {
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.fromLTRB(10, 8, 8, 8),
-        margin: const EdgeInsets.only(left: 12, right: 12, top: 12),
+        margin: const EdgeInsets.only(left: 12, right: 12, top: 16),
         decoration: BoxDecoration(
           color: newsBlock,
           borderRadius: BorderRadius.circular(20),

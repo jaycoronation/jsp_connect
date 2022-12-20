@@ -17,8 +17,8 @@ class LoadingWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Shimmer.fromColors(
-                    baseColor: Colors.grey.shade300,
-                    highlightColor: Colors.grey.shade500,
+                    baseColor: isDarkMode ? Colors.grey.shade800 : Colors.grey.shade300 ,
+                    highlightColor: isDarkMode ? Colors.grey.shade900 : Colors.grey.shade500 ,
                     enabled: true,
                     child: SingleChildScrollView(
                       physics: const NeverScrollableScrollPhysics(),

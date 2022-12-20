@@ -51,12 +51,12 @@ class _VideoWidgetState extends State<VideoPlayerPage>
   Widget build(BuildContext context) {
     return WillPopScope(
         child: Scaffold(
-          backgroundColor: black,
+          backgroundColor: blackConst,
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
             toolbarHeight: 55,
             automaticallyImplyLeading: false,
-            backgroundColor: black,
+            backgroundColor: blackConst,
             elevation: 0,
             centerTitle: false,
             titleSpacing: 0,
