@@ -431,10 +431,11 @@ class _NavigationDrawerScreen extends BaseState<NavigationDrawerScreen> {
                         style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: black)),
                   ),
                   Container(
-                    margin: const EdgeInsets.only(left: 15, right: 15, bottom: 40,top: 20),
+                    margin: const EdgeInsets.only(left: 15, right: 15, bottom: 12,top: 20),
                     child: Row(
                       children: [
-                        Expanded(child: Container(
+                        Expanded(
+                            child: SizedBox(
                                 height: 42,
                                 child: TextButton(
                                   style: ButtonStyle(
@@ -448,11 +449,12 @@ class _NavigationDrawerScreen extends BaseState<NavigationDrawerScreen> {
                                     Navigator.pop(context);
                                   },
                                   child:
-                                   Text("No", style: TextStyle(fontWeight: FontWeight.w600, fontFamily: slik, fontSize: 16, color: black)),
-                                ))),
+                                   const Text("No", style: TextStyle(fontWeight: FontWeight.w600, fontFamily: slik, fontSize: 16, color: blackConst)),
+                                ))
+                         ),
                         const Gap(20),
                         Expanded(
-                          child: Container(
+                          child: SizedBox(
                             height: 42,
                             child: TextButton(
                               style: ButtonStyle(
@@ -468,7 +470,7 @@ class _NavigationDrawerScreen extends BaseState<NavigationDrawerScreen> {
                                 Navigator.pushAndRemoveUntil(
                                     context, MaterialPageRoute(builder: (context) => const LoginScreen()), (Route<dynamic> route) => false);
                               },
-                              child:  Text("Yes", style: TextStyle(fontWeight: FontWeight.w600, fontFamily: slik, fontSize: 16, color: black)),
+                              child:  const Text("Yes", style: const TextStyle(fontWeight: FontWeight.w600, fontFamily: slik, fontSize: 16, color: blackConst)),
                             ),
                           ),
                         ),

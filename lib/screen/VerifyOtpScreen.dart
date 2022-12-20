@@ -149,7 +149,7 @@ class _VerifyOtpScreen extends BaseState<VerifyOtpScreen> {
                       Expanded(
                         child: Card(
                           margin: const EdgeInsets.only(left: 14, right: 14, bottom: 20, top: 20),
-                          color: lightblack,
+                          color: grayNew,
                           clipBehavior: Clip.antiAliasWithSaveLayer,
                           elevation: 0,
                           shape: RoundedRectangleBorder(
@@ -170,6 +170,7 @@ class _VerifyOtpScreen extends BaseState<VerifyOtpScreen> {
                                           "assets/images/ic_back_button.png",
                                           height: 22,
                                           width: 22,
+                                          color: black,
                                         ))),
                               ),
                               Container(
@@ -177,7 +178,7 @@ class _VerifyOtpScreen extends BaseState<VerifyOtpScreen> {
                                   margin: const EdgeInsets.only(top: 14, left: 14),
                                   child:  Text(
                                     "Confirm OTP",
-                                    style: TextStyle(color: white, fontSize: 18, fontWeight: FontWeight.w100, fontFamily: slik),
+                                    style: TextStyle(color: black, fontSize: 18, fontWeight: FontWeight.w100, fontFamily: slik),
                                   )),
                               Container(
                                 alignment: Alignment.topLeft,
@@ -188,11 +189,11 @@ class _VerifyOtpScreen extends BaseState<VerifyOtpScreen> {
                                     children: [
                                       const TextSpan(
                                         text: 'OTP is sent on',
-                                        style: TextStyle(fontSize: 16, color: text_light, fontWeight: FontWeight.w100, fontFamily: aileron),
+                                        style: TextStyle(fontSize: 16, color: text_dark, fontWeight: FontWeight.w100, fontFamily: aileron),
                                       ),
                                       TextSpan(
                                         text: " ${(widget as VerifyOtpScreen).ContactNumber}",
-                                        style: TextStyle(fontSize: 16, color: white, fontWeight: FontWeight.w600, fontFamily: aileron),
+                                        style: TextStyle(fontSize: 16, color: black, fontWeight: FontWeight.w600, fontFamily: aileron),
                                       ),
                                     ],
                                   ),
@@ -210,7 +211,7 @@ class _VerifyOtpScreen extends BaseState<VerifyOtpScreen> {
                                     color: black,
                                     fontWeight: FontWeight.bold,
                                   ),
-                                  textStyle: TextStyle(fontFamily: aileron, fontWeight: FontWeight.w600, color: white),
+                                  textStyle: TextStyle(fontFamily: aileron, fontWeight: FontWeight.w600, color: black),
                                   length: 4,
                                   autoFocus: true,
                                   obscureText: false,
@@ -222,7 +223,7 @@ class _VerifyOtpScreen extends BaseState<VerifyOtpScreen> {
                                     borderWidth: 1,
                                     fieldHeight: 50,
                                     fieldWidth: 50,
-                                    activeColor: white,
+                                    activeColor: black,
                                     selectedColor: lightGray,
                                     disabledColor: text_dark,
                                     inactiveColor: text_dark,
@@ -230,7 +231,7 @@ class _VerifyOtpScreen extends BaseState<VerifyOtpScreen> {
                                     selectedFillColor: Colors.transparent,
                                     inactiveFillColor: Colors.transparent,
                                   ),
-                                  cursorColor: white,
+                                  cursorColor: black,
                                   animationDuration: const Duration(milliseconds: 300),
                                   enableActiveFill: true,
                                   keyboardType: TextInputType.number,
@@ -270,14 +271,15 @@ class _VerifyOtpScreen extends BaseState<VerifyOtpScreen> {
                                       ),
                                       TextSpan(
                                         text: " $_start Seconds",
-                                        style: TextStyle(fontSize: 14, color: white, fontWeight: FontWeight.w600, fontFamily: aileron),
+                                        style: TextStyle(fontSize: 14, color: black, fontWeight: FontWeight.w600, fontFamily: aileron),
                                       ),
                                     ],
                                   ),
                                 ),
                               ) : Container(),
                               const Spacer(),
-                              visibilityResend ? Container(
+                              visibilityResend
+                                  ? Container(
                                 height: 55,
                                 margin: const EdgeInsets.only(bottom: 20, left: 24, right: 24, top: 24),
                                 width: MediaQuery.of(context).size.width,
@@ -305,7 +307,8 @@ class _VerifyOtpScreen extends BaseState<VerifyOtpScreen> {
                                   },
                                   child:  Text("Resend OTP", style: TextStyle(fontWeight: FontWeight.w400, fontFamily: slik, fontSize: 16, color: black)),
                                 ),
-                              ): Container(
+                              )
+                                  : Container(
                                 height: 55,
                                 margin: const EdgeInsets.only(bottom: 20, left: 24, right: 24, top: 24),
                                 width: MediaQuery.of(context).size.width,
@@ -339,9 +342,9 @@ class _VerifyOtpScreen extends BaseState<VerifyOtpScreen> {
                               Container(
                                   alignment: Alignment.bottomCenter,
                                   margin: const EdgeInsets.only(left: 10, top: 14,bottom: 50),
-                                  child:  Text(
+                                  child: const Text(
                                     "Please enter OTP to continue",
-                                    style: TextStyle(color: text_light, fontSize: 14, fontWeight: FontWeight.w600, fontFamily: aileron),
+                                    style: const TextStyle(color: text_dark, fontSize: 14, fontWeight: FontWeight.w600, fontFamily: aileron),
                                   )),
                             ],
                           ),
@@ -351,10 +354,10 @@ class _VerifyOtpScreen extends BaseState<VerifyOtpScreen> {
                       Container(
                         margin: const EdgeInsets.only(top: 14),
                         alignment: Alignment.center,
-                        child:  Text(
+                        child:  const Text(
                           "By continuing,you agree to our ",
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontFamily: aileron, color: text_light, fontSize: 14, fontWeight: FontWeight.w200),
+                          style: const TextStyle(fontFamily: aileron, color: text_light, fontSize: 14, fontWeight: FontWeight.w200),
                         ),
                       ),
                       Container(
@@ -366,15 +369,15 @@ class _VerifyOtpScreen extends BaseState<VerifyOtpScreen> {
                             children:  [
                               TextSpan(
                                 text: 'Privacy Policy',
-                                style: TextStyle(fontSize: 14, color: white, fontWeight: FontWeight.w200, fontFamily: aileron),
+                                style: TextStyle(fontSize: 14, color: black, fontWeight: FontWeight.w200, fontFamily: aileron),
                               ),
-                              TextSpan(
-                                text: "&",
+                              const TextSpan(
+                                text: " & ",
                                 style: TextStyle(fontSize: 14, color: text_light, fontWeight: FontWeight.w200, fontFamily: aileron),
                               ),
                               TextSpan(
                                 text: "Terms of Service.",
-                                style: TextStyle(fontSize: 14, color: white, fontWeight: FontWeight.w200, fontFamily: aileron),
+                                style: TextStyle(fontSize: 14, color: black, fontWeight: FontWeight.w200, fontFamily: aileron),
                               ),
                             ],
                           ),

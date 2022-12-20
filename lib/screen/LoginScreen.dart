@@ -1,11 +1,8 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pretty_http_logger/pretty_http_logger.dart';
 
-import '../constant/api_end_point.dart';
 import '../constant/colors.dart';
 import '../utils/app_utils.dart';
 import '../utils/base_class.dart';
@@ -32,7 +29,11 @@ class _LoginScreen extends BaseState<LoginScreen> {
                   child: IntrinsicHeight(
                     child: Stack(
                       children: [
-                        Container(color: white,width: MediaQuery.of(context).size.width,height: MediaQuery.of(context).size.height,),
+                        Container(
+                          color: white,
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height,
+                        ),
                         Container(
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
@@ -41,8 +42,8 @@ class _LoginScreen extends BaseState<LoginScreen> {
                                 begin: FractionalOffset.topCenter,
                                 end: FractionalOffset.bottomCenter,
                                 colors: [
-                                  black.withOpacity(0.2),
-                                  black.withOpacity(0.9),
+                                  blackConst.withOpacity(0.2),
+                                  blackConst.withOpacity(0.9),
                                 ],
                                 stops: const [
                                   0.2,
@@ -57,7 +58,7 @@ class _LoginScreen extends BaseState<LoginScreen> {
                         ),
                         Positioned(
                           child: Container(
-                            margin: EdgeInsets.only(bottom: 200),
+                            margin: const EdgeInsets.only(bottom: 200),
                             child: Align(
                               alignment: Alignment.center,
                               child: Row(
@@ -72,7 +73,7 @@ class _LoginScreen extends BaseState<LoginScreen> {
                         ),
                         Column(
                           children: [
-                            Spacer(),
+                            const Spacer(),
                             Text("Log In",style: TextStyle(color: white,fontFamily: gilroy,fontSize: 22,fontWeight: FontWeight.w600),),
                             Container(
                               width: MediaQuery.of(context).size.width,
@@ -83,7 +84,7 @@ class _LoginScreen extends BaseState<LoginScreen> {
                                   Container(
                                     margin: const EdgeInsets.only(top: 20, left: 12, right: 12),
                                     height: 55,
-                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(30), color: white,border: Border.all(width: 1, color: white, style: BorderStyle.solid)),
+                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(30), color: whiteConst,border: Border.all(width: 1, color: white, style: BorderStyle.solid)),
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -156,7 +157,7 @@ class _LoginScreen extends BaseState<LoginScreen> {
                                             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                                 RoundedRectangleBorder(
                                                     borderRadius: BorderRadius.circular(30.0),
-                                                    side:  BorderSide(color: black)
+                                                    side: const BorderSide(color: blackConst)
                                                 )
                                             )
                                         ),
