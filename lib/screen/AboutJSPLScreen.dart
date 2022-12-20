@@ -131,7 +131,7 @@ class _AboutJSPLScreen extends BaseState<AboutJSPLScreen> {
                                             isLiked
                                                 ? "assets/images/like_filled.png"
                                                 : "assets/images/like.png",
-                                            color: isLiked ? yellow : black,
+                                            color: isLiked ? orangeNew : black,
                                           );
                                         },
                                         onTap: (isLike) async {
