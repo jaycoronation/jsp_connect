@@ -31,7 +31,7 @@ class FullScreenImageNew extends StatelessWidget {
     ));*/
 
     return Scaffold(
-        backgroundColor: white,
+        backgroundColor: screenBg,
         body: Container(
           color: white,
           child: Stack(
@@ -65,7 +65,7 @@ class FullScreenImageNew extends StatelessWidget {
                   );
                 },
                 scrollPhysics: const BouncingScrollPhysics(),
-                backgroundDecoration: const BoxDecoration(
+                backgroundDecoration:  BoxDecoration(
                   color: white,
                 ),
               ),
@@ -106,7 +106,7 @@ class FullScreenImageNew extends StatelessWidget {
                     child: SmoothPageIndicator(
                       controller: controller,
                       count: images!.length,
-                      effect: const ExpandingDotsEffect(
+                      effect: ExpandingDotsEffect(
                         dotHeight: 6,
                         dotWidth: 6,
                         activeDotColor: black,

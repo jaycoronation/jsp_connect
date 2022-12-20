@@ -21,7 +21,6 @@ import '../utils/app_utils.dart';
 import '../utils/base_class.dart';
 import '../widget/loading.dart';
 import '../widget/no_data.dart';
-import 'VideoPlayerPage.dart';
 
 class VideoDetailsPage extends StatefulWidget {
   final String postId;
@@ -39,7 +38,7 @@ class _VideoDetailsPage extends BaseState<VideoDetailsPage> {
   late YoutubePlayerController _controller;
   late PlayerState _playerState;
   late YoutubeMetaData _videoMetaData;
-  bool _isPlayerReady = false;
+  final bool _isPlayerReady = false;
   late final String postId;
   late final PostDetails postDetailsData;
   num isLiked = 0;
@@ -123,7 +122,7 @@ class _VideoDetailsPage extends BaseState<VideoDetailsPage> {
                   padding: const EdgeInsets.all(18.0),
                   child: Image.asset('assets/images/ic_back_button.png', height: 16, width: 16, color: black),
                 )),
-            title: const Text(
+            title: Text(
               "",
               style: TextStyle(fontWeight: FontWeight.w600, color: black, fontSize: 18),
             ),
@@ -305,7 +304,7 @@ class _VideoDetailsPage extends BaseState<VideoDetailsPage> {
                           Container(
                             margin: const EdgeInsets.fromLTRB(12, 6, 12, 6),
                             child: Text(postDetailsData.title.toString(),
-                                style: const TextStyle(color: Colors.black, fontSize: 22, fontWeight: FontWeight.w500, fontFamily: roboto)),
+                                style: TextStyle(color: Colors.black, fontSize: 22, fontWeight: FontWeight.w500, fontFamily: roboto)),
                           ),
                           Container(
                             margin: const EdgeInsets.fromLTRB(12, 6, 12, 0),
@@ -317,11 +316,11 @@ class _VideoDetailsPage extends BaseState<VideoDetailsPage> {
                           Container(
                             margin: const EdgeInsets.fromLTRB(12, 22, 12, 6),
                             child: HtmlWidget(postDetailsData.description.toString(),
-                                textStyle: const TextStyle(height: 1.5, color: black, fontSize: 15, fontWeight: FontWeight.w500, fontFamily: roboto)),
+                                textStyle: TextStyle(height: 1.5, color: black, fontSize: 15, fontWeight: FontWeight.w500, fontFamily: roboto)),
                           ),
                           Container(
                             margin: const EdgeInsets.fromLTRB(12, 12, 12, 6),
-                            child: const Text(
+                            child: Text(
                               "Related Videos",
                               style: TextStyle(fontFamily: roboto, fontSize: 17, color: black, fontWeight: FontWeight.w800),
                             ),
@@ -379,8 +378,8 @@ class _VideoDetailsPage extends BaseState<VideoDetailsPage> {
                                                                 begin: FractionalOffset.topCenter,
                                                                 end: FractionalOffset.bottomCenter,
                                                                 colors: [
-                                                                  black.withOpacity(0.4),
-                                                                  black.withOpacity(1),
+                                                                  blackConst.withOpacity(0.4),
+                                                                  blackConst.withOpacity(1),
                                                                 ],
                                                                 stops: const [
                                                                   0.0,
@@ -427,8 +426,8 @@ class _VideoDetailsPage extends BaseState<VideoDetailsPage> {
                                                                 margin: const EdgeInsets.only(top: 14, left: 22, right: 10),
                                                                 child: Text(postDetailsData.reatedPosts![index].title.toString(),
                                                                     overflow: TextOverflow.clip,
-                                                                    style: const TextStyle(
-                                                                        color: white,
+                                                                    style: TextStyle(
+                                                                        color: black,
                                                                         fontWeight: FontWeight.w400,
                                                                         fontFamily: gilroy,
                                                                         fontSize: 16,
@@ -448,11 +447,11 @@ class _VideoDetailsPage extends BaseState<VideoDetailsPage> {
                                                                     alignment: Alignment.bottomRight,
                                                                     padding: const EdgeInsets.only(top: 6, bottom: 6, left: 10, right: 10),
                                                                     child: Text(postDetailsData.reatedPosts![index].saveTimestamp.toString(),
-                                                                        style: const TextStyle(
+                                                                        style: TextStyle(
                                                                             fontWeight: FontWeight.w500,
                                                                             fontFamily: aileron,
                                                                             fontSize: 12,
-                                                                            color: white)),
+                                                                            color: black)),
                                                                   ),
                                                                   Container(
                                                                     alignment: Alignment.bottomRight,
@@ -495,11 +494,11 @@ class _VideoDetailsPage extends BaseState<VideoDetailsPage> {
                                                                         Text(
                                                                           postDetailsData.reatedPosts![index].sharesCount.toString(),
                                                                           textAlign: TextAlign.center,
-                                                                          style: const TextStyle(
+                                                                          style: TextStyle(
                                                                               fontSize: 14,
                                                                               fontWeight: FontWeight.w400,
                                                                               fontFamily: roboto,
-                                                                              color: white),
+                                                                              color: black),
                                                                         ),
                                                                       ],
                                                                     ),

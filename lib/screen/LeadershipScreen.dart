@@ -16,6 +16,7 @@ import '../utils/app_utils.dart';
 import '../utils/base_class.dart';
 import '../widget/loading.dart';
 import '../widget/no_data.dart';
+import 'CommonDetailsScreen.dart';
 
 class LeadershipScreen extends StatefulWidget {
   const LeadershipScreen({Key? key}) : super(key: key);
@@ -43,11 +44,11 @@ class _LeadershipScreen extends BaseState<LeadershipScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
         child: Scaffold(
-          backgroundColor: black,
+          backgroundColor: screenBg,
           appBar: AppBar(
             toolbarHeight: 55,
             automaticallyImplyLeading: false,
-            backgroundColor: black,
+            backgroundColor: screenBg,
             elevation: 0,
             centerTitle: false,
             title: Row(
@@ -61,15 +62,15 @@ class _LeadershipScreen extends BaseState<LeadershipScreen> {
                     child: Container(
                       alignment: Alignment.topLeft,
                       padding: const EdgeInsets.all(6),
-                      child: Image.asset('assets/images/ic_back_button.png', height: 22, width: 22, color: white),
+                      child: Image.asset('assets/images/ic_back_button.png', height: 22, width: 22, color: black),
                     )),
                 Container(
                   alignment: Alignment.centerLeft,
                   height: 65,
                   margin: const EdgeInsets.only(left: 5),
-                  child: const Text(
+                  child:  Text(
                     "Our Leadership",
-                    style: TextStyle(fontWeight: FontWeight.w600, color: white, fontSize: 16),
+                    style: TextStyle(fontWeight: FontWeight.w600, color: black, fontSize: 16),
                   ),
                 ),
                 const Spacer(),
@@ -93,15 +94,15 @@ class _LeadershipScreen extends BaseState<LeadershipScreen> {
                             shrinkWrap: false,
                             itemCount: listLeadership.length,
                             itemBuilder: (ctx, index) => (Container(
-                                  margin: const EdgeInsets.only(left: 5, right: 5),
+                                  margin: EdgeInsets.only(left: index == 0 ? 0 : 5, right: 5),
                                   height: 42,
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                      primary: black,
-                                      onPrimary: black,
+                                      primary: grayNew,
+                                      onPrimary: grayNew,
                                       elevation: 0.0,
                                       padding: const EdgeInsets.only(left: 20, right: 20),
-                                      side: BorderSide(color: pos == index ? yellow.withOpacity(0.6) : white.withOpacity(0.6), width: 0.6, style: BorderStyle.solid),
+                                      side: BorderSide(color: pos == index ? orangeNew.withOpacity(0.6) : black.withOpacity(0.6), width: 0.6, style: BorderStyle.solid),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(20),
                                       ),
@@ -117,7 +118,7 @@ class _LeadershipScreen extends BaseState<LeadershipScreen> {
                                     },
                                     child: Text(
                                       listLeadership[index].name.toString(),
-                                      style: TextStyle(fontSize: 14, fontWeight: pos == index ? FontWeight.w600 : FontWeight.w500, color: pos == index ? yellow.withOpacity(0.8) : white.withOpacity(0.8), fontFamily: gilroy),
+                                      style: TextStyle(fontSize: 14, fontWeight: pos == index ? FontWeight.w600 : FontWeight.w500, color: pos == index ? orangeNew.withOpacity(0.8) : black.withOpacity(0.8), fontFamily: gilroy),
                                     ),
                                   ),
                                 ))),
@@ -137,8 +138,9 @@ class _LeadershipScreen extends BaseState<LeadershipScreen> {
                                   verticalOffset: 50.0,
                                   child: FadeInAnimation(
                                     child: GestureDetector(
-                                      onTap: () {
-                                           Navigator.push(context, MaterialPageRoute(builder: (context) => LeadershipDetailsScreen(listLeadership[pos].posts![indexNew].id.toString())));
+                                      onTap: () async {
+                                           final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => CommonDetailsScreen(listLeadership[pos].posts![indexNew].id.toString(),"10")));
+                                           print(result);
                                       },
                                       child: Column(
                                         children: [
@@ -175,8 +177,8 @@ class _LeadershipScreen extends BaseState<LeadershipScreen> {
                                                     color: Colors.black,
                                                     gradient:
                                                     LinearGradient(begin: FractionalOffset.topCenter, end: FractionalOffset.bottomCenter, colors: [
-                                                      black.withOpacity(0.4),
-                                                      black.withOpacity(1),
+                                                      blackConst.withOpacity(0.4),
+                                                      blackConst.withOpacity(1),
                                                     ], stops: const [
                                                       0.0,
                                                       1.0
@@ -197,7 +199,7 @@ class _LeadershipScreen extends BaseState<LeadershipScreen> {
                                                     style: const TextStyle(
                                                         fontWeight: FontWeight.w600,
                                                         fontFamily: gilroy,
-                                                        color: white,
+                                                        color: whiteConst,
                                                         fontSize: 18,
                                                         overflow: TextOverflow.clip),
                                                     textAlign: TextAlign.center,

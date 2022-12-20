@@ -1,9 +1,14 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
 import 'package:jspl_connect/screen/AboutJSPLScreen.dart';
 import 'package:jspl_connect/screen/LeadershipScreen.dart';
 import 'package:jspl_connect/screen/MagazineListScreen.dart';
+import 'package:jspl_connect/screen/tabcontrol/bottom_navigation_bar_screen.dart';
+import 'package:restart_app/restart_app.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../constant/colors.dart';
 import '../utils/base_class.dart';
@@ -34,7 +39,7 @@ class _NavigationDrawerScreen extends BaseState<NavigationDrawerScreen> {
     return WillPopScope(
         child: Scaffold(
           appBar: AppBar(
-            systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: white,statusBarIconBrightness: Brightness.dark,statusBarBrightness: Brightness.dark),
+            systemOverlayStyle:  SystemUiOverlayStyle(statusBarColor: white,statusBarIconBrightness: Brightness.dark,statusBarBrightness: Brightness.dark),
             toolbarHeight: 0,
             elevation: 0,
           ),
@@ -44,9 +49,21 @@ class _NavigationDrawerScreen extends BaseState<NavigationDrawerScreen> {
             children: [
               Expanded(
                 child: Container(
-                  margin: const EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 20),
+                  margin: const EdgeInsets.only(left: 14, right: 14, top: 8, bottom: 12),
                   decoration: BoxDecoration(
-                    color: lightblack,
+                      gradient: sessionManager.getDarkMode() ?? false
+                          ? const LinearGradient(
+                        colors: [navigationGradient1, navigationGradient2, navigationGradient3],
+                        stops: [0.0,0.4,1.0],
+                        begin: Alignment.bottomLeft,
+                        end: Alignment.topRight,
+                      )
+                          : const LinearGradient(
+                        colors: [navigation],
+                        stops: [1.0],
+                        begin: Alignment.bottomLeft,
+                        end: Alignment.topRight,
+                      ),
                     borderRadius: BorderRadius.circular(30),
                   ),
                   child: Column(
@@ -67,13 +84,13 @@ class _NavigationDrawerScreen extends BaseState<NavigationDrawerScreen> {
                                     width: 22,
                                     height: 22,
                                     margin: const EdgeInsets.only(top: 10),
-                                    child: Image.asset("assets/images/ic_back_button.png", height: 22, width: 22, color: yellow))),
+                                    child: Image.asset("assets/images/ic_back_button.png", height: 22, width: 22, color: blackConst))),
                             sessionManager.getFullName().toString().trim().isNotEmpty ? Container(
                               margin: const EdgeInsets.only(top: 10, left: 10),
                               child: Text(
                                 "Hi, ${sessionManager.getFullName().toString().trim()}",
                                 textAlign: TextAlign.start,
-                                style: TextStyle(fontSize: 16, color: white, fontWeight: FontWeight.w600, fontFamily: aileron),
+                                style: const TextStyle(fontSize: 16, color: blackConst, fontWeight: FontWeight.w600, fontFamily: aileron),
                               ),
                             ) :
                             Container(
@@ -81,7 +98,7 @@ class _NavigationDrawerScreen extends BaseState<NavigationDrawerScreen> {
                               child: const Text(
                                 "Hi,Guest User",
                                 textAlign: TextAlign.start,
-                                style: TextStyle(fontSize: 16, color: white, fontWeight: FontWeight.w600, fontFamily: aileron),
+                                style: TextStyle(fontSize: 16, color: blackConst, fontWeight: FontWeight.w600, fontFamily: aileron),
                               ),
                             ),
                             Expanded(child: Container())
@@ -89,113 +106,132 @@ class _NavigationDrawerScreen extends BaseState<NavigationDrawerScreen> {
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(left: 26, right: 10, top: 20),
+                        margin: const EdgeInsets.only(left: 26, right: 10, top: 32),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(6.0),
                               child: GestureDetector(
                                 onTap: () {
                                   Navigator.pop(context);
                                 },
                                 child: const Text(
                                   "Dashboard",
-                                  style: TextStyle(fontFamily: gilroy, fontSize: 18, color: white, fontWeight: FontWeight.w600),
+                                  style: TextStyle(fontFamily: gilroy, fontSize: 22, color: blackConst, fontWeight: FontWeight.w600),
                                 ),
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(6.0),
                               child: GestureDetector(
                                 onTap: () {
                                   Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutJSPLScreen()));
                                 },
                                 child: const Text(
                                   "About JSP",
-                                  style: TextStyle(fontFamily: slik, fontSize: 18, color: white, fontWeight: FontWeight.w600),
+                                  style: TextStyle(fontFamily: slik, fontSize: 22, color: blackConst, fontWeight: FontWeight.w600),
                                 ),
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(6.0),
                               child: GestureDetector(
                                 onTap: () {
                                   Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutScreen()));
                                 },
                                 child: const Text(
                                   "About Naveen Jindal",
-                                  style: TextStyle(fontFamily: gilroy, fontSize: 18, color: white, fontWeight: FontWeight.w600),
+                                  style: TextStyle(fontFamily: gilroy, fontSize: 22, color: blackConst, fontWeight: FontWeight.w600),
                                 ),
                               ),
                             ),
 
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(6.0),
                               child: GestureDetector(
                                 onTap: () {
                                   Navigator.push(context, MaterialPageRoute(builder: (context) => const SocialWallScreen()));
                                 },
                                 child: const Text(
                                   "Social",
-                                  style: TextStyle(fontFamily: gilroy, fontSize: 18, color: white, fontWeight: FontWeight.w600),
+                                  style: TextStyle(fontFamily: gilroy, fontSize: 22, color: blackConst, fontWeight: FontWeight.w600),
                                 ),
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(6.0),
                               child: GestureDetector(
                                 onTap: () {
                                   Navigator.push(context, MaterialPageRoute(builder: (context) => const MediaCoverageScreen()));
                                 },
                                 child: const Text(
                                   "Media Coverage",
-                                  style: TextStyle(fontFamily: gilroy, fontSize: 18, color: white, fontWeight: FontWeight.w600),
+                                  style: TextStyle(fontFamily: gilroy, fontSize: 22, color: blackConst, fontWeight: FontWeight.w600),
                                 ),
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(6.0),
                               child: GestureDetector(
                                 onTap: () async {
                                   Navigator.push(context, MaterialPageRoute(builder: (context) => const MagazineListScreen()));
                                 },
                                 child: const Text(
                                   "Magazine",
-                                  style: TextStyle(fontFamily: gilroy, fontSize: 18, color: white, fontWeight: FontWeight.w600),
+                                  style: TextStyle(fontFamily: gilroy, fontSize: 22, color: blackConst, fontWeight: FontWeight.w600),
                                 ),
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(6.0),
                               child: GestureDetector(
                                 onTap: () async {
                                   Navigator.push(context, MaterialPageRoute(builder: (context) => const SuggestionFormScreen()));
                                 },
                                 child: const Text(
                                   "Suggestions",
-                                  style: TextStyle(fontFamily: gilroy, fontSize: 18, color: white, fontWeight: FontWeight.w600),
+                                  style: TextStyle(fontFamily: gilroy, fontSize: 22, color: blackConst, fontWeight: FontWeight.w600),
                                 ),
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(6.0),
                               child: GestureDetector(
                                 onTap: () {
                                   Navigator.push(context, MaterialPageRoute(builder: (context) => const LeadershipScreen()));
                                 },
                                 child: const Text(
                                   "Our Leadership",
-                                  style: TextStyle(fontFamily: gilroy, fontSize: 18, color: white, fontWeight: FontWeight.w600),
+                                  style: TextStyle(fontFamily: gilroy, fontSize: 22, color: blackConst, fontWeight: FontWeight.w600),
                                 ),
                               ),
                             ),
                           ],
                         ),
                       ),
-                      Container(height: 18),
+                      Container(height: 22),
                       const Spacer(),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 26, right: 10,bottom: 12),
+                        child: Row(
+                          children: [
+                            const Text("Dark Mode : ",style: TextStyle(fontFamily: gilroy, fontSize: 22, color: blackConst, fontWeight: FontWeight.w600),),
+                            CupertinoSwitch(
+                              activeColor: grayNew,
+                              thumbColor: Colors.black,
+                              trackColor: Colors.black12,
+                              value: sessionManager.getDarkMode() ?? false,
+                              onChanged: (value) {
+                                setState((){});
+                                sessionManager.setDarkMode(value);
+                                Restart.restartApp();
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
                       const Divider(
                         height: 1,
                         color: text_light,
@@ -213,14 +249,14 @@ class _NavigationDrawerScreen extends BaseState<NavigationDrawerScreen> {
                               onTap: () {
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => const ContactScreen()));
                               },
-                              child: Text(
+                              child: const Text(
                                 "Contact",
-                                style: TextStyle(fontWeight: FontWeight.w200, fontSize: 16, color: white, fontFamily: aileron),
+                                style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16, color: blackConst, fontFamily: aileron),
                               ),
                             ),
-                            Text(
+                            const Text(
                               "Need Help?",
-                              style: TextStyle(fontWeight: FontWeight.w200, fontSize: 16, color: white, fontFamily: aileron),
+                              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16, color: blackConst, fontFamily: aileron),
                             )
                           ],
                         ),
@@ -230,7 +266,7 @@ class _NavigationDrawerScreen extends BaseState<NavigationDrawerScreen> {
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(top: 16, bottom: 16),
+                margin: const EdgeInsets.only( bottom: 16),
                 child: Row(
                   children: [
                     Flexible(
@@ -258,7 +294,7 @@ class _NavigationDrawerScreen extends BaseState<NavigationDrawerScreen> {
                                   "assets/images/ic_facebook.png",
                                   height: 22,
                                   width: 22,
-                                  color: black,
+                                  color: blackConst,
                                 ),
                               ),
                             ),
@@ -274,7 +310,7 @@ class _NavigationDrawerScreen extends BaseState<NavigationDrawerScreen> {
                                   "assets/images/ic_insta.png",
                                   height: 22,
                                   width: 22,
-                                  color: black,
+                                  color: blackConst,
                                 ),
                               ),
                             ),
@@ -290,7 +326,7 @@ class _NavigationDrawerScreen extends BaseState<NavigationDrawerScreen> {
                                   "assets/images/ic_twitter.png",
                                   height: 22,
                                   width: 22,
-                                  color: black,
+                                  color: blackConst,
                                 ),
                               ),
                             ),
@@ -306,7 +342,7 @@ class _NavigationDrawerScreen extends BaseState<NavigationDrawerScreen> {
                                   "assets/images/ic_youtube.png",
                                   height: 22,
                                   width: 22,
-                                  color: black,
+                                  color: blackConst,
                                 ),
                               ),
                             ),
@@ -337,13 +373,13 @@ class _NavigationDrawerScreen extends BaseState<NavigationDrawerScreen> {
                                   "assets/images/ic_logout.png",
                                   height: 20,
                                   width: 20,
-                                  color: black,
+                                  color: blackConst,
                                 ),
                                 const Spacer(),
                                 const Text(
                                   "LOG OUT",
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(fontFamily: roboto, color: black, fontSize: 16, fontWeight: FontWeight.w600),
+                                  style: TextStyle(fontFamily: roboto, color: blackConst, fontSize: 16, fontWeight: FontWeight.w600),
                                 ),
                                 const Spacer(),
                               ],
@@ -374,7 +410,7 @@ class _NavigationDrawerScreen extends BaseState<NavigationDrawerScreen> {
           children: [
             Container(
               margin: const EdgeInsets.all(15),
-              decoration: const BoxDecoration(borderRadius: BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12)), color: white),
+              decoration:  BoxDecoration(borderRadius: const BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12)), color: white),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -388,10 +424,10 @@ class _NavigationDrawerScreen extends BaseState<NavigationDrawerScreen> {
                   ),
                   Container(
                       margin: const EdgeInsets.only(top: 10, bottom: 10),
-                      child: const Text('Logout from JSP Connect', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: black))),
+                      child:  Text('Logout from JSP Connect', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: black))),
                   Container(
                     margin: const EdgeInsets.only(top: 10, bottom: 15),
-                    child: const Text('Are you sure you want to logout from app?',
+                    child:  Text('Are you sure you want to logout from app?',
                         style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: black)),
                   ),
                   Container(
@@ -412,9 +448,9 @@ class _NavigationDrawerScreen extends BaseState<NavigationDrawerScreen> {
                                     Navigator.pop(context);
                                   },
                                   child:
-                                  const Text("No", style: TextStyle(fontWeight: FontWeight.w600, fontFamily: slik, fontSize: 16, color: black)),
+                                   Text("No", style: TextStyle(fontWeight: FontWeight.w600, fontFamily: slik, fontSize: 16, color: black)),
                                 ))),
-                        Gap(20),
+                        const Gap(20),
                         Expanded(
                           child: Container(
                             height: 42,
@@ -432,7 +468,7 @@ class _NavigationDrawerScreen extends BaseState<NavigationDrawerScreen> {
                                 Navigator.pushAndRemoveUntil(
                                     context, MaterialPageRoute(builder: (context) => const LoginScreen()), (Route<dynamic> route) => false);
                               },
-                              child: const Text("Yes", style: TextStyle(fontWeight: FontWeight.w600, fontFamily: slik, fontSize: 16, color: black)),
+                              child:  Text("Yes", style: TextStyle(fontWeight: FontWeight.w600, fontFamily: slik, fontSize: 16, color: black)),
                             ),
                           ),
                         ),

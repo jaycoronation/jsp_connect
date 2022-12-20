@@ -49,12 +49,12 @@ class _AboutJSPLScreen extends BaseState<AboutJSPLScreen> {
                                 child: Container(
                                   alignment: Alignment.center,
                                   margin: const EdgeInsets.only(right: 8),
-                                  child: Image.asset('assets/images/ic_back_button.png', height: 22, width: 22),
+                                  child: Image.asset('assets/images/ic_back_button.png', height: 22, width: 22,color: white),
                                 )),
                             Container(
                               margin: const EdgeInsets.only( left: 12),
                               alignment: Alignment.center,
-                              child: const Text(
+                              child: Text(
                                 "About JSP",
                                 textAlign: TextAlign.start,
                                 style: TextStyle(fontSize: 18, color: white, fontWeight: FontWeight.w600, fontFamily: gilroy),
@@ -71,7 +71,7 @@ class _AboutJSPLScreen extends BaseState<AboutJSPLScreen> {
                       Container(
                         margin: const EdgeInsets.only(right: 22,left: 22,bottom: 50),
                         decoration: BoxDecoration(
-                          color: lightblack,
+                          color: grayNew,
                           borderRadius: BorderRadius.circular(30),
                         ),
                         child: Column(
@@ -84,18 +84,11 @@ class _AboutJSPLScreen extends BaseState<AboutJSPLScreen> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  const Text(
+                                  Text(
                                     "Message from the chairman",
-                                    style: TextStyle(fontFamily: gilroy, fontSize: 16, color: white, fontWeight: FontWeight.w600),
+                                    style: TextStyle(fontFamily: gilroy, fontSize: 16, color: black, fontWeight: FontWeight.w600),
                                   ),
                                   const Spacer(),
-                                  Image.asset(
-                                    "assets/images/share.png",
-                                    height: 22,
-                                    width: 22,
-                                    color: darkGray,
-                                  ),
-                                  Container(width: 12,),
                                   GestureDetector(
                                     onTap: (){
                                       setState(() {
@@ -110,15 +103,22 @@ class _AboutJSPLScreen extends BaseState<AboutJSPLScreen> {
                                       width: 22,
                                       color: isLiked ? Colors.yellow : darkGray,
                                     ),
-                                  )
+                                  ),
+                                  Container(width: 12,),
+                                  Image.asset(
+                                    "assets/images/share.png",
+                                    height: 22,
+                                    width: 22,
+                                    color: darkGray,
+                                  ),
                                 ],
                               ),
                             ),
                             Container(
                               margin: const EdgeInsets.only(left: 14, right: 14,top: 14,bottom: 18),
-                              child:  const Text(
+                              child:  Text(
                                 "As the Coronavirus pandemic continues to wage a fierce battle against the human race, imposing tremendous pressure across the world, not just financially but also socially, physically and emotionally.",
-                                style: TextStyle(fontWeight: FontWeight.w500, color: white, fontSize: 20, fontFamily: roboto),
+                                style: TextStyle(fontWeight: FontWeight.w500, color: black, fontSize: 20, fontFamily: roboto),
                               ),
                             ),
                             GestureDetector(
@@ -161,9 +161,9 @@ class _AboutJSPLScreen extends BaseState<AboutJSPLScreen> {
                                                 ),
                                               ],
                                             ),
-                                            const Text('Message From Chairman',style: TextStyle(color: white,fontWeight: FontWeight.w500,fontSize: 20,fontFamily: roboto)),
+                                            const Text('Message From Chairman',style: TextStyle(color: whiteConst,fontWeight: FontWeight.w500,fontSize: 20,fontFamily: roboto)),
                                             Container(height: 8,),
-                                            Text(readMore,style: const TextStyle(height: 1.5,color: white,fontWeight: FontWeight.w400,fontSize: 14,fontFamily: roboto)),
+                                            Text(readMore,style: const TextStyle(height: 1.5,color: whiteConst,fontWeight: FontWeight.w400,fontSize: 18,fontFamily: roboto)),
                                           ],
                                         ),
                                       ),
@@ -178,7 +178,7 @@ class _AboutJSPLScreen extends BaseState<AboutJSPLScreen> {
                                   color: bgMain.withOpacity(0.8),
                                 ),
                                 padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
-                                child: const Text("Read More",style: TextStyle(color: white,fontWeight: FontWeight.w400,fontSize: 14,fontFamily: roboto)),
+                                child: const Text("Read More",style: TextStyle(color: whiteConst,fontWeight: FontWeight.w400,fontSize: 14,fontFamily: roboto)),
                               ),
                             )
                           ],

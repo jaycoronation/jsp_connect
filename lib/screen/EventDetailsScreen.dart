@@ -51,11 +51,11 @@ class _EventDetailsScreen extends BaseState<EventDetailsScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
         child: Scaffold(
-          backgroundColor: white,
+          backgroundColor: screenBg,
           appBar: AppBar(
             toolbarHeight: 55,
             automaticallyImplyLeading: false,
-            backgroundColor: white,
+            backgroundColor: screenBg,
             elevation: 0,
             centerTitle: false,
             title: Padding(
@@ -94,7 +94,7 @@ class _EventDetailsScreen extends BaseState<EventDetailsScreen> {
                     alignment: Alignment.centerLeft,
                     height: 65,
                     margin: const EdgeInsets.only(left: 5),
-                    child: const Text(
+                    child: Text(
                       "",
                       style: TextStyle(fontWeight: FontWeight.w600, color: black, fontSize: 16),
                     ),
@@ -270,7 +270,7 @@ class _EventDetailsScreen extends BaseState<EventDetailsScreen> {
                 ),
                 Container(
                   margin: const EdgeInsets.fromLTRB(16, 22, 16, 8),
-                  child: HtmlWidget(postDetailsData.description.toString(),textStyle: const TextStyle(height: 1.5, color: black, fontSize: 16, fontWeight: FontWeight.w500, fontFamily: roboto)),
+                  child: HtmlWidget(postDetailsData.description.toString(),textStyle: TextStyle(height: 1.5, color: black, fontSize: 16, fontWeight: FontWeight.w500, fontFamily: roboto)),
                 ),
               ],
             ),

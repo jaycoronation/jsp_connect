@@ -50,11 +50,11 @@ class _NewsDetailsScreen extends BaseState<NewsDetailsScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
         child: Scaffold(
-          backgroundColor: white,
+          backgroundColor: screenBg,
           appBar: AppBar(
             toolbarHeight: 55,
             automaticallyImplyLeading: false,
-            backgroundColor: white,
+            backgroundColor: screenBg,
             elevation: 0,
             centerTitle: false,
             title: Padding(
@@ -94,7 +94,7 @@ class _NewsDetailsScreen extends BaseState<NewsDetailsScreen> {
                     alignment: Alignment.centerLeft,
                     height: 65,
                     margin: const EdgeInsets.only(left: 5),
-                    child: const Text(
+                    child: Text(
                       "",
                       style: TextStyle(fontWeight: FontWeight.w600, color: black, fontSize: 16),
                     ),
@@ -261,7 +261,7 @@ class _NewsDetailsScreen extends BaseState<NewsDetailsScreen> {
                     ),
                     Container(
                       margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                      child: Text(postDetailsData.title.toString(), style: const TextStyle(color: black, fontSize: 22, fontWeight: FontWeight.w500, fontFamily: roboto)),
+                      child: Text(postDetailsData.title.toString(), style:  TextStyle(color: black, fontSize: 22, fontWeight: FontWeight.w500, fontFamily: roboto)),
                     ),
                     Container(
                       margin: EdgeInsets.only(left: 16),
@@ -292,11 +292,11 @@ class _NewsDetailsScreen extends BaseState<NewsDetailsScreen> {
                     ),
                     Container(
                       margin: const EdgeInsets.fromLTRB(16, 22, 16, 8),
-                      child: HtmlWidget(postDetailsData.description.toString(),textStyle: const TextStyle(height: 1.5, color: black, fontSize: 16, fontWeight: FontWeight.w500, fontFamily: roboto)),
+                      child: HtmlWidget(postDetailsData.description.toString(),textStyle:  TextStyle(height: 1.5, color: black, fontSize: 16, fontWeight: FontWeight.w500, fontFamily: roboto)),
                     ),
                     Container(
                       margin: const EdgeInsets.fromLTRB(12, 6, 12, 0),
-                      child: const Text(
+                      child: Text(
                         "Related News",
                         style: TextStyle(fontFamily: roboto, fontSize: 17, color: black, fontWeight: FontWeight.w800),
                       ),
@@ -343,7 +343,7 @@ class _NewsDetailsScreen extends BaseState<NewsDetailsScreen> {
                                                   children: [
                                                     Text(postDetailsData.reatedPosts![index].title.toString(),
                                                         overflow: TextOverflow.clip,
-                                                        style: const TextStyle(
+                                                        style:  TextStyle(
                                                             overflow: TextOverflow.clip,
                                                             color: black,
                                                             fontWeight: FontWeight.w500,
@@ -370,7 +370,7 @@ class _NewsDetailsScreen extends BaseState<NewsDetailsScreen> {
                                           children: [
                                             Text(
                                               postDetailsData.reatedPosts![index].location.toString(),
-                                              style: const TextStyle(fontSize: 12, fontFamily: roboto, fontWeight: FontWeight.w400, color: black),
+                                              style:  TextStyle(fontSize: 12, fontFamily: roboto, fontWeight: FontWeight.w400, color: black),
                                             ),
                                             Container(
                                               width: 6,
@@ -386,7 +386,7 @@ class _NewsDetailsScreen extends BaseState<NewsDetailsScreen> {
                                             ),
                                             Text(
                                               postDetailsData.reatedPosts![index].saveTimestamp.toString(),
-                                              style: const TextStyle(fontSize: 12, fontFamily: roboto, fontWeight: FontWeight.w400, color: black),
+                                              style:  TextStyle(fontSize: 12, fontFamily: roboto, fontWeight: FontWeight.w400, color: black),
                                             ),
                                             const Spacer(),
                                             GestureDetector(
@@ -409,7 +409,7 @@ class _NewsDetailsScreen extends BaseState<NewsDetailsScreen> {
                                             Text(
                                               postDetailsData.reatedPosts![index].sharesCount.toString(),
                                               textAlign: TextAlign.center,
-                                              style: const TextStyle(
+                                              style:  TextStyle(
                                                   fontSize: 14, fontWeight: FontWeight.w400, fontFamily: roboto, color: black),
                                             ),
                                             Container(

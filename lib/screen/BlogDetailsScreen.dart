@@ -54,11 +54,11 @@ class _BlogDetailsScreen extends BaseState<BlogDetailsScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
         child: Scaffold(
-          backgroundColor: white,
+          backgroundColor: screenBg,
           appBar: AppBar(
             toolbarHeight: 55,
             automaticallyImplyLeading: false,
-            backgroundColor: white,
+            backgroundColor: screenBg,
             elevation: 0,
             centerTitle: false,
             titleSpacing: 0,
@@ -86,7 +86,7 @@ class _BlogDetailsScreen extends BaseState<BlogDetailsScreen> {
                 )),
             title: Container(
               alignment: Alignment.centerLeft,
-              child: const Text(
+              child:  Text(
                 "",
                 style: TextStyle(fontWeight: FontWeight.w600, color: black, fontSize: 18),
               ),
@@ -245,23 +245,23 @@ class _BlogDetailsScreen extends BaseState<BlogDetailsScreen> {
                 Container(
                   margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
                   child: Text(postDetailsData.title.toString(),
-                      style: const TextStyle(color: black, fontSize: 22, fontWeight: titleFont, fontFamily: aileron)),
+                      style:  TextStyle(color: black, fontSize: 22, fontWeight: titleFont, fontFamily: aileron)),
                 ),
                 Container(
                   margin: const EdgeInsets.only(left: 16),
                   child: Row(
                     children: [
-                      Text(postDetailsData.location.toString(), style: const TextStyle(fontWeight: FontWeight.w400, fontFamily: aileron, fontSize: 12, color: black)),
+                      Text(postDetailsData.location.toString(), style:  TextStyle(fontWeight: FontWeight.w400, fontFamily: aileron, fontSize: 12, color: black)),
                       postDetailsData.location.toString().isNotEmpty ? Container(
                         width: 6,
                         height: 6,
                         margin: const EdgeInsets.only(left: 6,right: 6),
-                        decoration: const BoxDecoration(
+                        decoration:  BoxDecoration(
                           color: black,
                           shape: BoxShape.circle,
                         ),
                       ) : Container(),
-                      Text(postDetailsData.saveTimestamp.toString(), style: const TextStyle(
+                      Text(postDetailsData.saveTimestamp.toString(), style:  TextStyle(
                           fontWeight: FontWeight.w400,
                           fontFamily: aileron, fontSize: 12,
                           color: black)),
@@ -271,11 +271,11 @@ class _BlogDetailsScreen extends BaseState<BlogDetailsScreen> {
                 Container(
                   margin: const EdgeInsets.fromLTRB(16, 22, 16, 8),
                   child: HtmlWidget(postDetailsData.description.toString(),
-                      textStyle: const TextStyle(height: 1.5, color: black, fontSize: 16, fontWeight: FontWeight.w400, fontFamily: robotoFinal)),
+                      textStyle:  TextStyle(height: 1.5, color: black, fontSize: 16, fontWeight: FontWeight.w400, fontFamily: robotoFinal)),
                 ),
                 Container(
                   margin: const EdgeInsets.fromLTRB(12, 6, 12, 0),
-                  child: const Text(
+                  child:  Text(
                     "Related Blogs",
                     style: TextStyle(fontFamily: roboto, fontSize: 17, color: black, fontWeight: FontWeight.w800),
                   ),
@@ -331,7 +331,7 @@ class _BlogDetailsScreen extends BaseState<BlogDetailsScreen> {
                                                           postDetailsData.reatedPosts![index].title.toString().trim(),
                                                           overflow: TextOverflow.clip,
                                                           textAlign: TextAlign.start,
-                                                          style: const TextStyle(
+                                                          style:  TextStyle(
                                                               fontWeight: titleFont,
                                                               fontSize: 16,
                                                               fontFamily: aileron,
@@ -376,17 +376,17 @@ class _BlogDetailsScreen extends BaseState<BlogDetailsScreen> {
                                               children: [
                                                 Row(
                                                   children: [
-                                                    Text(postDetailsData.reatedPosts![index].location.toString(), style: const TextStyle(fontWeight: FontWeight.w400, fontFamily: aileron, fontSize: 12, color: black)),
+                                                    Text(postDetailsData.reatedPosts![index].location.toString(), style: TextStyle(fontWeight: FontWeight.w400, fontFamily: aileron, fontSize: 12, color: black)),
                                                     postDetailsData.reatedPosts![index].location.toString().isNotEmpty ? Container(
                                                       width: 6,
                                                       height: 6,
                                                       margin: const EdgeInsets.only(left: 6,right: 6),
-                                                      decoration: const BoxDecoration(
+                                                      decoration:  BoxDecoration(
                                                         color: black,
                                                         shape: BoxShape.circle,
                                                       ),
                                                     ) : Container(),
-                                                    Text(postDetailsData.reatedPosts![index].saveTimestamp.toString(), style: const TextStyle(
+                                                    Text(postDetailsData.reatedPosts![index].saveTimestamp.toString(), style: TextStyle(
                                                         fontWeight: FontWeight.w400,
                                                         fontFamily: aileron, fontSize: 12,
                                                         color: black)),
@@ -427,7 +427,7 @@ class _BlogDetailsScreen extends BaseState<BlogDetailsScreen> {
                                                 Text(
                                                   postDetailsData.reatedPosts![index].sharesCount.toString(),
                                                   textAlign: TextAlign.center,
-                                                  style: const TextStyle(
+                                                  style:  TextStyle(
                                                       fontSize: 14, fontWeight: FontWeight.w400, fontFamily: roboto, color: black),
                                                 ),
                                               ],

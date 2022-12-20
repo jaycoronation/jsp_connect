@@ -8,10 +8,12 @@ import 'package:share/share.dart';
 import '../constant/api_end_point.dart';
 import '../constant/colors.dart';
 import '../model/CommanResponse.dart';
+import '../model/DashBoardDataResponse.dart';
 import '../model/PostListResponse.dart';
 import '../utils/app_utils.dart';
 import '../utils/base_class.dart';
 import '../widget/loading.dart';
+import 'CommonDetailsScreen.dart';
 import 'MediaCoverageDetailsScreen.dart';
 
 class MediaCoverageScreen extends StatefulWidget {
@@ -29,7 +31,7 @@ class _MediaCoverageScreen extends BaseState<MediaCoverageScreen> {
   bool _isLastPage = false;
   bool isScrollingDown = false;
   late ScrollController _scrollViewController;
-  List<PostsData> listMedia = [];
+  List<Posts> listMedia = [];
   
   @override
   void initState() {
@@ -81,7 +83,7 @@ class _MediaCoverageScreen extends BaseState<MediaCoverageScreen> {
           appBar: AppBar(
             toolbarHeight: 55,
             automaticallyImplyLeading: false,
-            backgroundColor: white,
+            backgroundColor: screenBg,
             elevation: 0,
             centerTitle: false,
             title: Padding(
@@ -107,7 +109,7 @@ class _MediaCoverageScreen extends BaseState<MediaCoverageScreen> {
                     alignment: Alignment.centerLeft,
                     height: 65,
                     margin: const EdgeInsets.only(left: 5),
-                    child: const Text(
+                    child: Text(
                       "Media Coverage",
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
@@ -120,7 +122,7 @@ class _MediaCoverageScreen extends BaseState<MediaCoverageScreen> {
               ),
             ),
           ),
-          backgroundColor: white,
+          backgroundColor: screenBg,
           resizeToAvoidBottomInset: true,
           body: _isLoading
               ? const LoadingWidget() : listMedia.isEmpty ? MyNoDataWidget(msg: 'No media coverage data found!')
@@ -149,8 +151,10 @@ class _MediaCoverageScreen extends BaseState<MediaCoverageScreen> {
                                     child: FadeInAnimation(
                                         child: GestureDetector(
                                           onTap: () async {
-                                            final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => MediaCoverageDetailsScreen(listMedia[index].id.toString())));
-                                            print("result ===== $result");
+                                            final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => CommonDetailsScreen(listMedia[index].id.toString(),"8")));
+                                            print(result);
+                                            /*final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => MediaCoverageDetailsScreen(listMedia[index].id.toString())));
+                                            print("result ===== $result");*/
                                             setState(() {
                                               var data = result.toString().split("|");
                                               for (int i = 0; i < listMedia.length; i++) {
@@ -164,7 +168,7 @@ class _MediaCoverageScreen extends BaseState<MediaCoverageScreen> {
                                           },
                                           child: Container(
                                             decoration: BoxDecoration(
-                                              color: lightblack,
+                                              color: grayNew,
                                               borderRadius: BorderRadius.circular(30),
                                             ),
                                             margin: const EdgeInsets.only(top: 12),
@@ -185,13 +189,13 @@ class _MediaCoverageScreen extends BaseState<MediaCoverageScreen> {
                                                           Text(listMedia[index].location.toString(),
                                                               overflow: TextOverflow.clip,
                                                               textAlign: TextAlign.start,
-                                                              style: const TextStyle(fontWeight: FontWeight.w400, fontFamily: roboto, fontSize: 12, color: white,overflow: TextOverflow.clip)),
+                                                              style: TextStyle(fontWeight: FontWeight.w400, fontFamily: roboto, fontSize: 12, color: black,overflow: TextOverflow.clip)),
                                                           Container(
                                                             margin: const EdgeInsets.only(top: 8),
                                                             child: Text(listMedia[index].title.toString(),
                                                                 overflow: TextOverflow.clip,
                                                                 textAlign: TextAlign.start,
-                                                                style: const TextStyle(fontWeight: FontWeight.w600, fontFamily: roboto, fontSize: 16, color: white,overflow: TextOverflow.clip)),
+                                                                style: TextStyle(fontWeight: FontWeight.w600, fontFamily: roboto, fontSize: 16, color: black,overflow: TextOverflow.clip)),
                                                           ),
                                                         ],
                                                       ),
@@ -222,7 +226,7 @@ class _MediaCoverageScreen extends BaseState<MediaCoverageScreen> {
                                                       child: Text(listMedia[index].saveTimestamp.toString(),
                                                           overflow: TextOverflow.clip,
                                                           textAlign: TextAlign.start,
-                                                          style: const TextStyle(fontWeight: FontWeight.w500, fontFamily: roboto, fontSize: 12, color: white,overflow: TextOverflow.clip)),
+                                                          style: TextStyle(fontWeight: FontWeight.w500, fontFamily: roboto, fontSize: 12, color: black,overflow: TextOverflow.clip)),
                                                     ),
                                                     Row(
                                                       children: [
@@ -252,14 +256,14 @@ class _MediaCoverageScreen extends BaseState<MediaCoverageScreen> {
                                                             width: 32,
                                                             height: 32,
                                                             padding: EdgeInsets.all(6),
-                                                            child: Image.asset("assets/images/share.png",color: white),
+                                                            child: Image.asset("assets/images/share.png",color: black),
                                                           ),
                                                         ),
                                                         Text(
                                                           listMedia[index].sharesCount.toString(),
                                                           textAlign: TextAlign.center,
-                                                          style: const TextStyle(
-                                                              fontSize: 14, fontWeight: FontWeight.w400, fontFamily: roboto, color: white),
+                                                          style: TextStyle(
+                                                              fontSize: 14, fontWeight: FontWeight.w400, fontFamily: roboto, color: black),
                                                         )
                                                       ],
                                                     )
@@ -294,12 +298,12 @@ class _MediaCoverageScreen extends BaseState<MediaCoverageScreen> {
                                   color: const Color(0xff444444),
                                   width: 1,
                                 )),
-                            child: const Padding(
+                            child:  Padding(
                               padding: EdgeInsets.all(6.0),
                               child: CircularProgressIndicator(color: white,strokeWidth: 2),
                             )
                         )),
-                    const Text(' Loading more...',
+                     Text(' Loading more...',
                         style: TextStyle(color: white, fontWeight: FontWeight.w400, fontSize: 16)
                     )
                   ],
@@ -384,7 +388,7 @@ class _MediaCoverageScreen extends BaseState<MediaCoverageScreen> {
       if(dataResponse.posts !=null && dataResponse.posts!.isNotEmpty)
       {
 
-        List<PostsData>? _tempList = [];
+        List<Posts>? _tempList = [];
         _tempList = dataResponse.posts;
         listMedia.addAll(_tempList!);
 

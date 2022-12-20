@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import '../constant/colors.dart';
+import '../model/DashBoardDataResponse.dart';
 import '../model/GalleryResponseModel.dart';
 import '../model/PostListResponse.dart';
 import '../utils/base_class.dart';
@@ -8,7 +9,7 @@ import '../utils/full_screen_image_new.dart';
 import '../widget/loading.dart';
 
 class GalleryScreen extends StatefulWidget {
-  final PostsData post;
+  final Posts post;
 
   const GalleryScreen(this.post, {Key? key}) : super(key: key);
 
@@ -17,7 +18,7 @@ class GalleryScreen extends StatefulWidget {
 }
 
 class _GalleryScreen extends BaseState<GalleryScreen> {
-  late final PostsData post;
+  late final Posts post;
   bool _isLoading = false;
   var listGallery = GalleryImages();
 
@@ -31,11 +32,11 @@ class _GalleryScreen extends BaseState<GalleryScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
         child: Scaffold(
-          backgroundColor: white,
+          backgroundColor: screenBg,
           appBar: AppBar(
             toolbarHeight: 55,
             automaticallyImplyLeading: false,
-            backgroundColor: white,
+            backgroundColor: screenBg,
             elevation: 0,
             centerTitle: false,
             titleSpacing: 0,
@@ -55,7 +56,7 @@ class _GalleryScreen extends BaseState<GalleryScreen> {
                 )),
             title: Text(
               post.title.toString().trim(),
-              style: const TextStyle(fontWeight: FontWeight.w600, color: black, fontSize: 16),
+              style: TextStyle(fontWeight: FontWeight.w600, color: black, fontSize: 16),
             ),
           ),
           body: _isLoading ? const LoadingWidget() : gallery(),
@@ -119,7 +120,7 @@ class _GalleryScreen extends BaseState<GalleryScreen> {
                     margin: const EdgeInsets.only(top: 12),
                     child: Stack(children: [
                       Container(
-                        margin: const EdgeInsets.only(left: 4, right: 4),
+                        margin: const EdgeInsets.only(left: 6 ,right: 6),
                         decoration: const BoxDecoration(
                           color: Colors.transparent,
                           borderRadius: BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20)),
@@ -127,33 +128,18 @@ class _GalleryScreen extends BaseState<GalleryScreen> {
                         height: 300,
                         width: MediaQuery.of(context).size.width,
                         child: ClipRRect(
-                          borderRadius: const BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20)), // Image border
+                          borderRadius: BorderRadius.circular(14), // Image border
                           child: SizedBox.fromSize(
                             size: const Size.fromRadius(20), // Image radius
-                            child: FadeInImage.assetNetwork(
-                              image: post.media![index].media.toString(),
+                            child: Image.network(
+                              post.media![index].media.toString(),
                               fit: BoxFit.cover,
                               width: MediaQuery.of(context).size.width,
-                              placeholder: 'assets/images/bg_gray.jpeg',
                             ),
                           ),
                         ),
                       ),
-                      Container(
-                        margin: const EdgeInsets.only(left: 4, right: 4),
-                        height: 300,
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          gradient: LinearGradient(begin: FractionalOffset.topCenter, end: FractionalOffset.bottomCenter, colors: [
-                            black.withOpacity(0.1),
-                            black.withOpacity(1),
-                          ], stops: const [
-                            0.0,
-                            1.0
-                          ]),
-                          borderRadius: const BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20)),
-                        ),
-                      ),
+
                     ]),
                   ),
                 ),

@@ -6,6 +6,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:pretty_http_logger/pretty_http_logger.dart';
 import '../constant/api_end_point.dart';
 import '../constant/colors.dart';
+import '../model/DashBoardDataResponse.dart';
 import '../model/PostListResponse.dart';
 import '../utils/app_utils.dart';
 import '../utils/base_class.dart';
@@ -28,7 +29,7 @@ class _AlbumScreen extends BaseState<AlbumScreen> {
   bool _isLastPage = false;
   bool isScrollingDown = false;
   late ScrollController _scrollViewController;
-  var listGallery = List<PostsData>.empty(growable: true);
+  var listGallery = List<Posts>.empty(growable: true);
 
   @override
   void initState() {
@@ -92,7 +93,7 @@ class _AlbumScreen extends BaseState<AlbumScreen> {
         appBar: AppBar(
           toolbarHeight: 55,
           automaticallyImplyLeading: false,
-          backgroundColor: white,
+          backgroundColor: screenBg,
           elevation: 0,
           centerTitle: false,
           title: Row(
@@ -113,7 +114,7 @@ class _AlbumScreen extends BaseState<AlbumScreen> {
                 alignment: Alignment.centerLeft,
                 height: 65,
                 margin: const EdgeInsets.only(left: 5),
-                child: const Text(
+                child: Text(
                   "Photo Gallery",
                   style:TextStyle(fontWeight: FontWeight.w600, color: black, fontFamily: roboto),
                 ),
@@ -122,7 +123,7 @@ class _AlbumScreen extends BaseState<AlbumScreen> {
             ],
           ),
         ),
-        backgroundColor: white,
+        backgroundColor: screenBg,
         resizeToAvoidBottomInset: true,
         body: _isLoading
             ? const LoadingWidget()
@@ -133,7 +134,7 @@ class _AlbumScreen extends BaseState<AlbumScreen> {
                   children: [
                     Expanded(child: Stack(
                       children: [
-                        Visibility(visible: listGallery.isEmpty, child: MyNoDataWidget(msg: 'No photo gallery data found!')),
+                        Visibility(visible: listGallery.isEmpty, child: const MyNoDataWidget(msg: 'No photo gallery data found!')),
                         Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: AnimationLimiter(
@@ -188,13 +189,13 @@ class _AlbumScreen extends BaseState<AlbumScreen> {
                                               margin: const EdgeInsets.only(left: 4, right: 4),
                                               height: 300,
                                               decoration: BoxDecoration(
-                                                  color: Colors.white,
+                                                  color: Colors.black,
                                                   gradient:
                                                   LinearGradient(begin: FractionalOffset.topCenter, end: FractionalOffset.bottomCenter, colors: [
-                                                    black.withOpacity(0.1),
-                                                    black.withOpacity(1),
+                                                    blackConst.withOpacity(0.2),
+                                                    blackConst.withOpacity(1),
                                                   ], stops: const [
-                                                    0.0,
+                                                    0.7,
                                                     1.0
                                                   ]),
                                                   borderRadius: BorderRadius.circular(20)),
@@ -220,7 +221,7 @@ class _AlbumScreen extends BaseState<AlbumScreen> {
                                                       ),
                                                       Text(
                                                         listGallery[index].media!.length.toString(),
-                                                        style: TextStyle(color: white, fontSize: 12, fontFamily: roboto, fontWeight: FontWeight.w400),
+                                                        style: const TextStyle(color: whiteConst, fontSize: 12, fontFamily: roboto, fontWeight: FontWeight.w400),
                                                       )
                                                     ],
                                                   ),
@@ -270,12 +271,12 @@ class _AlbumScreen extends BaseState<AlbumScreen> {
                                         color: const Color(0xff444444),
                                         width: 1,
                                       )),
-                                  child: const Padding(
+                                  child:  Padding(
                                     padding: EdgeInsets.all(6.0),
                                     child: CircularProgressIndicator(color: white,strokeWidth: 2),
                                   )
                               )),
-                          const Text(' Loading more...',
+                           Text(' Loading more...',
                               style: TextStyle(color: white, fontWeight: FontWeight.w400, fontSize: 16)
                           )
                         ],
@@ -322,7 +323,7 @@ class _AlbumScreen extends BaseState<AlbumScreen> {
       if (dataResponse.posts != null && dataResponse.posts!.isNotEmpty) {
 
 
-        List<PostsData>? _tempList = [];
+        List<Posts>? _tempList = [];
         _tempList = dataResponse.posts;
         listGallery.addAll(_tempList!);
 

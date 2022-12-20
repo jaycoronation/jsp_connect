@@ -26,11 +26,11 @@ class _SuggestionFormScreen extends BaseState<SuggestionFormScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
         child: Scaffold(
-          backgroundColor: white,
+          backgroundColor: screenBg,
           appBar: AppBar(
             toolbarHeight: 55,
             automaticallyImplyLeading: false,
-            backgroundColor: white,
+            backgroundColor: screenBg,
             elevation: 0,
             centerTitle: false,
             title: Padding(
@@ -53,7 +53,7 @@ class _SuggestionFormScreen extends BaseState<SuggestionFormScreen> {
                     alignment: Alignment.centerLeft,
                     height: 65,
                     margin: const EdgeInsets.only(left: 5),
-                    child: const Text(
+                    child: Text(
                       "Suggestions",
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
@@ -103,7 +103,7 @@ class _SuggestionFormScreen extends BaseState<SuggestionFormScreen> {
                                       disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(20)),borderSide: BorderSide(width: 1,color: text_dark,style: BorderStyle.solid)),
                                       border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(20)),borderSide: BorderSide(width: 1,color: text_dark,style: BorderStyle.solid))
                                   ),
-                                  style: const TextStyle(fontWeight: FontWeight.w300, color: black,fontSize: 16,fontFamily: gilroy),
+                                  style: TextStyle(fontWeight: FontWeight.w300, color: black,fontSize: 16,fontFamily: gilroy),
                                   onChanged: (value) {
                                   },
                                 ),
@@ -137,7 +137,7 @@ class _SuggestionFormScreen extends BaseState<SuggestionFormScreen> {
                                         }
                                       }
                                   },
-                                  child: const Text("Submit",style: TextStyle(fontWeight: FontWeight.w600,fontFamily: gilroy,fontSize: 18,color: black)),),
+                                  child: const Text("Submit",style: TextStyle(fontWeight: FontWeight.w600,fontFamily: gilroy,fontSize: 18,color: blackConst)),),
                               ),
                             ],
                           ),

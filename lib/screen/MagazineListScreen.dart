@@ -80,11 +80,11 @@ class _MagazineListScreen extends BaseState<MagazineListScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
         child: Scaffold(
-          backgroundColor: white,
+          backgroundColor: screenBg,
           appBar: AppBar(
             toolbarHeight: 55,
             automaticallyImplyLeading: false,
-            backgroundColor: white,
+            backgroundColor: screenBg,
             elevation: 0,
             centerTitle: false,
             title: Padding(
@@ -119,7 +119,7 @@ class _MagazineListScreen extends BaseState<MagazineListScreen> {
                     alignment: Alignment.centerLeft,
                     height: 65,
                     margin: const EdgeInsets.only(left: 5),
-                    child: const Text(
+                    child: Text(
                       "Magazine",
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
@@ -263,7 +263,7 @@ class _MagazineListScreen extends BaseState<MagazineListScreen> {
                                                             Text(
                                                               listMagazine[index].posts![indexNew].sharesCount.toString(),
                                                               textAlign: TextAlign.center,
-                                                              style: const TextStyle(
+                                                              style: TextStyle(
                                                                   fontSize: 14, fontWeight: FontWeight.w400, fontFamily: roboto, color: black),
                                                             )
                                                           ],
@@ -302,12 +302,12 @@ class _MagazineListScreen extends BaseState<MagazineListScreen> {
                                   color: const Color(0xff444444),
                                   width: 1,
                                 )),
-                            child: const Padding(
+                            child:  Padding(
                               padding: EdgeInsets.all(6.0),
                               child: CircularProgressIndicator(color: black,strokeWidth: 2),
                             )
                         )),
-                    const Text(' Loading more...',
+                     Text(' Loading more...',
                         style: TextStyle(color: black, fontWeight: FontWeight.w400, fontSize: 16)
                     )
                   ],

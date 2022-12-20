@@ -14,7 +14,7 @@ class MyNoDataWidget extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 100),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-            color: lightGray,
+            color: grayNew,
             borderRadius: BorderRadius.circular(22)
         ),
         width: 330,
@@ -26,7 +26,7 @@ class MyNoDataWidget extends StatelessWidget {
                 width: 120, height: 120),
             Text(
               msg,
-              style: const TextStyle(
+              style: TextStyle(
                   color: black,
                   fontSize: 20,
                   fontWeight: FontWeight.w500

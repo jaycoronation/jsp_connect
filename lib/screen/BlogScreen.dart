@@ -8,10 +8,12 @@ import 'package:share/share.dart';
 import '../constant/api_end_point.dart';
 import '../constant/colors.dart';
 import '../model/CommanResponse.dart';
+import '../model/DashBoardDataResponse.dart';
 import '../model/PostListResponse.dart';
 import '../utils/app_utils.dart';
 import '../utils/base_class.dart';
 import '../widget/loading.dart';
+import '../widget/news_block.dart';
 import '../widget/no_data.dart';
 import 'BlogDetailsScreen.dart';
 
@@ -30,7 +32,7 @@ class _BlogScreen extends BaseState<BlogScreen> {
   bool _isLastPage = false;
   bool isScrollingDown = false;
   late ScrollController _scrollViewController;
-  List<PostsData> blogList = List<PostsData>.empty(growable: true);
+  List<Posts> blogList = List<Posts>.empty(growable: true);
 
   @override
   void initState() {
@@ -61,13 +63,7 @@ class _BlogScreen extends BaseState<BlogScreen> {
     super.initState();
   }
 
-  final Shader linearGradient = const LinearGradient(
-    colors: <Color>[Color(0xffFFFFFF), Color(0xffaaa9a3)],
-  ).createShader(const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));
 
-  final Shader linearGradientForDate = const LinearGradient(
-    colors: <Color>[Color(0xffaaa9a3), Color(0xff72716d)],
-  ).createShader(const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));
 
   Future<bool> _refresh() {
     print("refresh......");
@@ -92,15 +88,17 @@ class _BlogScreen extends BaseState<BlogScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+
     return Scaffold(
         appBar: AppBar(
           toolbarHeight: 55,
           automaticallyImplyLeading: false,
-          backgroundColor: white,
+          backgroundColor: screenBg,
           elevation: 0,
           centerTitle: false,
           title: Padding(
@@ -124,7 +122,7 @@ class _BlogScreen extends BaseState<BlogScreen> {
                   alignment: Alignment.centerLeft,
                   height: 65,
                   margin: const EdgeInsets.only(left: 5),
-                  child: const Text(
+                  child:  Text(
                     "Blog",
                     style: TextStyle(fontWeight: FontWeight.w600, color: black, fontFamily: roboto),
                   ),
@@ -134,7 +132,7 @@ class _BlogScreen extends BaseState<BlogScreen> {
             ),
           ),
         ),
-        backgroundColor: white,
+        backgroundColor: screenBg,
         resizeToAvoidBottomInset: true,
         body: _isLoading
             ? const LoadingWidget()
@@ -145,163 +143,37 @@ class _BlogScreen extends BaseState<BlogScreen> {
                   children: [
                     Expanded(
                         child: Stack(
-                      children: [
-                        Visibility(
-                          visible: blogList.isEmpty,
-                          child: const MyNoDataWidget(msg: 'No blog data found!'),
-                        ),
-                        AnimationLimiter(
-                          child: ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            controller: _scrollViewController,
-                            physics: const AlwaysScrollableScrollPhysics(),
-                            itemCount: blogList.length,
-                            itemBuilder: (context, index) {
-                              return AnimationConfiguration.staggeredList(
-                                position: index,
-                                duration: const Duration(milliseconds: 375),
-                                child: SlideAnimation(
-                                  verticalOffset: 50.0,
-                                  child: FadeInAnimation(
-                                    child: GestureDetector(
-                                      behavior: HitTestBehavior.opaque,
-                                      onTap: () {
-                                        _viewDetails(context, blogList[index]);
-                                      },
-                                      child: Container(
-                                          margin: const EdgeInsets.only(left: 14, right: 14, top: 14),
-                                          decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(20),
-                                              border: Border.all(width: 0.6, color: black.withOpacity(0.4), style: BorderStyle.solid)),
-                                          child: Column(
-                                            children: [
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Expanded(
-                                                    child: Column(
-                                                      children: [
-                                                        Container(
-                                                            alignment: Alignment.centerLeft,
-                                                            margin: EdgeInsets.only(
-                                                                left: 14,
-                                                                right: 22,
-                                                                top: blogList[index].saveTimestamp.toString().isNotEmpty ? 10 : 22),
-                                                            child: Text(
-                                                              blogList[index].title.toString().trim(),
-                                                              overflow: TextOverflow.clip,
-                                                              textAlign: TextAlign.start,
-                                                              style: TextStyle(
-                                                                  fontWeight: titleFont,
-                                                                  fontSize: 16,
-                                                                  fontFamily: aileron,
-                                                                  overflow: TextOverflow.clip,
-                                                                  foreground: Paint()..shader = linearGradientForDate),
-                                                            )),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Stack(
-                                                    children: [
-                                                      Container(
-                                                        margin: const EdgeInsets.only(right: 10, top: 12),
-                                                        decoration: BoxDecoration(
-                                                          color: Colors.transparent,
-                                                          borderRadius: BorderRadius.circular(30),
-                                                        ),
-                                                        height: 80,
-                                                        width: 80,
-                                                        child: ClipRRect(
-                                                          borderRadius: BorderRadius.circular(20), // Image border
-                                                          child: SizedBox.fromSize(
-                                                            size: const Size.fromRadius(48), // Image radius
-                                                            child: Image.network(
-                                                              blogList[index].featuredImage.toString(),
-                                                              fit: BoxFit.cover,
-                                                              width: MediaQuery.of(context).size.width,
-                                                              alignment: Alignment.topRight,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                              Container(
-                                                margin: const EdgeInsets.fromLTRB(18, 38, 18, 12),
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                                  children: [
-                                                    Row(
-                                                      children: [
-                                                        Text(blogList[index].location.toString(),
-                                                            style: TextStyle(
-                                                                fontWeight: FontWeight.w400, fontFamily: aileron, fontSize: 12, color: black)),
-                                                        blogList[index].location.toString().isNotEmpty
-                                                            ? Container(
-                                                                width: 6,
-                                                                height: 6,
-                                                                margin: const EdgeInsets.only(left: 6, right: 6),
-                                                                decoration: const BoxDecoration(
-                                                                  color: black,
-                                                                  shape: BoxShape.circle,
-                                                                ),
-                                                              )
-                                                            : Container(),
-                                                        Text(blogList[index].saveTimestamp.toString(),
-                                                            style: TextStyle(
-                                                                fontWeight: FontWeight.w400,
-                                                                fontFamily: aileron,
-                                                                fontSize: 12,
-                                                                foreground: Paint()..shader = linearGradientForDate)),
-                                                      ],
-                                                    ),
-                                                    const Spacer(),
-                                                    GestureDetector(
-                                                      onTap: () {
-                                                        if (blogList[index].media!.isNotEmpty) {
-                                                          if (blogList[index].media![0].media.toString().isNotEmpty) {
-                                                            Share.share(blogList[index].media![0].media.toString());
-                                                            _sharePost(blogList[index].id.toString());
-                                                            setState(() {
-                                                              blogList[index].setSharesCount = blogList[index].sharesCount! + 1;
-                                                            });
-                                                          } else {
-                                                            showSnackBar("Blog link not found.", context);
-                                                          }
-                                                        } else {
-                                                          showSnackBar("Blog link not found.", context);
-                                                        }
-                                                      },
-                                                      behavior: HitTestBehavior.opaque,
-                                                      child: Container(
-                                                        width: 32,
-                                                        height: 32,
-                                                        padding: const EdgeInsets.all(6),
-                                                        child: Image.asset("assets/images/share.png", height: 22, width: 22, color: white),
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      blogList[index].sharesCount.toString(),
-                                                      textAlign: TextAlign.center,
-                                                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, fontFamily: roboto, color: white),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          )),
+                        children: [
+                          Visibility(
+                            visible: blogList.isEmpty,
+                            child: const MyNoDataWidget(msg: 'No blog data found!'),
+                          ),
+                          AnimationLimiter(
+                            child: ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              controller: _scrollViewController,
+                              physics: const AlwaysScrollableScrollPhysics(),
+                              itemCount: blogList.length,
+                              itemBuilder: (context, index) {
+                                return AnimationConfiguration.staggeredList(
+                                  position: index,
+                                  duration: const Duration(milliseconds: 375),
+                                  child: SlideAnimation(
+                                    verticalOffset: 50.0,
+                                    child: FadeInAnimation(
+                                      child: Column(
+                                        children: [
+                                          NewsBlock(listNews: blogList,index: index,isFromNews: false,setState: setState),
+                                          Container(height: index == blogList.length - 1 ? 20 : 0,)
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                              );
-                            },
+                                );
+                              },
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
                     )),
                     Visibility(
                         visible: _isLoadingMore,
@@ -321,11 +193,11 @@ class _BlogScreen extends BaseState<BlogScreen> {
                                             color: const Color(0xff444444),
                                             width: 1,
                                           )),
-                                      child: const Padding(
+                                      child:  Padding(
                                         padding: EdgeInsets.all(6.0),
                                         child: CircularProgressIndicator(color: white, strokeWidth: 2),
                                       ))),
-                              const Text(' Loading more...', style: TextStyle(color: white, fontWeight: FontWeight.w400, fontSize: 16))
+                               Text(' Loading more...', style: TextStyle(color: white, fontWeight: FontWeight.w400, fontSize: 16))
                             ],
                           ),
                         ))
@@ -334,7 +206,7 @@ class _BlogScreen extends BaseState<BlogScreen> {
               ));
   }
 
-  Future<void> _viewDetails(BuildContext context, PostsData postsData) async {
+  Future<void> _viewDetails(BuildContext context, Posts postsData) async {
     // Navigator.push returns a Future that completes after calling
     // Navigator.pop on the Selection Screen.
     final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => BlogDetailsScreen(postsData.id.toString())));
@@ -414,7 +286,7 @@ class _BlogScreen extends BaseState<BlogScreen> {
 
     if (statusCode == 200 && dataResponse.success == 1) {
       if (dataResponse.posts != null && dataResponse.posts!.isNotEmpty) {
-        List<PostsData>? _tempList = [];
+        List<Posts>? _tempList = [];
         _tempList = dataResponse.posts;
         blogList.addAll(_tempList!);
 

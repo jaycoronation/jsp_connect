@@ -137,7 +137,7 @@ class _VerifyOtpScreen extends BaseState<VerifyOtpScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
         child: Scaffold(
-          backgroundColor: black,
+          backgroundColor: screenBg,
           resizeToAvoidBottomInset: false,
           body: _isLoading
               ? const LoadingWidget()
@@ -175,7 +175,7 @@ class _VerifyOtpScreen extends BaseState<VerifyOtpScreen> {
                               Container(
                                   alignment: Alignment.topLeft,
                                   margin: const EdgeInsets.only(top: 14, left: 14),
-                                  child: const Text(
+                                  child:  Text(
                                     "Confirm OTP",
                                     style: TextStyle(color: white, fontSize: 18, fontWeight: FontWeight.w100, fontFamily: slik),
                                   )),
@@ -192,7 +192,7 @@ class _VerifyOtpScreen extends BaseState<VerifyOtpScreen> {
                                       ),
                                       TextSpan(
                                         text: " ${(widget as VerifyOtpScreen).ContactNumber}",
-                                        style: const TextStyle(fontSize: 16, color: white, fontWeight: FontWeight.w600, fontFamily: aileron),
+                                        style: TextStyle(fontSize: 16, color: white, fontWeight: FontWeight.w600, fontFamily: aileron),
                                       ),
                                     ],
                                   ),
@@ -205,12 +205,12 @@ class _VerifyOtpScreen extends BaseState<VerifyOtpScreen> {
                                   autoDisposeControllers: false,
                                   controller: textEditingController,
                                   appContext: context,
-                                  pastedTextStyle: const TextStyle(
+                                  pastedTextStyle: TextStyle(
                                     fontFamily: aileron,
                                     color: black,
                                     fontWeight: FontWeight.bold,
                                   ),
-                                  textStyle: const TextStyle(fontFamily: aileron, fontWeight: FontWeight.w600, color: white),
+                                  textStyle: TextStyle(fontFamily: aileron, fontWeight: FontWeight.w600, color: white),
                                   length: 4,
                                   autoFocus: true,
                                   obscureText: false,
@@ -270,7 +270,7 @@ class _VerifyOtpScreen extends BaseState<VerifyOtpScreen> {
                                       ),
                                       TextSpan(
                                         text: " $_start Seconds",
-                                        style: const TextStyle(fontSize: 14, color: white, fontWeight: FontWeight.w600, fontFamily: aileron),
+                                        style: TextStyle(fontSize: 14, color: white, fontWeight: FontWeight.w600, fontFamily: aileron),
                                       ),
                                     ],
                                   ),
@@ -303,7 +303,7 @@ class _VerifyOtpScreen extends BaseState<VerifyOtpScreen> {
                                       }
                                     });
                                   },
-                                  child: const Text("Resend OTP", style: TextStyle(fontWeight: FontWeight.w400, fontFamily: slik, fontSize: 16, color: black)),
+                                  child:  Text("Resend OTP", style: TextStyle(fontWeight: FontWeight.w400, fontFamily: slik, fontSize: 16, color: black)),
                                 ),
                               ): Container(
                                 height: 55,
@@ -332,14 +332,14 @@ class _VerifyOtpScreen extends BaseState<VerifyOtpScreen> {
                                       }
                                     }
                                   },
-                                  child: const Text("CONTINUE", style: TextStyle(fontWeight: FontWeight.w400, fontFamily: slik, fontSize: 16, color: black)),
+                                  child:  Text("CONTINUE", style: TextStyle(fontWeight: FontWeight.w400, fontFamily: slik, fontSize: 16, color: black)),
                                 ),
                               ),
                               const Spacer(),
                               Container(
                                   alignment: Alignment.bottomCenter,
                                   margin: const EdgeInsets.only(left: 10, top: 14,bottom: 50),
-                                  child: const Text(
+                                  child:  Text(
                                     "Please enter OTP to continue",
                                     style: TextStyle(color: text_light, fontSize: 14, fontWeight: FontWeight.w600, fontFamily: aileron),
                                   )),
@@ -351,7 +351,7 @@ class _VerifyOtpScreen extends BaseState<VerifyOtpScreen> {
                       Container(
                         margin: const EdgeInsets.only(top: 14),
                         alignment: Alignment.center,
-                        child: const Text(
+                        child:  Text(
                           "By continuing,you agree to our ",
                           textAlign: TextAlign.center,
                           style: TextStyle(fontFamily: aileron, color: text_light, fontSize: 14, fontWeight: FontWeight.w200),
@@ -363,7 +363,7 @@ class _VerifyOtpScreen extends BaseState<VerifyOtpScreen> {
                         child: RichText(
                           text: TextSpan(
                             style: Theme.of(context).textTheme.bodyText1,
-                            children: const [
+                            children:  [
                               TextSpan(
                                 text: 'Privacy Policy',
                                 style: TextStyle(fontSize: 14, color: white, fontWeight: FontWeight.w200, fontFamily: aileron),

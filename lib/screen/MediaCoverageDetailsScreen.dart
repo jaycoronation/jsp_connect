@@ -51,11 +51,11 @@ class _NewsDetailsScreen extends BaseState<MediaCoverageDetailsScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
         child: Scaffold(
-          backgroundColor: white,
+          backgroundColor: screenBg,
           appBar: AppBar(
             toolbarHeight: 55,
             automaticallyImplyLeading: false,
-            backgroundColor: white,
+            backgroundColor: screenBg,
             elevation: 0,
             centerTitle: false,
             title: Padding(
@@ -95,7 +95,7 @@ class _NewsDetailsScreen extends BaseState<MediaCoverageDetailsScreen> {
                     alignment: Alignment.centerLeft,
                     height: 65,
                     margin: const EdgeInsets.only(left: 5),
-                    child: const Text(
+                    child: Text(
                       "",
                       style: TextStyle(fontWeight: FontWeight.w600, color: black, fontSize: 16),
                     ),
@@ -260,15 +260,15 @@ class _NewsDetailsScreen extends BaseState<MediaCoverageDetailsScreen> {
                     ),
                     Container(
                       margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                      child: Text(postDetailsData.title.toString(), style: const TextStyle(color: black, fontSize: 22, fontWeight: FontWeight.w500, fontFamily: roboto)),
+                      child: Text(postDetailsData.title.toString(), style:  TextStyle(color: black, fontSize: 22, fontWeight: FontWeight.w500, fontFamily: roboto)),
                     ),
                     Container(
                       margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                      child: Text("On ${postDetailsData.saveTimestamp}", style: const TextStyle(color: black, fontSize: 14, fontWeight: FontWeight.w400, fontFamily: roboto)),
+                      child: Text("On ${postDetailsData.saveTimestamp}", style:  TextStyle(color: black, fontSize: 14, fontWeight: FontWeight.w400, fontFamily: roboto)),
                     ),
                     Container(
                       margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                      child: HtmlWidget(postDetailsData.description.toString(),textStyle: const TextStyle(height: 1.5, color: black, fontSize: 16, fontWeight: FontWeight.w400, fontFamily: roboto)),
+                      child: HtmlWidget(postDetailsData.description.toString(),textStyle:  TextStyle(height: 1.5, color: black, fontSize: 16, fontWeight: FontWeight.w400, fontFamily: roboto)),
                     ),
                   ],
                 ),

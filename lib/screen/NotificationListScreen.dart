@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:gap/gap.dart';
 import 'package:jspl_connect/screen/BlogDetailsScreen.dart';
+import 'package:jspl_connect/screen/CommonDetailsScreen.dart';
 import 'package:jspl_connect/screen/MagazineListScreen.dart';
 import 'package:pretty_http_logger/pretty_http_logger.dart';
 import '../constant/api_end_point.dart';
@@ -109,7 +110,7 @@ class _NotificationListScreen extends BaseState<NotificationListScreen> {
           appBar: AppBar(
             toolbarHeight: 55,
             automaticallyImplyLeading: false,
-            backgroundColor: black,
+            backgroundColor: screenBg,
             elevation: 0,
             centerTitle: false,
             title: Padding(
@@ -125,15 +126,15 @@ class _NotificationListScreen extends BaseState<NotificationListScreen> {
                       child: Container(
                         alignment: Alignment.topLeft,
                         padding: const EdgeInsets.all(6),
-                        child: Image.asset('assets/images/ic_back_button.png', height: 22, width: 22, color: white),
+                        child: Image.asset('assets/images/ic_back_button.png', height: 22, width: 22, color: black),
                       )),
                   Container(
                     alignment: Alignment.centerLeft,
                     height: 65,
                     margin: const EdgeInsets.only(left: 5),
-                    child: const Text(
+                    child:  Text(
                       "Notifications",
-                      style: TextStyle(fontWeight: FontWeight.w600, color: white, fontSize: 18),
+                      style: TextStyle(fontWeight: FontWeight.w600, color: black, fontSize: 18),
                     ),
                   ),
                   const Spacer(),
@@ -141,7 +142,7 @@ class _NotificationListScreen extends BaseState<NotificationListScreen> {
               ),
             ),
           ),
-          backgroundColor: black,
+          backgroundColor: screenBg,
           resizeToAvoidBottomInset: true,
           body: _isLoading
               ? const LoadingWidget()
@@ -178,13 +179,13 @@ class _NotificationListScreen extends BaseState<NotificationListScreen> {
                                             margin: const EdgeInsets.only(left: 14, right: 14, top: 14),
                                             decoration: BoxDecoration(
                                                 borderRadius: BorderRadius.circular(20),
-                                                border: Border.all(width: 0.6, color: white.withOpacity(0.4), style: BorderStyle.solid)),
+                                                border: Border.all(width: 0.6, color: black.withOpacity(0.4), style: BorderStyle.solid)),
                                             child: Padding(
                                               padding: EdgeInsets.all(10),
                                               child: Column(
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(notificationList[index].message.toString(), style: TextStyle(fontWeight: FontWeight.w600, fontFamily: aileron, fontSize: 16, color: lightGray)),
+                                                  Text(notificationList[index].message.toString(), style: TextStyle(fontWeight: FontWeight.w600, fontFamily: aileron, fontSize: 16, color: black)),
                                                   Gap(4),
                                                   Text(notificationList[index].saveTimestamp.toString(), style: TextStyle(
                                                       fontWeight: FontWeight.w400,
@@ -216,12 +217,12 @@ class _NotificationListScreen extends BaseState<NotificationListScreen> {
                                           color: const Color(0xff444444),
                                           width: 1,
                                         )),
-                                    child: const Padding(
+                                    child:  Padding(
                                       padding: EdgeInsets.all(6.0),
                                       child: CircularProgressIndicator(color: white,strokeWidth: 2),
                                     )
                                 )),
-                            const Text(' Loading more...',
+                             Text(' Loading more...',
                                 style: TextStyle(color: white, fontWeight: FontWeight.w400, fontSize: 16)
                             )
                           ],
@@ -245,7 +246,13 @@ class _NotificationListScreen extends BaseState<NotificationListScreen> {
        {
            if(notificationList.postId.toString().isNotEmpty)
            {
-             if(contentId == "2")
+
+             if (contentId != "5")
+               {
+                 Navigator.push(context, MaterialPageRoute(builder: (context) => CommonDetailsScreen(notificationList.postId.toString(),contentId)));
+               }
+
+             /*if(contentId == "2")
              {
                Navigator.push(context, MaterialPageRoute(builder: (context) => EventDetailsScreen(notificationList.postId.toString())));
              }
@@ -272,7 +279,7 @@ class _NotificationListScreen extends BaseState<NotificationListScreen> {
              else if(contentId == "8")
              {
                Navigator.push(context, MaterialPageRoute(builder: (context) => MediaCoverageDetailsScreen(notificationList.postId.toString())));
-             }
+             }*/
            }
          else
          {

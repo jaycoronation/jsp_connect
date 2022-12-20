@@ -25,6 +25,7 @@ class SessionManager {
   final String Get_APP_INFO_SHOW = "appInfoDialog";
   final String accessToken = "accessToken";
   final String companyId = "companyId";
+  final String isDarkMode = "isDarkMode";
 
   bool? checkIsLoggedIn() {
     return SessionManagerMethods.getBool(isLoggedIn);
@@ -60,6 +61,15 @@ class SessionManager {
 
   String? getDeviceToken() {
     return SessionManagerMethods.getString(deviceToken);
+  }
+
+  Future<void> setDarkMode(bool apiFirstName)
+  async {
+    await SessionManagerMethods.setBool(isDarkMode, apiFirstName);
+  }
+
+  bool? getDarkMode() {
+    return SessionManagerMethods.getBool(isDarkMode);
   }
 
   Future<void> setName(String apiFirstName)

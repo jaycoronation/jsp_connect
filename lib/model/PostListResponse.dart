@@ -1,4 +1,6 @@
 import 'dart:convert';
+
+import 'DashBoardDataResponse.dart';
 /// success : 1
 /// message : "List loaded successfully"
 /// posts : [{"id":"78","title":"Champions At Work- Jagat Kalyan Kumar","post_type_id":"3","post_category_id":"","short_description":"","description":"<html>\n<head>\n\t<title></title>\n</head>\n<body>\n<p>Meet Jagat Kalyan Kumar, Quality Assurance Manager at our Machinery Division in Raipur, Chhattisgarh. Passionate about technology and heavy machinery, Jagat is one of the many young engineers working tirelessly to build the nation of our dreams. He is one of our <a dir=\"auto\" href=\"https://www.youtube.com/hashtag/championsatwork\" spellcheck=\"false\">#ChampionsAtWork</a></p>\n</body>\n</html>\n","user_id":"","slug":"","location":"","meta_title":"","meta_keywords":"","meta_description":"","status":"1","social_media_type":"","social_media_link":"","schedule_timestamp":"09 Dec 2022","save_timestamp":"09 Dec 2022","featured_image":"https://jsp.coronation.in/api/assets/upload/feature_image/1670603761_Screenshot_2022-12-09_at_9.55.07_PM.png","likes_count":0,"shares_count":12,"bookmark_count":0,"is_liked":0,"is_bookmarked":0,"media":[{"post_id":78,"file_name":"1670603263_Champions_At_Work-_Jagat_Kalyan_Kumar.mp4","file_size":"20762424","file_type":"video/mp4","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670603263_Champions_At_Work-_Jagat_Kalyan_Kumar.mp4","alt_tag":"","sort_order":0,"company_id":6}]}]
@@ -9,7 +11,7 @@ class PostListResponse {
   PostListResponse({
       num? success, 
       String? message, 
-      List<PostsData>? posts,}){
+      List<Posts>? posts,}){
     _success = success;
     _message = message;
     _posts = posts;
@@ -21,23 +23,23 @@ class PostListResponse {
     if (json['posts'] != null) {
       _posts = [];
       json['posts'].forEach((v) {
-        _posts?.add(PostsData.fromJson(v));
+        _posts?.add(Posts.fromJson(v));
       });
     }
   }
   num? _success;
   String? _message;
-  List<PostsData>? _posts;
+  List<Posts>? _posts;
 PostListResponse copyWith({  num? success,
   String? message,
-  List<PostsData>? posts,
+  List<Posts>? posts,
 }) => PostListResponse(  success: success ?? _success,
   message: message ?? _message,
   posts: posts ?? _posts,
 );
   num? get success => _success;
   String? get message => _message;
-  List<PostsData>? get posts => _posts;
+  List<Posts>? get posts => _posts;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -76,8 +78,8 @@ PostListResponse copyWith({  num? success,
 /// is_bookmarked : 0
 /// media : [{"post_id":78,"file_name":"1670603263_Champions_At_Work-_Jagat_Kalyan_Kumar.mp4","file_size":"20762424","file_type":"video/mp4","path":"assets/upload/posts/2022/12/","media":"https://jsp.coronation.in/api/assets/upload/posts/2022/12/1670603263_Champions_At_Work-_Jagat_Kalyan_Kumar.mp4","alt_tag":"","sort_order":0,"company_id":6}]
 
-PostsData postsFromJson(String str) => PostsData.fromJson(json.decode(str));
-String postsToJson(PostsData data) => json.encode(data.toJson());
+Posts postsFromJson(String str) => Posts.fromJson(json.decode(str));
+String postsToJson(Posts data) => json.encode(data.toJson());
 class PostsData {
   PostsData({
       String? id, 

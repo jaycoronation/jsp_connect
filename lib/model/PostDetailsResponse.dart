@@ -246,6 +246,15 @@ PostDetails copyWith({  String? id,
   num? get likesCount => _likesCount;
   num? get sharesCount => _sharesCount;
   num? get bookmarkCount => _bookmarkCount;
+
+  set bookmarkCount(num? value) {
+    _bookmarkCount = value;
+  }
+
+  set likesCount(num? value) {
+    _likesCount = value;
+  }
+
   num? get isLiked => _isLiked;
   num? get isBookmarked => _isBookmarked;
   List<Media>? get media => _media;
@@ -283,6 +292,9 @@ PostDetails copyWith({  String? id,
     return map;
   }
 
+  set sharesCount(num? value) {
+    _sharesCount = value;
+  }
 }
 
 /// id : "77"

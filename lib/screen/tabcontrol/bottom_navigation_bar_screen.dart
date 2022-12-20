@@ -4,6 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jspl_connect/model/CommanResponse.dart';
+import 'package:jspl_connect/model/DashBoardDataResponse.dart';
 import 'package:jspl_connect/utils/base_class.dart';
 import 'package:pretty_http_logger/pretty_http_logger.dart';
 import '../../constant/api_end_point.dart';
@@ -64,6 +65,7 @@ class _BottomNavigationBarScreenState extends BaseState<BottomNavigationBarScree
   }
 
   void _onItemTapped(int value) {
+    HapticFeedback.vibrate();
     FocusScopeNode currentFocus = FocusScope.of(context);
     if (!currentFocus.hasPrimaryFocus) {
       currentFocus.unfocus();
@@ -164,7 +166,7 @@ class _BottomNavigationBarScreenState extends BaseState<BottomNavigationBarScree
       },
       child: Scaffold(
         resizeToAvoidBottomInset: true,
-        backgroundColor: white,
+        backgroundColor: screenBg,
         extendBody: true,
         body: FadeIndexedStack(
           _currentIndex,_pages ,const Duration(
@@ -174,44 +176,45 @@ class _BottomNavigationBarScreenState extends BaseState<BottomNavigationBarScree
         bottomNavigationBar: Material(
           elevation: 6,
           child: Container(
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: white,
-                borderRadius: BorderRadius.only(topRight: Radius.circular(30),topLeft: Radius.circular(30),),
+                borderRadius: const BorderRadius.only(topRight: Radius.circular(30),topLeft: Radius.circular(30),),
               ),
-              child: ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(30.0),
-                  topRight: Radius.circular(30.0),
+              child: BottomNavigationBar(
+                elevation: 0,
+                key: bottomWidgetKey,
+                items: const <BottomNavigationBarItem>[
+                  BottomNavigationBarItem(
+                    icon: ImageIcon(AssetImage("assets/images/trending.png")),
+                    label: 'Trending',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: ImageIcon(AssetImage("assets/images/news.png")),
+                    label: 'Gallery',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: ImageIcon(AssetImage("assets/images/media.png")),
+                    label: 'Video',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: ImageIcon(AssetImage("assets/images/podcast.png")),
+                    label: 'Blog',
+                  ),
+                ],
+                iconSize: 28,
+                selectedItemColor: blackConst,
+                selectedLabelStyle: const TextStyle(color: blackConst,fontSize: 12,fontFamily: roboto,fontWeight: FontWeight.w500),
+                unselectedLabelStyle: const TextStyle(color: blackConst,fontSize: 12,fontFamily: roboto,fontWeight: FontWeight.w500),
+                backgroundColor: bottombar,
+                selectedIconTheme: const IconThemeData(
+                  color: orangeNew,
                 ),
-                child: BottomNavigationBar(
-                  key: bottomWidgetKey,
-                  items: const <BottomNavigationBarItem>[
-                    BottomNavigationBarItem(
-                      icon: ImageIcon(AssetImage("assets/images/trending.png")),
-                      label: 'Trending',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: ImageIcon(AssetImage("assets/images/news.png")),
-                      label: 'Gallery',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: ImageIcon(AssetImage("assets/images/media.png")),
-                      label: 'Video',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: ImageIcon(AssetImage("assets/images/podcast.png")),
-                      label: 'Blog',
-                    ),
-                  ],
-                  selectedLabelStyle: const TextStyle(color: black,fontSize: 12,fontFamily: roboto,fontWeight: FontWeight.w400),
-                  unselectedLabelStyle: const TextStyle(color: black,fontSize: 12,fontFamily: roboto,fontWeight: FontWeight.w400),
-                  backgroundColor: white,
-                  type: BottomNavigationBarType.fixed,
-                  selectedItemColor: orangeNew,
-                  unselectedItemColor: black,
-                  currentIndex: _currentIndex,
-                  onTap: _onItemTapped,
+                unselectedIconTheme: const IconThemeData(
+                  color: text_dark,
                 ),
+                type: BottomNavigationBarType.fixed,
+                currentIndex: _currentIndex,
+                onTap: _onItemTapped,
               ),
             ),
         ),

@@ -22,11 +22,11 @@ class _ContactScreen extends BaseState<ContactScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
         child: Scaffold(
-          backgroundColor: white,
+          backgroundColor: screenBg,
           appBar: AppBar(
             toolbarHeight: 55,
             automaticallyImplyLeading: false,
-            backgroundColor: white,
+            backgroundColor: screenBg,
             elevation: 0,
             centerTitle: false,
             title: Padding(
@@ -49,7 +49,7 @@ class _ContactScreen extends BaseState<ContactScreen> {
                     alignment: Alignment.centerLeft,
                     height: 65,
                     margin: const EdgeInsets.only(left: 5),
-                    child: const Text(
+                    child:  Text(
                       "Contact Us",
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
@@ -73,7 +73,7 @@ class _ContactScreen extends BaseState<ContactScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text("Address",style: TextStyle(fontFamily: roboto,fontSize: 20,
-                        foreground: Paint()..shader = linearGradient,fontWeight: FontWeight.w900),),
+                        color: black,fontWeight: FontWeight.w900),),
                   ],
                 ),
               ),
@@ -81,7 +81,7 @@ class _ContactScreen extends BaseState<ContactScreen> {
                 child: Container(
                   margin: const EdgeInsets.only(left: 12,right: 12,top: 22),
                   child: Text("Jindal Centre 12, Bhikaiji Cama Place, New Delhi – 110 066, INDIA.",overflow: TextOverflow.clip,style: TextStyle(fontFamily: roboto,fontSize: 20,
-                      foreground: Paint()..shader = linearGradient,fontWeight: FontWeight.w400,overflow: TextOverflow.clip),),
+                      color: black,fontWeight: FontWeight.w400,overflow: TextOverflow.clip),),
                 ),
               ),
             ],

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import '../constant/global_context.dart';
 import '../screen/BlogDetailsScreen.dart';
+import '../screen/CommonDetailsScreen.dart';
 import '../screen/EventDetailsScreen.dart';
 import '../screen/LeadershipDetailsScreen.dart';
 import '../screen/MagazineListScreen.dart';
@@ -55,6 +56,8 @@ class PushNotificationService {
 // Also handle any interaction when the app is in the background via a
     // Stream listener
     // This function is called when the app is in the background and user clicks on the notification
+
+
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       var postId = "";
       var contentType = "";
@@ -102,27 +105,14 @@ class PushNotificationService {
                   builder: (context) =>  SocialWallScreen()),
             );
           }
-          else if(contentId == "2")
+          else if(NavigationService.notif_type == "2" || NavigationService.notif_type == "3" ||NavigationService.notif_type == "4" || NavigationService.notif_type == "6" || NavigationService.notif_type == "8" || NavigationService.notif_type == "10" )
           {
             NavigationService.navigatorKey.currentState!.push(
               MaterialPageRoute(
-                  builder: (context) =>  EventDetailsScreen(postId.toString())),
+                  builder: (context) =>  CommonDetailsScreen(NavigationService.notif_post_id.toString(),(NavigationService.notif_type.toString()))),
             );
           }
-          else if(contentId == "3")
-          {
-            NavigationService.navigatorKey.currentState!.push(
-              MaterialPageRoute(
-                  builder: (context) =>  VideoDetailsPage(postId.toString())),
-            );
-          }
-          else if(contentId == "4")
-          {
-            NavigationService.navigatorKey.currentState!.push(
-              MaterialPageRoute(
-                  builder: (context) =>  NewsDetailsScreen(postId.toString())),
-            );
-          }
+
           else if(contentId == "5")
           {
             // for image
@@ -134,32 +124,12 @@ class PushNotificationService {
             NavigationService.notif_type = "";
             NavigationService.notif_post_id = "";
           }
-          else if(contentId == "6")
-          {
-            NavigationService.navigatorKey.currentState!.push(
-              MaterialPageRoute(
-                  builder: (context) =>  BlogDetailsScreen(postId.toString())),
-            );
-          }
+
           else if(contentId == "7")
           {
             NavigationService.navigatorKey.currentState!.push(
               MaterialPageRoute(
                   builder: (context) =>  MagazineListScreen()),
-            );
-          }
-          else if(contentId == "8")
-          {
-            NavigationService.navigatorKey.currentState!.push(
-              MaterialPageRoute(
-                  builder: (context) =>  MediaCoverageDetailsScreen(postId.toString())),
-            );
-          }
-          else if(contentId == "10")
-          {
-            NavigationService.navigatorKey.currentState!.push(
-              MaterialPageRoute(
-                  builder: (context) =>  LeadershipDetailsScreen(postId.toString())),
             );
           }
           else

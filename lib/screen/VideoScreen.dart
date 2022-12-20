@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:jspl_connect/model/DashBoardDataResponse.dart';
+import 'package:like_button/like_button.dart';
 import 'package:pretty_http_logger/pretty_http_logger.dart';
 import 'package:share/share.dart';
 import '../constant/api_end_point.dart';
@@ -14,6 +16,7 @@ import '../utils/app_utils.dart';
 import '../utils/base_class.dart';
 import '../widget/loading.dart';
 import '../widget/no_data.dart';
+import '../widget/video_block.dart';
 import 'VideoDetailsPage.dart';
 
 class VideoScreen extends StatefulWidget {
@@ -31,7 +34,7 @@ class _VideoScreen extends BaseState<VideoScreen> {
   bool _isLastPage = false;
   bool isScrollingDown = false;
   late ScrollController _scrollViewController;
-  var listVideo = List<PostsData>.empty(growable: true);
+  var listVideo = List<Posts>.empty(growable: true);
 
   final Shader linearGradient = const LinearGradient(
     colors: <Color>[Color(0xffFFFFFF), Color(0xffaaa9a3)],
@@ -78,7 +81,7 @@ class _VideoScreen extends BaseState<VideoScreen> {
       appBar: AppBar(
         toolbarHeight: 55,
         automaticallyImplyLeading: false,
-        backgroundColor: white,
+        backgroundColor: screenBg,
         elevation: 0,
         centerTitle: false,
         title: Padding(
@@ -103,20 +106,20 @@ class _VideoScreen extends BaseState<VideoScreen> {
                     ),
                   )),*/
                 Container(
-                alignment: Alignment.centerLeft,
-                height: 65,
-                margin: const EdgeInsets.only(left: 5),
-                child: const Text(
-                  "Videos",
-                  style:TextStyle(fontWeight: FontWeight.w600, color: black, fontFamily: roboto),
+                  alignment: Alignment.centerLeft,
+                  height: 65,
+                  margin: const EdgeInsets.only(left: 5),
+                  child: Text(
+                    "Videos",
+                    style:TextStyle(fontWeight: FontWeight.w600, color: black, fontFamily: roboto),
+                  ),
                 ),
-              ),
               const Spacer(),
             ],
           ),
         ),
       ),
-      backgroundColor: white,
+      backgroundColor: screenBg,
       resizeToAvoidBottomInset: true,
       body: _isLoading
           ? const LoadingWidget()
@@ -144,195 +147,7 @@ class _VideoScreen extends BaseState<VideoScreen> {
                               child: SlideAnimation(
                                 verticalOffset: 50.0,
                                 child: FadeInAnimation(
-                                  child: GestureDetector(
-                                    onTap: () async {
-                                      final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => VideoDetailsPage(listVideo[index].id.toString())));
-                                      print("result ===== $result");
-                                      setState(() {
-                                        var data = result.toString().split("|");
-                                        for (int i = 0; i < listVideo.length; i++) {
-                                          if(listVideo[i].id == data[0])
-                                          {
-                                            listVideo[i].setSharesCount = num.parse(data[1]);
-                                            break;
-                                          }
-                                        }
-                                      });
-                                    },
-                                    child: Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      height: 300,
-                                      margin: const EdgeInsets.only(left: 14, right: 14, top: 14),
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(20),
-                                          border: Border.all(width: 0.6, color: white.withOpacity(0.4), style: BorderStyle.solid)),
-                                      child: Stack(
-                                        children: [
-                                          ClipRRect(
-                                            borderRadius: BorderRadius.circular(20), // Image border
-                                            child: Image.network(
-                                              listVideo[index].featuredImage.toString(),
-                                              fit: BoxFit.cover,
-                                              height: 300,
-                                              width: MediaQuery.of(context).size.width,
-                                            ),
-                                          ),
-                                          Container(
-                                            height: 300,
-                                            decoration: BoxDecoration(
-                                                color: Colors.black,
-                                                gradient:
-                                                LinearGradient(begin: FractionalOffset.topCenter, end: FractionalOffset.bottomCenter, colors: [
-                                                  black.withOpacity(0.4),
-                                                  black.withOpacity(1),
-                                                ], stops: const [
-                                                  0.0,
-                                                  1.0
-                                                ]),
-                                                borderRadius: BorderRadius.circular(20)),
-                                          ),
-                                          Positioned.fill(
-                                            bottom: 50,
-                                            child: Container(
-                                              width: 46,
-                                              height: 46,
-                                              alignment: Alignment.center,
-                                              child: Image.asset(
-                                                'assets/images/play.png',
-                                                height: 46,
-                                                width: 46,
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            bottom: 32,
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                    width: MediaQuery.of(context).size.width - 50,
-                                                    alignment: Alignment.bottomLeft,
-                                                    margin: const EdgeInsets.only(top: 14, left: 22, right: 10),
-                                                    child: Text(listVideo[index].title.toString(),
-                                                        overflow: TextOverflow.clip,
-                                                        style: TextStyle(
-                                                            foreground: Paint()..shader = linearGradient,
-                                                            fontWeight: titleFont,
-                                                            fontFamily: gilroy,
-                                                            fontSize: 16,
-                                                            overflow: TextOverflow.clip))),
-                                                Container(
-                                                  width: MediaQuery.of(context).size.width - 50,
-                                                  margin: const EdgeInsets.only(
-                                                    left: 12,
-                                                    right: 22,
-                                                    top: 10,
-                                                  ),
-                                                  child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    children: [
-                                                      Padding(
-                                                        padding: const EdgeInsets.only(top: 6, bottom: 6, left: 10, right: 10),
-                                                        child: Row(
-                                                          children: [
-                                                            Text(listVideo[index].location.toString(), style: const TextStyle(fontWeight: FontWeight.w500, fontFamily: aileron, fontSize: 12, color: lightGray)),
-                                                            listVideo[index].location.toString().isNotEmpty ? Container(
-                                                              width: 6,
-                                                              height: 6,
-                                                              margin: const EdgeInsets.only(left: 6,right: 6),
-                                                              decoration: const BoxDecoration(
-                                                                color: lightGray,
-                                                                shape: BoxShape.circle,
-                                                              ),
-                                                            ) : Container(),
-                                                            Text(listVideo[index].saveTimestamp.toString(), style: const TextStyle(
-                                                                fontWeight: FontWeight.w500,
-                                                                fontFamily: aileron, fontSize: 12,
-                                                                color: lightGray)),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      Container(
-                                                        alignment: Alignment.bottomRight,
-                                                        margin: const EdgeInsets.only(right: 6),
-                                                        child: Row(
-                                                          mainAxisAlignment: MainAxisAlignment.center,
-                                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                                          children: [
-                                                            GestureDetector(
-                                                              onTap: () {
-                                                                if(listVideo[index].media!.isNotEmpty)
-                                                                {
-                                                                  if(listVideo[index].media![0].media.toString().isNotEmpty)
-                                                                  {
-                                                                    Share.share(listVideo[index].media![0].media.toString());
-                                                                    _sharePost(listVideo[index].id.toString());
-                                                                    setState(() {
-                                                                      listVideo[index].setSharesCount = listVideo[index].sharesCount! + 1;
-                                                                    });
-                                                                  }
-                                                                  else
-                                                                  {
-                                                                    showSnackBar("Video link not found.", context);
-                                                                  }
-                                                                }
-                                                                else
-                                                                {
-                                                                  showSnackBar("Video link not found.", context);
-                                                                }
-                                                              },
-                                                              behavior: HitTestBehavior.opaque,
-                                                              child: Padding(
-                                                                padding: const EdgeInsets.all(6.0),
-                                                                child: Image.asset(
-                                                                  "assets/images/share.png",
-                                                                  height: 22,
-                                                                  color: white,
-                                                                  width: 22,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              listVideo[index].sharesCount.toString(),
-                                                              textAlign: TextAlign.center,
-                                                              style: const TextStyle(
-                                                                  fontSize: 14, fontWeight: FontWeight.w400, fontFamily: roboto, color: white),
-                                                            ),
-                                                            /* GestureDetector(
-                                                                onTap: (){
-                                                                 */ /* setState(() {
-                                                                    listVideo[index].isLike = !listVideo[index].isLike;
-                                                                  });*/ /*
-                                                                },
-                                                                child: Padding(
-                                                                  padding: const EdgeInsets.all(6.0),
-                                                                  child: Image.asset(
-                                                                    listVideo[index].isLiked == 1
-                                                                    ? "assets/images/like_filled.png"
-                                                                    : "assets/images/like.png",
-                                                                    height: 22,
-                                                                    color: listVideo[index].isLiked == 1
-                                                                        ? Colors.red : darkGray,
-                                                                    width: 22,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              Text(listVideo[index].likesCount.toString(),textAlign: TextAlign.center,style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400,fontFamily: roboto,color: white),),*/
-                                                          ],
-                                                        ),
-                                                      )
-                                                    ],
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
+                                  child: VideoBlock(listVideos: listVideo,index: index,setState: setState),
                                 ),
                               ),
                             );
@@ -355,12 +170,12 @@ class _VideoScreen extends BaseState<VideoScreen> {
                                       color: const Color(0xff444444),
                                       width: 1,
                                     )),
-                                child: const Padding(
+                                child:  Padding(
                                   padding: EdgeInsets.all(6.0),
                                   child: CircularProgressIndicator(color: white,strokeWidth: 2),
                                 )
                             )),
-                        const Text(' Loading more...',
+                         Text(' Loading more...',
                             style: TextStyle(color: white, fontWeight: FontWeight.w400, fontSize: 16)
                         )
                       ],
@@ -370,6 +185,43 @@ class _VideoScreen extends BaseState<VideoScreen> {
               ),
             ),
     );
+  }
+
+  mainClick(int index) async {
+    final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => VideoDetailsPage(listVideo[index].id.toString())));
+    print("result ===== $result");
+    setState(() {
+          var data = result.toString().split("|");
+          for (int i = 0; i < listVideo.length; i++) {
+            if(listVideo[i].id == data[0])
+            {
+              listVideo[i].setSharesCount = num.parse(data[1]);
+              break;
+            }
+          }
+        });
+  }
+
+  shareClick(int index) {
+    if(listVideo[index].media!.isNotEmpty)
+    {
+      if(listVideo[index].media![0].media.toString().isNotEmpty)
+      {
+        Share.share(listVideo[index].media![0].media.toString());
+        _sharePost(listVideo[index].id.toString());
+        setState(() {
+          listVideo[index].setSharesCount = listVideo[index].sharesCount! + 1;
+        });
+      }
+      else
+      {
+        showSnackBar("Video link not found.", context);
+      }
+    }
+    else
+    {
+      showSnackBar("Video link not found.", context);
+    }
   }
 
   _sharePost(String postId) async {
@@ -460,7 +312,7 @@ class _VideoScreen extends BaseState<VideoScreen> {
     if (statusCode == 200 && dataResponse.success == 1) {
       if (dataResponse.posts != null && dataResponse.posts!.isNotEmpty) {
 
-        List<PostsData>? _tempList = [];
+        List<Posts>? _tempList = [];
         _tempList = dataResponse.posts;
         listVideo.addAll(_tempList!);
 

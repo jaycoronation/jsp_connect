@@ -10,7 +10,7 @@ class LoadingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: white,
+      color: screenBg,
       child: Center(
           child: SingleChildScrollView(
             child: Column(

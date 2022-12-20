@@ -52,7 +52,7 @@ class _SignUpScreen extends BaseState<SignUpScreen> {
                                   children: [
                                     Container(
                                       alignment: Alignment.center,
-                                      child: const Text(
+                                      child:  Text(
                                         "Welcome Back!",
                                         textAlign: TextAlign.center,
                                         style: TextStyle(fontFamily: gilroy, color: white, fontSize: 34, fontWeight: FontWeight.w400),
@@ -60,7 +60,7 @@ class _SignUpScreen extends BaseState<SignUpScreen> {
                                     ),
                                     Container(
                                       alignment: Alignment.center,
-                                      child: const Text(
+                                      child:  Text(
                                         "Log in or SignUp",
                                         textAlign: TextAlign.center,
                                         style: TextStyle(fontFamily: gilroy, color: white, fontSize: 24, fontWeight: FontWeight.w100),
@@ -98,7 +98,7 @@ class _SignUpScreen extends BaseState<SignUpScreen> {
                                                     Container(
                                                       alignment: Alignment.center,
                                                       margin: const EdgeInsets.only(left: 10),
-                                                      child: const Text("+91", style: TextStyle(fontFamily: gilroy, fontWeight: FontWeight.w600, color: white, fontSize: 16)),
+                                                      child:  Text("+91", style: TextStyle(fontFamily: gilroy, fontWeight: FontWeight.w600, color: white, fontSize: 16)),
                                                     ),
                                                     Expanded(
                                                       child: TextField(
@@ -114,7 +114,7 @@ class _SignUpScreen extends BaseState<SignUpScreen> {
                                                               fontWeight: FontWeight.w500,
                                                             ),
                                                             border: InputBorder.none),
-                                                        style: const TextStyle(color: white, fontFamily: gilroy,fontWeight: FontWeight.w600),
+                                                        style: TextStyle(color: white, fontFamily: gilroy,fontWeight: FontWeight.w600),
                                                         onChanged: (value) {},
                                                       ),
                                                     ),
@@ -150,7 +150,7 @@ class _SignUpScreen extends BaseState<SignUpScreen> {
                                         ),
                                         Container(
                                             margin: const EdgeInsets.only(top: 40),
-                                            child: const Text(
+                                            child: Text(
                                               "We will send you OTP via SMS.",
                                               style: TextStyle(color: white, fontSize: 16, fontWeight: FontWeight.w200, fontFamily: gilroy),
                                             )),
@@ -160,7 +160,7 @@ class _SignUpScreen extends BaseState<SignUpScreen> {
                                           child: RichText(
                                             text: TextSpan(
                                               style: Theme.of(context).textTheme.bodyText1,
-                                              children: const [
+                                              children: [
                                                 TextSpan(
                                                   text: 'Register an new',
                                                   style: TextStyle(fontSize: 18, color: text_light, fontWeight: FontWeight.w200, fontFamily: gilroy),

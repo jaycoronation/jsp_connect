@@ -9,11 +9,13 @@ import 'package:url_launcher/url_launcher.dart';
 import '../constant/api_end_point.dart';
 import '../constant/colors.dart';
 import '../model/CommanResponse.dart';
+import '../model/DashBoardDataResponse.dart';
 import '../model/PostListResponse.dart';
 import '../utils/app_utils.dart';
 import '../utils/base_class.dart';
 import '../widget/loading.dart';
 import '../widget/no_data.dart';
+import '../widget/social_block.dart';
 
 class SocialWallScreen extends StatefulWidget {
   const SocialWallScreen({Key? key}) : super(key: key);
@@ -30,7 +32,7 @@ class _SocialWallScreen extends BaseState<SocialWallScreen> {
   bool _isLastPage = false;
   bool isScrollingDown = false;
   late ScrollController _scrollViewController;
-  List<PostsData> listSocial = List<PostsData>.empty(growable: true);
+  List<Posts> listSocial = List<Posts>.empty(growable: true);
 
   @override
   void initState() {
@@ -48,7 +50,6 @@ class _SocialWallScreen extends BaseState<SocialWallScreen> {
           setState(() {});
         }
       }
-
       pagination();
     });
 
@@ -83,53 +84,41 @@ class _SocialWallScreen extends BaseState<SocialWallScreen> {
           appBar: AppBar(
             toolbarHeight: 55,
             automaticallyImplyLeading: false,
-            backgroundColor: black,
+            backgroundColor: screenBg,
             elevation: 0,
             centerTitle: false,
+            titleSpacing: 0,
+            leading: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(6),
+                  child: Image.asset('assets/images/ic_back_button.png', height: 22, width: 22, color: black),
+                )),
             title: Padding(
               padding: const EdgeInsets.only(top: 0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  InkWell(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Container(
-                        alignment: Alignment.topLeft,
-                        padding: const EdgeInsets.all(6),
-                        child: Image.asset('assets/images/ic_back_button.png', height: 22, width: 22, color: white),
-                      )),
                   Container(
                     alignment: Alignment.centerLeft,
                     height: 65,
                     margin: const EdgeInsets.only(left: 5),
-                    child: const Text(
+                    child: Text(
                       "Social",
-                      style: TextStyle(fontWeight: FontWeight.w600, color: white, fontSize: 18),
+                      style: TextStyle(fontWeight: FontWeight.w600, color: black, fontSize: 18),
                     ),
                   ),
                   const Spacer(),
-                  /* Container(
-                    decoration: BoxDecoration(
-                      color: bgMain,
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
-                    child: Row(
-                      children: [
-                        Image.asset("assets/images/view.png",height: 12,width: 12,),
-                        Container(width: 6),
-                        const Text("8k Views",textAlign: TextAlign.center,style: TextStyle(color: white,fontSize: 14,fontWeight: FontWeight.w400,fontFamily: gilroy,),),
-                      ],
-                    ),
-                  )*/
                 ],
               ),
             ),
           ),
-          backgroundColor: black,
+          backgroundColor: screenBg,
           resizeToAvoidBottomInset: true,
           body: _isLoading
               ? const LoadingWidget() : listSocial.isEmpty ? const MyNoDataWidget(msg: 'No social media data found!')
@@ -138,155 +127,26 @@ class _SocialWallScreen extends BaseState<SocialWallScreen> {
                     Expanded(
                         child: AnimationLimiter(
                            child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          controller: _scrollViewController,
-                          itemCount: listSocial.length,
-                          itemBuilder: (context, index) {
-                            return AnimationConfiguration.staggeredList(
-                              position: index,
-                              duration: const Duration(milliseconds: 375),
-                              child: SlideAnimation(
-                                verticalOffset: 50.0,
-                                child: FadeInAnimation(
-                                  child: GestureDetector(
-                                    onTap: () async {
-                                      if (listSocial[index].socialMediaLink!.isNotEmpty) {
-                                        if (await canLaunchUrl(Uri.parse(listSocial[index].socialMediaLink!.toString()))) {
-                                          launchUrl(Uri.parse(listSocial[index].socialMediaLink!.toString()), mode: LaunchMode.externalNonBrowserApplication);
-                                        }
-                                      }
-                                    },
-                                    child: Container(
-                                      height: 350,
-                                      margin: const EdgeInsets.only(left: 14, right: 14, top: 14),
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(30),
-                                          border: Border.all(width: 0.2, color: white.withOpacity(0.4), style: BorderStyle.solid)),
-                                      child: Stack(
-                                        children: [
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(30),
-                                            ),
-                                            height: 350,
-                                            alignment: Alignment.center,
-                                            width: MediaQuery.of(context).size.width,
-                                            child: ClipRRect(
-                                              borderRadius: BorderRadius.circular(30), // Image border
-                                              child: Image.network(
-                                                listSocial[index].featuredImage.toString(),
-                                                fit: BoxFit.cover,
-                                                height: 350,
-                                                width: MediaQuery.of(context).size.width,
-                                              ),
-                                            ),
-                                          ),
-                                          Container(
-                                              margin: const EdgeInsets.only(right: 14, top: 14),
-                                              alignment: Alignment.topRight,
-                                              child: Image.asset(
-                                                listSocial[index].socialMediaType.toString() == "Facebook"
-                                                    ? "assets/images/facebook.png"
-                                                    : listSocial[index].socialMediaType.toString() == "Twitter"
-                                                        ? "assets/images/ic_twitter.png"
-                                                        : "assets/images/ic_insta.png",
-                                                height: 24,
-                                                width: 24,
-                                                color: white,
-                                              )),
-                                          Container(
-                                            height: 350,
-                                            decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius: BorderRadius.circular(30),
-                                                gradient:
-                                                    LinearGradient(begin: FractionalOffset.topCenter, end: FractionalOffset.bottomCenter, colors: [
-                                                  black.withOpacity(0.0),
-                                                  black,
-                                                ], stops: const [
-                                                  0.2,
-                                                  1.0
-                                                ])),
-                                          ),
-                                          Positioned(
-                                            bottom: 12,
-                                            child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                    width: MediaQuery.of(context).size.width - 50,
-                                                    margin: const EdgeInsets.only(bottom: 0, left: 14, right: 14),
-                                                    alignment: Alignment.centerLeft,
-                                                    child: Text(
-                                                      listSocial[index].shortDescription.toString(),
-                                                      style: TextStyle(
-                                                          foreground: Paint()..shader = linearGradientSocial,
-                                                          fontWeight: FontWeight.w600,
-                                                          fontFamily: gilroy,
-                                                          fontSize: 16,
-                                                          overflow: TextOverflow.clip),
-                                                      overflow: TextOverflow.clip,
-                                                    )),
-                                                Container(
-                                                  width: MediaQuery.of(context).size.width - 60,
-                                                  margin: const EdgeInsets.only(left: 14, right: 14, top: 5),
-                                                  child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                                    children: [
-                                                      Container(
-                                                        alignment: Alignment.centerLeft,
-                                                        padding: const EdgeInsets.only(top: 8, bottom: 8,  right: 10),
-                                                        child: Text(listSocial[index].saveTimestamp.toString(),
-                                                            style: const TextStyle(
-                                                                fontWeight: FontWeight.w400, fontFamily: aileron, fontSize: 14, color: lightGray)),
-                                                      ),
-                                                      Expanded(child: Container()),
-                                                      GestureDetector(
-                                                        onTap: () {
-                                                          if (listSocial[index].socialMediaLink!.isNotEmpty) {
-                                                            Share.share(listSocial[index].socialMediaLink.toString());
-                                                            _sharePost(listSocial[index].id.toString());
-                                                            setState(() {
-                                                              listSocial[index].setSharesCount = listSocial[index].sharesCount! + 1;
-                                                            });
-                                                          } else {
-                                                            showSnackBar("Social link not found.", context);
-                                                          }
-                                                        },
-                                                        behavior: HitTestBehavior.opaque,
-                                                        child: Image.asset(
-                                                          "assets/images/share.png",
-                                                          height: 24,
-                                                          color: darkGray,
-                                                          width: 24,
-                                                        ),
-                                                      ),
-                                                      Gap(6),
-                                                      Text(
-                                                        listSocial[index].sharesCount.toString(),
-                                                        textAlign: TextAlign.center,
-                                                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, fontFamily: roboto, color: white),
-                                                      )
-                                                    ],
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          )
-                                        ],
-                                      ),
+                              scrollDirection: Axis.vertical,
+                              physics: const AlwaysScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              controller: _scrollViewController,
+                              itemCount: listSocial.length,
+                              itemBuilder: (context, index) {
+                                return AnimationConfiguration.staggeredList(
+                                  position: index,
+                                  duration: const Duration(milliseconds: 375),
+                                  child: SlideAnimation(
+                                    verticalOffset: 50.0,
+                                    child: FadeInAnimation(
+                                      child: SocialBlock(listSocial: listSocial, index: index,setState: setState),
                                     ),
                                   ),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                    )),
+                                );
+                              },
+                            ),
+                      )
+                    ),
                     Visibility(
                         visible: _isLoadingMore,
                         child: Container(
@@ -305,11 +165,11 @@ class _SocialWallScreen extends BaseState<SocialWallScreen> {
                                             color: const Color(0xff444444),
                                             width: 1,
                                           )),
-                                      child: const Padding(
+                                      child: Padding(
                                         padding: EdgeInsets.all(6.0),
                                         child: CircularProgressIndicator(color: white, strokeWidth: 2),
                                       ))),
-                              const Text(' Loading more...', style: TextStyle(color: white, fontWeight: FontWeight.w400, fontSize: 16))
+                              Text(' Loading more...', style: TextStyle(color: white, fontWeight: FontWeight.w400, fontSize: 16))
                             ],
                           ),
                         ))
@@ -386,7 +246,7 @@ class _SocialWallScreen extends BaseState<SocialWallScreen> {
 
     if (statusCode == 200 && dataResponse.success == 1) {
       if (dataResponse.posts != null && dataResponse.posts!.isNotEmpty) {
-        List<PostsData>? _tempList = [];
+        List<Posts>? _tempList = [];
         _tempList = dataResponse.posts;
         listSocial.addAll(_tempList!);
 

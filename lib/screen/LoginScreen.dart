@@ -73,7 +73,7 @@ class _LoginScreen extends BaseState<LoginScreen> {
                         Column(
                           children: [
                             Spacer(),
-                            const Text("Log In",style: TextStyle(color: white,fontFamily: gilroy,fontSize: 22,fontWeight: FontWeight.w600),),
+                            Text("Log In",style: TextStyle(color: white,fontFamily: gilroy,fontSize: 22,fontWeight: FontWeight.w600),),
                             Container(
                               width: MediaQuery.of(context).size.width,
                               padding: const EdgeInsets.only(left: 14, right: 14,bottom: 100),
@@ -120,7 +120,7 @@ class _LoginScreen extends BaseState<LoginScreen> {
                                   ),
                                   Container(
                                       margin: const EdgeInsets.only(top: 22),
-                                      child: const Text(
+                                      child: Text(
                                         "You will receive an OTP on your register mobile no.",
                                         textAlign: TextAlign.center,
                                         style: TextStyle(color: white, fontSize: 16, fontWeight: FontWeight.w200, fontFamily: aileron,),
@@ -156,7 +156,7 @@ class _LoginScreen extends BaseState<LoginScreen> {
                                             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                                 RoundedRectangleBorder(
                                                     borderRadius: BorderRadius.circular(30.0),
-                                                    side: const BorderSide(color: black)
+                                                    side:  BorderSide(color: black)
                                                 )
                                             )
                                         ),

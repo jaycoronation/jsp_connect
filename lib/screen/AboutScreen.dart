@@ -55,7 +55,7 @@ class _AboutScreen extends BaseState<AboutScreen> {
 
     return WillPopScope(
         child: Scaffold(
-          backgroundColor: black,
+          backgroundColor: blackConst,
           resizeToAvoidBottomInset: false,
           appBar: AppBar(toolbarHeight: 0, elevation: 0,systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: white,statusBarIconBrightness: Brightness.dark,statusBarBrightness: Brightness.dark),),
           body: _isLoading
@@ -80,8 +80,8 @@ class _AboutScreen extends BaseState<AboutScreen> {
                                    begin: FractionalOffset.topCenter,
                                    end: FractionalOffset.bottomCenter,
                                    colors: [
-                                     black.withOpacity(0.1),
-                                     black.withOpacity(1),
+                                     blackConst.withOpacity(0.1),
+                                     blackConst.withOpacity(1),
                                    ],
                                    stops: const [
                                      0.0,
@@ -106,13 +106,13 @@ class _AboutScreen extends BaseState<AboutScreen> {
                                          child: Container(
                                            alignment: Alignment.center,
                                            margin: const EdgeInsets.only(right: 8),
-                                           child: Image.asset('assets/images/ic_back_button.png', height: 22, width: 22),
+                                           child: Image.asset('assets/images/ic_back_button.png', height: 22, width: 22,color: white),
                                          )),
                                      Container(
-                                       margin: const EdgeInsets.only( left: 12),
+                                       margin: const EdgeInsets.only(left: 12),
                                        alignment: Alignment.center,
-                                       child: const Text(
-                                         "About",
+                                       child: Text(
+                                         "About Naveen Jindal",
                                          textAlign: TextAlign.start,
                                          style: TextStyle(fontSize: 18, color: white, fontWeight: FontWeight.w600, fontFamily: gilroy),
                                        ),
@@ -128,7 +128,7 @@ class _AboutScreen extends BaseState<AboutScreen> {
                                Container(
                                  margin: const EdgeInsets.only(right: 22,left: 22),
                                  decoration: BoxDecoration(
-                                   color: lightblack,
+                                   color: grayNew,
                                    borderRadius: BorderRadius.circular(30),
                                  ),
                                  child: Column(
@@ -141,18 +141,11 @@ class _AboutScreen extends BaseState<AboutScreen> {
                                          mainAxisAlignment: MainAxisAlignment.start,
                                          crossAxisAlignment: CrossAxisAlignment.center,
                                          children: [
-                                            const Text(
+                                            Text(
                                             "Biography",
-                                             style: TextStyle(fontFamily: gilroy, fontSize: 16, color: white, fontWeight: FontWeight.w600),
+                                             style: TextStyle(fontFamily: gilroy, fontSize: 16, color: black, fontWeight: FontWeight.w600),
                                            ),
                                            const Spacer(),
-                                           Image.asset(
-                                             "assets/images/share.png",
-                                             height: 22,
-                                             width: 22,
-                                             color: darkGray,
-                                           ),
-                                           Container(width: 12,),
                                            GestureDetector(
                                              onTap: (){
                                                setState(() {
@@ -167,15 +160,23 @@ class _AboutScreen extends BaseState<AboutScreen> {
                                                width: 22,
                                                color: isLiked ? Colors.yellow : darkGray,
                                              ),
-                                           )
+                                           ),
+                                           Container(width: 12,),
+                                           Image.asset(
+                                             "assets/images/share.png",
+                                             height: 22,
+                                             width: 22,
+                                             color: darkGray,
+                                           ),
+
                                          ],
                                        ),
                                      ),
                                      Container(
                                        margin: const EdgeInsets.only(left: 14, right: 14,top: 14,bottom: 18),
-                                       child:  const Text(
+                                       child: Text(
                                          "A man of myriad talents, Naveen stands out for his  senes of commitment, responsibility, dedicatation, honesty, integirty and sheer passion in all his undertaking.",
-                                         style: TextStyle(fontWeight: FontWeight.w500, color: white, fontSize: 20, fontFamily: roboto),
+                                         style: TextStyle(fontWeight: FontWeight.w500, color: black, fontSize: 20, fontFamily: roboto),
                                        ),
                                      ),
                                      Container(
@@ -184,7 +185,7 @@ class _AboutScreen extends BaseState<AboutScreen> {
                                          listAbout[0].aboutData![0].topTxt.toString(),
                                          maxLines: 2,
                                          overflow: TextOverflow.ellipsis,
-                                         style: const TextStyle(overflow: TextOverflow.ellipsis,fontWeight: FontWeight.w400, color: white, fontSize: 14, fontFamily: roboto),
+                                         style: TextStyle(overflow: TextOverflow.ellipsis,fontWeight: FontWeight.w400, color: black, fontSize: 14, fontFamily: roboto),
                                        ),
                                      ),
                                      GestureDetector(
@@ -227,9 +228,9 @@ class _AboutScreen extends BaseState<AboutScreen> {
                                                          ),
                                                        ],
                                                      ),
-                                                     const Text('Biography',style: TextStyle(color: white,fontWeight: FontWeight.w600,fontSize: 20,fontFamily: roboto)),
+                                                     const Text('Biography',style: TextStyle(color: whiteConst,fontWeight: FontWeight.w600,fontSize: 20,fontFamily: roboto)),
                                                      Container(height: 8,),
-                                                     Text(bio,style: const TextStyle(color: white,fontWeight: FontWeight.w400,fontSize: 16,fontFamily: roboto)),
+                                                     Text(bio,style: const TextStyle(color: whiteConst,fontWeight: FontWeight.w400,fontSize: 18,fontFamily: roboto)),
                                                    ],
                                                  ),
                                                ),
@@ -244,7 +245,7 @@ class _AboutScreen extends BaseState<AboutScreen> {
                                            color: bgMain.withOpacity(0.8),
                                          ),
                                          padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
-                                         child: const Text("Read More",style: TextStyle(color: white,fontWeight: FontWeight.w400,fontSize: 14,fontFamily: roboto)),
+                                         child:  Text("Read More",style: TextStyle(color: whiteConst,fontWeight: FontWeight.w400,fontSize: 14,fontFamily: roboto)),
                                        ),
                                      )
                                    ],
@@ -288,12 +289,12 @@ class _AboutScreen extends BaseState<AboutScreen> {
                                      margin: const EdgeInsets.only(top: 12),
                                      decoration: BoxDecoration(
                                        borderRadius: BorderRadius.circular(18),
-                                       color: white,
+                                       color: grayNew,
                                      ),
                                      padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
                                      child: Text(listNew[index].title,
                                          textAlign: TextAlign.center,
-                                         style: const TextStyle(color: black,fontWeight: FontWeight.w600,fontSize: 14,fontFamily: roboto)),
+                                         style: TextStyle(color: black,fontWeight: FontWeight.w600,fontSize: 14,fontFamily: roboto)),
                                    )
                                  ],
                                ),
