@@ -189,7 +189,6 @@ class _NotificationListScreen extends BaseState<NotificationListScreen> {
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
                                                       Text(notificationList[index].title.toString(), style: TextStyle(fontWeight: FontWeight.w600, fontFamily: aileron, fontSize: 16, color: black)),
-                                                      Text(notificationList[index].contentType.toString(), style: TextStyle(fontWeight: FontWeight.w600, fontFamily: aileron, fontSize: 16, color: black)),
                                                       Gap(4),
                                                       Text(notificationList[index].saveTimestamp.toString(), style: TextStyle(
                                                           fontWeight: FontWeight.w400,
