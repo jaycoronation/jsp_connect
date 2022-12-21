@@ -65,7 +65,7 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
         });
       }
     });
-
+    sessionManager.setUnreadNotificationCount(0);
     if (isOnline) {
       getDashboradData();
     } else {
@@ -210,13 +210,35 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
           ),
           GestureDetector(
             onTap: () {
+              setState(() {
+                sessionManager.setUnreadNotificationCount(0);
+              });
               Navigator.push(context, MaterialPageRoute(builder: (context) => const NotificationListScreen()));
             },
-            child: Container(
-              width: 50,
-              height: 50,
-              alignment: Alignment.center,
-              child: Image.asset('assets/images/notification_white.png', height: 22, width: 22, color: black),
+            child: Stack(
+              children: [
+                Container(
+                  width: 50,
+                  height: 50,
+                  alignment: Alignment.center,
+                  margin: const EdgeInsets.only(top: 6, right: 10),
+                  child: Image.asset('assets/images/notification_white.png', color: black,height: 22, width: 22),
+                ),
+                sessionManager.getUnreadNotificationCount()! > 0 ? Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25.0),
+                    color: orangeNew,
+                  ),
+                  height: 22,
+                  width: 22,
+                  alignment: Alignment.topRight,
+                  margin: const EdgeInsets.only(left: 22,top: 10),
+                  child: Center(
+                    child: Text(checkValidString(sessionManager.getUnreadNotificationCount().toString()),
+                        style: const TextStyle(fontWeight: FontWeight.w400, color: whiteConst, fontSize: 11)),
+                  ),
+                ) : Container(),
+              ],
             ),
           ),
         ],

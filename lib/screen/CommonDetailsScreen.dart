@@ -1,15 +1,12 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:jspl_connect/screen/video_player_screen.dart';
-import 'package:jspl_connect/widget/video_block.dart';
 import 'package:like_button/like_button.dart';
 import 'package:pretty_http_logger/pretty_http_logger.dart';
 import 'package:share/share.dart';
-
 import '../constant/api_end_point.dart';
 import '../constant/colors.dart';
 import '../constant/global_context.dart';
@@ -20,7 +17,6 @@ import '../utils/base_class.dart';
 import '../utils/full_screen_image_new.dart';
 import '../widget/loading.dart';
 import '../widget/no_data.dart';
-import 'NewsDetailsScreen.dart';
 import 'VideoPlayerPage.dart';
 import 'tabcontrol/bottom_navigation_bar_screen.dart';
 

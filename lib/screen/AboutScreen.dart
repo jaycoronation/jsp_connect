@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jspl_connect/model/AboutJSPResponseModel.dart';
+import 'package:jspl_connect/utils/app_utils.dart';
 import 'package:like_button/like_button.dart';
 import 'package:pretty_http_logger/pretty_http_logger.dart';
 
@@ -35,11 +36,10 @@ class _AboutScreen extends BaseState<AboutScreen> {
       if (isOnline)
       {
         _aboutApi();
-
       }
       else
       {
-
+        noInterNet(context);
       }
 
     String sportsMan = "At the age of 6, Naveen Jindal began his riding lessons when his father gave him a horse as a birthday present. He emerged as a prolific rider and focused his attention on polo. The Jindal Steel & Power polo team became a reality and an integral part of the Indian polo circuit. Being an accomplished player and an irrepressible polo enthusiast, he became the driving force behind the multiple successes of the Jindal team.\n\nHis passion for the sport is evident through his sprawling 30-acre farm, where 40 select ponies and horses are trained under professional eye and kept in peak-condition. And his love for the sport is ever increasing, the challenges motivating him to greater heights. He is the moving spirit behind popularising polo as a sport in the country.\n\nAt the age of 15, Naveen developed another passion, which he not only mastered but has been acknowledged for in numerous occasions. It is shooting as a sport. His first rifle was gifted by his father and soon Naveen became extremely focused in improving his overall performance in skeet shooting. He is a National Record Holder in Skeet Shooting. This sport, which entails quick reflexes and decision making, soon became second nature to him.\n\nUnder careful guidance and training from his coaches, he became a name to be reckoned with in the national and international events in skeet shooting. He also initiated and successfully got the import policy changed for the duty-free import of arms and ammunition for shooting as a sport. Earlier only the top 10 shooters were allowed to import arms and ammunition which, through his untiring efforts was changed to the top 25 shooters. He has received intensive training under the guidance of the world-famous Juan Ghia Yarur of Peru.\n\nNaveen is also the President of Chhattisgarh Pradesh Rifle Association and under his guidance shooting ranges have been constructed at Raigarh to further popularise the sport. Coaching camps at Raigarh are under way for school children and for other members of the shooting club. He has plans to carry basic training needs to everyone interested in the sport including members of police and armed forces personnel.";
@@ -63,7 +63,7 @@ class _AboutScreen extends BaseState<AboutScreen> {
     precacheImage(AssetImage("assets/images/ic_about_jspl_1-min_lsvqzo.jpeg"), context);
     return WillPopScope(
           child: Scaffold(
-            backgroundColor: blackConst,
+            backgroundColor: white,
             resizeToAvoidBottomInset: false,
             extendBodyBehindAppBar: true,
             appBar: AppBar(
@@ -187,7 +187,7 @@ class _AboutScreen extends BaseState<AboutScreen> {
                                          "assets/images/share.png",
                                          height: 22,
                                          width: 22,
-                                         color: darkGray,
+                                         color: black,
                                        ),
                                      ],
                                    ),

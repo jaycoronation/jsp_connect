@@ -146,7 +146,7 @@ class _AboutJSPLScreen extends BaseState<AboutJSPLScreen> {
                                         "assets/images/share.png",
                                         height: 22,
                                         width: 22,
-                                        color: darkGray,
+                                        color: black,
                                       ),
                                     ],
                                   ),

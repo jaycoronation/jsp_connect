@@ -182,17 +182,29 @@ class _NotificationListScreen extends BaseState<NotificationListScreen> {
                                                 borderRadius: BorderRadius.circular(20),
                                                 border: Border.all(width: 0.6, color: black.withOpacity(0.4), style: BorderStyle.solid)),
                                             child: Padding(
-                                              padding: EdgeInsets.all(10),
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                              padding: const EdgeInsets.all(10),
+                                              child: Row(
                                                 children: [
-                                                  Text(notificationList[index].title.toString(), style: TextStyle(fontWeight: FontWeight.w600, fontFamily: aileron, fontSize: 16, color: black)),
-                                                  Text(notificationList[index].contentType.toString(), style: TextStyle(fontWeight: FontWeight.w600, fontFamily: aileron, fontSize: 16, color: black)),
-                                                  Gap(4),
-                                                  Text(notificationList[index].saveTimestamp.toString(), style: TextStyle(
-                                                      fontWeight: FontWeight.w400,
-                                                      fontFamily: aileron, fontSize: 14,
-                                                      foreground:Paint()..shader = linearGradientForDate)),
+                                                  Expanded(child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(notificationList[index].title.toString(), style: TextStyle(fontWeight: FontWeight.w600, fontFamily: aileron, fontSize: 16, color: black)),
+                                                      Text(notificationList[index].contentType.toString(), style: TextStyle(fontWeight: FontWeight.w600, fontFamily: aileron, fontSize: 16, color: black)),
+                                                      Gap(4),
+                                                      Text(notificationList[index].saveTimestamp.toString(), style: TextStyle(
+                                                          fontWeight: FontWeight.w400,
+                                                          fontFamily: aileron, fontSize: 14,
+                                                          foreground:Paint()..shader = linearGradientForDate)),
+                                                    ],
+                                                  )),
+                                                 /* SizedBox(
+                                                    width: 100,
+                                                    height: 100,
+                                                    child: ClipRRect(
+                                                      borderRadius: BorderRadius.circular(20.0),
+                                                      child: Image.network(notificationList[index].featuredImage.toString(), width: 100, height: 100, fit: BoxFit.cover),
+                                                    ),
+                                                  )*/
                                                 ],
                                               ),
                                             )),

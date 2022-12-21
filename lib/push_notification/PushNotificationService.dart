@@ -51,7 +51,7 @@ class PushNotificationService {
     // Navigator.pushNamed(context, '/chat',
     //     arguments: ChatArguments(initialMessage));
     // }
-// Also handle any interaction when the app is in the background via a
+    // Also handle any interaction when the app is in the background via a
     // Stream listener
     // This function is called when the app is in the background and user clicks on the notification
 
@@ -61,7 +61,7 @@ class PushNotificationService {
       var contentId = "";
       var notificationId = "";
       var image = "";
-      print('Data Payload:${message.data.toString()}');
+     // print('Data Payload:${message.data.toString()}');
       message.data.forEach((key, value) {
         if (key == "post_id") {
           postId = value;
@@ -84,57 +84,12 @@ class PushNotificationService {
         }
       });
 
-      print('<><> onMessageOpenedApp postId--->' + postId);
+      /*print('<><> onMessageOpenedApp postId--->' + postId);
       print('<><> onMessageOpenedApp contentType--->' + contentType);
       print('<><> onMessageOpenedApp contentId--->' + contentId);
-      print('<><> onMessageOpenedApp notificationId--->' + notificationId);
-
-      NavigationService.notif_type = contentId;
-      NavigationService.notif_post_id = postId;
-      tabNavigationReload();
-      if (postId != null) {
-        if (postId.toString().isNotEmpty) {
-          if (contentId == "1") {
-            NavigationService.navigatorKey.currentState!.push(
-              MaterialPageRoute(builder: (context) => SocialWallScreen()),
-            );
-          } else if (NavigationService.notif_type == "2" ||
-              NavigationService.notif_type == "3" ||
-              NavigationService.notif_type == "4" ||
-              NavigationService.notif_type == "6" ||
-              NavigationService.notif_type == "8" ||
-              NavigationService.notif_type == "10") {
-            NavigationService.navigatorKey.currentState!.push(
-              MaterialPageRoute(
-                  builder: (context) => CommonDetailsScreen(NavigationService.notif_post_id.toString(), (NavigationService.notif_type.toString()))),
-            );
-          } else if (contentId == "5") {
-            // for image
-            NavigationService.navigatorKey.currentState!.push(
-              MaterialPageRoute(builder: (context) => BottomNavigationBarScreen(1)),
-            );
-          } else if (contentId == "7") {
-            NavigationService.navigatorKey.currentState!.push(
-              MaterialPageRoute(builder: (context) => MagazineListScreen()),
-            );
-          } else {
-            NavigationService.navigatorKey.currentState!.push(
-              MaterialPageRoute(builder: (context) => BottomNavigationBarScreen(0)),
-            );
-          }
-        } else {
-          NavigationService.navigatorKey.currentState!.push(
-            MaterialPageRoute(builder: (context) => BottomNavigationBarScreen(0)),
-          );
-        }
-      } else {
-        NavigationService.navigatorKey.currentState!.push(
-          MaterialPageRoute(builder: (context) => BottomNavigationBarScreen(0)),
-        );
-      }
+      print('<><> onMessageOpenedApp notificationId--->' + notificationId);*/
+      openPage(postId,contentId);
     });
-
-
 
     await enableIOSNotifications();
     await registerNotificationListeners();
@@ -153,24 +108,30 @@ class PushNotificationService {
       requestAlertPermission: true,
     );
     var initSettings = InitializationSettings(android: androidSettings, iOS: iOSSettings);
-    flutterLocalNotificationsPlugin.initialize(initSettings, onSelectNotification: (message) async {
+    flutterLocalNotificationsPlugin.initialize(initSettings, onSelectNotification: (payload) {
       // This function handles the click in the notification when the app is in foreground
       // Get.toNamed(NOTIFICATIOINS_ROUTE);
-      print('onMessage Data Payload On TAP :' + message.toString() + "  <><>");
-      NavigationService.navigatorKey.currentState!.push(
-        MaterialPageRoute(builder: (context) => BottomNavigationBarScreen(0)),
-      );
+      try {
+        /*print('<><> TAP onMessage :' + payload.toString() + "  <><>");*/
+        var data = payload.toString().split("|");
+        var contentId = data[0];
+        var postId = data[1];
+        openPage(postId,contentId);
+      } catch (e) {
+        print(e);
+      }
     });
     // onMessage is called when the app is in foreground and a notification is received
     FirebaseMessaging.onMessage.listen((RemoteMessage? message) async {
-      print('onMessage Notification Payload:${message?.notification!.toMap().toString()}');
-      print('onMessage Data Payload:${message?.data.toString()}');
+    /*  print('onMessage Notification Payload:${message?.notification!.toMap().toString()}');
+      print('onMessage Data Payload:${message?.data.toString()}');*/
       RemoteNotification? notification = message?.notification;
       AndroidNotification? android = message?.notification?.android;
       AppleNotification? appleNotification = message?.notification?.apple;
       SessionManager sessionManager = SessionManager();
       var isLoggedIn = sessionManager.checkIsLoggedIn() ?? false;
-      if (notification != null && isLoggedIn && android != null) {
+      if (notification != null && isLoggedIn && android != null)
+      {
         var postId = "";
         var contentType = "";
         var contentId = "";
@@ -203,12 +164,12 @@ class PushNotificationService {
           }
         });
 
-        print('<><> onMessage postId--->' + postId);
+       /* print('<><> onMessage postId--->' + postId);
         print('<><> onMessage contentType--->' + contentType);
         print('<><> onMessage contentId--->' + contentId);
         print('<><> onMessage notificationId--->' + notificationId);
+        print("<><> onMessage Image URL : " + image.toString() + " <><>");*/
         const IOSNotificationDetails iOSPlatformChannelSpecifics = IOSNotificationDetails(presentSound: true, presentAlert: true);
-        print("<><> onMessage Image URL : " + image.toString() + " <><>");
         if (image != null)
         {
             if(image.toString().isNotEmpty)
@@ -235,6 +196,7 @@ class PushNotificationService {
                         importance: Importance.max,
                         priority: Priority.high),
                     iOS: iOSPlatformChannelSpecifics),
+                    payload: "$contentId|$postId",
               );
             }
             else
@@ -251,6 +213,7 @@ class PushNotificationService {
                         importance: Importance.max,
                         priority: Priority.high),
                     iOS: iOSPlatformChannelSpecifics),
+                     payload: "$contentId|$postId",
               );
             }
         }
@@ -260,6 +223,7 @@ class PushNotificationService {
               notification.hashCode,
               notification.title,
               "",
+              payload: "$contentId|$postId",
               NotificationDetails(
                   android: AndroidNotificationDetails('JSP Connect', 'JSP Connect',
                       channelDescription: channel.description,
@@ -298,4 +262,52 @@ class PushNotificationService {
         playSound: true,
         sound: RawResourceAndroidNotificationSound('notification_sound_tone.mp3'),
       );
+
+  void openPage(String postId,String contentId) {
+    if (postId != null)
+    {
+      NavigationService.notif_type = contentId;
+      NavigationService.notif_post_id = postId;
+      if (postId.toString().isNotEmpty) {
+        if (contentId == "1") {
+          NavigationService.navigatorKey.currentState!.push(
+            MaterialPageRoute(builder: (context) => SocialWallScreen()),
+          );
+        } else if (contentId == "2" ||
+            contentId == "3" ||
+            contentId == "4" ||
+            contentId == "6" ||
+            contentId == "8" ||
+            contentId == "10") {
+          NavigationService.navigatorKey.currentState!.push(
+            MaterialPageRoute(
+                builder: (context) => CommonDetailsScreen(postId,contentId)),
+          );
+        } else if (contentId == "5") {
+          // for image
+          NavigationService.navigatorKey.currentState!.push(
+            MaterialPageRoute(builder: (context) => BottomNavigationBarScreen(1)),
+          );
+        } else if (contentId == "7") {
+          NavigationService.navigatorKey.currentState!.push(
+            MaterialPageRoute(builder: (context) => MagazineListScreen()),
+          );
+        } else {
+          NavigationService.navigatorKey.currentState!.push(
+            MaterialPageRoute(builder: (context) => BottomNavigationBarScreen(0)),
+          );
+        }
+      } else {
+        NavigationService.navigatorKey.currentState!.push(
+          MaterialPageRoute(builder: (context) => BottomNavigationBarScreen(0)),
+        );
+      }
+    }
+    else
+    {
+      NavigationService.navigatorKey.currentState!.push(
+        MaterialPageRoute(builder: (context) => BottomNavigationBarScreen(0)),
+      );
+    }
+  }
 }

@@ -26,6 +26,7 @@ class SessionManager {
   final String accessToken = "accessToken";
   final String companyId = "companyId";
   final String isDarkMode = "isDarkMode";
+  final String notificationCount = "notification_count";
 
   bool? checkIsLoggedIn() {
     return SessionManagerMethods.getBool(isLoggedIn);
@@ -147,6 +148,15 @@ class SessionManager {
   Future<void> setAddress(String apiIsFirstTime)
   async {
     await SessionManagerMethods.setString(is_first_time, apiIsFirstTime);
+  }
+
+  Future<void> setUnreadNotificationCount(int count)
+  async {
+    await SessionManagerMethods.setInt(notificationCount, count);
+  }
+
+  int? getUnreadNotificationCount() {
+    return SessionManagerMethods.getInt(notificationCount);
   }
 
   String? getAddress() {
