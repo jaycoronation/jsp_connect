@@ -271,7 +271,7 @@ class _BlogDetailsScreen extends BaseState<BlogDetailsScreen> {
                 Container(
                   margin: const EdgeInsets.fromLTRB(16, 22, 16, 8),
                   child: HtmlWidget(postDetailsData.description.toString(),
-                      textStyle:  TextStyle(height: 1.5, color: black, fontSize: 16, fontWeight: FontWeight.w400, fontFamily: robotoFinal)),
+                      textStyle:  TextStyle(height: 1.5, color: black, fontSize: 16, fontWeight: FontWeight.w400, fontFamily: roboto)),
                 ),
                 Container(
                   margin: const EdgeInsets.fromLTRB(12, 6, 12, 0),

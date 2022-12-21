@@ -153,10 +153,26 @@ class _MyHomePageState extends State<MyHomePage> {
       statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
       statusBarBrightness: Brightness.dark,
     ));
-    return Container(
-      color: white,
-      height: MediaQuery.of(context).size.height,
-      child: Image.asset('assets/images/jspl.jpg',fit: BoxFit.cover),
+    return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 0,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          // Status bar color
+          statusBarColor: Colors.transparent,
+          // Status bar brightness (optional)
+          statusBarIconBrightness: Brightness.light,
+          // For Android (dark icons)
+          statusBarBrightness: Brightness.light, // For iOS (dark icons)
+        ),
+      ),
+      body: Container(
+        color: white,
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child: Image.asset('assets/images/jspl.jpg',fit: BoxFit.cover),
+      ),
     );
   }
 

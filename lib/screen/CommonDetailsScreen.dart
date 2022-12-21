@@ -409,7 +409,7 @@ class _CommonDetailsScreen extends BaseState<CommonDetailsScreen> {
                       ),
                       margin: const EdgeInsets.fromLTRB(16, 10, 16, 0),
                       padding: const EdgeInsets.all(8),
-                      child: HtmlWidget(postDetailsData.description.toString(),textStyle: TextStyle(height: 1.5, color: black, fontSize: 16, fontWeight: FontWeight.w500, fontFamily: robotoFinal),),
+                      child: HtmlWidget(postDetailsData.description.toString(),textStyle: TextStyle(height: 1.5, color: black, fontSize: 16, fontWeight: FontWeight.w500, fontFamily: roboto),),
                     ),
                     Visibility(
                       visible: isShowRelatedPost(),
