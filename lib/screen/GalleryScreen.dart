@@ -3,7 +3,6 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import '../constant/colors.dart';
 import '../model/DashBoardDataResponse.dart';
 import '../model/GalleryResponseModel.dart';
-import '../model/PostListResponse.dart';
 import '../utils/base_class.dart';
 import '../utils/full_screen_image_new.dart';
 import '../widget/loading.dart';
@@ -91,10 +90,10 @@ class _GalleryScreen extends BaseState<GalleryScreen> {
                     {
                       if (post.media![i].media != null)
                       {
-                          if(post.media![i].media!.isNotEmpty)
-                          {
-                            listImage.add(post.media![i].media.toString());
-                          }
+                        if(post.media![i].media!.isNotEmpty)
+                        {
+                          listImage.add(post.media![i].media.toString());
+                        }
                       }
                     }
 

@@ -87,15 +87,15 @@ class _VideoPlayerScreenState extends BaseState<VideoPlayerScreen> {
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(left: 18.0, top: 18, bottom: 18, right: 18),
-                    child: Image.asset('assets/images/ic_back_button.png', height: 16, width: 16, color: white),
+                    child: Image.asset('assets/images/ic_back_button.png', height: 16, width: 16, color: black),
                   )),
               title: Text(
                 (widget as VideoPlayerScreen).title,
-                style: TextStyle(fontWeight: FontWeight.w600, color: white, fontSize: 18),
+                style: TextStyle(fontWeight: FontWeight.w600, color: black, fontSize: 18),
               ),
             ),
             body: Container(
-              color: blackConst,
+              color: white,
               alignment: Alignment.center,
               child: player,
             ),

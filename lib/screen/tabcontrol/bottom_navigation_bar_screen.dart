@@ -68,7 +68,7 @@ class _BottomNavigationBarScreenState extends BaseState<BottomNavigationBarScree
   }
 
   void _onItemTapped(int value) {
-    HapticFeedback.vibrate();
+   // HapticFeedback.vibrate();
     FocusScopeNode currentFocus = FocusScope.of(context);
     if (!currentFocus.hasPrimaryFocus) {
       currentFocus.unfocus();

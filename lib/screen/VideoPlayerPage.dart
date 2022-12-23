@@ -51,12 +51,12 @@ class _VideoWidgetState extends State<VideoPlayerPage>
   Widget build(BuildContext context) {
     return WillPopScope(
         child: Scaffold(
-          backgroundColor: blackConst,
+          backgroundColor: white,
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
             toolbarHeight: 55,
             automaticallyImplyLeading: false,
-            backgroundColor: blackConst,
+            backgroundColor: white,
             elevation: 0,
             centerTitle: false,
             titleSpacing: 0,
@@ -67,14 +67,14 @@ class _VideoWidgetState extends State<VideoPlayerPage>
                 child: Container(
                   alignment: Alignment.center,
                   padding: const EdgeInsets.all(6),
-                  child: Image.asset('assets/images/ic_back_button.png', height: 22, width: 22, color: white),
+                  child: Image.asset('assets/images/ic_back_button.png', height: 22, width: 22, color: black),
                 )),
             title: Container(
               alignment: Alignment.centerLeft,
               child: Text(
                 widget.title,
                 maxLines: 1,
-                style: TextStyle(fontWeight: FontWeight.w600, color: white, fontSize: 18),
+                style: TextStyle(fontWeight: FontWeight.w600, color: black, fontSize: 18),
               ),
             )
           ),

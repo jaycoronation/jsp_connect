@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
@@ -12,13 +11,12 @@ import 'package:jspl_connect/screen/SocialWallScreen.dart';
 import 'package:jspl_connect/widget/social_block.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pretty_http_logger/pretty_http_logger.dart';
-import 'package:share/share.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
+import 'package:touch_ripple_effect/touch_ripple_effect.dart';
 import '../../constant/api_end_point.dart';
 import '../../constant/colors.dart';
-import '../../model/CommanResponse.dart';
 import '../../model/DashBoardDataResponse.dart';
+import '../../model/NotificationCountResponse.dart';
 import '../../utils/app_utils.dart';
 import '../../utils/base_class.dart';
 import '../../widget/loading.dart';
@@ -36,7 +34,7 @@ class TrendingScreen extends StatefulWidget {
   _TrendingScreen createState() => _TrendingScreen();
 }
 
-class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProviderStateMixin {
+class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   final controller = PageController(viewportFraction: 1, keepPage: true);
   final controllerNew = PageController(viewportFraction: 0.95, keepPage: false);
   final controllerSocial = PageController(viewportFraction: 1, keepPage: true);
@@ -65,20 +63,36 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
         });
       }
     });
-    sessionManager.setUnreadNotificationCount(0);
+
     if (isOnline) {
+      unReadNotificationCount();
       getDashboradData();
     } else {
       noInterNet(context);
     }
 
     isHomeReload = false;
+    WidgetsBinding.instance.addObserver(this);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if(state == AppLifecycleState.resumed){
+      unReadNotificationCount();
+    }
   }
 
   Future<bool> _refresh() {
     print("refresh......");
     if (isInternetConnected) {
+      unReadNotificationCount();
       getDashboradData(true);
     } else {
       noInterNet(context);
@@ -235,7 +249,11 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                   margin: const EdgeInsets.only(left: 22,top: 10),
                   child: Center(
                     child: Text(checkValidString(sessionManager.getUnreadNotificationCount().toString()),
-                        style: const TextStyle(fontWeight: FontWeight.w400, color: whiteConst, fontSize: 11)),
+                        maxLines: 1,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w400,
+                            color: whiteConst,
+                            fontSize: 11)),
                   ),
                 ) : Container(),
               ],
@@ -395,7 +413,6 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                 onRefresh: _refresh,
                 child: SafeArea(
                   child: SingleChildScrollView(
-                    physics: const AlwaysScrollableScrollPhysics(),
                     child: Stack(
                       children: [
                         Column(
@@ -705,15 +722,17 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                               child: ListView(
                                 scrollDirection: Axis.horizontal,
                                 children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutJSPLScreen()));
-                                    },
-                                    child: Column(
-                                      children: [
-                                        Container(
+                                  Column(
+                                    children: [
+                                      TouchRippleEffect(
+                                        borderRadius: BorderRadius.circular(18),
+                                        rippleColor: Colors.white60,
+                                        rippleDuration: const Duration(milliseconds: 100),
+                                        onTap: () {
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutJSPLScreen()));
+                                        },
+                                        child: Container(
                                           decoration: BoxDecoration(borderRadius: BorderRadius.circular(18)),
-                                          padding: const EdgeInsets.all(4),
                                           child: ClipRRect(
                                             borderRadius: BorderRadius.circular(18),
                                             child: Image.network(
@@ -723,28 +742,30 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                                 fit: BoxFit.cover),
                                           ),
                                         ),
-                                        Container(
-                                          height: 6,
-                                        ),
-                                        Text(
-                                          "About JSP",
-                                          style: TextStyle(color: black, fontFamily: roboto, fontSize: 14, fontWeight: FontWeight.w500),
-                                        )
-                                      ],
-                                    ),
+                                      ),
+                                      Container(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        "About JSP",
+                                        style: TextStyle(color: black, fontFamily: roboto, fontSize: 14, fontWeight: FontWeight.w500),
+                                      )
+                                    ],
                                   ),
                                   Container(
                                     width: 6,
                                   ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutScreen()));
-                                    },
-                                    child: Column(
-                                      children: [
-                                        Container(
+                                  Column(
+                                    children: [
+                                      TouchRippleEffect(
+                                        borderRadius: BorderRadius.circular(18),
+                                        rippleColor: Colors.white60,
+                                        rippleDuration: const Duration(milliseconds: 100),
+                                        onTap: () {
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutScreen()));
+                                        },
+                                        child:  Container(
                                           decoration: BoxDecoration(borderRadius: BorderRadius.circular(18)),
-                                          padding: const EdgeInsets.all(4),
                                           child: ClipRRect(
                                             borderRadius: BorderRadius.circular(18),
                                             child: Image.network(
@@ -754,15 +775,15 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                                 fit: BoxFit.cover),
                                           ),
                                         ),
-                                        Container(
-                                          height: 6,
-                                        ),
-                                        Text(
-                                          "Shri Naveen Jindal",
-                                          style: TextStyle(color: black, fontFamily: roboto, fontSize: 14, fontWeight: FontWeight.w500),
-                                        )
-                                      ],
-                                    ),
+                                      ),
+                                      Container(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        "Shri Naveen Jindal",
+                                        style: TextStyle(color: black, fontFamily: roboto, fontSize: 14, fontWeight: FontWeight.w500),
+                                      )
+                                    ],
                                   ),
                                   Container(
                                     width: 6,
@@ -775,7 +796,6 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                       children: [
                                         Container(
                                           decoration: BoxDecoration(borderRadius: BorderRadius.circular(18)),
-                                          padding: const EdgeInsets.all(4),
                                           child: ClipRRect(
                                             borderRadius: BorderRadius.circular(18),
                                             child: Image.network(
@@ -786,7 +806,7 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                           ),
                                         ),
                                         Container(
-                                          height: 6,
+                                          height: 10,
                                         ),
                                         Text(
                                           "Social",
@@ -798,33 +818,37 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                   Container(
                                     width: 6,
                                   ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => const MediaCoverageScreen()));
-                                    },
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(18)),
-                                          padding: const EdgeInsets.all(4),
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(18),
-                                            child: Image.network(
-                                                "https://res.cloudinary.com/dliifke2y/image/upload/v1669291963/Naveen%20Jindal/0X4A0431-min_ospsox.jpg",
-                                                width: 150,
-                                                height: 100,
-                                                fit: BoxFit.cover),
+                                  Column(
+                                    children: [
+                                      Container(
+                                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(18)),
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(18),
+                                          child: Material(
+                                            color : Colors.transparent,
+                                            child: InkWell(
+                                              onTap: () {
+                                                Navigator.push(context, MaterialPageRoute(builder: (context) => const MediaCoverageScreen()));
+                                              },
+                                              borderRadius: BorderRadius.circular(18),
+                                              splashColor: Colors.brown.withOpacity(0.5),
+                                              child: Image.network(
+                                                  "https://res.cloudinary.com/dliifke2y/image/upload/v1669291963/Naveen%20Jindal/0X4A0431-min_ospsox.jpg",
+                                                  width: 150,
+                                                  height: 100,
+                                                  fit: BoxFit.cover),
+                                            ),
                                           ),
                                         ),
-                                        Container(
-                                          height: 6,
-                                        ),
-                                        Text(
-                                          "Media Coverage",
-                                          style: TextStyle(color: black, fontFamily: roboto, fontSize: 14, fontWeight: FontWeight.w500),
-                                        )
-                                      ],
-                                    ),
+                                      ),
+                                      Container(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        "Media Coverage",
+                                        style: TextStyle(color: black, fontFamily: roboto, fontSize: 14, fontWeight: FontWeight.w500),
+                                      )
+                                    ],
                                   ),
                                   Container(
                                     width: 6,
@@ -837,7 +861,6 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                       children: [
                                         Container(
                                           decoration: BoxDecoration(borderRadius: BorderRadius.circular(18)),
-                                          padding: const EdgeInsets.all(4),
                                           child: ClipRRect(
                                             borderRadius: BorderRadius.circular(18),
                                             child: Image.network(
@@ -848,7 +871,7 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                           ),
                                         ),
                                         Container(
-                                          height: 6,
+                                          height: 10,
                                         ),
                                         Text(
                                           "Magazine",
@@ -868,7 +891,6 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                       children: [
                                         Container(
                                           decoration: BoxDecoration(borderRadius: BorderRadius.circular(18)),
-                                          padding: const EdgeInsets.all(4),
                                           child: ClipRRect(
                                             borderRadius: BorderRadius.circular(18),
                                             child: Image.network(
@@ -879,7 +901,7 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                           ),
                                         ),
                                         Container(
-                                          height: 6,
+                                          height: 10,
                                         ),
                                         Text(
                                           "Our Leadership",
@@ -1408,43 +1430,6 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
     );
   }
 
-  /*mainVideoClick(int index) async {
-    final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => VideoDetailsPage(listVideos[index].id.toString())));
-    print("result ===== $result");
-    setState(() {
-      var data = result.toString().split("|");
-      for (int i = 0; i < listVideos.length; i++) {
-        if(listVideos[i].id == data[0])
-        {
-          listVideos[i].setSharesCount = num.parse(data[1]);
-          break;
-        }
-      }
-    });
-  }*/
-
-  /*shareClick(int index) {
-    if(listVideos[index].media!.isNotEmpty)
-    {
-      if(listVideos[index].media![0].media.toString().isNotEmpty)
-      {
-        Share.share(listVideos[index].media![0].media.toString());
-        _sharePost(listVideos[index].id.toString());
-        setState(() {
-          listVideos[index].setSharesCount = listVideos[index].sharesCount! + 1;
-        });
-      }
-      else
-      {
-        showSnackBar("Video link not found.", context);
-      }
-    }
-    else
-    {
-      showSnackBar("Video link not found.", context);
-    }
-  }*/
-
   @override
   void castStatefulWidget() {
     widget as TrendingScreen;
@@ -1519,30 +1504,38 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
     });
   }
 
-  _sharePost(String postId) async {
+  unReadNotificationCount() async {
     HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
       HttpLogger(logLevel: LogLevel.BODY),
     ]);
 
-    final url = Uri.parse(API_URL + postMetaSave);
-    Map<String, String> jsonBody = {
-      'from_app': FROM_APP,
-      'post_id': postId.toString(),
-      'user_id': sessionManager.getUserId().toString(),
-      'type': "share",
-      'comments': ""
-    };
-
+    final url = Uri.parse(API_URL + unreadNotification);
+    Map<String, String> jsonBody = {'from_app': FROM_APP, 'user_id': sessionManager.getUserId().toString()};
     final response = await http.post(url, body: jsonBody, headers: {"Access-Token": sessionManager.getAccessToken().toString().trim()});
-
     final statusCode = response.statusCode;
     final body = response.body;
     Map<String, dynamic> apiResponse = jsonDecode(body);
-    var dataResponse = CommanResponse.fromJson(apiResponse);
-
-    if (statusCode == 200 && dataResponse.status == 1) {
+    var dataResponse = NotificationCountResponse.fromJson(apiResponse);
+    if (statusCode == 200 && dataResponse.success == 1)
+    {
+        if(dataResponse.totalUnread !=null)
+        {
+          if(dataResponse.totalUnread.toString().isNotEmpty)
+          {
+             sessionManager.setUnreadNotificationCount(int.parse(dataResponse.totalUnread.toString()));
+          }
+          else
+          {
+            sessionManager.setUnreadNotificationCount(0);
+          }
+        }
+        else
+        {
+          sessionManager.setUnreadNotificationCount(0);
+        }
     } else {
       showSnackBar(dataResponse.message, context);
+      sessionManager.setUnreadNotificationCount(0);
     }
   }
 

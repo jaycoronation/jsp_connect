@@ -5,10 +5,10 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:gap/gap.dart';
-import 'package:jspl_connect/screen/BlogDetailsScreen.dart';
 import 'package:jspl_connect/screen/CommonDetailsScreen.dart';
 import 'package:jspl_connect/screen/MagazineListScreen.dart';
 import 'package:pretty_http_logger/pretty_http_logger.dart';
+
 import '../constant/api_end_point.dart';
 import '../constant/colors.dart';
 import '../model/NotificationListResponse.dart';
@@ -16,11 +16,7 @@ import '../utils/app_utils.dart';
 import '../utils/base_class.dart';
 import '../widget/loading.dart';
 import '../widget/no_data.dart';
-import 'MediaCoverageDetailsScreen.dart';
-import 'NewsDetailsScreen.dart';
-import 'EventDetailsScreen.dart';
 import 'SocialWallScreen.dart';
-import 'VideoDetailsPage.dart';
 
 class NotificationListScreen extends StatefulWidget {
   const NotificationListScreen({Key? key}) : super(key: key);
@@ -196,14 +192,20 @@ class _NotificationListScreen extends BaseState<NotificationListScreen> {
                                                           foreground:Paint()..shader = linearGradientForDate)),
                                                     ],
                                                   )),
-                                                 /* SizedBox(
-                                                    width: 100,
-                                                    height: 100,
+                                                  SizedBox(
+                                                    width: 60,
+                                                    height: 60,
                                                     child: ClipRRect(
                                                       borderRadius: BorderRadius.circular(20.0),
-                                                      child: Image.network(notificationList[index].featuredImage.toString(), width: 100, height: 100, fit: BoxFit.cover),
+                                                      child : FadeInImage.assetNetwork(
+                                                        image: notificationList[index].image.toString(),
+                                                        fit: BoxFit.cover,
+                                                        width: 60,
+                                                        height: 60,
+                                                        placeholder: 'assets/images/bg_gray.jpeg',
+                                                      )
                                                     ),
-                                                  )*/
+                                                  )
                                                 ],
                                               ),
                                             )),

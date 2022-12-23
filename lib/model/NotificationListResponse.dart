@@ -79,7 +79,8 @@ class NotificationList {
       num? toUserId, 
       String? saveTimestamp, 
       num? postId, 
-      num? contentId, 
+      num? contentId,
+      String? image,
       String? contentType,}){
     _id = id;
     _title = title;
@@ -89,6 +90,7 @@ class NotificationList {
     _postId = postId;
     _contentId = contentId;
     _contentType = contentType;
+    _image = image;
 }
 
   NotificationList.fromJson(dynamic json) {
@@ -100,6 +102,7 @@ class NotificationList {
     _postId = json['post_id'];
     _contentId = json['content_id'];
     _contentType = json['content_type'];
+    _image= json['image'];
   }
   num? _id;
   String? _title;
@@ -109,6 +112,7 @@ class NotificationList {
   num? _postId;
   num? _contentId;
   String? _contentType;
+  String? _image;
 NotificationList copyWith({  num? id,
   String? title,
   String? message,
@@ -116,6 +120,7 @@ NotificationList copyWith({  num? id,
   String? saveTimestamp,
   num? postId,
   num? contentId,
+  String? image,
   String? contentType,
 }) => NotificationList(  id: id ?? _id,
   title: title ?? _title,
@@ -125,6 +130,7 @@ NotificationList copyWith({  num? id,
   postId: postId ?? _postId,
   contentId: contentId ?? _contentId,
   contentType: contentType ?? _contentType,
+  image: image ?? _image,
 );
   num? get id => _id;
   String? get title => _title;
@@ -134,6 +140,7 @@ NotificationList copyWith({  num? id,
   num? get postId => _postId;
   num? get contentId => _contentId;
   String? get contentType => _contentType;
+  String? get image => _image;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -145,6 +152,7 @@ NotificationList copyWith({  num? id,
     map['post_id'] = _postId;
     map['content_id'] = _contentId;
     map['content_type'] = _contentType;
+    map['image'] = _image;
     return map;
   }
 

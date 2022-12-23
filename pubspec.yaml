@@ -60,6 +60,7 @@ dependencies:
   cached_network_image:
   flutter_widget_from_html:
   path_provider:
+  touch_ripple_effect :
   flutter_absolute_path:
     git:
       url: https://github.com/canewsin/flutter_absolute_path.git

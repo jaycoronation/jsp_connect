@@ -1,10 +1,14 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:pretty_http_logger/pretty_http_logger.dart';
+import '../constant/api_end_point.dart';
 import '../constant/global_context.dart';
+import '../model/NotificationCountResponse.dart';
 import '../screen/CommonDetailsScreen.dart';
 import '../screen/MagazineListScreen.dart';
 import '../screen/SocialWallScreen.dart';
@@ -123,8 +127,8 @@ class PushNotificationService {
     });
     // onMessage is called when the app is in foreground and a notification is received
     FirebaseMessaging.onMessage.listen((RemoteMessage? message) async {
-    /*  print('onMessage Notification Payload:${message?.notification!.toMap().toString()}');
-      print('onMessage Data Payload:${message?.data.toString()}');*/
+      print('onMessage Notification Payload:${message?.notification!.toMap().toString()}');
+      print('onMessage Data Payload:${message?.data.toString()}');
       RemoteNotification? notification = message?.notification;
       AndroidNotification? android = message?.notification?.android;
       AppleNotification? appleNotification = message?.notification?.apple;
@@ -234,8 +238,48 @@ class PushNotificationService {
                   iOS: iOSPlatformChannelSpecifics),
             );
         }
+
+        unReadNotificationCount(sessionManager);
       }
+      else
+        {
+          print("<><> CHECK DATA : " + " <><>");
+        }
     });
+  }
+
+  unReadNotificationCount(SessionManager sessionManager) async {
+    HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+      HttpLogger(logLevel: LogLevel.BODY),
+    ]);
+
+    final url = Uri.parse(API_URL + unreadNotification);
+    Map<String, String> jsonBody = {'from_app': FROM_APP, 'user_id': sessionManager.getUserId().toString()};
+    final response = await http.post(url, body: jsonBody, headers: {"Access-Token": sessionManager.getAccessToken().toString().trim()});
+    final statusCode = response.statusCode;
+    final body = response.body;
+    Map<String, dynamic> apiResponse = jsonDecode(body);
+    var dataResponse = NotificationCountResponse.fromJson(apiResponse);
+    if (statusCode == 200 && dataResponse.success == 1)
+    {
+      if(dataResponse.totalUnread !=null)
+      {
+        if(dataResponse.totalUnread.toString().isNotEmpty)
+        {
+          sessionManager.setUnreadNotificationCount(int.parse(dataResponse.totalUnread.toString()));
+        }
+        else
+        {
+          sessionManager.setUnreadNotificationCount(0);
+        }
+      }
+      else
+      {
+        sessionManager.setUnreadNotificationCount(0);
+      }
+    } else {
+      sessionManager.setUnreadNotificationCount(0);
+    }
   }
 
   Future<String> _downloadAndSaveFile(String url, String fileName) async {

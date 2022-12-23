@@ -24,6 +24,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  PaintingBinding.instance.imageCache.maximumSizeBytes = 1000 << 40; // for increase the cache memory
   await SessionManagerMethods.init();
   await PushNotificationService().setupInteractedMessage();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
         title: 'JSP Connect',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primarySwatch: createMaterialColor(black),
+          primarySwatch: createMaterialColor(white),
         ),
         darkTheme: SessionManager().getDarkMode() ?? false ? ThemeData.dark() : ThemeData.light(),
         home: const MyHomePage(),
@@ -172,7 +173,8 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        child: Image.asset('assets/images/jspl.jpg',fit: BoxFit.cover,
+        child: Image.asset('assets/images/jspl.jpg',
+            fit: BoxFit.cover,
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width),
       ),
