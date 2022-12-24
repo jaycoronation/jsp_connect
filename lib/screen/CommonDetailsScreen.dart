@@ -417,9 +417,11 @@ class _CommonDetailsScreen extends BaseState<CommonDetailsScreen> {
                         ),
                       ),
                     ),
-                    Visibility(visible : isShowRelatedPost() ,child: postDetailsData.reatedPosts!.isNotEmpty
-                        ? relatedPostBlock()
-                        : Container()),
+                    Visibility(visible : isShowRelatedPost(),
+                        child: postDetailsData.reatedPosts!.isNotEmpty
+                          ? relatedPostBlock()
+                          : Container()
+                    ),
                     Container(height: 16,)
                   ],
             ),
@@ -1532,8 +1534,11 @@ class _CommonDetailsScreen extends BaseState<CommonDetailsScreen> {
     Map<String, dynamic> apiResponse = jsonDecode(body);
     var dataResponse = CommanResponse.fromJson(apiResponse);
 
-    if (statusCode == 200 && dataResponse.status == 1) {
-    } else {
+    if (statusCode == 200 && dataResponse.status == 1)
+    {
+    }
+    else
+    {
       showSnackBar(dataResponse.message, context);
     }
   }
@@ -1543,14 +1548,15 @@ class _CommonDetailsScreen extends BaseState<CommonDetailsScreen> {
     widget is CommonDetailsScreen;
   }
 
-  isShowRelatedPost() {
-    if (typeId == "2" || typeId == "3" || typeId == "4" || typeId == "6")
+  isShowRelatedPost()
     {
-      return true;
+      if (typeId == "2" || typeId == "3" || typeId == "4" || typeId == "6")
+        {
+          return true;
+        }
+      else
+        {
+          return false;
+        }
     }
-    else
-      {
-        return false;
-      }
-  }
 }

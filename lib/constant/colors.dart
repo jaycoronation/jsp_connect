@@ -53,6 +53,7 @@ const Color lightGray = Color(0xff9BA6B3);
 const Color facebookBlue = Color(0xff3264b5);
 const Color yellow= Color(0xfff8eb21);
 const Color Gray= Color(0xffe0e0e0);
+const Color lightGrayNew= Color(0xfff3f3f3);
 const Color darkGray= Color(0xff999999);
 const Color btnBlack= Color(0xff423e3d);
 const Color bgOverlay= Color(0xff757575);
@@ -69,6 +70,9 @@ const Color navigation= Color(0xffDDE2E6);
 const Color navigationGradient1= Color(0xffBAC2DE);
 const Color navigationGradient2= Color(0xffEECA9E);
 const Color navigationGradient3= Color(0xffEED386);
+
+const Color newScreenBg= Color(0xffefefef);
+const Color border= Color(0xff015cfd);
 
 // FOR DARK
 

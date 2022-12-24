@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jspl_connect/model/CommanResponse.dart';
 import 'package:jspl_connect/model/DashBoardDataResponse.dart';
+import 'package:jspl_connect/screen/tabcontrol/DashboardNewScreen.dart';
 import 'package:jspl_connect/utils/base_class.dart';
 import 'package:pretty_http_logger/pretty_http_logger.dart';
 import '../../constant/api_end_point.dart';
@@ -42,7 +43,8 @@ class _BottomNavigationBarScreenState extends BaseState<BottomNavigationBarScree
   void initState() {
     super.initState();
     getDeviceToken();
-    _page1 = TrendingScreen(key : myWidgetState);
+    //_page1 = TrendingScreen(key : myWidgetState);
+    _page1 = DashboardNewScreen();
     _page2 = const AlbumScreen();
     _page3 = const VideoScreen();
     _page4 = const BlogScreen();
