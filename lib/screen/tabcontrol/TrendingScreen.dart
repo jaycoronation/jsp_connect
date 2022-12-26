@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:gap/gap.dart';
 import 'package:http/http.dart';
 import 'package:jspl_connect/screen/AboutJSPLScreen.dart';
@@ -26,6 +27,7 @@ import '../CommonDetailsScreen.dart';
 import '../MagazineListScreen.dart';
 import '../NavigationDrawerScreen.dart';
 import '../NotificationListScreen.dart';
+import '../VideoScreen.dart';
 
 class TrendingScreen extends StatefulWidget {
   const TrendingScreen({Key? key}) : super(key: key);
@@ -46,11 +48,14 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
   bool isPromotion = false;
   bool isAnniversary = false;
   bool isAnimationVisible = false;
+  bool isDashboard1 = false;
   late AnimationController _animationController;
   List<Posts> listSocial = List<Posts>.empty(growable: true);
   List<Posts> listVideos = List<Posts>.empty(growable: true);
   List<Posts> listEvents = List<Posts>.empty(growable: true);
   List<Posts> listNews = List<Posts>.empty(growable: true);
+  List<Posts> listLeadership = List<Posts>.empty(growable: true);
+  List<Posts> listImages = List<Posts>.empty(growable: true);
 
   @override
   void initState() {
@@ -408,889 +413,1459 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
         },
         child: _isLoading
             ? const LoadingWidget()
-            : RefreshIndicator(
-                color: orange,
-                onRefresh: _refresh,
-                child: SafeArea(
-                  child: SingleChildScrollView(
-                    child: Stack(
-                      children: [
-                        Column(
-                          children: [
-                            AnimatedOpacity(
-                              duration: const Duration(seconds: 1),
-                              opacity: isNotification ? 1 : 0,
-                              child: Container(
-                                height: isNotification ? 220 : 0,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(18),
-                                    //color: lightGray.withOpacity(0.2),
-                                    gradient: const LinearGradient(
-                                      colors: [navigationGradient1, navigationGradient2, navigationGradient3],
-                                      stops: [0.0, 0.4, 1.0],
-                                      begin: Alignment.bottomLeft,
-                                      end: Alignment.topRight,
-                                    )),
-                                margin: const EdgeInsets.fromLTRB(12, 0, 12, 0),
-                                padding: const EdgeInsets.all(8),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        children: [
-                                          const Text(
-                                            "Dear Jay, ",
-                                            style: TextStyle(color: blackConst, fontWeight: FontWeight.w600, fontSize: 20, fontFamily: roboto),
-                                          ),
-                                          Container(
-                                            height: 12,
-                                          ),
-                                          const Text(
-                                            "Wishing you a very happy birthday & splendid year ahead.",
-                                            style: TextStyle(color: blackConst, fontWeight: FontWeight.w400, fontSize: 18, fontFamily: roboto),
-                                          ),
-                                          Container(
-                                            height: 22,
-                                          ),
-                                          const Text(
-                                            "Naveen Jindal",
-                                            style: TextStyle(color: blackConst, fontWeight: FontWeight.w600, fontSize: 20, fontFamily: roboto),
-                                          ),
-                                          const Text(
-                                            "Chairman",
-                                            style: TextStyle(color: blackConst, fontWeight: FontWeight.w400, fontSize: 18, fontFamily: roboto),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Column(
-                                      children: [
-                                        Expanded(
-                                          child: Container(),
-                                        ),
-                                        Image.asset(
-                                          "assets/images/ic_naveen_wish.png",
-                                          width: 120,
-                                          height: 150,
-                                          fit: BoxFit.fill,
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
+            : SingleChildScrollView(
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Container(width: 12),
+                      Expanded(
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: grayNew,
+                            onPrimary: grayNew,
+                            elevation: 0.0,
+                            padding: const EdgeInsets.only(left: 20, right: 20),
+                            side: BorderSide(color: isDashboard1 ? orangeNew.withOpacity(0.6) : black.withOpacity(0.6), width: 0.6, style: BorderStyle.solid),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
                             ),
-                            AnimatedOpacity(
-                              duration: const Duration(seconds: 1),
-                              opacity: isJoining ? 1 : 0,
-                              child: Container(
-                                height: isJoining ? 250 : 0,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(18),
-                                    //color: blueNew,
-                                    gradient: const LinearGradient(
-                                      colors: [navigationGradient1, navigationGradient2, navigationGradient3],
-                                      stops: [0.0, 0.4, 1.0],
-                                      begin: Alignment.bottomLeft,
-                                      end: Alignment.topRight,
-                                    )),
-                                margin: const EdgeInsets.fromLTRB(12, 0, 12, 0),
-                                padding: const EdgeInsets.all(8),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        children: [
-                                          const Text(
-                                            "Dear Jay, ",
-                                            style: TextStyle(color: blackConst, fontWeight: FontWeight.w600, fontSize: 20, fontFamily: roboto),
-                                          ),
-                                          Container(
-                                            height: 12,
-                                          ),
-                                          const Text(
-                                            "Welcome to the JSP Family I am sure you will add great value to the organization with your hardwork and commitment",
-                                            style: const TextStyle(color: blackConst, fontWeight: FontWeight.w400, fontSize: 18, fontFamily: roboto),
-                                          ),
-                                          Container(
-                                            height: 22,
-                                          ),
-                                          const Text(
-                                            "Naveen Jindal",
-                                            style: TextStyle(color: blackConst, fontWeight: FontWeight.w600, fontSize: 20, fontFamily: roboto),
-                                          ),
-                                          const Text(
-                                            "Chairman",
-                                            style: TextStyle(color: blackConst, fontWeight: FontWeight.w400, fontSize: 18, fontFamily: roboto),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Column(
-                                      children: [
-                                        Flexible(
-                                          flex: 1,
-                                          child: Container(),
-                                        ),
-                                        Image.asset(
-                                          "assets/images/ic_naveen_wish.png",
-                                          width: 120,
-                                          height: 150,
-                                          fit: BoxFit.fill,
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
+                            tapTargetSize: MaterialTapTargetSize.padded,
+                            animationDuration: const Duration(milliseconds: 100),
+                            enableFeedback: true,
+                            alignment: Alignment.center,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              isDashboard1 = true;
+                            });
+                          },
+                          child: Text(
+                            "Dashboard 1",
+                            style: TextStyle(fontSize: 14, fontWeight: isDashboard1 ? FontWeight.w600 : FontWeight.w500, color: isDashboard1 ? orangeNew.withOpacity(0.8) : black.withOpacity(0.8), fontFamily: gilroy),
+                          ),
+                        ),
+                      ),
+                      Container(width: 12),
+                      Expanded(
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: grayNew,
+                            onPrimary: grayNew,
+                            elevation: 0.0,
+                            padding: const EdgeInsets.only(left: 20, right: 20),
+                            side: BorderSide(color: !isDashboard1 ? orangeNew.withOpacity(0.6) : black.withOpacity(0.6), width: 0.6, style: BorderStyle.solid),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
                             ),
-                            AnimatedOpacity(
-                              duration: const Duration(seconds: 1),
-                              opacity: isPromotion ? 1 : 0,
-                              child: Container(
-                                height: isPromotion ? 280 : 0,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(18),
-                                    //color: yellowNew,
-                                    gradient: const LinearGradient(
-                                      colors: [navigationGradient1, navigationGradient2, navigationGradient3],
-                                      stops: [0.0, 0.4, 1.0],
-                                      begin: Alignment.bottomLeft,
-                                      end: Alignment.topRight,
-                                    )
-                                    /*gradient: LinearGradient(
-                                  // Where the linear gradient begins and ends
-                                  begin: Alignment.topRight,
-                                  end: Alignment.bottomLeft,
-                                  // Add one stop for each color. Stops should increase from 0 to 1
-                                  stops: const [0.1,  0.9],
-                                  colors: [
-                                    Colors.orange.shade600,
-                                    Colors.orange.shade100,
-                                  ],
-                                ),*/
-                                    ),
-                                margin: const EdgeInsets.fromLTRB(12, 0, 12, 0),
-                                padding: const EdgeInsets.all(8),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        children: [
-                                          const Text(
-                                            "Dear Jay, ",
-                                            style: TextStyle(color: blackConst, fontWeight: FontWeight.w600, fontSize: 20, fontFamily: roboto),
-                                          ),
-                                          Container(
-                                            height: 12,
-                                          ),
-                                          const Text(
-                                            "Congratulations on your promotion which is the result of your hardwork and commitment, I hope you scale new heights in the future.",
-                                            style: const TextStyle(color: blackConst, fontWeight: FontWeight.w400, fontSize: 18, fontFamily: roboto),
-                                          ),
-                                          Container(
-                                            height: 22,
-                                          ),
-                                          const Text(
-                                            "Naveen Jindal",
-                                            style: TextStyle(color: blackConst, fontWeight: FontWeight.w600, fontSize: 20, fontFamily: roboto),
-                                          ),
-                                          const Text(
-                                            "Chairman",
-                                            style: TextStyle(color: blackConst, fontWeight: FontWeight.w400, fontSize: 18, fontFamily: roboto),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Column(
-                                      children: [
-                                        Flexible(
-                                          flex: 1,
-                                          child: Container(),
-                                        ),
-                                        Image.asset(
-                                          "assets/images/ic_naveen_wish.png",
-                                          width: 120,
-                                          height: 150,
-                                          fit: BoxFit.fill,
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                            AnimatedOpacity(
-                              duration: const Duration(seconds: 1),
-                              opacity: isAnniversary ? 1 : 0,
-                              child: Container(
-                                height: isAnniversary ? 275 : 0,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(18),
-                                    //color: orangeNew,
-                                    gradient: const LinearGradient(
-                                      colors: [navigationGradient1, navigationGradient2, navigationGradient3],
-                                      stops: [0.0, 0.4, 1.0],
-                                      begin: Alignment.bottomLeft,
-                                      end: Alignment.topRight,
-                                    )
-                                    /*gradient: LinearGradient(
-                                  // Where the linear gradient begins and ends
-                                  begin: Alignment.bottomLeft,
-                                  end: Alignment.topRight,
-                                  // Add one stop for each color. Stops should increase from 0 to 1
-                                  stops: const [0.1,  0.9],
-                                  colors: [
-                                    Colors.lightGreen.shade600,
-                                    Colors.lightGreen.shade100,
-                                  ],
-                                ),*/
-                                    ),
-                                margin: const EdgeInsets.fromLTRB(12, 0, 12, 0),
-                                padding: const EdgeInsets.all(8),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        children: [
-                                          const Text(
-                                            "Dear Jay, ",
-                                            style: TextStyle(color: blackConst, fontWeight: FontWeight.w600, fontSize: 20, fontFamily: roboto),
-                                          ),
-                                          Container(
-                                            height: 12,
-                                          ),
-                                          const Text(
-                                            "Congratulations on completion of 2 successful year with JSP, I hope you will achieve new heights with same hardwork and commitment.",
-                                            style: TextStyle(color: blackConst, fontWeight: FontWeight.w400, fontSize: 18, fontFamily: roboto),
-                                          ),
-                                          Container(
-                                            height: 22,
-                                          ),
-                                          const Text(
-                                            "Naveen Jindal",
-                                            style: TextStyle(color: blackConst, fontWeight: FontWeight.w600, fontSize: 20, fontFamily: roboto),
-                                          ),
-                                          const Text(
-                                            "Chairman",
-                                            style: TextStyle(color: blackConst, fontWeight: FontWeight.w400, fontSize: 18, fontFamily: roboto),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Column(
-                                      children: [
-                                        Flexible(
-                                          flex: 1,
-                                          child: Container(),
-                                        ),
-                                        Image.asset(
-                                          "assets/images/ic_naveen_wish.png",
-                                          width: 120,
-                                          height: 150,
-                                          fit: BoxFit.fill,
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(top: 12,left: 12),
-                              height: 135,
-                              child: ListView(
-                                scrollDirection: Axis.horizontal,
+                            tapTargetSize: MaterialTapTargetSize.padded,
+                            animationDuration: const Duration(milliseconds: 100),
+                            enableFeedback: true,
+                            alignment: Alignment.center,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              isDashboard1 = false;
+                            });
+                          },
+                          child: Text(
+                            "Dashboard 2",
+                            style: TextStyle(fontSize: 14, fontWeight: !isDashboard1 ? FontWeight.w600 : FontWeight.w500, color: !isDashboard1 ? orangeNew.withOpacity(0.8) : black.withOpacity(0.8), fontFamily: gilroy),
+                          ),
+                        ),
+                      ),
+                      Container(width: 12),
+                    ],
+                  ),
+                  isDashboard1
+                      ?  RefreshIndicator(
+                      color: orange,
+                      onRefresh: _refresh,
+                      child: SafeArea(
+                        child: SingleChildScrollView(
+                          child: Stack(
+                            children: [
+                              Column(
                                 children: [
-                                  Column(
-                                    children: [
-                                      TouchRippleEffect(
-                                        borderRadius: BorderRadius.circular(18),
-                                        rippleColor: Colors.white60,
-                                        rippleDuration: const Duration(milliseconds: 100),
-                                        onTap: () {
-                                          Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutJSPLScreen()));
-                                        },
-                                        child: Container(
-                                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(18)),
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(18),
-                                            child: Image.network(
-                                                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgyscUUTE5JRATut4NyA_H02hk4_3OiShe6w&usqp=CAU",
-                                                width: 150,
-                                                height: 100,
-                                                fit: BoxFit.cover),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        height: 10,
-                                      ),
-                                      Text(
-                                        "About JSP",
-                                        style: TextStyle(color: black, fontFamily: roboto, fontSize: 14, fontWeight: FontWeight.w500),
-                                      )
-                                    ],
-                                  ),
-                                  Container(
-                                    width: 6,
-                                  ),
-                                  Column(
-                                    children: [
-                                      TouchRippleEffect(
-                                        borderRadius: BorderRadius.circular(18),
-                                        rippleColor: Colors.white60,
-                                        rippleDuration: const Duration(milliseconds: 100),
-                                        onTap: () {
-                                          Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutScreen()));
-                                        },
-                                        child:  Container(
-                                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(18)),
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(18),
-                                            child: Image.network(
-                                                "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Naveen_Jindal_at_the_India_Economic_Summit_2010_cropped.jpg/800px-Naveen_Jindal_at_the_India_Economic_Summit_2010_cropped.jpg",
-                                                width: 150,
-                                                height: 100,
-                                                fit: BoxFit.cover),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        height: 10,
-                                      ),
-                                      Text(
-                                        "Shri Naveen Jindal",
-                                        style: TextStyle(color: black, fontFamily: roboto, fontSize: 14, fontWeight: FontWeight.w500),
-                                      )
-                                    ],
-                                  ),
-                                  Container(
-                                    width: 6,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => const SocialWallScreen()));
-                                    },
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(18)),
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(18),
-                                            child: Image.network(
-                                                "https://d2lptvt2jijg6f.cloudfront.net/Flag%20Foundation/page/1598931776_lapal-pin.jpg",
-                                                width: 150,
-                                                height: 100,
-                                                fit: BoxFit.cover),
-                                          ),
-                                        ),
-                                        Container(
-                                          height: 10,
-                                        ),
-                                        Text(
-                                          "Social",
-                                          style: TextStyle(color: black, fontFamily: roboto, fontSize: 14, fontWeight: FontWeight.w500),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 6,
-                                  ),
-                                  Column(
-                                    children: [
-                                      Container(
-                                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(18)),
-                                        child: ClipRRect(
+
+                                  AnimatedOpacity(
+                                    duration: const Duration(seconds: 1),
+                                    opacity: isNotification ? 1 : 0,
+                                    child: Container(
+                                      height: isNotification ? 220 : 0,
+                                      decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(18),
-                                          child: Material(
-                                            color : Colors.transparent,
-                                            child: InkWell(
-                                              onTap: () {
-                                                Navigator.push(context, MaterialPageRoute(builder: (context) => const MediaCoverageScreen()));
-                                              },
+                                          //color: lightGray.withOpacity(0.2),
+                                          gradient: const LinearGradient(
+                                            colors: [navigationGradient1, navigationGradient2, navigationGradient3],
+                                            stops: [0.0, 0.4, 1.0],
+                                            begin: Alignment.bottomLeft,
+                                            end: Alignment.topRight,
+                                          )),
+                                      margin: const EdgeInsets.fromLTRB(12, 0, 12, 0),
+                                      padding: const EdgeInsets.all(8),
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              children: [
+                                                const Text(
+                                                  "Dear Jay, ",
+                                                  style: TextStyle(color: blackConst, fontWeight: FontWeight.w600, fontSize: 20, fontFamily: roboto),
+                                                ),
+                                                Container(
+                                                  height: 12,
+                                                ),
+                                                const Text(
+                                                  "Wishing you a very happy birthday & splendid year ahead.",
+                                                  style: TextStyle(color: blackConst, fontWeight: FontWeight.w400, fontSize: 18, fontFamily: roboto),
+                                                ),
+                                                Container(
+                                                  height: 22,
+                                                ),
+                                                const Text(
+                                                  "Naveen Jindal",
+                                                  style: TextStyle(color: blackConst, fontWeight: FontWeight.w600, fontSize: 20, fontFamily: roboto),
+                                                ),
+                                                const Text(
+                                                  "Chairman",
+                                                  style: TextStyle(color: blackConst, fontWeight: FontWeight.w400, fontSize: 18, fontFamily: roboto),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Column(
+                                            children: [
+                                              Expanded(
+                                                child: Container(),
+                                              ),
+                                              Image.asset(
+                                                "assets/images/ic_naveen_wish.png",
+                                                width: 120,
+                                                height: 150,
+                                                fit: BoxFit.fill,
+                                              )
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  AnimatedOpacity(
+                                    duration: const Duration(seconds: 1),
+                                    opacity: isJoining ? 1 : 0,
+                                    child: Container(
+                                      height: isJoining ? 250 : 0,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(18),
+                                          //color: blueNew,
+                                          gradient: const LinearGradient(
+                                            colors: [navigationGradient1, navigationGradient2, navigationGradient3],
+                                            stops: [0.0, 0.4, 1.0],
+                                            begin: Alignment.bottomLeft,
+                                            end: Alignment.topRight,
+                                          )),
+                                      margin: const EdgeInsets.fromLTRB(12, 0, 12, 0),
+                                      padding: const EdgeInsets.all(8),
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              children: [
+                                                const Text(
+                                                  "Dear Jay, ",
+                                                  style: TextStyle(color: blackConst, fontWeight: FontWeight.w600, fontSize: 20, fontFamily: roboto),
+                                                ),
+                                                Container(
+                                                  height: 12,
+                                                ),
+                                                const Text(
+                                                  "Welcome to the JSP Family I am sure you will add great value to the organization with your hardwork and commitment",
+                                                  style: const TextStyle(color: blackConst, fontWeight: FontWeight.w400, fontSize: 18, fontFamily: roboto),
+                                                ),
+                                                Container(
+                                                  height: 22,
+                                                ),
+                                                const Text(
+                                                  "Naveen Jindal",
+                                                  style: TextStyle(color: blackConst, fontWeight: FontWeight.w600, fontSize: 20, fontFamily: roboto),
+                                                ),
+                                                const Text(
+                                                  "Chairman",
+                                                  style: TextStyle(color: blackConst, fontWeight: FontWeight.w400, fontSize: 18, fontFamily: roboto),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Column(
+                                            children: [
+                                              Flexible(
+                                                flex: 1,
+                                                child: Container(),
+                                              ),
+                                              Image.asset(
+                                                "assets/images/ic_naveen_wish.png",
+                                                width: 120,
+                                                height: 150,
+                                                fit: BoxFit.fill,
+                                              )
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  AnimatedOpacity(
+                                    duration: const Duration(seconds: 1),
+                                    opacity: isPromotion ? 1 : 0,
+                                    child: Container(
+                                      height: isPromotion ? 280 : 0,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(18),
+                                          //color: yellowNew,
+                                          gradient: const LinearGradient(
+                                            colors: [navigationGradient1, navigationGradient2, navigationGradient3],
+                                            stops: [0.0, 0.4, 1.0],
+                                            begin: Alignment.bottomLeft,
+                                            end: Alignment.topRight,
+                                          )
+                                          /*gradient: LinearGradient(
+                                        // Where the linear gradient begins and ends
+                                        begin: Alignment.topRight,
+                                        end: Alignment.bottomLeft,
+                                        // Add one stop for each color. Stops should increase from 0 to 1
+                                        stops: const [0.1,  0.9],
+                                        colors: [
+                                          Colors.orange.shade600,
+                                          Colors.orange.shade100,
+                                        ],
+                                      ),*/
+                                          ),
+                                      margin: const EdgeInsets.fromLTRB(12, 0, 12, 0),
+                                      padding: const EdgeInsets.all(8),
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              children: [
+                                                const Text(
+                                                  "Dear Jay, ",
+                                                  style: TextStyle(color: blackConst, fontWeight: FontWeight.w600, fontSize: 20, fontFamily: roboto),
+                                                ),
+                                                Container(
+                                                  height: 12,
+                                                ),
+                                                const Text(
+                                                  "Congratulations on your promotion which is the result of your hardwork and commitment, I hope you scale new heights in the future.",
+                                                  style: const TextStyle(color: blackConst, fontWeight: FontWeight.w400, fontSize: 18, fontFamily: roboto),
+                                                ),
+                                                Container(
+                                                  height: 22,
+                                                ),
+                                                const Text(
+                                                  "Naveen Jindal",
+                                                  style: TextStyle(color: blackConst, fontWeight: FontWeight.w600, fontSize: 20, fontFamily: roboto),
+                                                ),
+                                                const Text(
+                                                  "Chairman",
+                                                  style: TextStyle(color: blackConst, fontWeight: FontWeight.w400, fontSize: 18, fontFamily: roboto),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Column(
+                                            children: [
+                                              Flexible(
+                                                flex: 1,
+                                                child: Container(),
+                                              ),
+                                              Image.asset(
+                                                "assets/images/ic_naveen_wish.png",
+                                                width: 120,
+                                                height: 150,
+                                                fit: BoxFit.fill,
+                                              )
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  AnimatedOpacity(
+                                    duration: const Duration(seconds: 1),
+                                    opacity: isAnniversary ? 1 : 0,
+                                    child: Container(
+                                      height: isAnniversary ? 275 : 0,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(18),
+                                          //color: orangeNew,
+                                          gradient: const LinearGradient(
+                                            colors: [navigationGradient1, navigationGradient2, navigationGradient3],
+                                            stops: [0.0, 0.4, 1.0],
+                                            begin: Alignment.bottomLeft,
+                                            end: Alignment.topRight,
+                                          )
+                                          /*gradient: LinearGradient(
+                                        // Where the linear gradient begins and ends
+                                        begin: Alignment.bottomLeft,
+                                        end: Alignment.topRight,
+                                        // Add one stop for each color. Stops should increase from 0 to 1
+                                        stops: const [0.1,  0.9],
+                                        colors: [
+                                          Colors.lightGreen.shade600,
+                                          Colors.lightGreen.shade100,
+                                        ],
+                                      ),*/
+                                          ),
+                                      margin: const EdgeInsets.fromLTRB(12, 0, 12, 0),
+                                      padding: const EdgeInsets.all(8),
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              children: [
+                                                const Text(
+                                                  "Dear Jay, ",
+                                                  style: TextStyle(color: blackConst, fontWeight: FontWeight.w600, fontSize: 20, fontFamily: roboto),
+                                                ),
+                                                Container(
+                                                  height: 12,
+                                                ),
+                                                const Text(
+                                                  "Congratulations on completion of 2 successful year with JSP, I hope you will achieve new heights with same hardwork and commitment.",
+                                                  style: TextStyle(color: blackConst, fontWeight: FontWeight.w400, fontSize: 18, fontFamily: roboto),
+                                                ),
+                                                Container(
+                                                  height: 22,
+                                                ),
+                                                const Text(
+                                                  "Naveen Jindal",
+                                                  style: TextStyle(color: blackConst, fontWeight: FontWeight.w600, fontSize: 20, fontFamily: roboto),
+                                                ),
+                                                const Text(
+                                                  "Chairman",
+                                                  style: TextStyle(color: blackConst, fontWeight: FontWeight.w400, fontSize: 18, fontFamily: roboto),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Column(
+                                            children: [
+                                              Flexible(
+                                                flex: 1,
+                                                child: Container(),
+                                              ),
+                                              Image.asset(
+                                                "assets/images/ic_naveen_wish.png",
+                                                width: 120,
+                                                height: 150,
+                                                fit: BoxFit.fill,
+                                              )
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.only(top: 12,left: 12),
+                                    height: 135,
+                                    child: ListView(
+                                      scrollDirection: Axis.horizontal,
+                                      children: [
+                                        Column(
+                                          children: [
+                                            TouchRippleEffect(
                                               borderRadius: BorderRadius.circular(18),
-                                              splashColor: Colors.brown.withOpacity(0.5),
-                                              child: Image.network(
-                                                  "https://res.cloudinary.com/dliifke2y/image/upload/v1669291963/Naveen%20Jindal/0X4A0431-min_ospsox.jpg",
-                                                  width: 150,
-                                                  height: 100,
-                                                  fit: BoxFit.cover),
+                                              rippleColor: Colors.white60,
+                                              rippleDuration: const Duration(milliseconds: 100),
+                                              onTap: () {
+                                                Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutJSPLScreen()));
+                                              },
+                                              child: Container(
+                                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(18)),
+                                                child: ClipRRect(
+                                                  borderRadius: BorderRadius.circular(18),
+                                                  child: Image.network(
+                                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgyscUUTE5JRATut4NyA_H02hk4_3OiShe6w&usqp=CAU",
+                                                      width: 150,
+                                                      height: 100,
+                                                      fit: BoxFit.cover),
+                                                ),
+                                              ),
                                             ),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        height: 10,
-                                      ),
-                                      Text(
-                                        "Media Coverage",
-                                        style: TextStyle(color: black, fontFamily: roboto, fontSize: 14, fontWeight: FontWeight.w500),
-                                      )
-                                    ],
-                                  ),
-                                  Container(
-                                    width: 6,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => const MagazineListScreen()));
-                                    },
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(18)),
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(18),
-                                            child: Image.network(
-                                                "https://res.cloudinary.com/dliifke2y/image/upload/v1669291685/Naveen%20Jindal/_SAM9274_jxcxzj.jpg",
-                                                width: 150,
-                                                height: 100,
-                                                fit: BoxFit.cover),
-                                          ),
-                                        ),
-                                        Container(
-                                          height: 10,
-                                        ),
-                                        Text(
-                                          "Magazine",
-                                          style: TextStyle(color: black, fontFamily: roboto, fontSize: 14, fontWeight: FontWeight.w500),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 6,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => const LeadershipScreen()));
-                                    },
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(18)),
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(18),
-                                            child: Image.network(
-                                                "https://indiacsr.in/wp-content/uploads/2022/11/Jindal-Steel-Power-Limited-board-members-1.jpg",
-                                                width: 150,
-                                                height: 100,
-                                                fit: BoxFit.cover),
-                                          ),
-                                        ),
-                                        Container(
-                                          height: 10,
-                                        ),
-                                        Text(
-                                          "Our Leadership",
-                                          style: TextStyle(color: black, fontFamily: roboto, fontSize: 14, fontWeight: FontWeight.w500),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Visibility(
-                                visible: listSocial.isNotEmpty,
-                                child: Container(
-                                  alignment: Alignment.centerLeft,
-                                  margin: const EdgeInsets.only(left: 14, right: 14, top: 12),
-                                  child: RichText(
-                                    text: TextSpan(
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                            text: 'Social Media',
-                                            style: TextStyle(fontFamily: roboto, fontSize: 22, color: black, fontWeight: FontWeight.w900)),
-                                      ],
-                                    ),
-                                  ),
-                                )),
-                            Visibility(
-                                visible: listSocial.isNotEmpty,
-                                child: SizedBox(
-                                    height: 450,
-                                    child: PageView.builder(
-                                      controller: controllerSocial,
-                                      itemCount: listSocial.length,
-                                      physics: const ScrollPhysics(),
-                                      itemBuilder: (context, index) {
-                                        return SocialBlock(
-                                          listSocial: listSocial,
-                                          index: index,
-                                          setState: setState,
-                                        );
-                                      },
-                                    ))),
-                            Visibility(
-                                visible: listSocial.length > 1,
-                                child: Wrap(
-                                  children: [
-                                    Container(
-                                      width: listSocial.length * 36,
-                                      alignment: Alignment.center,
-                                      margin: const EdgeInsets.only(bottom: 10, left: 14, right: 14, top: 12),
-                                      decoration: const BoxDecoration(color: text_dark),
-                                      child: SmoothPageIndicator(
-                                        controller: controllerSocial,
-                                        count: listSocial.length,
-                                        effect: const SlideEffect(
-                                            spacing: 2.0,
-                                            radius: 0.0,
-                                            dotWidth: 36.0,
-                                            dotHeight: 2.5,
-                                            paintStyle: PaintingStyle.stroke,
-                                            strokeWidth: 0,
-                                            dotColor: Colors.transparent,
-                                            activeDotColor: orangeNew),
-                                      ),
-                                    ),
-                                  ],
-                                )),
-                            Container(
-                              margin: const EdgeInsets.only(left: 12, right: 12, top: 22),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  RichText(
-                                    text: TextSpan(
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                            text: "Chairman's Message",
-                                            style: TextStyle(fontFamily: roboto, fontSize: 22, color: black, fontWeight: FontWeight.w900)),
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: newsBlock,
-                              ),
-                              margin: const EdgeInsets.fromLTRB(12, 12, 12, 0),
-                              padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Expanded(
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "A well-known Indian Industrialist and Philanthropist, Mr Naveen Jindal is the Chairman of Jindal steel & Power limited (JSPL), India’s leading infrastructure Conglomerate with interests in steel, mining and power sector.",
-                                          style: TextStyle(
-                                              height: 1.5,
-                                              color: black,
-                                              fontWeight: FontWeight.w600,
-                                              fontFamily: gilroy,
-                                              fontSize: 14,
-                                              overflow: TextOverflow.clip),
-                                        ),
-                                        Container(
-                                          height: 12,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 12,
-                                  ),
-                                  SizedBox(
-                                    width: 100,
-                                    height: 100,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(20.0),
-                                      child: Image.asset("assets/images/ic_naveen_video_2.png", width: 100, height: 100, fit: BoxFit.cover),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(left: 12, right: 12, top: 22),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  RichText(
-                                    text: TextSpan(
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                            text: "What's",
-                                            style: TextStyle(fontFamily: roboto, fontSize: 22, color: black, fontWeight: FontWeight.w900)),
-                                        TextSpan(
-                                            text: ' New',
-                                            style: TextStyle(fontFamily: roboto, fontSize: 22, color: black, fontWeight: FontWeight.w900)),
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            Container(
-                              height: 300,
-                              width: double.infinity,
-                              child: PageView.builder(
-                                controller: controllerNew,
-                                itemCount: 3,
-                                pageSnapping: true,
-                                physics: const ScrollPhysics(),
-                                itemBuilder: (context, index) {
-                                  return Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: newsBlock,
-                                    ),
-                                    margin: const EdgeInsets.fromLTRB(0, 12, 12, 0),
-                                    padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          height: 12,
-                                        ),
-                                        Text("1 hour ago",
-                                            style: TextStyle(color: black, fontFamily: roboto, fontWeight: FontWeight.w400, fontSize: 14)),
-                                        Container(
-                                          height: 12,
-                                        ),
-                                        Text(
-                                          "JSP is an industrial powerhouse with a dominant presence in steel, power, mining and infrastructure sectors.",
-                                          style: TextStyle(
-                                              height: 1.5,
-                                              color: black,
-                                              fontWeight: FontWeight.w600,
-                                              fontFamily: gilroy,
-                                              fontSize: 18,
-                                              overflow: TextOverflow.clip),
-                                          maxLines: 3,
-                                        ),
-                                        Container(
-                                          height: 12,
-                                        ),
-                                        Text(
-                                          "Led by Mr Naveen Jindal, the company’s enviable success story has been scripted essentially by its resolve to innovate, set new standards, enhance capabilities, enrich lives and to ensure that it stays true to its cherished value system.",
-                                          style: TextStyle(
-                                              height: 1.5,
-                                              color: black,
-                                              fontWeight: titleFont,
-                                              fontFamily: gilroy,
-                                              fontSize: 14,
-                                              overflow: TextOverflow.clip),
-                                          maxLines: 5,
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                            Wrap(
-                              children: [
-                                Container(
-                                  width: 3 * 36,
-                                  alignment: Alignment.center,
-                                  margin: const EdgeInsets.only(bottom: 10, left: 14, right: 14, top: 12),
-                                  decoration: const BoxDecoration(color: text_dark),
-                                  child: SmoothPageIndicator(
-                                    controller: controllerNew,
-                                    count: 3,
-                                    effect: const SlideEffect(
-                                        spacing: 2.0,
-                                        radius: 0.0,
-                                        dotWidth: 36.0,
-                                        dotHeight: 2.5,
-                                        paintStyle: PaintingStyle.stroke,
-                                        strokeWidth: 0,
-                                        dotColor: Colors.transparent,
-                                        activeDotColor: orangeNew),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Visibility(
-                                visible: listEvents.isNotEmpty,
-                                child: Container(
-                                  margin: const EdgeInsets.only(left: 12, right: 12, top: 22),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      /*Text("Events & Engagements",style: TextStyle(fontFamily: roboto,fontSize: 20,
-                                  foreground: Paint()..shader = linearGradient,fontWeight: FontWeight.w900),),*/
-                                      RichText(
-                                        text: TextSpan(
-                                          children: <TextSpan>[
-                                            TextSpan(
-                                                text: 'Events',
-                                                style: TextStyle(fontFamily: roboto, fontSize: 22, color: black, fontWeight: FontWeight.w900)),
-                                            TextSpan(
-                                              text: ' & ',
-                                              style: TextStyle(fontFamily: roboto, fontSize: 22, color: black, fontWeight: FontWeight.w900),
+                                            Container(
+                                              height: 10,
                                             ),
-                                            TextSpan(
-                                                text: 'Engagements',
-                                                style: TextStyle(fontFamily: roboto, fontSize: 22, color: black, fontWeight: FontWeight.w900)),
+                                            Text(
+                                              "About JSP",
+                                              style: TextStyle(color: black, fontFamily: roboto, fontSize: 14, fontWeight: FontWeight.w500),
+                                            )
                                           ],
                                         ),
-                                      )
-                                    ],
-                                  ),
-                                )),
-                            Visibility(
-                                visible: listEvents.isNotEmpty,
-                                child: SizedBox(
-                                  height: 400,
-                                  child: PageView.builder(
-                                    controller: controllerEvents,
-                                    itemCount: listEvents.length,
-                                    physics: const ScrollPhysics(),
-                                    itemBuilder: (context, index) {
-                                      return GestureDetector(
-                                        onTap: () async {
-                                          final result = await Navigator.push(context,
-                                              MaterialPageRoute(builder: (context) => CommonDetailsScreen(listEvents[index].id.toString(), "2")));
-                                          print(result);
-                                        },
-                                        child: Container(
-                                          height: 400,
-                                          margin: const EdgeInsets.only(left: 14, right: 14, top: 14),
-                                          decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(20),
-                                              border: Border.all(width: 0.6, color: black.withOpacity(0.4), style: BorderStyle.solid)),
-                                          child: Stack(
+                                        Container(
+                                          width: 6,
+                                        ),
+                                        Column(
+                                          children: [
+                                            TouchRippleEffect(
+                                              borderRadius: BorderRadius.circular(18),
+                                              rippleColor: Colors.white60,
+                                              rippleDuration: const Duration(milliseconds: 100),
+                                              onTap: () {
+                                                Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutScreen()));
+                                              },
+                                              child:  Container(
+                                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(18)),
+                                                child: ClipRRect(
+                                                  borderRadius: BorderRadius.circular(18),
+                                                  child: Image.network(
+                                                      "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Naveen_Jindal_at_the_India_Economic_Summit_2010_cropped.jpg/800px-Naveen_Jindal_at_the_India_Economic_Summit_2010_cropped.jpg",
+                                                      width: 150,
+                                                      height: 100,
+                                                      fit: BoxFit.cover),
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              height: 10,
+                                            ),
+                                            Text(
+                                              "Shri Naveen Jindal",
+                                              style: TextStyle(color: black, fontFamily: roboto, fontSize: 14, fontWeight: FontWeight.w500),
+                                            )
+                                          ],
+                                        ),
+                                        Container(
+                                          width: 6,
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(context, MaterialPageRoute(builder: (context) => const SocialWallScreen()));
+                                          },
+                                          child: Column(
                                             children: [
                                               Container(
-                                                decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(20),
-                                                ),
-                                                height: 450,
-                                                alignment: Alignment.center,
-                                                width: MediaQuery.of(context).size.width,
+                                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(18)),
                                                 child: ClipRRect(
-                                                  borderRadius: BorderRadius.circular(20), // Image border
+                                                  borderRadius: BorderRadius.circular(18),
                                                   child: Image.network(
-                                                    listEvents[index].featuredImage.toString(),
-                                                    fit: BoxFit.cover,
-                                                    height: 450,
-                                                    width: MediaQuery.of(context).size.width,
-                                                  ),
+                                                      "https://d2lptvt2jijg6f.cloudfront.net/Flag%20Foundation/page/1598931776_lapal-pin.jpg",
+                                                      width: 150,
+                                                      height: 100,
+                                                      fit: BoxFit.cover),
                                                 ),
                                               ),
                                               Container(
-                                                height: 400,
-                                                decoration: BoxDecoration(
-                                                    color: Colors.black,
-                                                    borderRadius: BorderRadius.circular(20),
-                                                    gradient: LinearGradient(
-                                                        begin: FractionalOffset.topCenter,
-                                                        end: FractionalOffset.bottomCenter,
-                                                        colors: [
-                                                          blackConst.withOpacity(0.2),
-                                                          blackConst,
-                                                        ],
-                                                        stops: const [
-                                                          0.7,
-                                                          1.0
-                                                        ])),
+                                                height: 10,
                                               ),
-                                              Positioned(
-                                                  top: 12,
-                                                  left: 12,
-                                                  child: Container(
-                                                      decoration:
-                                                          BoxDecoration(color: whiteConst.withOpacity(0.4), borderRadius: BorderRadius.circular(22)),
-                                                      padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
-                                                      child: Text(
-                                                        listEvents[index].location.toString(),
-                                                        style: const TextStyle(color: blackConst, fontSize: 14, fontWeight: FontWeight.w400),
-                                                      ))),
-                                              Positioned(
-                                                bottom: 12,
-                                                child: Column(
-                                                  children: [
-                                                    Container(
-                                                        width: MediaQuery.of(context).size.width - 50,
-                                                        margin: const EdgeInsets.only(bottom: 0, left: 14, right: 14),
-                                                        alignment: Alignment.centerLeft,
-                                                        child: Text(
-                                                          listEvents[index].title.toString(),
-                                                          overflow: TextOverflow.clip,
-                                                          style: const TextStyle(
-                                                              color: whiteConst,
-                                                              fontWeight: FontWeight.w500,
-                                                              fontFamily: gilroy,
-                                                              fontSize: 16,
-                                                              overflow: TextOverflow.ellipsis),
-                                                        )),
-                                                    Row(
-                                                      children: [
-                                                        Container(
-                                                            width: MediaQuery.of(context).size.width - 50,
-                                                            margin: const EdgeInsets.only(top: 12, bottom: 12, left: 14, right: 14),
-                                                            alignment: Alignment.centerLeft,
-                                                            child: Text(
-                                                              listEvents[index].saveTimestamp.toString(),
-                                                              style: const TextStyle(
-                                                                  color: lightGray,
-                                                                  fontWeight: FontWeight.w400,
-                                                                  fontFamily: gilroy,
-                                                                  fontSize: 14,
-                                                                  overflow: TextOverflow.clip),
-                                                              overflow: TextOverflow.clip,
-                                                            )),
-                                                      ],
-                                                    )
-                                                  ],
-                                                ),
+                                              Text(
+                                                "Social",
+                                                style: TextStyle(color: black, fontFamily: roboto, fontSize: 14, fontWeight: FontWeight.w500),
                                               )
                                             ],
                                           ),
                                         ),
+                                        Container(
+                                          width: 6,
+                                        ),
+                                        Column(
+                                          children: [
+                                            Container(
+                                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(18)),
+                                              child: ClipRRect(
+                                                borderRadius: BorderRadius.circular(18),
+                                                child: Material(
+                                                  color : Colors.transparent,
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      Navigator.push(context, MaterialPageRoute(builder: (context) => const MediaCoverageScreen()));
+                                                    },
+                                                    borderRadius: BorderRadius.circular(18),
+                                                    splashColor: Colors.brown.withOpacity(0.5),
+                                                    child: Image.network(
+                                                        "https://res.cloudinary.com/dliifke2y/image/upload/v1669291963/Naveen%20Jindal/0X4A0431-min_ospsox.jpg",
+                                                        width: 150,
+                                                        height: 100,
+                                                        fit: BoxFit.cover),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              height: 10,
+                                            ),
+                                            Text(
+                                              "Media Coverage",
+                                              style: TextStyle(color: black, fontFamily: roboto, fontSize: 14, fontWeight: FontWeight.w500),
+                                            )
+                                          ],
+                                        ),
+                                        Container(
+                                          width: 6,
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(context, MaterialPageRoute(builder: (context) => const MagazineListScreen()));
+                                          },
+                                          child: Column(
+                                            children: [
+                                              Container(
+                                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(18)),
+                                                child: ClipRRect(
+                                                  borderRadius: BorderRadius.circular(18),
+                                                  child: Image.network(
+                                                      "https://res.cloudinary.com/dliifke2y/image/upload/v1669291685/Naveen%20Jindal/_SAM9274_jxcxzj.jpg",
+                                                      width: 150,
+                                                      height: 100,
+                                                      fit: BoxFit.cover),
+                                                ),
+                                              ),
+                                              Container(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                "Magazine",
+                                                style: TextStyle(color: black, fontFamily: roboto, fontSize: 14, fontWeight: FontWeight.w500),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 6,
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(context, MaterialPageRoute(builder: (context) => const LeadershipScreen()));
+                                          },
+                                          child: Column(
+                                            children: [
+                                              Container(
+                                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(18)),
+                                                child: ClipRRect(
+                                                  borderRadius: BorderRadius.circular(18),
+                                                  child: Image.network(
+                                                      "https://indiacsr.in/wp-content/uploads/2022/11/Jindal-Steel-Power-Limited-board-members-1.jpg",
+                                                      width: 150,
+                                                      height: 100,
+                                                      fit: BoxFit.cover),
+                                                ),
+                                              ),
+                                              Container(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                "Our Leadership",
+                                                style: TextStyle(color: black, fontFamily: roboto, fontSize: 14, fontWeight: FontWeight.w500),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Visibility(
+                                      visible: listSocial.isNotEmpty,
+                                      child: Container(
+                                        alignment: Alignment.centerLeft,
+                                        margin: const EdgeInsets.only(left: 14, right: 14, top: 12),
+                                        child: RichText(
+                                          text: TextSpan(
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                  text: 'Social Media',
+                                                  style: TextStyle(fontFamily: roboto, fontSize: 22, color: black, fontWeight: FontWeight.w900)),
+                                            ],
+                                          ),
+                                        ),
+                                      )),
+                                  Visibility(
+                                      visible: listSocial.isNotEmpty,
+                                      child: SizedBox(
+                                          height: 450,
+                                          child: PageView.builder(
+                                            controller: controllerSocial,
+                                            itemCount: listSocial.length,
+                                            physics: const ScrollPhysics(),
+                                            itemBuilder: (context, index) {
+                                              return SocialBlock(
+                                                listSocial: listSocial,
+                                                index: index,
+                                                setState: setState,
+                                              );
+                                            },
+                                          ))),
+                                  Visibility(
+                                      visible: listSocial.length > 1,
+                                      child: Wrap(
+                                        children: [
+                                          Container(
+                                            width: listSocial.length * 36,
+                                            alignment: Alignment.center,
+                                            margin: const EdgeInsets.only(bottom: 10, left: 14, right: 14, top: 12),
+                                            decoration: const BoxDecoration(color: text_dark),
+                                            child: SmoothPageIndicator(
+                                              controller: controllerSocial,
+                                              count: listSocial.length,
+                                              effect: const SlideEffect(
+                                                  spacing: 2.0,
+                                                  radius: 0.0,
+                                                  dotWidth: 36.0,
+                                                  dotHeight: 2.5,
+                                                  paintStyle: PaintingStyle.stroke,
+                                                  strokeWidth: 0,
+                                                  dotColor: Colors.transparent,
+                                                  activeDotColor: orangeNew),
+                                            ),
+                                          ),
+                                        ],
+                                      )),
+                                  Container(
+                                    margin: const EdgeInsets.only(left: 12, right: 12, top: 22),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        RichText(
+                                          text: TextSpan(
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                  text: "Chairman's Message",
+                                                  style: TextStyle(fontFamily: roboto, fontSize: 22, color: black, fontWeight: FontWeight.w900)),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: newsBlock,
+                                    ),
+                                    margin: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+                                    padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Expanded(
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "A well-known Indian Industrialist and Philanthropist, Mr Naveen Jindal is the Chairman of Jindal steel & Power limited (JSPL), India’s leading infrastructure Conglomerate with interests in steel, mining and power sector.",
+                                                style: TextStyle(
+                                                    height: 1.5,
+                                                    color: black,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontFamily: gilroy,
+                                                    fontSize: 14,
+                                                    overflow: TextOverflow.clip),
+                                              ),
+                                              Container(
+                                                height: 12,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 12,
+                                        ),
+                                        SizedBox(
+                                          width: 100,
+                                          height: 100,
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(20.0),
+                                            child: Image.asset("assets/images/ic_naveen_video_2.png", width: 100, height: 100, fit: BoxFit.cover),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.only(left: 12, right: 12, top: 22),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        RichText(
+                                          text: TextSpan(
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                  text: "What's",
+                                                  style: TextStyle(fontFamily: roboto, fontSize: 22, color: black, fontWeight: FontWeight.w900)),
+                                              TextSpan(
+                                                  text: ' New',
+                                                  style: TextStyle(fontFamily: roboto, fontSize: 22, color: black, fontWeight: FontWeight.w900)),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 300,
+                                    width: double.infinity,
+                                    child: PageView.builder(
+                                      controller: controllerNew,
+                                      itemCount: 3,
+                                      pageSnapping: true,
+                                      physics: const ScrollPhysics(),
+                                      itemBuilder: (context, index) {
+                                        return Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(20),
+                                            color: newsBlock,
+                                          ),
+                                          margin: const EdgeInsets.fromLTRB(0, 12, 12, 0),
+                                          padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                height: 12,
+                                              ),
+                                              Text("1 hour ago",
+                                                  style: TextStyle(color: black, fontFamily: roboto, fontWeight: FontWeight.w400, fontSize: 14)),
+                                              Container(
+                                                height: 12,
+                                              ),
+                                              Text(
+                                                "JSP is an industrial powerhouse with a dominant presence in steel, power, mining and infrastructure sectors.",
+                                                style: TextStyle(
+                                                    height: 1.5,
+                                                    color: black,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontFamily: gilroy,
+                                                    fontSize: 18,
+                                                    overflow: TextOverflow.clip),
+                                                maxLines: 3,
+                                              ),
+                                              Container(
+                                                height: 12,
+                                              ),
+                                              Text(
+                                                "Led by Mr Naveen Jindal, the company’s enviable success story has been scripted essentially by its resolve to innovate, set new standards, enhance capabilities, enrich lives and to ensure that it stays true to its cherished value system.",
+                                                style: TextStyle(
+                                                    height: 1.5,
+                                                    color: black,
+                                                    fontWeight: titleFont,
+                                                    fontFamily: gilroy,
+                                                    fontSize: 14,
+                                                    overflow: TextOverflow.clip),
+                                                maxLines: 5,
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                  Wrap(
+                                    children: [
+                                      Container(
+                                        width: 3 * 36,
+                                        alignment: Alignment.center,
+                                        margin: const EdgeInsets.only(bottom: 10, left: 14, right: 14, top: 12),
+                                        decoration: const BoxDecoration(color: text_dark),
+                                        child: SmoothPageIndicator(
+                                          controller: controllerNew,
+                                          count: 3,
+                                          effect: const SlideEffect(
+                                              spacing: 2.0,
+                                              radius: 0.0,
+                                              dotWidth: 36.0,
+                                              dotHeight: 2.5,
+                                              paintStyle: PaintingStyle.stroke,
+                                              strokeWidth: 0,
+                                              dotColor: Colors.transparent,
+                                              activeDotColor: orangeNew),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Visibility(
+                                      visible: listEvents.isNotEmpty,
+                                      child: Container(
+                                        margin: const EdgeInsets.only(left: 12, right: 12, top: 22),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            /*Text("Events & Engagements",style: TextStyle(fontFamily: roboto,fontSize: 20,
+                                        foreground: Paint()..shader = linearGradient,fontWeight: FontWeight.w900),),*/
+                                            RichText(
+                                              text: TextSpan(
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                      text: 'Events',
+                                                      style: TextStyle(fontFamily: roboto, fontSize: 22, color: black, fontWeight: FontWeight.w900)),
+                                                  TextSpan(
+                                                    text: ' & ',
+                                                    style: TextStyle(fontFamily: roboto, fontSize: 22, color: black, fontWeight: FontWeight.w900),
+                                                  ),
+                                                  TextSpan(
+                                                      text: 'Engagements',
+                                                      style: TextStyle(fontFamily: roboto, fontSize: 22, color: black, fontWeight: FontWeight.w900)),
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      )),
+                                  Visibility(
+                                      visible: listEvents.isNotEmpty,
+                                      child: SizedBox(
+                                        height: 400,
+                                        child: PageView.builder(
+                                          controller: controllerEvents,
+                                          itemCount: listEvents.length,
+                                          physics: const ScrollPhysics(),
+                                          itemBuilder: (context, index) {
+                                            return GestureDetector(
+                                              onTap: () async {
+                                                final result = await Navigator.push(context,
+                                                    MaterialPageRoute(builder: (context) => CommonDetailsScreen(listEvents[index].id.toString(), "2")));
+                                                print(result);
+                                              },
+                                              child: Container(
+                                                height: 400,
+                                                margin: const EdgeInsets.only(left: 14, right: 14, top: 14),
+                                                decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(20),
+                                                    border: Border.all(width: 0.6, color: black.withOpacity(0.4), style: BorderStyle.solid)),
+                                                child: Stack(
+                                                  children: [
+                                                    Container(
+                                                      decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(20),
+                                                      ),
+                                                      height: 450,
+                                                      alignment: Alignment.center,
+                                                      width: MediaQuery.of(context).size.width,
+                                                      child: ClipRRect(
+                                                        borderRadius: BorderRadius.circular(20), // Image border
+                                                        child: Image.network(
+                                                          listEvents[index].featuredImage.toString(),
+                                                          fit: BoxFit.cover,
+                                                          height: 450,
+                                                          width: MediaQuery.of(context).size.width,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Container(
+                                                      height: 400,
+                                                      decoration: BoxDecoration(
+                                                          color: Colors.black,
+                                                          borderRadius: BorderRadius.circular(20),
+                                                          gradient: LinearGradient(
+                                                              begin: FractionalOffset.topCenter,
+                                                              end: FractionalOffset.bottomCenter,
+                                                              colors: [
+                                                                blackConst.withOpacity(0.2),
+                                                                blackConst,
+                                                              ],
+                                                              stops: const [
+                                                                0.7,
+                                                                1.0
+                                                              ])),
+                                                    ),
+                                                    Positioned(
+                                                        top: 12,
+                                                        left: 12,
+                                                        child: Container(
+                                                            decoration:
+                                                                BoxDecoration(color: whiteConst.withOpacity(0.4), borderRadius: BorderRadius.circular(22)),
+                                                            padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
+                                                            child: Text(
+                                                              listEvents[index].location.toString(),
+                                                              style: const TextStyle(color: blackConst, fontSize: 14, fontWeight: FontWeight.w400),
+                                                            ))),
+                                                    Positioned(
+                                                      bottom: 12,
+                                                      child: Column(
+                                                        children: [
+                                                          Container(
+                                                              width: MediaQuery.of(context).size.width - 50,
+                                                              margin: const EdgeInsets.only(bottom: 0, left: 14, right: 14),
+                                                              alignment: Alignment.centerLeft,
+                                                              child: Text(
+                                                                listEvents[index].title.toString(),
+                                                                overflow: TextOverflow.clip,
+                                                                style: const TextStyle(
+                                                                    color: whiteConst,
+                                                                    fontWeight: FontWeight.w500,
+                                                                    fontFamily: gilroy,
+                                                                    fontSize: 16,
+                                                                    overflow: TextOverflow.ellipsis),
+                                                              )),
+                                                          Row(
+                                                            children: [
+                                                              Container(
+                                                                  width: MediaQuery.of(context).size.width - 50,
+                                                                  margin: const EdgeInsets.only(top: 12, bottom: 12, left: 14, right: 14),
+                                                                  alignment: Alignment.centerLeft,
+                                                                  child: Text(
+                                                                    listEvents[index].saveTimestamp.toString(),
+                                                                    style: const TextStyle(
+                                                                        color: lightGray,
+                                                                        fontWeight: FontWeight.w400,
+                                                                        fontFamily: gilroy,
+                                                                        fontSize: 14,
+                                                                        overflow: TextOverflow.clip),
+                                                                    overflow: TextOverflow.clip,
+                                                                  )),
+                                                            ],
+                                                          )
+                                                        ],
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      )),
+                                  Visibility(
+                                      visible: listEvents.length > 1,
+                                      child: Wrap(
+                                        children: [
+                                          Container(
+                                            width: listEvents.length.toDouble() * 36,
+                                            alignment: Alignment.center,
+                                            margin: const EdgeInsets.only(bottom: 10, left: 14, right: 14, top: 12),
+                                            decoration: const BoxDecoration(color: text_light),
+                                            child: SmoothPageIndicator(
+                                              controller: controllerEvents,
+                                              count: listEvents.length,
+                                              effect: const SlideEffect(
+                                                  spacing: 2.0,
+                                                  radius: 0.0,
+                                                  dotWidth: 36.0,
+                                                  dotHeight: 2.5,
+                                                  paintStyle: PaintingStyle.stroke,
+                                                  strokeWidth: 0,
+                                                  dotColor: Colors.transparent,
+                                                  activeDotColor: orangeNew),
+                                            ),
+                                          ),
+                                        ],
+                                      )),
+                                  Visibility(
+                                      visible: listVideos.isNotEmpty,
+                                      child: Container(
+                                        margin: const EdgeInsets.only(left: 12, right: 12, top: 22),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            /* Text("Videos",style: TextStyle(fontFamily: roboto,fontSize: 20,
+                                        foreground: Paint()..shader = linearGradient,fontWeight: FontWeight.w900),),*/
+                                            RichText(
+                                              text: TextSpan(
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                      text: 'Videos',
+                                                      style: TextStyle(fontFamily: roboto, fontSize: 22, color: black, fontWeight: FontWeight.w900)),
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      )),
+                                  Visibility(
+                                      visible: listVideos.isNotEmpty,
+                                      child: Container(
+                                        margin: const EdgeInsets.only(top: 22),
+                                        height: 450,
+                                        child: PageView.builder(
+                                          controller: controller,
+                                          itemCount: listVideos.length,
+                                          physics: const ScrollPhysics(),
+                                          itemBuilder: (context, index) {
+                                            return VideoBlock(
+                                              listVideos: listVideos,
+                                              index: index,
+                                              setState: setState,
+                                            );
+                                          },
+                                        ),
+                                      )),
+                                  Visibility(
+                                      visible: listVideos.length > 1,
+                                      child: Wrap(
+                                        children: [
+                                          Container(
+                                            width: listVideos.length.toDouble() * 36,
+                                            alignment: Alignment.center,
+                                            margin: const EdgeInsets.only(bottom: 10, left: 14, right: 14, top: 24),
+                                            decoration: const BoxDecoration(color: text_light),
+                                            child: SmoothPageIndicator(
+                                              controller: controller,
+                                              count: listVideos.length,
+                                              effect: const SlideEffect(
+                                                  spacing: 2.0,
+                                                  radius: 0.0,
+                                                  dotWidth: 36.0,
+                                                  dotHeight: 2.5,
+                                                  paintStyle: PaintingStyle.stroke,
+                                                  strokeWidth: 0,
+                                                  dotColor: Colors.transparent,
+                                                  activeDotColor: orange),
+                                            ),
+                                          ),
+                                        ],
+                                      )),
+                                  Visibility(
+                                      visible: listNews.isNotEmpty,
+                                      child: Container(
+                                        margin: const EdgeInsets.only(left: 12, right: 12, top: 22),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            RichText(
+                                              text: TextSpan(
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                      text: 'News',
+                                                      style: TextStyle(fontFamily: roboto, fontSize: 22, color: black, fontWeight: FontWeight.w900)),
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      )),
+                                  Visibility(
+                                      visible: listNews.isNotEmpty,
+                                      child: ListView.builder(
+                                        scrollDirection: Axis.vertical,
+                                        physics: const NeverScrollableScrollPhysics(),
+                                        primary: false,
+                                        shrinkWrap: true,
+                                        itemCount: listNews.length,
+                                        itemBuilder: (context, index) {
+                                          return NewsBlock(
+                                            listNews: listNews,
+                                            index: index,
+                                            isFromNews: true,
+                                            setState: setState,
+                                          );
+                                        },
+                                      )),
+                                  const Gap(20)
+                                ],
+                              ),
+                              Visibility(
+                                visible: isAnimationVisible,
+                                child: Container(
+                                  alignment: Alignment.topCenter,
+                                  child: Lottie.asset(
+                                    'assets/images/confetti.json',
+                                    repeat: true,
+                                    height: 300,
+                                    width: MediaQuery.of(context).size.width,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    )
+                      : RefreshIndicator(
+                        color: orange,
+                        onRefresh: _refresh,
+                        child: SafeArea(
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.only(top: 12,left: 12),
+                                  height: 135,
+                                  child: ListView(
+                                    scrollDirection: Axis.horizontal,
+                                    children: [
+                                      Container(
+                                        width: 100,
+                                        child: Column(
+                                          children: [
+                                            TouchRippleEffect(
+                                              borderRadius: BorderRadius.circular(18),
+                                              rippleColor: Colors.white60,
+                                              rippleDuration: const Duration(milliseconds: 100),
+                                              onTap: () {
+                                                Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutJSPLScreen()));
+                                              },
+                                              child: Container(
+                                                width: 80,
+                                                height: 80,
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  border: Border.all(color: border,width: 2),
+                                                ),
+                                                child: const Padding(
+                                                  padding: EdgeInsets.all(4.0),
+                                                  child: CircleAvatar(
+                                                    radius: 48,
+                                                    backgroundImage: NetworkImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgyscUUTE5JRATut4NyA_H02hk4_3OiShe6w&usqp=CAU"),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              height: 10,
+                                            ),
+                                            Text(
+                                              "Jindal Steel & Power Ltd.",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(color: black, fontFamily: roboto, fontSize: 12, fontWeight: FontWeight.w500),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        width: 6,
+                                      ),
+                                      Container(
+                                        width: 100,
+                                        child: Column(
+                                          children: [
+                                            TouchRippleEffect(
+                                              borderRadius: BorderRadius.circular(18),
+                                              rippleColor: Colors.white60,
+                                              rippleDuration: const Duration(milliseconds: 100),
+                                              onTap: () {
+                                                Navigator.push(context, MaterialPageRoute(builder: (context) => const AboutScreen()));
+                                              },
+                                              child: Container(
+                                                width: 80,
+                                                height: 80,
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  border: Border.all(color: border,width: 2),
+                                                ),
+                                                child: const Padding(
+                                                  padding: EdgeInsets.all(4.0),
+                                                  child: CircleAvatar(
+                                                    radius: 48,
+                                                    backgroundImage: NetworkImage("https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Naveen_Jindal_at_the_India_Economic_Summit_2010_cropped.jpg/800px-Naveen_Jindal_at_the_India_Economic_Summit_2010_cropped.jpg"),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              height: 10,
+                                            ),
+                                            Text(
+                                              "Shri Naveen Jindal",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(color: black, fontFamily: roboto, fontSize: 12, fontWeight: FontWeight.w500),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        width: 6,
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => const SocialWallScreen()));
+                                        },
+                                        child: Container(
+                                          width: 100,
+                                          child: Column(
+                                            children: [
+                                              Container(
+                                                width: 80,
+                                                height: 80,
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  border: Border.all(color: border,width: 2),
+                                                ),
+                                                child: const Padding(
+                                                  padding: EdgeInsets.all(4.0),
+                                                  child: CircleAvatar(
+                                                    radius: 48,
+                                                    backgroundImage: NetworkImage("https://d2lptvt2jijg6f.cloudfront.net/Flag%20Foundation/page/1598931776_lapal-pin.jpg"),
+                                                  ),
+                                                ),
+                                              ),
+                                              Container(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                "Social",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(color: black, fontFamily: roboto, fontSize: 12, fontWeight: FontWeight.w500),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        width: 6,
+                                      ),
+                                      GestureDetector(
+                                        onTap: (){
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => const MediaCoverageScreen()));
+                                        },
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              width: 80,
+                                              height: 80,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                border: Border.all(color: border,width: 2),
+                                              ),
+                                              child: const Padding(
+                                                padding: EdgeInsets.all(4.0),
+                                                child: CircleAvatar(
+                                                  radius: 48,
+                                                  backgroundImage: NetworkImage("https://res.cloudinary.com/dliifke2y/image/upload/v1669291963/Naveen%20Jindal/0X4A0431-min_ospsox.jpg"),
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              height: 10,
+                                            ),
+                                            Text(
+                                              "Media Coverage",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(color: black, fontFamily: roboto, fontSize: 12, fontWeight: FontWeight.w500),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        width: 6,
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => const MagazineListScreen()));
+                                        },
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              width: 80,
+                                              height: 80,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                border: Border.all(color: border,width: 2),
+                                              ),
+                                              child: const Padding(
+                                                padding: EdgeInsets.all(4.0),
+                                                child: CircleAvatar(
+                                                  radius: 48,
+                                                  backgroundImage: NetworkImage("https://res.cloudinary.com/dliifke2y/image/upload/v1669291685/Naveen%20Jindal/_SAM9274_jxcxzj.jpg"),
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              height: 10,
+                                            ),
+                                            Text(
+                                              "Magazine",
+                                              style: TextStyle(color: black, fontFamily: roboto, fontSize: 12, fontWeight: FontWeight.w500),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        width: 6,
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => const LeadershipScreen()));
+                                        },
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              width: 80,
+                                              height: 80,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                border: Border.all(color: border,width: 2),
+                                              ),
+                                              child: const Padding(
+                                                padding: EdgeInsets.all(4.0),
+                                                child: CircleAvatar(
+                                                  radius: 48,
+                                                  backgroundImage: NetworkImage("https://indiacsr.in/wp-content/uploads/2022/11/Jindal-Steel-Power-Limited-board-members-1.jpg"),
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              height: 10,
+                                            ),
+                                            Text(
+                                              "Our Leadership",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(color: black, fontFamily: roboto, fontSize: 12, fontWeight: FontWeight.w500),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  margin: const EdgeInsets.only(left: 12, right: 12, top: 32),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Text("What's New",style: TextStyle(fontFamily: roboto, fontSize: 18, color: black, fontWeight: FontWeight.w600),),
+                                      Row(
+                                        children: [
+                                          const Text("See All",style: const TextStyle(color: text_dark,fontWeight: FontWeight.w500,fontSize: 14,fontFamily: roboto),),
+                                          Container(width: 4,),
+                                          const Icon(Icons.arrow_forward_ios,color: border,size: 12,)
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  margin: const EdgeInsets.only(top: 22),
+                                  height: 470,
+                                  width: double.infinity,
+                                  child: PageView.builder(
+                                    controller: controllerNew,
+                                    itemCount: 3,
+                                    pageSnapping: true,
+                                    physics: const ScrollPhysics(),
+                                    itemBuilder: (context, index) {
+                                      return Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(20),
+                                          color: white,
+                                        ),
+                                        margin: const EdgeInsets.fromLTRB(0, 0, 12, 0),
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Stack(
+                                              children: [
+                                                ClipRRect(
+                                                  borderRadius: const BorderRadius.only(topLeft: const Radius.circular(20),topRight: const Radius.circular(20)),
+                                                  child: Image.network("https://pbs.twimg.com/media/FkpkP2KUAAEvVcQ?format=jpg&name=medium",
+                                                    width: MediaQuery.of(context).size.width,
+                                                    height: 300,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                                Positioned(
+                                                    bottom: 12,
+                                                    right: 56,
+                                                    child: Container(
+                                                      width: 36,
+                                                      height: 36,
+                                                      decoration: BoxDecoration(
+                                                          color: whiteConst.withOpacity(0.6),
+                                                          shape: BoxShape.circle
+                                                      ),
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.all(8.0),
+                                                        child: Image.asset("assets/images/like.png",width: 24,height: 24),
+                                                      ),
+                                                    )
+                                                ),
+                                                Positioned(
+                                                    bottom: 12,
+                                                    right: 12,
+                                                    child: Container(
+                                                      width: 36,
+                                                      height: 36,
+                                                      decoration: BoxDecoration(
+                                                          color: whiteConst.withOpacity(0.6),
+                                                          shape: BoxShape.circle
+                                                      ),
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.all(8.0),
+                                                        child: Image.asset("assets/images/share.png",width: 24,height: 24),
+                                                      ),
+                                                    )
+                                                )
+                                              ],
+                                            ),
+                                            Container(
+                                              padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+                                              child: Text(
+                                                "Building A Nation of Our Dreams",
+                                                style: TextStyle(
+                                                    height: 1.5,
+                                                    color: black,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontFamily: gilroy,
+                                                    fontSize: 18,
+                                                    overflow: TextOverflow.clip),
+                                                maxLines: 3,
+                                              ),
+                                            ),
+                                            Container(
+                                              padding: const EdgeInsets.fromLTRB(12, 6, 12, 0),
+                                              child: const Text("1 hour ago",
+                                                  style: const TextStyle(color: text_dark, fontFamily: roboto, fontWeight: FontWeight.w600, fontSize: 12)),
+                                            ),
+                                            Container(
+                                              padding: const EdgeInsets.fromLTRB(12, 6, 12, 12),
+                                              child: Text(
+                                                "Led by Mr Naveen Jindal, the company’s enviable success story has been scripted essentially by its resolve to innovate, set new standards, enhance capabilities, enrich lives and to ensure that it stays true to its cherished value system.",
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(
+                                                    height: 1.5,
+                                                    color: black,
+                                                    fontWeight: FontWeight.w400,
+                                                    fontFamily: gilroy,
+                                                    fontSize: 14,
+                                                    overflow: TextOverflow.clip),
+                                                maxLines: 3,
+                                              ),
+                                            ),
+    
+                                          ],
+                                        ),
                                       );
                                     },
                                   ),
-                                )),
-                            Visibility(
-                                visible: listEvents.length > 1,
-                                child: Wrap(
+                                ),
+                                Wrap(
                                   children: [
                                     Container(
-                                      width: listEvents.length.toDouble() * 36,
+                                      width: 3 * 36,
                                       alignment: Alignment.center,
-                                      margin: const EdgeInsets.only(bottom: 10, left: 14, right: 14, top: 12),
-                                      decoration: const BoxDecoration(color: text_light),
+                                      margin: const EdgeInsets.only( left: 14, right: 14, top: 12),
+                                      decoration: const BoxDecoration(color: text_dark),
                                       child: SmoothPageIndicator(
-                                        controller: controllerEvents,
-                                        count: listEvents.length,
+                                        controller: controllerNew,
+                                        count: 3,
                                         effect: const SlideEffect(
                                             spacing: 2.0,
                                             radius: 0.0,
@@ -1303,129 +1878,809 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                       ),
                                     ),
                                   ],
-                                )),
-                            Visibility(
-                                visible: listVideos.isNotEmpty,
-                                child: Container(
-                                  margin: const EdgeInsets.only(left: 12, right: 12, top: 22),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                ),
+                                Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  margin: const EdgeInsets.only(top: 32),
+                                  padding: const EdgeInsets.fromLTRB(12, 22, 12, 0),
+                                  height: 240,
+                                  color: white,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      /* Text("Videos",style: TextStyle(fontFamily: roboto,fontSize: 20,
-                                  foreground: Paint()..shader = linearGradient,fontWeight: FontWeight.w900),),*/
+                                      Text("Quick Links",style: TextStyle(fontFamily: roboto, fontSize: 18, color: black, fontWeight: FontWeight.w600),),
+                                      Container(height: 12),
+                                      Wrap(
+                                        spacing: 6.0,
+                                        runSpacing: 6.0,
+                                        children: <Widget>[
+                                          _buildChip('Foundation'),
+                                          _buildChip('Magazine'),
+                                          _buildChip('Jindal Panther'),
+                                          _buildChip('News'),
+                                          _buildChip('Education'),
+                                          _buildChip('Media'),
+                                          _buildChip('Investment'),
+                                          _buildChip('Safety'),
+                                          _buildChip('Blogs'),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Visibility(
+                                    visible: listSocial.isNotEmpty,
+                                    child: Container(
+                                      alignment: Alignment.centerLeft,
+                                      margin: const EdgeInsets.only(left: 14, right: 14, top: 32),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          RichText(
+                                            text: TextSpan(
+                                              children: <TextSpan>[
+                                                TextSpan(
+                                                    text: 'Social Media',
+                                                    style: TextStyle(fontFamily: roboto, fontSize: 18, color: black, fontWeight: FontWeight.w600)),
+                                              ],
+                                            ),
+                                          ),
+                                          GestureDetector(
+                                            onTap: (){
+                                              Navigator.push(context, MaterialPageRoute(builder: (context) => const SocialWallScreen()));
+                                            },
+                                            child: Row(
+                                              children: [
+                                                const Text("See All",style: const TextStyle(color: text_dark,fontWeight: FontWeight.w500,fontSize: 14,fontFamily: roboto),),
+                                                Container(width: 4,),
+                                                const Icon(Icons.arrow_forward_ios,color: border,size: 12,)
+                                              ],
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    )),
+                                Visibility(
+                                    visible: listSocial.isNotEmpty,
+                                    child: Container(
+                                        margin: const EdgeInsets.only(left: 12,top: 22),
+                                        height: 455,
+                                        child: PageView.builder(
+                                          controller: controllerSocial,
+                                          itemCount: listSocial.length,
+                                          physics: const ScrollPhysics(),
+                                          itemBuilder: (context, index) {
+                                            return GestureDetector(
+                                              onTap: (){
+                                                Navigator.push(context, MaterialPageRoute(builder: (context) => CommonDetailsScreen(listSocial[index].id.toString(),listSocial[index].postTypeId.toString())));
+                                              },
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(20),
+                                                  color: white,
+                                                ),
+                                                margin: const EdgeInsets.fromLTRB(0, 0, 12, 0),
+                                                child: Column(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Stack(
+                                                      children: [
+                                                        ClipRRect(
+                                                          borderRadius: const BorderRadius.only(topLeft: const Radius.circular(20),topRight: const Radius.circular(20)),
+                                                          child: Image.network(listSocial[index].featuredImage.toString(),
+                                                            width: MediaQuery.of(context).size.width,
+                                                            height: 300,
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
+                                                        Positioned(
+                                                            bottom: 22,
+                                                            right: 12,
+                                                            child: Row(
+                                                              children: [
+                                                                Container(
+                                                                  width: 36,
+                                                                  height: 36,
+                                                                  margin: const EdgeInsets.only(right: 6),
+                                                                  decoration: BoxDecoration(
+                                                                      color: whiteConst.withOpacity(0.6),
+                                                                      shape: BoxShape.circle
+                                                                  ),
+                                                                  child: Padding(
+                                                                    padding: const EdgeInsets.all(8.0),
+                                                                    child: Image.asset("assets/images/saved.png",width: 24,height: 24),
+                                                                  ),
+                                                                ),
+                                                                Container(
+                                                                  width: 36,
+                                                                  height: 36,
+                                                                  margin: const EdgeInsets.only(right: 6),
+                                                                  decoration: BoxDecoration(
+                                                                      color: whiteConst.withOpacity(0.6),
+                                                                      shape: BoxShape.circle
+                                                                  ),
+                                                                  child: Padding(
+                                                                    padding: const EdgeInsets.all(8.0),
+                                                                    child: Image.asset("assets/images/like.png",width: 24,height: 24),
+                                                                  ),
+                                                                ),
+                                                                Container(
+                                                                  width: 36,
+                                                                  height: 36,
+                                                                  decoration: BoxDecoration(
+                                                                      color: whiteConst.withOpacity(0.6),
+                                                                      shape: BoxShape.circle
+                                                                  ),
+                                                                  child: Padding(
+                                                                    padding: const EdgeInsets.all(8.0),
+                                                                    child: Image.asset("assets/images/share.png",width: 24,height: 24),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            )
+                                                        )
+                                                      ],
+                                                    ),
+                                                    Container(
+                                                      padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+                                                      child: Row(
+                                                        children: [
+                                                          Image.asset("assets/images/ic_instagram_new.png",width: 28,height: 28),
+                                                          Container(width: 8,),
+                                                          Text(
+                                                            listSocial[index].title.toString(),
+                                                            style: TextStyle(
+                                                                height: 1.5,
+                                                                color: black,
+                                                                fontWeight: FontWeight.w600,
+                                                                fontFamily: gilroy,
+                                                                fontSize: 18,
+                                                                overflow: TextOverflow.clip),
+                                                            maxLines: 3,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Container(
+                                                      padding: const EdgeInsets.fromLTRB(12, 6, 12, 0),
+                                                      child: Text(listSocial[index].saveTimestamp.toString(),
+                                                          style: const TextStyle(color: text_dark, fontFamily: roboto, fontWeight: FontWeight.w600, fontSize: 12)),
+                                                    ),
+                                                    Container(
+                                                      padding: const EdgeInsets.fromLTRB(12, 6, 12, 12),
+                                                      child:  Text(
+                                                        "On #VijayDiwas we salute the brave hearts of the Indian Armed Forces who led India to victory in the 1971 war. #JaiHind #JindalStee",
+                                                        overflow: TextOverflow.ellipsis,
+                                                        style: TextStyle(
+                                                            height: 1.5,
+                                                            color: black,
+                                                            fontWeight: FontWeight.w400,
+                                                            fontFamily: gilroy,
+                                                            fontSize: 14,
+                                                            overflow: TextOverflow.clip),
+                                                        maxLines: 3,
+                                                      ),
+                                                    ),
+    
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ))),
+                                Visibility(
+                                    visible: listSocial.length > 1,
+                                    child: Wrap(
+                                      children: [
+                                        Container(
+                                          width: listSocial.length * 36,
+                                          alignment: Alignment.center,
+                                          margin: const EdgeInsets.only(bottom: 10, left: 14, right: 14, top: 12),
+                                          decoration: const BoxDecoration(color: text_dark),
+                                          child: SmoothPageIndicator(
+                                            controller: controllerSocial,
+                                            count: listSocial.length,
+                                            effect: const SlideEffect(
+                                                spacing: 2.0,
+                                                radius: 0.0,
+                                                dotWidth: 36.0,
+                                                dotHeight: 2.5,
+                                                paintStyle: PaintingStyle.stroke,
+                                                strokeWidth: 0,
+                                                dotColor: Colors.transparent,
+                                                activeDotColor: orangeNew),
+                                          ),
+                                        ),
+                                      ],
+                                    )),
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  margin: const EdgeInsets.only(left: 14, right: 14, top: 32),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
                                       RichText(
                                         text: TextSpan(
                                           children: <TextSpan>[
                                             TextSpan(
-                                                text: 'Videos',
-                                                style: TextStyle(fontFamily: roboto, fontSize: 22, color: black, fontWeight: FontWeight.w900)),
+                                                text: 'Leadership',
+                                                style: TextStyle(fontFamily: roboto, fontSize: 18, color: black, fontWeight: FontWeight.w600)),
+                                          ],
+                                        ),
+                                      ),
+                                      GestureDetector(
+                                        onTap: (){
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => const LeadershipScreen()));
+                                        },
+                                        child: Row(
+                                          children: [
+                                            const Text("See All",style: const TextStyle(color: text_dark,fontWeight: FontWeight.w500,fontSize: 14,fontFamily: roboto),),
+                                            Container(width: 4,),
+                                            const Icon(Icons.arrow_forward_ios,color: border,size: 12,)
                                           ],
                                         ),
                                       )
                                     ],
                                   ),
-                                )),
-                            Visibility(
-                                visible: listVideos.isNotEmpty,
-                                child: Container(
-                                  margin: const EdgeInsets.only(top: 22),
-                                  height: 450,
-                                  child: PageView.builder(
-                                    controller: controller,
-                                    itemCount: listVideos.length,
-                                    physics: const ScrollPhysics(),
+                                ),
+                                Container(
+                                  height: 220,
+                                  margin: const EdgeInsets.only(left: 12,top: 22),
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    physics: const BouncingScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: listLeadership.length,
                                     itemBuilder: (context, index) {
-                                      return VideoBlock(
-                                        listVideos: listVideos,
-                                        index: index,
-                                        setState: setState,
+                                      return AnimationConfiguration.staggeredList(
+                                        position: index,
+                                        duration: const Duration(milliseconds: 375),
+                                        child: SlideAnimation(
+                                          verticalOffset: 50.0,
+                                          child: FadeInAnimation(
+                                            child: GestureDetector(
+                                              onTap: () async {
+                                                Navigator.push(context, MaterialPageRoute(builder: (context) => CommonDetailsScreen(listLeadership[index].id.toString(),listLeadership[index].postTypeId.toString())));
+                                              },
+                                              child: Container(
+                                                  height: 220,
+                                                  width: 140,
+                                                  margin: const EdgeInsets.only(right: 12),
+                                                  decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(6)
+                                                  ),
+                                                  child: Stack(
+                                                    children: [
+                                                      ClipRRect(
+                                                        borderRadius: BorderRadius.circular(6),
+                                                        child: Image.network(
+                                                          listLeadership[index].featuredImage.toString(),
+                                                          width: 140,
+                                                          height: 220,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                      Positioned(
+                                                          bottom: 0,
+                                                          child: Container(
+                                                              width: 140,
+                                                              padding: const EdgeInsets.only(top: 4,bottom: 4),
+                                                              alignment: Alignment.center,
+                                                              color: black.withOpacity(0.7),
+                                                              child: Text(listLeadership[index].title.toString(),style: TextStyle(fontWeight: FontWeight.w500,fontSize: 14,fontFamily: roboto,color: white),overflow: TextOverflow.ellipsis,))
+                                                      )
+                                                    ],
+                                                  )
+                                              ),
+                                            ),
+                                          ),
+                                        ),
                                       );
                                     },
                                   ),
-                                )),
-                            Visibility(
-                                visible: listVideos.length > 1,
-                                child: Wrap(
-                                  children: [
-                                    Container(
-                                      width: listVideos.length.toDouble() * 36,
-                                      alignment: Alignment.center,
-                                      margin: const EdgeInsets.only(bottom: 10, left: 14, right: 14, top: 24),
-                                      decoration: const BoxDecoration(color: text_light),
-                                      child: SmoothPageIndicator(
-                                        controller: controller,
-                                        count: listVideos.length,
-                                        effect: const SlideEffect(
-                                            spacing: 2.0,
-                                            radius: 0.0,
-                                            dotWidth: 36.0,
-                                            dotHeight: 2.5,
-                                            paintStyle: PaintingStyle.stroke,
-                                            strokeWidth: 0,
-                                            dotColor: Colors.transparent,
-                                            activeDotColor: orange),
-                                      ),
-                                    ),
-                                  ],
-                                )),
-                            Visibility(
-                                visible: listNews.isNotEmpty,
-                                child: Container(
-                                  margin: const EdgeInsets.only(left: 12, right: 12, top: 22),
+                                ),
+    
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  margin: const EdgeInsets.only(left: 14, right: 14, top: 32),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      RichText(
+                                        text: TextSpan(
+                                          children: <TextSpan>[
+                                            TextSpan(
+                                                text: 'Event & Engagement',
+                                                style: TextStyle(fontFamily: roboto, fontSize: 18, color: black, fontWeight: FontWeight.w600)),
+                                          ],
+                                        ),
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text("See All",style: const TextStyle(color: text_dark,fontWeight: FontWeight.w500,fontSize: 14,fontFamily: roboto),),
+                                          Container(width: 4,),
+                                          const Icon(Icons.arrow_forward_ios,color: border,size: 12,)
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                    margin: const EdgeInsets.only(left: 12,top: 22),
+                                    height: 290,
+                                    child: PageView.builder(
+                                      itemCount: listEvents.length,
+                                      physics: const ScrollPhysics(),
+                                      itemBuilder: (context, index) {
+                                        return GestureDetector(
+                                          onTap: (){
+                                            Navigator.push(context, MaterialPageRoute(builder: (context) => CommonDetailsScreen(listEvents[index].id.toString(),listEvents[index].postTypeId.toString())));
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(20),
+                                              color: white,
+                                            ),
+                                            margin: const EdgeInsets.fromLTRB(0, 0, 12, 0),
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Stack(
+                                                  children: [
+                                                    ClipRRect(
+                                                      borderRadius: BorderRadius.circular(20),
+                                                      child: Image.network(listEvents[index].featuredImage.toString(),
+                                                        width: MediaQuery.of(context).size.width,
+                                                        height: 180,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
+                                                    Positioned(
+                                                        bottom: 22,
+                                                        right: 12,
+                                                        child: Row(
+                                                          children: [
+                                                            Container(
+                                                              width: 36,
+                                                              height: 36,
+                                                              margin: const EdgeInsets.only(right: 6),
+                                                              decoration: BoxDecoration(
+                                                                  color: whiteConst.withOpacity(0.6),
+                                                                  shape: BoxShape.circle
+                                                              ),
+                                                              child: Padding(
+                                                                padding: const EdgeInsets.all(8.0),
+                                                                child: Image.asset("assets/images/saved.png",width: 24,height: 24),
+                                                              ),
+                                                            ),
+                                                            Container(
+                                                              width: 36,
+                                                              height: 36,
+                                                              margin: const EdgeInsets.only(right: 6),
+                                                              decoration: BoxDecoration(
+                                                                  color: whiteConst.withOpacity(0.6),
+                                                                  shape: BoxShape.circle
+                                                              ),
+                                                              child: Padding(
+                                                                padding: const EdgeInsets.all(8.0),
+                                                                child: Image.asset("assets/images/like.png",width: 24,height: 24),
+                                                              ),
+                                                            ),
+                                                            Container(
+                                                              width: 36,
+                                                              height: 36,
+                                                              decoration: BoxDecoration(
+                                                                  color: whiteConst.withOpacity(0.6),
+                                                                  shape: BoxShape.circle
+                                                              ),
+                                                              child: Padding(
+                                                                padding: const EdgeInsets.all(8.0),
+                                                                child: Image.asset("assets/images/share.png",width: 24,height: 24),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        )
+                                                    )
+                                                  ],
+                                                ),
+    
+                                                Container(
+                                                  padding: const EdgeInsets.fromLTRB(12, 6, 12, 0),
+                                                  child:  Text(
+                                                    listEvents[index].title.toString(),
+                                                    style: TextStyle(
+                                                        height: 1.5,
+                                                        color: black,
+                                                        fontWeight: FontWeight.w600,
+                                                        fontFamily: gilroy,
+                                                        fontSize: 18,
+                                                        overflow: TextOverflow.ellipsis),
+                                                    maxLines: 2,
+                                                  ),
+                                                ),
+                                                Container(
+                                                  padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
+                                                  child: Row(
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                    children: [
+                                                      Text(
+                                                        listEvents[index].location.toString(),
+                                                        overflow: TextOverflow.ellipsis,
+                                                        style: TextStyle(fontSize: 12, fontFamily: roboto, fontWeight: FontWeight.w400, color: black,
+                                                          overflow: TextOverflow.ellipsis,),
+                                                      ),
+                                                      listEvents[index].location.toString().isNotEmpty ? Container(
+                                                        width: 12,
+                                                      ) : Container(),
+                                                      listEvents[index].location.toString().isNotEmpty ? Image.asset(
+                                                        "assets/images/ic_placeholder.png",
+                                                        width: 4,
+                                                        height: 4,
+                                                        color: black,
+                                                      ) : Container(),
+                                                      listEvents[index].location.toString().isNotEmpty ?  Container(
+                                                        width: 12,
+                                                      ) : Container(),
+                                                      Text(
+                                                        listEvents[index].saveTimestamp.toString(),
+                                                        overflow: TextOverflow.ellipsis,
+                                                        style: TextStyle(fontSize: 12, fontFamily: roboto, fontWeight: FontWeight.w400, color: black,
+                                                          overflow: TextOverflow.ellipsis,),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    )),
+    
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  margin: const EdgeInsets.only(left: 14, right: 14, top: 32),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      RichText(
+                                        text: TextSpan(
+                                          children: <TextSpan>[
+                                            TextSpan(
+                                                text: 'Photos',
+                                                style: TextStyle(fontFamily: roboto, fontSize: 18, color: black, fontWeight: FontWeight.w600)),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  height: 250,
+                                  width: MediaQuery.of(context).size.width,
+                                  margin: const EdgeInsets.only(left: 12,right: 12,top: 22),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: white,
+                                  ),
+                                  child: Stack(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                              child: ClipRRect(
+                                                borderRadius: const BorderRadius.only(topLeft: Radius.circular(20),bottomLeft: Radius.circular(20) ),
+                                                child: Image.network(
+                                                  "https://res.cloudinary.com/dliifke2y/image/upload/v1669291684/Naveen%20Jindal/_SAM9259_ydo7fg.jpg",
+                                                  fit: BoxFit.cover,
+                                                  height: 250,
+                                                ),
+                                              )
+                                          ),
+                                          Container(
+                                            width: 100,
+                                            margin: const EdgeInsets.only(left: 2),
+                                            child: Column(
+                                              children: [
+                                                Expanded(
+                                                  child: ClipRRect(
+                                                    borderRadius: const BorderRadius.only(topRight: Radius.circular(20)),
+                                                    child: Image.network("https://res.cloudinary.com/dliifke2y/image/upload/v1669291684/Naveen%20Jindal/_SAM9144_kqf6wa.jpg",
+                                                      fit: BoxFit.cover,),
+                                                  ),
+                                                ),
+                                                Container(height: 2,),
+                                                Expanded(
+                                                  child: ClipRRect(
+                                                    borderRadius: const BorderRadius.only(bottomRight: const Radius.circular(20)),
+                                                    child: Image.network("https://res.cloudinary.com/dliifke2y/image/upload/v1669291963/Naveen%20Jindal/0X4A0431-min_ospsox.jpg",
+                                                      fit: BoxFit.cover,),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      Positioned(
+                                          bottom: 12,
+                                          right: 12,
+                                          child: GestureDetector(
+                                            onTap: (){
+                                              final BottomNavigationBar bar = bottomWidgetKey.currentWidget as BottomNavigationBar;
+                                              bar.onTap!(1);
+                                            },
+                                            child: Container(
+                                              width: 100,
+                                              alignment: Alignment.center,
+                                              padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                                              decoration: BoxDecoration(
+                                                  color: border.withOpacity(0.8)
+                                              ),
+                                              child: Row(
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: const [
+                                                  Text("View All",style: TextStyle(color: whiteConst,fontFamily: roboto,fontSize: 14,fontWeight: FontWeight.w500),),
+                                                  Icon(Icons.arrow_forward_ios,color: whiteConst,size: 14,)
+                                                ],
+                                              ),
+                                            ),
+                                          )
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  margin: const EdgeInsets.only(left: 14, right: 14, top: 32),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       RichText(
                                         text: TextSpan(
                                           children: <TextSpan>[
                                             TextSpan(
                                                 text: 'News',
-                                                style: TextStyle(fontFamily: roboto, fontSize: 22, color: black, fontWeight: FontWeight.w900)),
+                                                style: TextStyle(fontFamily: roboto, fontSize: 18, color: black, fontWeight: FontWeight.w600)),
+                                          ],
+                                        ),
+                                      ),
+                                      GestureDetector(
+                                        onTap: (){
+                                        },
+                                        child: Row(
+                                          children: [
+                                            const Text("See All",style: const TextStyle(color: text_dark,fontWeight: FontWeight.w500,fontSize: 14,fontFamily: roboto),),
+                                            Container(width: 4,),
+                                            const Icon(Icons.arrow_forward_ios,color: border,size: 12,)
                                           ],
                                         ),
                                       )
                                     ],
                                   ),
-                                )),
-                            Visibility(
-                                visible: listNews.isNotEmpty,
-                                child: ListView.builder(
-                                  scrollDirection: Axis.vertical,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  primary: false,
-                                  shrinkWrap: true,
-                                  itemCount: listNews.length,
-                                  itemBuilder: (context, index) {
-                                    return NewsBlock(
-                                      listNews: listNews,
-                                      index: index,
-                                      isFromNews: true,
-                                      setState: setState,
-                                    );
-                                  },
-                                )),
-                            const Gap(20)
-                          ],
-                        ),
-                        Visibility(
-                          visible: isAnimationVisible,
-                          child: Container(
-                            alignment: Alignment.topCenter,
-                            child: Lottie.asset(
-                              'assets/images/confetti.json',
-                              repeat: true,
-                              height: 300,
-                              width: MediaQuery.of(context).size.width,
+                                ),
+                                Container(
+                                    margin: const EdgeInsets.only(left: 12,top: 22),
+                                    height: 320,
+                                    child: PageView.builder(
+                                      itemCount: listNews.length,
+                                      physics: const ScrollPhysics(),
+                                      itemBuilder: (context, index) {
+                                        return GestureDetector(
+                                          onTap: (){
+                                            Navigator.push(context, MaterialPageRoute(builder: (context) => CommonDetailsScreen(listNews[index].id.toString(),listNews[index].postTypeId.toString())));
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(20),
+                                              color: white,
+                                            ),
+                                            margin: const EdgeInsets.fromLTRB(0, 0, 12, 0),
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Stack(
+                                                  children: [
+                                                    ClipRRect(
+                                                      borderRadius: BorderRadius.circular(20),
+                                                      child: Image.network(listNews[index].featuredImage.toString(),
+                                                        width: MediaQuery.of(context).size.width,
+                                                        height: 180,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
+                                                    Positioned(
+                                                        bottom: 22,
+                                                        right: 12,
+                                                        child: Row(
+                                                          children: [
+                                                            Container(
+                                                              width: 36,
+                                                              height: 36,
+                                                              margin: const EdgeInsets.only(right: 6),
+                                                              decoration: BoxDecoration(
+                                                                  color: whiteConst.withOpacity(0.6),
+                                                                  shape: BoxShape.circle
+                                                              ),
+                                                              child: Padding(
+                                                                padding: const EdgeInsets.all(8.0),
+                                                                child: Image.asset("assets/images/saved.png",width: 24,height: 24),
+                                                              ),
+                                                            ),
+                                                            Container(
+                                                              width: 36,
+                                                              height: 36,
+                                                              margin: const EdgeInsets.only(right: 6),
+                                                              decoration: BoxDecoration(
+                                                                  color: whiteConst.withOpacity(0.6),
+                                                                  shape: BoxShape.circle
+                                                              ),
+                                                              child: Padding(
+                                                                padding: const EdgeInsets.all(8.0),
+                                                                child: Image.asset("assets/images/like.png",width: 24,height: 24),
+                                                              ),
+                                                            ),
+                                                            Container(
+                                                              width: 36,
+                                                              height: 36,
+                                                              decoration: BoxDecoration(
+                                                                  color: whiteConst.withOpacity(0.6),
+                                                                  shape: BoxShape.circle
+                                                              ),
+                                                              child: Padding(
+                                                                padding: const EdgeInsets.all(8.0),
+                                                                child: Image.asset("assets/images/share.png",width: 24,height: 24),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        )
+                                                    )
+                                                  ],
+                                                ),
+                                                Container(
+                                                  margin: const EdgeInsets.only(top: 22,left: 12,),
+                                                  child: Image.asset("assets/images/ic_et_logo.png",width: 140,color: black),
+                                                ),
+                                                Container(
+                                                  padding: const EdgeInsets.fromLTRB(12, 6, 12, 0),
+                                                  child:  Text(
+                                                    listNews[index].title.toString(),
+                                                    style: TextStyle(
+                                                        height: 1.5,
+                                                        color: black,
+                                                        fontWeight: FontWeight.w600,
+                                                        fontFamily: gilroy,
+                                                        fontSize: 18,
+                                                        overflow: TextOverflow.ellipsis),
+                                                    maxLines: 2,
+                                                  ),
+                                                ),
+                                                Container(
+                                                  padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
+                                                  child: Row(
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                    children: [
+                                                      Text(
+                                                        listNews[index].saveTimestamp.toString(),
+                                                        overflow: TextOverflow.ellipsis,
+                                                        style: TextStyle(fontSize: 12, fontFamily: roboto, fontWeight: FontWeight.w400, color: black,
+                                                          overflow: TextOverflow.ellipsis,),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    )
+                                ),
+    
+                                Container(
+                                  margin: const EdgeInsets.fromLTRB(12, 22, 12, 0),
+                                  padding: const EdgeInsets.fromLTRB(12, 18, 12, 18),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: border
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: const [
+                                      Text("Share your suggestions with us",style: TextStyle(color: whiteConst,fontWeight: FontWeight.w600,fontSize: 16,fontFamily: roboto),),
+                                      Icon(Icons.arrow_forward_ios,color: whiteConst,size: 12,)
+                                    ],
+                                  ),
+                                ),
+    
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  margin: const EdgeInsets.only(left: 14, right: 14, top: 32),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      RichText(
+                                        text: TextSpan(
+                                          children: <TextSpan>[
+                                            TextSpan(
+                                                text: 'Videos',
+                                                style: TextStyle(fontFamily: roboto, fontSize: 18, color: black, fontWeight: FontWeight.w600)),
+                                          ],
+                                        ),
+                                      ),
+                                      GestureDetector(
+                                        onTap: (){
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => const VideoScreen()));
+                                        },
+                                        child: Row(
+                                          children: [
+                                            const Text("See All",style: const TextStyle(color: text_dark,fontWeight: FontWeight.w500,fontSize: 14,fontFamily: roboto),),
+                                            Container(width: 4,),
+                                            const Icon(Icons.arrow_forward_ios,color: border,size: 12,)
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  height: 350,
+                                  margin: const EdgeInsets.only(left: 12,right: 12,top: 22),
+                                  child: GridView.builder(
+                                    itemCount: 4,
+                                    physics: const NeverScrollableScrollPhysics(),
+                                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        mainAxisExtent: 170,
+                                        crossAxisSpacing: 12,
+                                        mainAxisSpacing: 12
+                                    ),
+                                    itemBuilder: (BuildContext context, int index) {
+                                      return GestureDetector(
+                                        onTap: (){
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => CommonDetailsScreen(listVideos[index].id.toString(),listVideos[index].postTypeId.toString())));
+                                        },
+                                        child: Stack(
+                                          children: [
+                                            SizedBox(
+                                              height: 170,
+                                              child: ClipRRect(
+                                                borderRadius: BorderRadius.circular(12),
+                                                child: Image.network(listVideos[index].featuredImage.toString(),fit: BoxFit.cover,),
+                                              ),
+                                            ),
+                                            Positioned(
+                                                bottom: 12,
+                                                right: 12,
+                                                child: Image.asset("assets/images/play.png",height: 36,width: 36,))
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+    
+                                const Gap(20)
+                              ],
                             ),
                           ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
+                        ),
+                      ),
+                ],
               ),
+            ),
       ),
     );
   }
@@ -1433,6 +2688,26 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
   @override
   void castStatefulWidget() {
     widget as TrendingScreen;
+  }
+
+  Widget _buildChip(String label) {
+    return Chip(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      labelPadding: const EdgeInsets.all(2.0),
+      label: Text(
+        label,
+        style: const TextStyle(
+            color: border,
+            fontFamily: roboto,
+            fontSize: 12,
+            fontWeight: FontWeight.w500
+        ),
+      ),
+      backgroundColor: lightGrayNew,
+      elevation: 0,
+      shadowColor: lightGrayNew,
+      padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+    );
   }
 
   getDashboradData([bool isPull = false]) async {
@@ -1463,38 +2738,61 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
       listVideos = List<Posts>.empty(growable: true);
       listEvents = List<Posts>.empty(growable: true);
       listNews = List<Posts>.empty(growable: true);
+      listLeadership = List<Posts>.empty(growable: true);
+      listImages = List<Posts>.empty(growable: true);
       if (dataResponse.postsList != null && dataResponse.postsList!.isNotEmpty) {
         for (int i = 0; i < dataResponse.postsList!.length; i++) {
           if (dataResponse.postsList![i].id == "1") // "Social Media"
-          {
+              {
             if (dataResponse.postsList![i].posts != null) {
               if (dataResponse.postsList![i].posts!.isNotEmpty) {
                 listSocial.addAll(dataResponse.postsList![i].posts!);
               }
             }
-          } else if (dataResponse.postsList![i].id == "2") // "Events & Enagagements"
-          {
+          }
+          else if (dataResponse.postsList![i].id == "2") // "Events & Enagagements"
+              {
             if (dataResponse.postsList![i].posts != null) {
               if (dataResponse.postsList![i].posts!.isNotEmpty) {
                 listEvents.addAll(dataResponse.postsList![i].posts!);
               }
             }
-          } else if (dataResponse.postsList![i].id == "3") // "Videos"
-          {
+          }
+          else if (dataResponse.postsList![i].id == "3") // "Videos"
+              {
             if (dataResponse.postsList![i].posts != null) {
               if (dataResponse.postsList![i].posts!.isNotEmpty) {
                 listVideos.addAll(dataResponse.postsList![i].posts!);
               }
             }
-          } else if (dataResponse.postsList![i].id == "4") // "News"
-          {
+          }
+          else if (dataResponse.postsList![i].id == "4") // "News"
+              {
             if (dataResponse.postsList![i].posts != null) {
               if (dataResponse.postsList![i].posts!.isNotEmpty) {
                 listNews.addAll(dataResponse.postsList![i].posts!);
               }
             }
           }
+          else if (dataResponse.postsList![i].id == "5") // "Images"
+              {
+            if (dataResponse.postsList![i].posts != null) {
+              if (dataResponse.postsList![i].posts!.isNotEmpty) {
+                listImages.addAll(dataResponse.postsList![i].posts!);
+              }
+            }
+          }
+          else if (dataResponse.postsList![i].id == "10") // "Leadership"
+              {
+            if (dataResponse.postsList![i].posts != null) {
+              if (dataResponse.postsList![i].posts!.isNotEmpty) {
+                listLeadership.addAll(dataResponse.postsList![i].posts!);
+              }
+            }
+          }
         }
+        listLeadership = listLeadership.reversed.toList();
+
       }
     } else {
       showSnackBar(dataResponse.message, context);

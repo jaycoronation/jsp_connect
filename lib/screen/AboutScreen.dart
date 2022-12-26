@@ -63,7 +63,7 @@ class _AboutScreen extends BaseState<AboutScreen> {
     precacheImage(AssetImage("assets/images/ic_about_jspl_1-min_lsvqzo.jpeg"), context);
     return WillPopScope(
           child: Scaffold(
-            backgroundColor: white,
+            backgroundColor: blackConst,
             resizeToAvoidBottomInset: false,
             extendBodyBehindAppBar: true,
             appBar: AppBar(

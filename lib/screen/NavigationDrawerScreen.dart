@@ -7,6 +7,7 @@ import 'package:gap/gap.dart';
 import 'package:jspl_connect/screen/AboutJSPLScreen.dart';
 import 'package:jspl_connect/screen/LeadershipScreen.dart';
 import 'package:jspl_connect/screen/MagazineListScreen.dart';
+import 'package:jspl_connect/screen/tabcontrol/DashboardNewScreen.dart';
 import 'package:jspl_connect/screen/tabcontrol/bottom_navigation_bar_screen.dart';
 import 'package:restart_app/restart_app.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -115,7 +116,7 @@ class _NavigationDrawerScreen extends BaseState<NavigationDrawerScreen> {
                               padding: const EdgeInsets.all(6.0),
                               child: GestureDetector(
                                 onTap: () {
-                                  Navigator.pop(context);
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => const DashboardNewScreen()));
                                 },
                                 child: const Text(
                                   "Dashboard",
