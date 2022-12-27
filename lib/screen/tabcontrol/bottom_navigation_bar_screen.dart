@@ -8,6 +8,7 @@ import 'package:jspl_connect/model/DashBoardDataResponse.dart';
 import 'package:jspl_connect/screen/tabcontrol/DashboardNewScreen.dart';
 import 'package:jspl_connect/utils/base_class.dart';
 import 'package:pretty_http_logger/pretty_http_logger.dart';
+import 'package:slide_indexed_stack/slide_indexed_stack.dart';
 import '../../constant/api_end_point.dart';
 import '../../constant/colors.dart';
 import '../../utils/app_utils.dart';
@@ -173,10 +174,12 @@ class _BottomNavigationBarScreenState extends BaseState<BottomNavigationBarScree
         resizeToAvoidBottomInset: true,
         backgroundColor: screenBg,
         extendBody: true,
-        body: FadeIndexedStack(
-          _currentIndex,_pages ,const Duration(
-          milliseconds: 400,
-        )
+        body: SlideIndexedStack(
+            axis: Axis.horizontal,
+            slideOffset: 0.9,
+            index: _currentIndex,
+            duration: const Duration(milliseconds: 80),
+          children: _pages,
         ),
         bottomNavigationBar: Material(
           elevation: 6,

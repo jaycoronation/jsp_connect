@@ -66,6 +66,7 @@ dependencies:
       url: https://github.com/canewsin/flutter_absolute_path.git
   like_button: ^2.0.5
   restart_app:
+  slide_indexed_stack: ^0.0.1
 
 dev_dependencies:
   flutter_test:

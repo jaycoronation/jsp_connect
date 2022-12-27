@@ -1136,7 +1136,7 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                     ),
                                   ),
                                   Container(
-                                    height: 300,
+                                    height: 320,
                                     width: double.infinity,
                                     child: PageView.builder(
                                       controller: controllerNew,
@@ -1145,6 +1145,7 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                       physics: const ScrollPhysics(),
                                       itemBuilder: (context, index) {
                                         return Container(
+                                          height: 320,
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(20),
                                             color: newsBlock,
@@ -1172,7 +1173,7 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                                     fontFamily: gilroy,
                                                     fontSize: 18,
                                                     overflow: TextOverflow.clip),
-                                                maxLines: 3,
+                                                maxLines: 1,
                                               ),
                                               Container(
                                                 height: 12,
@@ -2028,7 +2029,7 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                                           fontFamily: gilroy,
                                                           fontSize: 18,
                                                           overflow: TextOverflow.clip),
-                                                      maxLines: 3,
+                                                      maxLines: 2,
                                                     ),
                                                   ),
                                                   Container(
@@ -2037,12 +2038,11 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                                         style: TextStyle(color: text_dark, fontFamily: roboto, fontWeight: FontWeight.w600, fontSize: 12)),
                                                   ),
                                                   Container(
-                                                    padding: const EdgeInsets.fromLTRB(12, 6, 12, 12),
+                                                    padding: const EdgeInsets.fromLTRB(12, 6, 12, 10),
                                                     child: Text(
                                                       listWhatsNew[index].shortDescription.toString(),
                                                       overflow: TextOverflow.ellipsis,
                                                       style: TextStyle(
-                                                          height: 1.5,
                                                           color: black,
                                                           fontWeight: FontWeight.w400,
                                                           fontFamily: gilroy,
