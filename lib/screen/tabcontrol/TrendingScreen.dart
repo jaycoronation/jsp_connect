@@ -19,6 +19,7 @@ import '../../constant/api_end_point.dart';
 import '../../constant/colors.dart';
 import '../../model/DashBoardDataResponse.dart';
 import '../../model/NotificationCountResponse.dart';
+import '../../model/PostListResponse.dart';
 import '../../utils/app_utils.dart';
 import '../../utils/base_class.dart';
 import '../../widget/loading.dart';
@@ -30,8 +31,10 @@ import '../MagazineListScreen.dart';
 import '../NavigationDrawerScreen.dart';
 import '../NewsListScreen.dart';
 import '../NotificationListScreen.dart';
+import '../SearchPostScreen.dart';
 import '../SuggestionFormScreen.dart';
 import '../VideoScreen.dart';
+import '../WhatsNewListScreen.dart';
 
 class TrendingScreen extends StatefulWidget {
   const TrendingScreen({Key? key}) : super(key: key);
@@ -60,6 +63,7 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
   List<Posts> listNews = List<Posts>.empty(growable: true);
   List<Posts> listLeadership = List<Posts>.empty(growable: true);
   List<Posts> listImages = List<Posts>.empty(growable: true);
+  List<Posts> listWhatsNew = List<Posts>.empty(growable: true);
 
   @override
   void initState() {
@@ -75,7 +79,8 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
 
     if (isOnline) {
       unReadNotificationCount();
-      getDashboradData();
+      getDashBoardData();
+      getWhatsNew();
     } else {
       noInterNet(context);
     }
@@ -102,7 +107,7 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
     print("refresh......");
     if (isInternetConnected) {
       unReadNotificationCount();
-      getDashboradData(true);
+      getDashBoardData(true);
     } else {
       noInterNet(context);
     }
@@ -140,7 +145,9 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
         ),
         actions: [
           GestureDetector(
-            onTap: () async {},
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const SearchPostScreen()));
+            },
             child: Container(
               width: 50,
               height: 50,
@@ -1133,7 +1140,7 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                     width: double.infinity,
                                     child: PageView.builder(
                                       controller: controllerNew,
-                                      itemCount: 3,
+                                      itemCount: listWhatsNew.length > 4 ? 4 : listWhatsNew.length,
                                       pageSnapping: true,
                                       physics: const ScrollPhysics(),
                                       itemBuilder: (context, index) {
@@ -1151,13 +1158,13 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                               Container(
                                                 height: 12,
                                               ),
-                                              Text("1 hour ago",
+                                              Text(listWhatsNew[index].saveTimestamp.toString(),
                                                   style: TextStyle(color: black, fontFamily: roboto, fontWeight: FontWeight.w400, fontSize: 14)),
                                               Container(
                                                 height: 12,
                                               ),
                                               Text(
-                                                "JSP is an industrial powerhouse with a dominant presence in steel, power, mining and infrastructure sectors.",
+                                                listWhatsNew[index].title.toString(),
                                                 style: TextStyle(
                                                     height: 1.5,
                                                     color: black,
@@ -1171,7 +1178,7 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                                 height: 12,
                                               ),
                                               Text(
-                                                "Led by Mr Naveen Jindal, the company’s enviable success story has been scripted essentially by its resolve to innovate, set new standards, enhance capabilities, enrich lives and to ensure that it stays true to its cherished value system.",
+                                                  listWhatsNew[index].shortDescription.toString(),
                                                 style: TextStyle(
                                                     height: 1.5,
                                                     color: black,
@@ -1190,13 +1197,13 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                   Wrap(
                                     children: [
                                       Container(
-                                        width: 3 * 36,
+                                        width: listWhatsNew.length > 4 ? 4 * 36 : listWhatsNew.length * 36,
                                         alignment: Alignment.center,
                                         margin: const EdgeInsets.only(bottom: 10, left: 14, right: 14, top: 12),
                                         decoration: const BoxDecoration(color: text_dark),
                                         child: SmoothPageIndicator(
                                           controller: controllerNew,
-                                          count: 3,
+                                          count: listWhatsNew.length > 4 ? 4 : listWhatsNew.length,
                                           effect: const SlideEffect(
                                               spacing: 2.0,
                                               radius: 0.0,
@@ -1947,13 +1954,18 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                           crossAxisAlignment: CrossAxisAlignment.center,
                                           children: [
                                             Text("What's New",style: TextStyle(fontFamily: roboto, fontSize: 18, color: black, fontWeight: FontWeight.w600),),
-                                            /*Row(
-                                              children: [
-                                                const Text("See All",style: TextStyle(color: text_dark,fontWeight: FontWeight.w500,fontSize: 14,fontFamily: roboto),),
-                                                Container(width: 4,),
-                                                const Icon(Icons.arrow_forward_ios,color: border,size: 12,)
-                                              ],
-                                            )*/
+                                            GestureDetector(
+                                              onTap: (){
+                                                Navigator.push(context, MaterialPageRoute(builder: (context) => const WhatsNewListScreen()));
+                                              },
+                                              child: Row(
+                                                children: [
+                                                  const Text("See All",style: TextStyle(color: text_dark,fontWeight: FontWeight.w500,fontSize: 14,fontFamily: roboto),),
+                                                  Container(width: 4,),
+                                                  const Icon(Icons.arrow_forward_ios,color: border,size: 12,)
+                                                ],
+                                              ),
+                                            )
                                           ],
                                         ),
                                       ),
@@ -1963,7 +1975,7 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                         width: double.infinity,
                                         child: PageView.builder(
                                           controller: controllerNew,
-                                          itemCount: 3,
+                                          itemCount:  listWhatsNew.length > 4 ? 4 : listWhatsNew.length,
                                           pageSnapping: true,
                                           physics: const ScrollPhysics(),
                                           itemBuilder: (context, index) {
@@ -1981,13 +1993,12 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                                     children: [
                                                       ClipRRect(
                                                         borderRadius: const BorderRadius.only(topLeft: Radius.circular(20),topRight: Radius.circular(20)),
-                                                        child: Image.network("https://pbs.twimg.com/media/FkpkP2KUAAEvVcQ?format=jpg&name=medium",
+                                                        child: Image.network(listWhatsNew[index].featuredImage.toString(),
                                                           width: MediaQuery.of(context).size.width,
                                                           height: 300,
                                                           fit: BoxFit.cover,
                                                         ),
                                                       ),
-
                                                       /*Positioned(
                                                           bottom: 12,
                                                           right: 12,
@@ -2009,7 +2020,7 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                                   Container(
                                                     padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
                                                     child: Text(
-                                                      "Building A Nation of Our Dreams",
+                                                      listWhatsNew[index].title.toString(),
                                                       style: TextStyle(
                                                           height: 1.5,
                                                           color: black,
@@ -2022,13 +2033,13 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                                   ),
                                                   Container(
                                                     padding: const EdgeInsets.fromLTRB(12, 6, 12, 0),
-                                                    child: const Text("1 hour ago",
+                                                    child: Text(listWhatsNew[index].saveTimestamp.toString(),
                                                         style: TextStyle(color: text_dark, fontFamily: roboto, fontWeight: FontWeight.w600, fontSize: 12)),
                                                   ),
                                                   Container(
                                                     padding: const EdgeInsets.fromLTRB(12, 6, 12, 12),
                                                     child: Text(
-                                                      "Led by Mr Naveen Jindal, the company’s enviable success story has been scripted essentially by its resolve to innovate, set new standards, enhance capabilities, enrich lives and to ensure that it stays true to its cherished value system.",
+                                                      listWhatsNew[index].shortDescription.toString(),
                                                       overflow: TextOverflow.ellipsis,
                                                       style: TextStyle(
                                                           height: 1.5,
@@ -2050,13 +2061,13 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                       Wrap(
                                         children: [
                                           Container(
-                                            width: 3 * 36,
+                                            width: listWhatsNew.length > 4 ? 4 * 36 : listWhatsNew.length * 36,
                                             alignment: Alignment.center,
                                             margin: const EdgeInsets.only( left: 14, right: 14, top: 12),
                                             decoration: const BoxDecoration(color: text_dark),
                                             child: SmoothPageIndicator(
                                               controller: controllerNew,
-                                              count: 3,
+                                              count:  listWhatsNew.length > 4 ? 4 : listWhatsNew.length,
                                               effect: const SlideEffect(
                                                   spacing: 2.0,
                                                   radius: 0.0,
@@ -2360,7 +2371,7 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                               text: TextSpan(
                                                 children: <TextSpan>[
                                                   TextSpan(
-                                                      text: 'Event & Engagement',
+                                                      text: 'Events & Engagement',
                                                       style: TextStyle(fontFamily: roboto, fontSize: 18, color: black, fontWeight: FontWeight.w600)),
                                                 ],
                                               ),
@@ -2434,7 +2445,6 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                                           )*/
                                                         ],
                                                       ),
-
                                                       Container(
                                                         padding: const EdgeInsets.fromLTRB(12, 6, 12, 0),
                                                         child:  Text(
@@ -2487,7 +2497,6 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
                                               );
                                             },
                                           )),
-
                                       Container(
                                         alignment: Alignment.centerLeft,
                                         margin: const EdgeInsets.only(left: 14, right: 14, top: 32),
@@ -2852,7 +2861,7 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
     );
   }
 
-  getDashboradData([bool isPull = false]) async {
+  getDashBoardData([bool isPull = false]) async {
     if (!isPull) {
       setState(() {
         _isLoading = true;
@@ -2942,6 +2951,43 @@ class _TrendingScreen extends BaseState<TrendingScreen> with SingleTickerProvide
     setState(() {
       _isLoading = false;
     });
+  }
+
+  getWhatsNew() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+      HttpLogger(logLevel: LogLevel.BODY),
+    ]);
+
+    final url = Uri.parse(API_URL + posts);
+    Map<String, String> jsonBody = {
+      'from_app': FROM_APP,
+      'user_id': sessionManager.getUserId().toString(),
+      'limit': "10",
+      'page': "0",
+      'is_new': "1"
+    };
+    final response = await http.post(url, body: jsonBody, headers: {"Access-Token": sessionManager.getAccessToken().toString().trim()});
+    final statusCode = response.statusCode;
+    final body = response.body;
+    Map<String, dynamic> apiResponse = jsonDecode(body);
+    var dataResponse = PostListResponse.fromJson(apiResponse);
+    if (statusCode == 200 && dataResponse.success == 1) {
+      if (dataResponse.posts != null && dataResponse.posts!.isNotEmpty) {
+        listWhatsNew.addAll(dataResponse.posts!);
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    } else {
+      showSnackBar(dataResponse.message, context);
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   unReadNotificationCount() async {

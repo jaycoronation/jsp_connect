@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:share/share.dart';
-
 import '../constant/colors.dart';
 
 /*show message to user*/

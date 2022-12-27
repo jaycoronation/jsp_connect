@@ -233,13 +233,13 @@ class _CommonDetailsScreen extends BaseState<CommonDetailsScreen> {
                             if (postDetailsData.media![0].media.toString().isNotEmpty) {
                               Share.share(postDetailsData.media![0].media.toString());
                               postDetailsData.sharesCount = int.parse(postDetailsData.sharesCount.toString()) + 1;
-                              _sharePost(postId);
                             } else {
                               showSnackBar("Link not found.", context);
                             }
                           } else {
                             showSnackBar("Link not found.", context);
                           }
+                          _sharePost(postId);
                         },
                         behavior: HitTestBehavior.opaque,
                         child: Container(

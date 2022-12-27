@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:jspl_connect/widget/loading_more.dart';
 import 'package:jspl_connect/widget/news_block.dart';
 import 'package:jspl_connect/widget/no_data.dart';
 import 'package:pretty_http_logger/pretty_http_logger.dart';
@@ -162,31 +163,7 @@ class _MediaCoverageScreen extends BaseState<MediaCoverageScreen> {
                         ],
                       ),
                     )),
-                    Visibility(visible : _isLoadingMore,child: Container(
-                      padding: const EdgeInsets.only(top: 10,bottom: 10),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(width: 30, height: 30,
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                        color: const Color(0xff444444),
-                                        width: 1,
-                                      )),
-                                  child:  Padding(
-                                    padding: EdgeInsets.all(6.0),
-                                    child: CircularProgressIndicator(color: white,strokeWidth: 2),
-                                  )
-                              )),
-                           Text(' Loading more...',
-                              style: TextStyle(color: white, fontWeight: FontWeight.w400, fontSize: 16)
-                          )
-                        ],
-                      ),
-                    ))
+                    Visibility(visible : _isLoadingMore,child: LoadingMoreWidget())
                   ],
                 ),
         ),

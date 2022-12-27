@@ -10,12 +10,15 @@ import '../constant/api_end_point.dart';
 import '../constant/global_context.dart';
 import '../model/NotificationCountResponse.dart';
 import '../screen/CommonDetailsScreen.dart';
+import '../screen/LoginScreen.dart';
 import '../screen/MagazineListScreen.dart';
 import '../screen/SocialWallScreen.dart';
 import '../screen/tabcontrol/bottom_navigation_bar_screen.dart';
 import '../utils/app_utils.dart';
 import '../utils/session_manager.dart';
 import 'package:http/http.dart' as http;
+
+import '../utils/session_manager_methods.dart';
 
 // ignore: slash_for_doc_comments
 /**
@@ -168,7 +171,7 @@ class PushNotificationService {
           }
         });
 
-       /* print('<><> onMessage postId--->' + postId);
+        /* print('<><> onMessage postId--->' + postId);
         print('<><> onMessage contentType--->' + contentType);
         print('<><> onMessage contentId--->' + contentId);
         print('<><> onMessage notificationId--->' + notificationId);
@@ -237,6 +240,13 @@ class PushNotificationService {
                       priority: Priority.high),
                   iOS: iOSPlatformChannelSpecifics),
             );
+        }
+
+        if(contentId == "400")
+        {
+          SessionManagerMethods.clear();
+          NavigationService.navigatorKey.currentState!.pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const LoginScreen()), (Route<dynamic> route) => false);
+          return;
         }
 
         unReadNotificationCount(sessionManager);
@@ -308,6 +318,14 @@ class PushNotificationService {
       );
 
   void openPage(String postId,String contentId) {
+
+    if(contentId == "400")
+    {
+      SessionManagerMethods.clear();
+      NavigationService.navigatorKey.currentState!.pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const LoginScreen()), (Route<dynamic> route) => false);
+      return;
+    }
+
     if (postId != null)
     {
       NavigationService.notif_type = contentId;

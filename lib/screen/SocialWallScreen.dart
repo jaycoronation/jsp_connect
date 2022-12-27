@@ -14,6 +14,7 @@ import '../model/PostListResponse.dart';
 import '../utils/app_utils.dart';
 import '../utils/base_class.dart';
 import '../widget/loading.dart';
+import '../widget/loading_more.dart';
 import '../widget/no_data.dart';
 import '../widget/social_block.dart';
 
@@ -149,30 +150,7 @@ class _SocialWallScreen extends BaseState<SocialWallScreen> {
                     ),
                     Visibility(
                         visible: _isLoadingMore,
-                        child: Container(
-                          padding: const EdgeInsets.only(top: 10, bottom: 10),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                  width: 30,
-                                  height: 30,
-                                  child: Container(
-                                      decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          border: Border.all(
-                                            color: const Color(0xff444444),
-                                            width: 1,
-                                          )),
-                                      child: Padding(
-                                        padding: EdgeInsets.all(6.0),
-                                        child: CircularProgressIndicator(color: white, strokeWidth: 2),
-                                      ))),
-                              Text(' Loading more...', style: TextStyle(color: white, fontWeight: FontWeight.w400, fontSize: 16))
-                            ],
-                          ),
-                        ))
+                        child: const LoadingMoreWidget())
                   ],
                 ),
         ),

@@ -81,6 +81,13 @@ class _MyHomePageState extends State<MyHomePage> {
       //print("<><> NOTIF TYPE POST :" + NavigationService.notif_post_id + " <><>");
       if(isLoggedIn)
       {
+        if(NavigationService.notif_type == "400")
+        {
+          SessionManagerMethods.clear();
+          Timer(
+              const Duration(seconds: 3), () => Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const LoginScreen()), (Route<dynamic> route) => false));
+        }
+
         if(NavigationService.notif_post_id != null)
         {
           if(NavigationService.notif_post_id.toString().isNotEmpty)
@@ -154,6 +161,7 @@ class _MyHomePageState extends State<MyHomePage> {
       statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
       statusBarBrightness: Brightness.dark,
     ));
+
     return Scaffold(
       backgroundColor: white,
       extendBodyBehindAppBar: true,

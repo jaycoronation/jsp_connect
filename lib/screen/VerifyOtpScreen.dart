@@ -122,6 +122,7 @@ class _VerifyOtpScreen extends BaseState<VerifyOtpScreen> {
       FocusScope.of(context).requestFocus(FocusNode());
       Navigator.push(context, MaterialPageRoute(builder: (context) => const BottomNavigationBarScreen(0)));
     } else {
+      FocusScope.of(context).requestFocus(FocusNode());
       showSnackBar(dataResponse.message, context);
     }
     setState(() {

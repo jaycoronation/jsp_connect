@@ -1,5 +1,6 @@
 
 
+import 'package:jspl_connect/utils/session_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SessionManagerMethods {
@@ -42,6 +43,10 @@ class SessionManagerMethods {
   //deletes..
   static Future<bool?> remove(String key) async => await _prefs?.remove(key);
 
-  static Future<bool?> clear() async => await _prefs?.clear();
+  static Future<bool?> clear() async {
+    var isDarkMode = SessionManager().getDarkMode();
+    await _prefs?.clear();
+    SessionManager().setDarkMode(isDarkMode ?? false);
+  }
 
 }
