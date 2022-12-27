@@ -700,7 +700,7 @@ class _CommonDetailsScreen extends BaseState<CommonDetailsScreen> {
                                               postDetailsData.reatedPosts![index].saveTimestamp.toString(),
                                               style:  const TextStyle(fontSize: 14, fontFamily: roboto, fontWeight: FontWeight.w400, color: text_light),
                                             ),
-                                            Row(
+                                            /*Row(
                                               children: [
                                                 GestureDetector(
                                                   onTap: (){
@@ -739,7 +739,7 @@ class _CommonDetailsScreen extends BaseState<CommonDetailsScreen> {
                                                 ),
                                                 Container(width: 16,),
                                               ],
-                                            ),
+                                            ),*/
                                           ],
                                         ),
                                       )
@@ -853,7 +853,7 @@ class _CommonDetailsScreen extends BaseState<CommonDetailsScreen> {
                                     style: TextStyle(fontSize: 13, fontFamily: roboto, fontWeight: FontWeight.w400, color: newsText),
                                   ),
                                   const Spacer(),
-                                  GestureDetector(
+                                 /* GestureDetector(
                                     onTap: () async {
                                       if(postDetailsData.reatedPosts![index].media!.isNotEmpty)
                                       {
@@ -887,7 +887,7 @@ class _CommonDetailsScreen extends BaseState<CommonDetailsScreen> {
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                         fontSize: 13, fontWeight: FontWeight.w400, fontFamily: roboto, color: newsText),
-                                  ),
+                                  ),*/
                                   Container(
                                     width: 8,
                                   )
@@ -1015,7 +1015,7 @@ class _CommonDetailsScreen extends BaseState<CommonDetailsScreen> {
                                     style: TextStyle(fontSize: 13, fontFamily: roboto, fontWeight: FontWeight.w400, color: newsText),
                                   ),
                                   const Spacer(),
-                                  GestureDetector(
+                                  /*GestureDetector(
                                     onTap: () async {
                                       if(postDetailsData.reatedPosts![index].media!.isNotEmpty)
                                       {
@@ -1049,7 +1049,7 @@ class _CommonDetailsScreen extends BaseState<CommonDetailsScreen> {
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                         fontSize: 13, fontWeight: FontWeight.w400, fontFamily: roboto, color: newsText),
-                                  ),
+                                  ),*/
                                   Container(
                                     width: 8,
                                   )
@@ -1177,7 +1177,7 @@ class _CommonDetailsScreen extends BaseState<CommonDetailsScreen> {
                                     style: TextStyle(fontSize: 13, fontFamily: roboto, fontWeight: FontWeight.w400, color: newsText),
                                   ),
                                   const Spacer(),
-                                  GestureDetector(
+                                 /* GestureDetector(
                                     onTap: () async {
                                       if(postDetailsData.reatedPosts![index].media!.isNotEmpty)
                                       {
@@ -1211,7 +1211,7 @@ class _CommonDetailsScreen extends BaseState<CommonDetailsScreen> {
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                         fontSize: 13, fontWeight: FontWeight.w400, fontFamily: roboto, color: newsText),
-                                  ),
+                                  ),*/
                                   Container(
                                     width: 8,
                                   )

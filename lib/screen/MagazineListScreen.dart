@@ -158,7 +158,8 @@ class _MagazineListScreen extends BaseState<MagazineListScreen> {
                                 child: GestureDetector(
                                   onTap: () {
                                   },
-                                  child: listMagazine[index].posts!.isNotEmpty ? Column(
+                                  child: listMagazine[index].posts!.isNotEmpty
+                                      ? Column(
                                     children: [
                                       Container(
                                         margin: const EdgeInsets.only(left: 12,right: 12,top: 0),
@@ -178,7 +179,7 @@ class _MagazineListScreen extends BaseState<MagazineListScreen> {
                                       ),
                                       Container(
                                         margin: const EdgeInsets.only(left: 12,top: 4,bottom: 8),
-                                        height: 250,
+                                        height: 265,
                                         width: MediaQuery.of(context).size.width,
                                         child: ListView.builder(
                                           scrollDirection: Axis.horizontal,
@@ -194,82 +195,98 @@ class _MagazineListScreen extends BaseState<MagazineListScreen> {
                                                 }
                                               },
                                               child: Container(
-                                                height: 250,
+                                                height: 265,
                                                 width: 180,
                                                 margin: const EdgeInsets.only(top: 8,),
-                                                child: Stack(
-                                                    children:[
-                                                      Container(
-                                                        margin:const EdgeInsets.only(left: 4,right: 4),
-                                                        decoration:  BoxDecoration(
-                                                            color: Colors.transparent,
-                                                            borderRadius: BorderRadius.circular(4)
-                                                        ),
-                                                        height: 300,
-                                                        width: MediaQuery.of(context).size.width,
-                                                        child: ClipRRect(
-                                                          borderRadius:  BorderRadius.circular(4),
-                                                          child: SizedBox.fromSize(
-                                                              size: const Size.fromRadius(48), // Image radius
-                                                              child:
-                                                              CachedNetworkImage(
-                                                                imageUrl: listMagazine[index].posts![indexNew].featuredImagePath.toString(),
-                                                                fit: BoxFit.cover,
-                                                                width: MediaQuery.of(context).size.width,
-                                                                height: 300,
-                                                                errorWidget: (context, url, error) => Image.asset('assets/images/bg_gray.jpeg', width: MediaQuery.of(context).size.width,
-                                                                  height: 300,fit: BoxFit.cover,),
-                                                                placeholder: (context, url) => Image.asset('assets/images/bg_gray.jpeg', width: MediaQuery.of(context).size.width,
-                                                                  height: 300,),
-                                                              )
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Positioned(
-                                                        right: 10,
-                                                        top: 6,
-                                                        child: Row(
-                                                          children: [
-                                                            GestureDetector(
-                                                              behavior: HitTestBehavior.opaque,
-                                                              onTap: (){
-                                                                if(listMagazine[index].posts![indexNew].media!.isNotEmpty)
-                                                                {
-                                                                  if(listMagazine[index].posts![indexNew].media![0].media.toString().isNotEmpty)
-                                                                  {
-                                                                    Share.share(listMagazine[index].posts![indexNew].media![0].media.toString());
-                                                                    _sharePost(listMagazine[index].posts![indexNew].id.toString());
-                                                                    setState(() {
-                                                                      listMagazine[index].posts![indexNew].setSharesCount = listMagazine[index].posts![indexNew].sharesCount! + 1;
-                                                                    });
-                                                                  }
-                                                                  else
-                                                                  {
-                                                                    showSnackBar("Magazine link not found.", context);
-                                                                  }
-                                                                }
-                                                                else
-                                                                {
-                                                                  showSnackBar("Magazine link not found.", context);
-                                                                }
-                                                              },
-                                                              child: Container(
-                                                                width: 32,
-                                                                height: 32,
-                                                                padding: EdgeInsets.all(4),
-                                                                child: Image.asset("assets/images/share.png",width: 22,height: 22,color: black,),
+                                                child: Column(
+                                                  children: [
+                                                    Stack(
+                                                        children:[
+                                                          Container(
+                                                            margin:const EdgeInsets.only(left: 4,right: 4),
+                                                            decoration:  BoxDecoration(
+                                                                color: Colors.transparent,
+                                                                borderRadius: BorderRadius.circular(4)
+                                                            ),
+                                                            height: 225,
+                                                            width: MediaQuery.of(context).size.width,
+                                                            child: ClipRRect(
+                                                              borderRadius:  BorderRadius.circular(4),
+                                                              child: SizedBox.fromSize(
+                                                                  size: const Size.fromRadius(48), // Image radius
+                                                                  child:
+                                                                  CachedNetworkImage(
+                                                                    imageUrl: listMagazine[index].posts![indexNew].featuredImagePath.toString(),
+                                                                    fit: BoxFit.cover,
+                                                                    width: MediaQuery.of(context).size.width,
+                                                                    height: 225,
+                                                                    errorWidget: (context, url, error) => Image.asset('assets/images/bg_gray.jpeg', width: MediaQuery.of(context).size.width,
+                                                                      height: 225,fit: BoxFit.cover,),
+                                                                    placeholder: (context, url) => Image.asset('assets/images/bg_gray.jpeg', width: MediaQuery.of(context).size.width,
+                                                                      height: 225,),
+                                                                  )
                                                               ),
                                                             ),
-                                                            Text(
-                                                              listMagazine[index].posts![indexNew].sharesCount.toString(),
-                                                              textAlign: TextAlign.center,
-                                                              style: TextStyle(
-                                                                  fontSize: 14, fontWeight: FontWeight.w400, fontFamily: roboto, color: black),
-                                                            )
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ]
+                                                          ),
+                                                          Positioned(
+                                                            right: 10,
+                                                            top: 6,
+                                                            child: Row(
+                                                              children: [
+                                                                GestureDetector(
+                                                                  behavior: HitTestBehavior.opaque,
+                                                                  onTap: (){
+                                                                    if(listMagazine[index].posts![indexNew].media!.isNotEmpty)
+                                                                    {
+                                                                      if(listMagazine[index].posts![indexNew].media![0].media.toString().isNotEmpty)
+                                                                      {
+                                                                        Share.share(listMagazine[index].posts![indexNew].media![0].media.toString());
+                                                                        _sharePost(listMagazine[index].posts![indexNew].id.toString());
+                                                                        setState(() {
+                                                                          listMagazine[index].posts![indexNew].setSharesCount = listMagazine[index].posts![indexNew].sharesCount! + 1;
+                                                                        });
+                                                                      }
+                                                                      else
+                                                                      {
+                                                                        showSnackBar("Magazine link not found.", context);
+                                                                      }
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                      showSnackBar("Magazine link not found.", context);
+                                                                    }
+                                                                  },
+                                                                  child: Container(
+                                                                    width: 36,
+                                                                    height: 36,
+                                                                    decoration: BoxDecoration(
+                                                                        color: whiteConst.withOpacity(0.6),
+                                                                        shape: BoxShape.circle
+                                                                    ),
+                                                                    child: Padding(
+                                                                      padding: const EdgeInsets.all(8.0),
+                                                                      child: Image.asset("assets/images/share.png",width: 24,height: 24),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                Text(
+                                                                  listMagazine[index].posts![indexNew].sharesCount.toString(),
+                                                                  textAlign: TextAlign.center,
+                                                                  style: TextStyle(
+                                                                      fontSize: 14, fontWeight: FontWeight.w400, fontFamily: roboto, color: black),
+                                                                )
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ]
+                                                    ),
+                                                    Container(height: 12,),
+                                                    Text(
+                                                      listMagazine[index].posts![indexNew].title.toString(),
+                                                      textAlign: TextAlign.center,
+                                                      style: TextStyle(color: black, fontFamily: roboto, fontSize: 14, fontWeight: FontWeight.w500),
+                                                    )
+                                                  ],
                                                 ),
                                               ),
                                             );
@@ -277,7 +294,8 @@ class _MagazineListScreen extends BaseState<MagazineListScreen> {
                                         ),
                                       )
                                     ],
-                                  ) : Column(),
+                                  )
+                                      : Column(),
                                 ),
                               ),
                             ),

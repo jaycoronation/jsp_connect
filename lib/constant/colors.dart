@@ -41,7 +41,7 @@ Color newsBlock = isDarkMode ? const Color(0xff333333) : const Color(0xffE7EBEE)
 Color newsText = isDarkMode ? const Color(0xffE7EBEE) : const Color(0xff72716d);
 Color white= isDarkMode ? const Color(0xff000000) : const Color(0xffffffff);
 Color screenBg= isDarkMode ? const Color(0Xffff181C1F) : const Color(0xfffffffff);
-Color bottombar= isDarkMode ? Color(0Xff181C1F) : Color(0xffE6E9EE);
+Color bottombar= isDarkMode ? const Color(0Xff181C1F) : const Color(0xffE6E9EE);
 const Color blackConst= Color(0xff000000);
 const Color whiteConst= Color(0xffffffff);
 const Color text_light= Color(0xffaaa9a3);
@@ -67,11 +67,12 @@ const Color blueNew= Color(0xff114ce4);
 const Color yellowNew= Color(0xffffe505);
 const Color orangeNew= Color(0xffff551d);
 const Color navigation= Color(0xffDDE2E6);
+const Color navigationIcon= Color(0xffbec5c9);
 const Color navigationGradient1= Color(0xffBAC2DE);
 const Color navigationGradient2= Color(0xffEECA9E);
 const Color navigationGradient3= Color(0xffEED386);
 
-const Color newScreenBg= Color(0xffefefef);
+Color newScreenBg= isDarkMode ? const Color(0xffff181c1f) : const Color(0xffefefef);
 const Color border= Color(0xff015cfd);
 
 // FOR DARK

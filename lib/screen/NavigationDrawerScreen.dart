@@ -72,29 +72,37 @@ class _NavigationDrawerScreen extends BaseState<NavigationDrawerScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(10.0),
+                        padding: const EdgeInsets.fromLTRB(10, 4, 10, 10),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             GestureDetector(
                                 onTap: () {
-                                  Navigator.pop(context);
+                                  profileDialog();
                                 },
                                 child: Container(
-                                    width: 22,
-                                    height: 22,
+                                    width: 38,
+                                    height: 38,
+                                    decoration: BoxDecoration(
+                                      color: isDarkMode ? navigationIcon : navigationIcon,
+                                      shape: BoxShape.circle
+                                    ),
                                     margin: const EdgeInsets.only(top: 10),
-                                    child: Image.asset("assets/images/ic_back_button.png", height: 22, width: 22, color: blackConst))),
-                            sessionManager.getFullName().toString().trim().isNotEmpty ? Container(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Image.asset("assets/images/ic_user.png", height: 22, width: 22, color: blackConst),
+                                    ))),
+                            sessionManager.getFullName().toString().trim().isNotEmpty
+                                ? Container(
                               margin: const EdgeInsets.only(top: 10, left: 10),
                               child: Text(
                                 "Hi, ${sessionManager.getFullName().toString().trim()}",
                                 textAlign: TextAlign.start,
                                 style: const TextStyle(fontSize: 16, color: blackConst, fontWeight: FontWeight.w600, fontFamily: aileron),
                               ),
-                            ) :
-                            Container(
+                            )
+                                : Container(
                               margin: const EdgeInsets.only(top: 10, left: 10),
                               child: const Text(
                                 "Hi,Guest User",
@@ -102,7 +110,24 @@ class _NavigationDrawerScreen extends BaseState<NavigationDrawerScreen> {
                                 style: TextStyle(fontSize: 16, color: blackConst, fontWeight: FontWeight.w600, fontFamily: aileron),
                               ),
                             ),
-                            Expanded(child: Container())
+                            Expanded(child: Container()),
+                            GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Container(
+                                    width: 38,
+                                    height: 38,
+                                    decoration: BoxDecoration(
+                                        color: isDarkMode ? navigationIcon : navigationIcon,
+                                        shape: BoxShape.circle
+                                    ),
+                                    margin: const EdgeInsets.only(top: 10),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: Image.asset("assets/images/ic_close.png", height: 22, width: 22, color: blackConst),
+                                    ))
+                            ),
                           ],
                         ),
                       ),
@@ -116,7 +141,7 @@ class _NavigationDrawerScreen extends BaseState<NavigationDrawerScreen> {
                               padding: const EdgeInsets.all(6.0),
                               child: GestureDetector(
                                 onTap: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => const DashboardNewScreen()));
+                                  Navigator.pop(context);
                                 },
                                 child: const Text(
                                   "Dashboard",
@@ -399,6 +424,134 @@ class _NavigationDrawerScreen extends BaseState<NavigationDrawerScreen> {
           Navigator.pop(context);
           return Future.value(true);
         });
+  }
+
+  void profileDialog() {
+    showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: white,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12))),
+      builder: (BuildContext context) {
+        return Wrap(
+          children: [
+            Container(
+              margin: const EdgeInsets.all(15),
+              padding: const EdgeInsets.all(15),
+              decoration:  BoxDecoration(borderRadius: const BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12)), color: white),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    height: 2,
+                    width: 40,
+                    alignment: Alignment.center,
+                    color: orange,
+                    margin: const EdgeInsets.only(top: 10, bottom: 10),
+                  ),
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.pop(context);
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
+                          child: Row(
+                            children: [
+                              Container(
+                                  width: 38,
+                                  height: 38,
+                                  decoration: const BoxDecoration(
+                                      color: navigationIcon,
+                                      shape: BoxShape.circle
+                                  ),
+                                  margin: const EdgeInsets.only(right: 12),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Image.asset("assets/images/ic_user.png", height: 22, width: 22, color: blackConst),
+                                  )),
+                              Text('My Profile', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: black)),
+                            ],
+                          ),
+                        ),
+                        const Divider(height: 0.5,color: text_light,thickness: 0.5,)
+                      ],
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.pop(context);
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
+                          child: Row(
+                            children: [
+                              Container(
+                                  width: 38,
+                                  height: 38,
+                                  decoration: const BoxDecoration(
+                                      color: navigationIcon,
+                                      shape: BoxShape.circle
+                                  ),
+                                  margin: const EdgeInsets.only(right: 12),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Image.asset("assets/images/like.png", height: 22, width: 22, color: blackConst),
+                                  )),
+                              Text('Favourite Post', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: black)),
+                            ],
+                          ),
+                        ),
+                        const Divider(height: 0.5,color: text_light,thickness: 0.5,)
+                      ],
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.pop(context);
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0 ,12, 0, 12),
+                          child: Row(
+                            children: [
+                              Container(
+                                  width: 38,
+                                  height: 38,
+                                  decoration: const BoxDecoration(
+                                      color: navigationIcon,
+                                      shape: BoxShape.circle
+                                  ),
+                                  margin: const EdgeInsets.only(right: 12),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Image.asset("assets/images/saved.png", height: 22, width: 22, color: blackConst),
+                                  )),
+                              Text('Bookmark Post', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: black)),
+                            ],
+                          ),
+                        ),
+                        const Divider(height: 0.5,color: text_light,thickness: 0.5,)
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   void logoutFromApp() {

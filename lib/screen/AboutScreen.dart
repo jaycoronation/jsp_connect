@@ -60,7 +60,7 @@ class _AboutScreen extends BaseState<AboutScreen> {
 
   @override
   Widget build(BuildContext context) {
-    precacheImage(AssetImage("assets/images/ic_about_jspl_1-min_lsvqzo.jpeg"), context);
+    precacheImage(const AssetImage("assets/images/ic_about_jspl_1-min_lsvqzo.jpeg"), context);
     return WillPopScope(
           child: Scaffold(
             backgroundColor: blackConst,
@@ -265,7 +265,7 @@ class _AboutScreen extends BaseState<AboutScreen> {
                                        color: bgMain.withOpacity(0.8),
                                      ),
                                      padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
-                                     child:  Text("Read More",style: TextStyle(color: whiteConst,fontWeight: FontWeight.w400,fontSize: 14,fontFamily: roboto)),
+                                     child:  const Text("Read More",style: TextStyle(color: whiteConst,fontWeight: FontWeight.w400,fontSize: 14,fontFamily: roboto)),
                                    ),
                                  )
                                ],

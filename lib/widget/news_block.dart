@@ -105,41 +105,7 @@ class NewsBlock extends StatelessWidget {
                   style:  TextStyle(fontSize: 13, fontFamily: roboto, fontWeight: FontWeight.w400, color: newsText),
                 ),
                 const Spacer(),
-                GestureDetector(
-                  onTap: () async {
-                    if(listNews[index].media!.isNotEmpty)
-                    {
-                      if(listNews[index].media![0].media.toString().isNotEmpty)
-                      {
-                        Share.share(listNews[index].media![0].media.toString());
-                        _sharePost(listNews[index].id.toString());
-                        setState(() {
-                          listNews[index].setSharesCount = listNews[index].sharesCount! + 1;
-                        });
-                      }
-                      else
-                      {
-                        showSnackBar("News link not found.", context);
-                      }
-                    }
-                    else
-                    {
-                      showSnackBar("News link not found.", context);
-                    }
-                  },
-                  child: Container(
-                    width: 42,
-                    height: 42,
-                    alignment: Alignment.center,
-                    child: Image.asset('assets/images/share.png', height: 22, width: 22, color: newsText),
-                  ),
-                ),
-                Text(
-                  listNews[index].sharesCount.toString(),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 13, fontWeight: FontWeight.w400, fontFamily: roboto, color: newsText),
-                ),
+
                 Container(
                   width: 8,
                 )

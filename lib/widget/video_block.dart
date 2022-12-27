@@ -137,7 +137,7 @@ class VideoBlock extends StatelessWidget {
                             listVideos[index].saveTimestamp.toString(),
                             style: const TextStyle(fontSize: 14, fontFamily: roboto, fontWeight: FontWeight.w400, color: text_light),
                           ),
-                          Row(
+                          /*Row(
                             children: [
                               GestureDetector(
                                 onTap: (){
@@ -175,7 +175,7 @@ class VideoBlock extends StatelessWidget {
                                     fontSize: 14, fontWeight: FontWeight.w400, fontFamily: roboto, color: whiteConst),
                               ),
                               Container(width: 16,),
-                              /*LikeButton(
+                              *//*LikeButton(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 size: 24,
@@ -237,9 +237,9 @@ class VideoBlock extends StatelessWidget {
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
                                     fontSize: 14, fontWeight: FontWeight.w400, fontFamily: roboto, color: whiteConst),
-                              ),*/
+                              ),*//*
                             ],
-                          ),
+                          ),*/
                         ],
                       ),
                     )

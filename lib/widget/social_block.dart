@@ -128,7 +128,7 @@ class SocialBlock extends StatelessWidget {
                               style: const TextStyle(
                                   fontWeight: FontWeight.w400, fontFamily: aileron, fontSize: 14, color: darkGray)),
                         ),
-                        Row(
+                       /* Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             GestureDetector(
@@ -158,7 +158,7 @@ class SocialBlock extends StatelessWidget {
                               style:  TextStyle(fontSize: 14, fontWeight: FontWeight.w400, fontFamily: roboto, color: lightGray),
                             )
                           ],
-                        ),
+                        ),*/
                       ],
                     ),
                   )
