@@ -1,5 +1,5 @@
 const String MAIN_URL = "https://jackpotshop.coronation.in/jspl/";
-const String API_URL = "http://jsp.coronation.in/api/services/";
+const String API_URL = "https://jsp.coronation.in/api/services/";
 //const String API_URL = "http://192.168.50.34/jindal/services/";
 var FROM_APP = "true";
 String loginWithOTP = "login/login_with_otp";
@@ -7,6 +7,7 @@ String verifyOTP = "login/verify_otp";
 String updateDeviceToken = "update_device_token";
 String dashboardData = "dashboradData/list";
 String posts = "post_list";
+String activityList = "activityList";
 String postDetails = "post_details";
 String postMetaSave = "post_meta_save";
 String suggestion_save = "suggestion_save";
@@ -14,6 +15,7 @@ String magazineList = "magazine_list";
 String leadershipList = "leadershipList";
 String notification_list = "notification_list";
 String unreadNotification = "unread_notification";
+String tagList = "manage_tag/list";
 
 //String dashboardApi = "dashbord.json";
 //String videoApi = "video.json";

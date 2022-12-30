@@ -76,7 +76,6 @@ Color newScreenBg= isDarkMode ? const Color(0xffff181c1f) : const Color(0xffefef
 const Color border= Color(0xff015cfd);
 
 // FOR DARK
-
 /*final Shader linearGradient = const LinearGradient(
   colors: <Color>[Color(0xff000000), Color(0xffaaa9a3)],
 ).createShader(const Rect.fromLTWH(0.0, 0.0, 800.0, 80.0));

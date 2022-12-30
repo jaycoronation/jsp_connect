@@ -15,6 +15,7 @@ import '../constant/colors.dart';
 import '../utils/base_class.dart';
 import '../utils/session_manager_methods.dart';
 import 'AboutScreen.dart';
+import 'ActivityListScreen.dart';
 import 'ContactScreen.dart';
 import 'LoginScreen.dart';
 import 'MediaCoverageScreen.dart';
@@ -437,6 +438,7 @@ class _NavigationDrawerScreen extends BaseState<NavigationDrawerScreen> {
             Container(
               margin: const EdgeInsets.all(15),
               padding: const EdgeInsets.all(15),
+              width: double.infinity,
               decoration:  BoxDecoration(borderRadius: const BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12)), color: white),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -453,96 +455,92 @@ class _NavigationDrawerScreen extends BaseState<NavigationDrawerScreen> {
                     onTap: (){
                       Navigator.pop(context);
                     },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
-                          child: Row(
-                            children: [
-                              Container(
-                                  width: 38,
-                                  height: 38,
-                                  decoration: const BoxDecoration(
-                                      color: navigationIcon,
-                                      shape: BoxShape.circle
-                                  ),
-                                  margin: const EdgeInsets.only(right: 12),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Image.asset("assets/images/ic_user.png", height: 22, width: 22, color: blackConst),
-                                  )),
-                              Text('My Profile', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: black)),
-                            ],
-                          ),
+                    child:  Container(
+                      color: Colors.transparent,
+                      width: double.infinity,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
+                        child: Row(
+                          children: [
+                            Container(
+                                width: 38,
+                                height: 38,
+                                decoration: const BoxDecoration(
+                                    color: navigationIcon,
+                                    shape: BoxShape.circle
+                                ),
+                                margin: const EdgeInsets.only(right: 12),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Image.asset("assets/images/ic_user.png", height: 22, width: 22, color: blackConst),
+                                )),
+                            Text('My Profile', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: black)),
+                          ],
                         ),
-                        const Divider(height: 0.5,color: text_light,thickness: 0.5,)
-                      ],
+                      ),
                     ),
                   ),
+                  const Divider(height: 0.5,color: text_light,thickness: 0.5,),
                   GestureDetector(
                     onTap: (){
                       Navigator.pop(context);
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const ActivityListScreen("Favourite Post")));
                     },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
-                          child: Row(
-                            children: [
-                              Container(
-                                  width: 38,
-                                  height: 38,
-                                  decoration: const BoxDecoration(
-                                      color: navigationIcon,
-                                      shape: BoxShape.circle
-                                  ),
-                                  margin: const EdgeInsets.only(right: 12),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Image.asset("assets/images/like.png", height: 22, width: 22, color: blackConst),
-                                  )),
-                              Text('Favourite Post', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: black)),
-                            ],
-                          ),
+                    child: Container(
+                      color: Colors.transparent,
+                      width: double.infinity,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Container(
+                                width: 38,
+                                height: 38,
+                                decoration: const BoxDecoration(
+                                    color: navigationIcon,
+                                    shape: BoxShape.circle
+                                ),
+                                margin: const EdgeInsets.only(right: 12),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Image.asset("assets/images/like.png", height: 22, width: 22, color: blackConst),
+                                )),
+                            Text('Favourite Post', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: black)),
+                          ],
                         ),
-                        const Divider(height: 0.5,color: text_light,thickness: 0.5,)
-                      ],
+                      ),
                     ),
                   ),
+                  const Divider(height: 0.5,color: text_light,thickness: 0.5,),
                   GestureDetector(
                     onTap: (){
                       Navigator.pop(context);
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const ActivityListScreen("Bookmark Post")));
                     },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0 ,12, 0, 12),
-                          child: Row(
-                            children: [
-                              Container(
-                                  width: 38,
-                                  height: 38,
-                                  decoration: const BoxDecoration(
-                                      color: navigationIcon,
-                                      shape: BoxShape.circle
-                                  ),
-                                  margin: const EdgeInsets.only(right: 12),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Image.asset("assets/images/saved.png", height: 22, width: 22, color: blackConst),
-                                  )),
-                              Text('Bookmark Post', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: black)),
-                            ],
-                          ),
+                    child: Container(
+                      width: double.infinity,
+                      color: Colors.transparent,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(0 ,12, 0, 12),
+                        child: Row(
+                          children: [
+                            Container(
+                                width: 38,
+                                height: 38,
+                                decoration: const BoxDecoration(
+                                    color: navigationIcon,
+                                    shape: BoxShape.circle
+                                ),
+                                margin: const EdgeInsets.only(right: 12),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Image.asset("assets/images/saved.png", height: 22, width: 22, color: blackConst),
+                                )),
+                            Text('Bookmark Post', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: black)),
+                          ],
                         ),
-                        const Divider(height: 0.5,color: text_light,thickness: 0.5,)
-                      ],
+                      ),
                     ),
                   ),
                 ],

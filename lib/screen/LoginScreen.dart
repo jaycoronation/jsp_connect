@@ -1,8 +1,6 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import '../constant/colors.dart';
 import '../utils/app_utils.dart';
 import '../utils/base_class.dart';
@@ -169,9 +167,9 @@ class _LoginScreen extends BaseState<LoginScreen> {
                                   )
                                 ],
                               ),
-                            ),
+                            )
                           ],
-                        ),
+                        )
                       ],
                     ),
                   ),

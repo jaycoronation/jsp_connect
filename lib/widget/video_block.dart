@@ -104,7 +104,7 @@ class VideoBlock extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
+                    Visibility(visible : listVideos[index].location.toString().isNotEmpty , child: Container(
                       padding: const EdgeInsets.fromLTRB(14, 8, 14, 8),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(22),
@@ -112,7 +112,7 @@ class VideoBlock extends StatelessWidget {
                       ),
                       alignment: Alignment.center,
                       child: Text(listVideos[index].location.toString(),style: const TextStyle(color: blackConst,fontSize: 12,fontWeight: FontWeight.w500,fontFamily: roboto)),
-                    ),
+                    )),
                     Container(
                         width: MediaQuery.of(context).size.width - 50,
                         margin: const EdgeInsets.only(top: 12, right: 18,bottom: 22),

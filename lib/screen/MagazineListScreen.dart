@@ -242,7 +242,6 @@ class _MagazineListScreen extends BaseState<MagazineListScreen> {
                                                                       if(listMagazine[index].posts![indexNew].media![0].media.toString().isNotEmpty)
                                                                       {
                                                                         Share.share(listMagazine[index].posts![indexNew].media![0].media.toString());
-                                                                        _sharePost(listMagazine[index].posts![indexNew].id.toString());
                                                                         setState(() {
                                                                           listMagazine[index].posts![indexNew].setSharesCount = listMagazine[index].posts![indexNew].sharesCount! + 1;
                                                                         });
@@ -256,6 +255,7 @@ class _MagazineListScreen extends BaseState<MagazineListScreen> {
                                                                     {
                                                                       showSnackBar("Magazine link not found.", context);
                                                                     }
+                                                                    _sharePost(listMagazine[index].posts![indexNew].id.toString());
                                                                   },
                                                                   child: Container(
                                                                     width: 36,

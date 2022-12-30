@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:chip_list/chip_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -10,6 +11,7 @@ import '../constant/api_end_point.dart';
 import '../constant/colors.dart';
 import '../model/DashBoardDataResponse.dart';
 import '../model/PostListResponse.dart';
+import '../model/TagListResponse.dart';
 import '../utils/app_utils.dart';
 import '../utils/base_class.dart';
 import '../widget/loading.dart';
@@ -34,6 +36,7 @@ class _SearchPostScreen extends BaseState<SearchPostScreen> {
   bool isScrollingDown = false;
   late ScrollController _scrollViewController;
   List<Posts> listSearch = List<Posts>.empty(growable: true);
+  List<String> listTags = List<String>.empty(growable: true);
   TextEditingController searchController = TextEditingController();
   var searchText = "";
 
@@ -55,6 +58,8 @@ class _SearchPostScreen extends BaseState<SearchPostScreen> {
       }
       pagination();
     });
+
+    getAllTags();
 
     super.initState();
   }
@@ -102,214 +107,228 @@ class _SearchPostScreen extends BaseState<SearchPostScreen> {
                 Container(),
                 Expanded(
                     child: Container(
-                  margin: const EdgeInsets.only(right: 15, top: 6, bottom: 6),
-                  child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(22), // if you need this
-                        side: const BorderSide(
-                          color: lightGrayNew,
-                          width: 0,
-                        ),
-                      ),
-                      elevation: 0,
-                      child: Container(
-                        height: 45,
-                        alignment: Alignment.center,
-                        padding: const EdgeInsets.only(left: 12),
-                        width: double.infinity,
-                        child: TextField(
-                          keyboardType: TextInputType.text,
-                          textCapitalization: TextCapitalization.sentences,
-                          textAlign: TextAlign.start,
-                          controller: searchController,
-                          cursorColor: blackConst,
-                          style: TextStyle(
-                            color: blackConst,
-                            fontFamily: aileron,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
+                      margin: const EdgeInsets.only(right: 15, top: 6, bottom: 6),
+                      child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(22), // if you need this
+                            side: const BorderSide(
+                              color: lightGrayNew,
+                              width: 0,
+                            ),
                           ),
-                          decoration: InputDecoration(
-                              contentPadding: EdgeInsets.zero,
-                              hintText: "Search post..",
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(color: Colors.transparent, width: 0),
-                                borderRadius: BorderRadius.circular(22),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(color: Colors.transparent, width: 0),
-                                borderRadius: BorderRadius.circular(22),
-                              ),
-                              hintStyle: TextStyle(
+                          elevation: 0,
+                          child: Container(
+                            height: 45,
+                            alignment: Alignment.center,
+                            padding: const EdgeInsets.only(left: 12),
+                            width: double.infinity,
+                            child: TextField(
+                              keyboardType: TextInputType.text,
+                              textCapitalization: TextCapitalization.sentences,
+                              textAlign: TextAlign.start,
+                              controller: searchController,
+                              cursorColor: blackConst,
+                              style: const TextStyle(
                                 color: blackConst,
+                                fontFamily: aileron,
+                                fontWeight: FontWeight.w600,
                                 fontSize: 16,
-                                fontFamily: gilroy,
-                                fontWeight: FontWeight.w400,
                               ),
-                              suffixIcon: InkWell(
-                                child: Icon(
-                                  Icons.close,
-                                  size: 24,
-                                  color: blackConst,
-                                ),
-                                onTap: () {
-                                  setState(() {
-                                    searchController.text = "";
-                                    searchText = "";
-                                    if (listSearch.isNotEmpty) {
-                                      listSearch = [];
-                                    }
-                                  });
-                                },
-                              )),
-                          onChanged: (text) {
-                            searchController.text = text;
-                            searchController.selection = TextSelection.fromPosition(TextPosition(offset: searchController.text.length));
-                            if (text.length > 3) {
-                              searchText = searchController.text.toString().trim();
-                              if (listSearch.isNotEmpty) {
-                                listSearch = [];
-                              }
-                              getApiData(true);
-                            } else if (text.length == 1 || text.length == 2 || text.length == 3) {
-                            } else {
-                              searchText = "";
-                              if (listSearch.isNotEmpty) {
-                                listSearch = [];
-                              }
-                              getApiData(true);
-                            }
-                          },
-                        ),
-                      )),
-                )),
+                              decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.zero,
+                                  hintText: "Search post..",
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(color: Colors.transparent, width: 0),
+                                    borderRadius: BorderRadius.circular(22),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(color: Colors.transparent, width: 0),
+                                    borderRadius: BorderRadius.circular(22),
+                                  ),
+                                  hintStyle: const TextStyle(
+                                    color: blackConst,
+                                    fontSize: 16,
+                                    fontFamily: gilroy,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                  suffixIcon: InkWell(
+                                    child: const Icon(
+                                      Icons.close,
+                                      size: 24,
+                                      color: blackConst,
+                                    ),
+                                    onTap: () {
+                                      setState(() {
+                                        searchController.text = "";
+                                        searchText = "";
+                                        if (listSearch.isNotEmpty) {
+                                          listSearch = [];
+                                        }
+                                      });
+                                    },
+                                  )),
+                              onChanged: (text) {
+                                searchController.text = text;
+                                searchController.selection = TextSelection.fromPosition(TextPosition(offset: searchController.text.length));
+                                if (text.length > 3) {
+                                  searchText = searchController.text.toString().trim();
+                                  if (listSearch.isNotEmpty) {
+                                    listSearch = [];
+                                  }
+                                  getApiData(true);
+                                } else if (text.length == 1 || text.length == 2 || text.length == 3) {} else {
+                                  searchText = "";
+                                  if (listSearch.isNotEmpty) {
+                                    listSearch = [];
+                                  }
+                                  getApiData(true);
+                                }
+                              },
+                            ),
+                          )),
+                    )),
                 Container()
               ],
             ),
           ),
           backgroundColor: newScreenBg,
           resizeToAvoidBottomInset: true,
-          body: _isLoading
-              ? const LoadingWidget()
-              : (listSearch.isEmpty && searchText.isNotEmpty)
-                  ? const MyNoDataWidget(msg: 'No post data found!')
-                  : Column(
-                      children: [
-                        Expanded(
-                            child: AnimationLimiter(
-                            child: ListView.builder(
-                              scrollDirection: Axis.vertical,
-                              physics: const AlwaysScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              controller: _scrollViewController,
-                              itemCount: listSearch.length,
-                              itemBuilder: (context, index) {
-                                return AnimationConfiguration.staggeredList(
-                                  position: index,
-                                  duration: const Duration(milliseconds: 375),
-                                  child: SlideAnimation(
-                                    verticalOffset: 50.0,
-                                    child: FadeInAnimation(
-                                      child: GestureDetector(
-                                        onTap: () async {
+          body: _isLoading ? const LoadingWidget() : (listSearch.isEmpty && searchText.isNotEmpty)
+              ? const MyNoDataWidget(msg: 'No post data found!')
+              : (listSearch.isEmpty && searchText.isEmpty) ? showAllTags() : Column(
+            children: [
+              Expanded(
+                  child: AnimationLimiter(
+                    child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      controller: _scrollViewController,
+                      itemCount: listSearch.length,
+                      itemBuilder: (context, index) {
+                        return AnimationConfiguration.staggeredList(
+                          position: index,
+                          duration: const Duration(milliseconds: 375),
+                          child: SlideAnimation(
+                            verticalOffset: 50.0,
+                            child: FadeInAnimation(
+                              child: GestureDetector(
+                                onTap: () async {
+                                  String typeId = listSearch[index].postTypeId.toString();
+                                  String postId = listSearch[index].id.toString();
 
-                                          String typeId = listSearch[index].postTypeId.toString();
-                                          String postId = listSearch[index].id.toString();
-
-                                          if (postId != null) {
-                                            if (postId.toString().isNotEmpty) {
-                                              if (typeId == "1") {
-                                                if (listSearch[index].socialMediaLink!.isNotEmpty) {
-                                                  if (await canLaunchUrl(Uri.parse(listSearch[index].socialMediaLink!.toString()))) {
-                                                    launchUrl(Uri.parse(listSearch[index].socialMediaLink!.toString()), mode: LaunchMode.externalNonBrowserApplication);
-                                                  }
-                                                }
-                                              } else if (typeId == "2" || typeId == "3" || typeId == "4" || typeId == "6" || typeId == "8" || typeId == "10") {
-                                                Navigator.push(context, MaterialPageRoute(builder: (context) => CommonDetailsScreen(postId.toString(), typeId)));
-                                              } else if (typeId == "7") {
-                                                Navigator.push(context, MaterialPageRoute(builder: (context) => const MagazineListScreen()));
-                                              }
-                                            } else {
-                                              showSnackBar("Post id not found.", context);
-                                            }
-                                          } else {
-                                            showSnackBar("Post id not found.", context);
+                                  if (postId != null) {
+                                    if (postId
+                                        .toString()
+                                        .isNotEmpty) {
+                                      if (typeId == "1") {
+                                        if (listSearch[index].socialMediaLink!.isNotEmpty) {
+                                          if (await canLaunchUrl(Uri.parse(listSearch[index].socialMediaLink!.toString()))) {
+                                            launchUrl(Uri.parse(listSearch[index].socialMediaLink!.toString()),
+                                                mode: LaunchMode.externalNonBrowserApplication);
                                           }
-                                          
-                                          
-                                        },
-                                        child: Column(
-                                          children: [
-                                            Container(
-                                              width: double.infinity,
-                                              padding: const EdgeInsets.fromLTRB(10, 8, 8, 8),
-                                              margin: const EdgeInsets.only(left: 12, right: 12, top: 16),
-                                              decoration: BoxDecoration(
-                                                color: newsBlock,
-                                                borderRadius: BorderRadius.circular(20),
-                                              ),
-                                              child: Row(
+                                        }
+                                      } else
+                                      if (typeId == "2" || typeId == "3" || typeId == "4" || typeId == "6" || typeId == "8" || typeId == "10") {
+                                        Navigator.push(
+                                            context, MaterialPageRoute(builder: (context) => CommonDetailsScreen(postId.toString(), typeId)));
+                                      } else if (typeId == "7") {
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => const MagazineListScreen()));
+                                      }
+                                    } else {
+                                      showSnackBar("Post id not found.", context);
+                                    }
+                                  } else {
+                                    showSnackBar("Post id not found.", context);
+                                  }
+                                },
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      width: double.infinity,
+                                      padding: const EdgeInsets.fromLTRB(10, 8, 8, 8),
+                                      margin: const EdgeInsets.only(left: 12, right: 12, top: 16),
+                                      decoration: BoxDecoration(
+                                        color: newsBlock,
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: Container(
+                                              margin: const EdgeInsets.only(right: 12, top: 12, bottom: 12),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
-                                                  Expanded(
-                                                    child: Container(
-                                                      margin: const EdgeInsets.only(right: 12, top: 12, bottom: 12),
-                                                      child: Column(
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                        children: [
-                                                          Text(listSearch[index].title.toString(),
-                                                              overflow: TextOverflow.ellipsis,
-                                                              maxLines: 3,
-                                                              style: TextStyle(
-                                                                  color: black,
-                                                                  fontWeight: FontWeight.w500,
-                                                                  fontFamily: gilroy,
-                                                                  fontSize: 16,
-                                                                  overflow: TextOverflow.ellipsis)),
-                                                          Gap(6),
-                                                          Text(listSearch[index].shortDescription.toString(),
-                                                              overflow: TextOverflow.ellipsis,
-                                                              maxLines: 3,
-                                                              style: TextStyle(
-                                                                  color: black,
-                                                                  fontWeight: FontWeight.w500,
-                                                                  fontFamily: gilroy,
-                                                                  fontSize: 16,
-                                                                  overflow: TextOverflow.ellipsis)),
-                                                          Gap(12),
-                                                          Text(
-                                                            listSearch[index].saveTimestamp.toString(),
-                                                            style:
-                                                                TextStyle(fontSize: 13, fontFamily: roboto, fontWeight: FontWeight.w400, color: newsText),
-                                                          ),
-                                                        ],
+                                                  Row(
+                                                    children: [
+                                                      Container(
+                                                        padding: const EdgeInsets.fromLTRB(14, 8, 14, 8),
+                                                        decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.circular(20),
+                                                            color: white.withOpacity(0.5)
+                                                        ),
+                                                        alignment: Alignment.center,
+                                                        child: Text(getPostTypeName(listSearch[index].postTypeId.toString()),style:  TextStyle(color: black,fontSize: 12,fontWeight: FontWeight.w500,fontFamily: roboto)),
                                                       ),
-                                                    ),
+                                                      Expanded(child: Container()),
+                                                    ],
                                                   ),
-                                                  SizedBox(
-                                                    width: 100,
-                                                    height: 100,
-                                                    child: ClipRRect(
-                                                      borderRadius: BorderRadius.circular(20.0),
-                                                      child: Image.network(listSearch[index].featuredImage.toString(),
-                                                          width: 100, height: 100, fit: BoxFit.cover),
-                                                    ),
-                                                  )
+                                                  Gap(6),
+                                                  Text(listSearch[index].title.toString(),
+                                                      overflow: TextOverflow.ellipsis,
+                                                      maxLines: 3,
+                                                      style: TextStyle(
+                                                          color: black,
+                                                          fontWeight: FontWeight.w500,
+                                                          fontFamily: gilroy,
+                                                          fontSize: 16,
+                                                          overflow: TextOverflow.ellipsis)),
+                                                  Gap(6),
+                                                  Text(listSearch[index].shortDescription.toString(),
+                                                      overflow: TextOverflow.ellipsis,
+                                                      maxLines: 3,
+                                                      style: TextStyle(
+                                                          color: black,
+                                                          fontWeight: FontWeight.w500,
+                                                          fontFamily: gilroy,
+                                                          fontSize: 16,
+                                                          overflow: TextOverflow.ellipsis)),
+                                                  Gap(12),
+                                                  Text(
+                                                    listSearch[index].saveTimestamp.toString(),
+                                                    style:
+                                                    TextStyle(fontSize: 13, fontFamily: roboto, fontWeight: FontWeight.w400, color: newsText),
+                                                  ),
                                                 ],
                                               ),
                                             ),
-                                            Visibility(visible : index == listSearch.length -1 ,child: Gap(20))
-                                          ],
-                                        ),
+                                          ),
+                                          SizedBox(
+                                            width: 100,
+                                            height: 100,
+                                            child: ClipRRect(
+                                              borderRadius: BorderRadius.circular(20.0),
+                                              child: Image.network(listSearch[index].featuredImage.toString(),
+                                                  width: 100, height: 100, fit: BoxFit.cover),
+                                            ),
+                                          )
+                                        ],
                                       ),
                                     ),
-                                  ),
-                                );
-                              },
+                                    Visibility(visible: index == listSearch.length - 1, child: Gap(20))
+                                  ],
+                                ),
+                              ),
                             ),
-                        )),
-                        Visibility(visible: _isLoadingMore, child: const LoadingMoreWidget())
-                      ],
+                          ),
+                        );
+                      },
                     ),
+                  )),
+              Visibility(visible: _isLoadingMore, child: const LoadingMoreWidget())
+            ],
+          ),
         ),
         onWillPop: () {
           Navigator.pop(context);
@@ -378,8 +397,101 @@ class _SearchPostScreen extends BaseState<SearchPostScreen> {
     }
   }
 
+  getAllTags() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    HttpWithMiddleware http = HttpWithMiddleware.build(middlewares: [
+      HttpLogger(logLevel: LogLevel.BODY),
+    ]);
+
+    final url = Uri.parse(API_URL + tagList);
+    Map<String, String> jsonBody = {
+      'from_app': FROM_APP
+    };
+    final response = await http.post(url, body: jsonBody, headers: {"Access-Token": sessionManager.getAccessToken().toString().trim()});
+    final statusCode = response.statusCode;
+    final body = response.body;
+    Map<String, dynamic> apiResponse = jsonDecode(body);
+    var dataResponse = TagListResponse.fromJson(apiResponse);
+    if (statusCode == 200 && dataResponse.success == 1) {
+      if (dataResponse.tags != null && dataResponse.tags!.isNotEmpty) {
+        for (int i = 0; i < dataResponse.tags!.length; i++) {
+          listTags.add(dataResponse.tags![i].tagName.toString());
+        }
+
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
   @override
   void castStatefulWidget() {
     widget is SearchPostScreen;
+  }
+
+  Container showAllTags() {
+    return
+      Container(
+        margin: const EdgeInsets.only(left: 20,right: 20,bottom: 20,top: 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "TRENDING TAGS",
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: black,
+                  fontSize: 14),
+            ),
+            Expanded(child:  SingleChildScrollView(
+              child: Wrap(
+                children: [
+                  Container(
+                      margin: const EdgeInsets.only(top: 10),
+                      padding: const EdgeInsets.all(10),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          color: grayNew,
+                          borderRadius: BorderRadius.circular(10)
+                      ),
+                      child: ChipList(
+                        listOfChipNames: listTags,
+                        scrollPhysics: AlwaysScrollableScrollPhysics(),
+                        supportsMultiSelect: true,
+                        activeBgColorList:  [white],
+                        inactiveBgColorList: [white],
+                        activeTextColorList: [black],
+                        inactiveTextColorList: [black],
+                        inactiveBorderColorList: [white],
+                        activeBorderColorList: [white],
+                        listOfChipIndicesCurrentlySeclected: [],
+                        shouldWrap: true,
+                        extraOnToggle: (val) {
+                          setState(() {
+                            searchText = listTags[val].toString().trim();
+                            searchController.text = searchText;
+                            searchController.selection = TextSelection.fromPosition(TextPosition(offset: searchController.text.length));
+                            if (listSearch.isNotEmpty) {
+                              listSearch = [];
+                            }
+                            getApiData(true);
+                          });
+                        },
+                      ))
+                ],
+              ),
+            ))
+          ],
+        ),
+      );
   }
 }

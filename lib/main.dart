@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -24,6 +25,18 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+    if(kIsWeb)
+    {
+      await Firebase.initializeApp(
+        // Replace with actual values
+        options: const FirebaseOptions(
+          apiKey: "AIzaSyA2GIssNLcetXVngOSsM_skQtHeB2SPn1c",
+          appId: "1:1074098588756:web:b20e714cfdb5e29444b1c1",
+          messagingSenderId: "1074098588756",
+          projectId: "jspl-connect",
+        ),
+      );
+    }
   PaintingBinding.instance.imageCache.maximumSizeBytes = 1000 << 40; // for increase the cache memory
   await SessionManagerMethods.init();
   await PushNotificationService().setupInteractedMessage();
@@ -47,6 +60,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: createMaterialColor(white),
+          platform: TargetPlatform.iOS,
         ),
         darkTheme: SessionManager().getDarkMode() ?? false ? ThemeData.dark() : ThemeData.light(),
         home: const MyHomePage(),

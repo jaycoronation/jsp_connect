@@ -229,16 +229,20 @@ class _CommonDetailsScreen extends BaseState<CommonDetailsScreen> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          if (postDetailsData.media!.isNotEmpty) {
+                          if (postDetailsData.media!.isNotEmpty)
+                          {
                             if (postDetailsData.media![0].media.toString().isNotEmpty) {
                               Share.share(postDetailsData.media![0].media.toString());
                               postDetailsData.sharesCount = int.parse(postDetailsData.sharesCount.toString()) + 1;
                             } else {
                               showSnackBar("Link not found.", context);
                             }
-                          } else {
+                          }
+                          else
+                          {
                             showSnackBar("Link not found.", context);
                           }
+
                           _sharePost(postId);
                         },
                         behavior: HitTestBehavior.opaque,

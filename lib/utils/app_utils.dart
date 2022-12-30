@@ -39,6 +39,56 @@ String getPrice(String text) {
     }
 }
 
+String getPostTypeName(String typeId) {
+  if(typeId.isNotEmpty)
+  {
+    try {
+        if(typeId == "1")
+        {
+           return "Social Media";
+        }
+        else if(typeId == "2")
+        {
+          return "Events & Enagagements";
+        }
+        else if(typeId == "3")
+        {
+          return "Videos";
+        }
+        else if(typeId == "4")
+        {
+          return "News";
+        }
+        else if(typeId == "6")
+        {
+          return "Blog";
+        }
+        else if(typeId == "7")
+        {
+          return "Magazine";
+        }
+        else if(typeId == "8")
+        {
+          return "Media Coverage";
+        }
+        else if(typeId == "10")
+        {
+          return "Our Leadership";
+        }
+        else
+          {
+            return "";
+          }
+    } catch (e) {
+      return "";
+    }
+  }
+  else
+  {
+    return "";
+  }
+}
+
 noInterNet(BuildContext? context) {
   try {
     return ScaffoldMessenger.of(context!).showSnackBar(

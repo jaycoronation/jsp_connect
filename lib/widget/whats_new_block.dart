@@ -16,27 +16,27 @@ import '../screen/SocialWallScreen.dart';
 import '../utils/app_utils.dart';
 
 class WhatsNewBlock extends StatelessWidget {
-  final List<Posts> listWhatsNew;
+  final List<Posts> listData;
   final int index;
   final StateSetter setState;
 
-  const WhatsNewBlock({Key? key, required this.listWhatsNew, required this.index, required this.setState}) : super(key: key);
+  const WhatsNewBlock({Key? key, required this.listData, required this.index, required this.setState}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        /*  final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => CommonDetailsScreen(listWhatsNew[index].id.toString(), "2")));
+        /*  final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => CommonDetailsScreen(listData[index].id.toString(), "2")));
         print(result);*/
-        String typeId = listWhatsNew[index].postTypeId.toString();
-        String postId = listWhatsNew[index].id.toString();
+        String typeId = listData[index].postTypeId.toString();
+        String postId = listData[index].id.toString();
 
         if (postId != null) {
           if (postId.toString().isNotEmpty) {
             if (typeId == "1") {
-              if (listWhatsNew[index].socialMediaLink!.isNotEmpty) {
-                if (await canLaunchUrl(Uri.parse(listWhatsNew[index].socialMediaLink!.toString()))) {
-                  launchUrl(Uri.parse(listWhatsNew[index].socialMediaLink!.toString()), mode: LaunchMode.externalNonBrowserApplication);
+              if (listData[index].socialMediaLink!.isNotEmpty) {
+                if (await canLaunchUrl(Uri.parse(listData[index].socialMediaLink!.toString()))) {
+                  launchUrl(Uri.parse(listData[index].socialMediaLink!.toString()), mode: LaunchMode.externalNonBrowserApplication);
                 }
               }
             } else if (typeId == "2" || typeId == "3" || typeId == "4" || typeId == "6" || typeId == "8" || typeId == "10") {
@@ -65,39 +65,32 @@ class WhatsNewBlock extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(20),
-                  child: Image.network(listWhatsNew[index].featuredImage.toString(),
+                  child: Image.network(listData[index].featuredImage.toString(),
                     width: MediaQuery.of(context).size.width,
                     height: 200,
                     fit: BoxFit.cover,
                   ),
                 ),
-                /*Positioned(
-                                                              bottom: 22,
-                                                              right: 12,
-                                                              child: Row(
-                                                                children: [
-
-                                                                  Container(
-                                                                    width: 36,
-                                                                    height: 36,
-                                                                    decoration: BoxDecoration(
-                                                                        color: whiteConst.withOpacity(0.6),
-                                                                        shape: BoxShape.circle
-                                                                    ),
-                                                                    child: Padding(
-                                                                      padding: const EdgeInsets.all(8.0),
-                                                                      child: Image.asset("assets/images/share.png",width: 24,height: 24),
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              )
-                                                          )*/
+                Visibility(visible : getPostTypeName(listData[index].postTypeId.toString()).isNotEmpty , child:
+                Positioned(
+                    top: 15,
+                    left: 5,
+                    child: Container(
+                      padding: const EdgeInsets.fromLTRB(14, 8, 14, 8),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: white.withOpacity(0.5)
+                      ),
+                      alignment: Alignment.center,
+                      child: Text(getPostTypeName(listData[index].postTypeId.toString()),style:  TextStyle(color: black,fontSize: 12,fontWeight: FontWeight.w500,fontFamily: roboto)),
+                    ))
+                ),
               ],
             ),
             Container(
               padding: const EdgeInsets.fromLTRB(12, 6, 12, 0),
               child:  Text(
-                listWhatsNew[index].title.toString(),
+                listData[index].title.toString(),
                 style: TextStyle(
                     height: 1.5,
                     color: black,
@@ -114,7 +107,7 @@ class WhatsNewBlock extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    listWhatsNew[index].saveTimestamp.toString(),
+                    listData[index].saveTimestamp.toString(),
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(fontSize: 12, fontFamily: roboto, fontWeight: FontWeight.w400, color: black,
                       overflow: TextOverflow.ellipsis,),
